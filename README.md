@@ -87,7 +87,9 @@ Navigate to `/opt/stack/horizon/openstack_dashboard/dashboards/` and clone the r
 
 ```Bash
 $ cd /opt/stack/horizon/openstack_dashboard/dashboards/
-$ git clone https://github.com/nizos/Horizon-Policies-Plugin/tree/master/policies_dashboard
+$ mkdir policies_dashboard
+$ cd policies_dashboard
+$ git clone https://github.com/nizos/Horizon-Policies-Plugin
 ```
 
 ### Enable the plugin
