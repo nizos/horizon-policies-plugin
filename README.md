@@ -28,7 +28,6 @@ $ sudo apt install python3-pip
 $ python3 -m pip install Django==2.2
 ```
 
-
 ### Check versions
 
 ```Bash
@@ -87,21 +86,25 @@ Navigate to `/opt/stack/horizon/openstack_dashboard/dashboards/` and clone the r
 
 ```Bash
 $ cd /opt/stack/horizon/openstack_dashboard/dashboards/
-$ git clone https://github.com/nizos/Horizon-Policies-Plugin/tree/master/policies_dashboard
+$ git clone https://github.com/nizos/Horizon-Policies-Plugin
+$ cd Horizon-Policies-Plugin/cafe-ui/
+$ python3 -m pip install -r requirements.txt
+$ python3 setup.py sdist
+$ python3 -m pip install dist/cafe-ui-0.0.0.tar.gz
 ```
 
 ### Enable the plugin
 Add the plugin's enabled files to Horizon:
 ```Bash
 $ cd ..
-$ cp dashboards/policies_dashboard/enabled/_50_policies_dashboard.py local/enabled
+$ cp cafe_ui/enabled/_90_project_cafe_panelgroup.py enabled/
+$ cp cafe_ui//enabled/_91_project_cafe_drinks_panel.py enabled/
 ```
 
 ### Restart Horizon
 ```Bash
 $ service apache2 restart
 ```
-
 
 # Contributors
 Andreas, Nizar, Rickard, Joel & Wissam.
