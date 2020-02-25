@@ -1,0 +1,16 @@
+<div ng-controller="horizon.dashboard.cafe.drinks.OverviewController as ctrl">
+  <div class="row">
+    <div class="col-md-12 detail">
+      <h3 translate>Drink</h3>
+      <hr>
+      <hz-resource-property-list
+        resource-type-name="OS::Cafe::Drink"
+        cls="dl-horizontal"
+        item="ctrl.drink"
+        property-groups="[['name', 'description', 'enabled'],
+                          ['size', 'temperature', 'base', 'flavor', 'topping'],
+                          ['id', 'created_at', 'updated_at']]">
+      </hz-resource-property-list>
+    </div>
+  </div>
+</div>
