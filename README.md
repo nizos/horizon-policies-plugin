@@ -114,7 +114,7 @@ Copy the static files to Horizon's `static` directory
 Run the following command
 
 ```Bash
-cd misc_goodies/
+cd horizon-policies-plugin/misc_goodies/
 chmod u+x copy_static_files.sh
 ./copy_static_files.sh
 ```
