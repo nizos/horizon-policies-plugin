@@ -1,0 +1,37 @@
+CHANGES
+=======
+
+* Slides
+* remove offline from local.conf
+* Last minute add to improve laptop environments
+* Remove master horizon reference
+* fix name in devstack readme
+* add a few misc helpers
+* start network action
+* initial stop network impl
+* lab 2 plus decode and shared
+* use yes/no filter for admin state up
+* Prepare for the lab 2 exercise
+* Rename var loadbaalancer because it isn't
+* add proper import for api call
+* some cleanup and correction for sample network api
+* Most of the lab 2 first api call stuff
+* Corrections made during review of charts and sample 1
+* Corrections made during review of charts and sample 1
+* remove "don't use" warning
+* add a table placeholder
+* This is python! use \_\_init\_\_ files
+* fix js module name
+* clean up most of the navigation stuff and add gitigore
+* remove unneeded brackets
+* Remove extraneous condition leftover from lbaasv2
+* Remove \*.swp file
+* put a warning in the readme for the curious
+* Remember the README is rst format
+* Add some usage info to README
+* actually include plugin in local.conf!
+* initial local.conf
+* devstack plugin
+* Remove some stray files≈
+* Partial, undebugged creation of initial panel
+* Initial Commit
