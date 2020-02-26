@@ -103,8 +103,8 @@ python3 -m pip install dist/sample-dashboard-0.0.1.dev24.tar.gz
 Add the plugin's enabled files to Horizon
 
 ```Bash
-
-cp sample_dashboard/enabled/_1485_project_network_sample_enabled.py openstack_dashboard/enabled/
+cd ..
+cp horizon-policies-plugin/sample_dashboard/enabled/_1485_project_network_sample_enabled.py openstack_dashboard/enabled/
 ```
 
 ### Copy static files to Horizon/static
