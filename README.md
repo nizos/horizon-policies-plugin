@@ -96,7 +96,7 @@ Run the commands to install the plugin
 cd horizon-policies-plugin/
 python3 -m pip install -r requirements.txt
 python3 setup.py sdist
-python3 -m pip install dist/sample-dashboard-0.0.1.dev34.tar.gz
+python3 -m pip install dist/sample-dashboard-0.0.1.dev24.tar.gz
 ```
 
 ### Enable the plugin
@@ -114,7 +114,9 @@ Copy the static files to Horizon's `static` directory
 Run the following command
 
 ```Bash
-bash misc_goodies/copy_static_files.bash
+cd misc_goodies/
+chmod u+x copy_static_files.sh
+./copy_static_files.sh
 ```
 #### Copy files manually
 Copy the following files
@@ -156,7 +158,7 @@ cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sampl
 # static/dashboard/project/sample/network/actions/stop_network/modal.service.js
 mkdir static/dashboard/project/sample/network/actions/stop_network
 
-cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/network/actions/stop_network/modal.service.js static/dashboard/project/sample/network/actions/actions/stop_network/
+cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/network/actions/stop_network/modal.service.js static/dashboard/project/sample/network/actions/stop_network/
 
 ```
 
