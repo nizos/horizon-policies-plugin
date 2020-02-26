@@ -87,7 +87,7 @@ Navigate to `/opt/stack/horizon/openstack_dashboard/dashboards/` and clone the r
 ```Bash
 $ cd /opt/stack/horizon/openstack_dashboard/dashboards/
 $ git clone https://github.com/nizos/Horizon-Policies-Plugin
-$ cd Horizon-Policies-Plugin/cafe-ui/
+$ cd Horizon-Policies-Plugin/policy/
 $ python3 -m pip install -r requirements.txt
 $ python3 setup.py sdist
 $ python3 -m pip install dist/cafe-ui-0.0.0.tar.gz
@@ -96,9 +96,13 @@ $ python3 -m pip install dist/cafe-ui-0.0.0.tar.gz
 ### Enable the plugin
 Add the plugin's enabled files to Horizon:
 ```Bash
-$ cd ..
-$ cp cafe_ui/enabled/_90_project_cafe_panelgroup.py enabled/
-$ cp cafe_ui//enabled/_91_project_cafe_drinks_panel.py enabled/
+$ Navigate to: /openstack_dashboard/
+$ cp dashboards/Horizon-Policies/Plugin/policy/cafe_ui/enabled/_90_project_cafe_panelgroup.py enabled/
+$ cp dashboards/Horizon-Policies/Plugin/policy/cafe_ui/enabled/_91_project_cafe_drinks_panel.py enabled/
+1. Navigate to openstack_dashboard/dashboards/Horizon-Policies-Plugin/policy/cafe_ui/static/dashboard/ 
+2. Copy the 'cafe'-folder
+3. Navigate to horizon/static/dashboard
+4. Paste the 'cafe'-folder into /dashboard
 ```
 
 ### Restart Horizon
