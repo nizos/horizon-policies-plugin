@@ -93,13 +93,6 @@ $ python3 setup.py sdist
 $ python3 -m pip install dist/cafe-ui-0.0.0.tar.gz
 ```
 
-### Init repo
-```Bash
-$ git init .
-$ git add .
-$ git commit
-```
-
 ### Enable the plugin
 Add the plugin's enabled files to Horizon:
 ```Bash
