@@ -7,6 +7,6 @@
 #rsync -av policy/cafe_ui/static/dashboard/cafe ../../../static/dashboard
 
 
-# USE this if you installed the plugin under horizon/openstack_dashboard/dashboards/.
+# USE this if you installed the plugin under this  horizon/openstack_dashboard/dashboards/.
 
 rsync -av policy/cafe_ui/static/dashboard/cafe ../../../../../static/dashboard
