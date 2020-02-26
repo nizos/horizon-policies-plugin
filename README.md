@@ -99,11 +99,12 @@ Add the plugin's enabled files to Horizon:
 $ Navigate to: /openstack_dashboard/
 $ cp dashboards/Horizon-Policies-Plugin/policy/cafe_ui/enabled/_90_project_cafe_panelgroup.py enabled/
 $ cp dashboards/Horizon-Policies-Plugin/policy/cafe_ui/enabled/_91_project_cafe_drinks_panel.py enabled/
-1. Navigate to openstack_dashboard/dashboards/Horizon-Policies-Plugin/policy/cafe_ui/static/dashboard/ 
-2. Copy the 'cafe'-folder
-3. Navigate to horizon/static/dashboard
-4. Paste the 'cafe'-folder into /dashboard
 ```
+
+### Copy static files to Horizon/static
+
+$ Navigate to: Horizon-Policies-Plugin
+$ bash static.bash.bash
 
 ### Restart Horizon
 ```Bash
