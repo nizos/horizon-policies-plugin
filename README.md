@@ -104,7 +104,10 @@ $ cp dashboards/Horizon-Policies-Plugin/policy/cafe_ui/enabled/_91_project_cafe_
 ### Copy static files to Horizon/static
 
 $ Navigate to: Horizon-Policies-Plugin
+
+```Bash
 $ bash static.bash.bash
+```
 
 ### Restart Horizon
 ```Bash
