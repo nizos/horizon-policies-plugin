@@ -113,11 +113,11 @@ git clone https://github.com/nizos/horizon-policies-plugin
 ```
 
 ### Initialize policy-ui repo
-In order for the setup packager to work properly, we will need to initialize a repo in the `/horizon-policies-plugin/policy-ui/` directory. If you already have .git folder in this directory and are having trouble with the installation, you can safely remove it before starting with the next step. If you are not sure if there is such a folder, check your vscode settings according to the next section or type `ls -all` while you are in the `/horizon-policies-plugin/policy-ui/` directory.
+In order for the setup packager to work properly, we will need to initialize a repo in the `horizon-policies-plugin/policy-ui/` directory. If you already have .git folder in this directory and are having trouble with the installation, you can safely remove it before starting with the next step. If you are not sure if there is such a folder, check your vscode settings according to the next section or type `ls -all` while you are in the `horizon-policies-plugin/policy-ui/` directory.
 
 We do this by navigating into the directory and running the following commands
 ```Bash
-cd /horizon-policies-plugin/policy-ui/
+cd horizon-policies-plugin/policy-ui/
 git init
 git add .
 git commit -a
@@ -133,8 +133,8 @@ If you want to be able to view .git/ directories in vscode do the following:
 
 ### Install the plugin
 Before proceeding and in order to insure a clean install, make sure that:
-* Your `/horizon-policies-plugin/policy-ui/dist` is empty or doesn't contain a `policy-ui-X.X.X.tar.gz` file.
-* You don't have a `policy_ui.egg-info` folder in your `/horizon-policies-plugin/policy-ui/` directory.
+* Your `horizon-policies-plugin/policy-ui/dist` is empty or doesn't contain a `policy-ui-X.X.X.tar.gz` file.
+* You don't have a `policy_ui.egg-info` folder in your `horizon-policies-plugin/policy-ui/` directory.
 
 You can safely delete those files/folders.
 
