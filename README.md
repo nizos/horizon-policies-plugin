@@ -81,85 +81,86 @@ Your devstack will have installed keystone, glance, nova, placement, cinder, neu
 
 ## Install the plugin
 
+### Remove previous plugin installation
+Make sure to remove any previously installed plugins using the similar name and any other previously installed and unwanted plugins.
+
+To remove a specific package
+```Bash
+python3 -m pip uninstall <package-name>
+```
+For example, to remove policy-ui:
+```Bash
+python3 -m pip uninstall policy-ui
+```
+
+#### Further tips
+To view a list of all packages type:
+```Bash
+python3 -m pip list
+```
+
+To view details about a specific package type:
+```Bash
+python3 -m pip show policy-ui
+```
+
 ### Clone the repo
-Navigate to `/opt/stack/horizon/` and clone the repo.
+Now its time to install the plugin, we start by navigating  to `/opt/stack/horizon/` and cloning the repo.
 
 ```Bash
 cd /opt/stack/horizon/
 git clone https://github.com/nizos/horizon-policies-plugin
 ```
 
+### Initialize policy-ui repo
+In order for the setup packager to work properly, we will need to initialize a repo in the `/horizon-policies-plugin/policy-ui/` directory. If you already have .git folder in this directory and are having trouble with the installation, you can safely remove it before starting with the next step. If you are not sure if there is such a folder, check your vscode settings according to the next section or type `ls -all` while you are in the `/horizon-policies-plugin/policy-ui/` directory.
+
+We do this by navigating into the directory and running the following commands
+```Bash
+cd /horizon-policies-plugin/policy-ui/
+git init
+git add .
+git commit -a
+```
+Type a commit message in editor window above all the # lines. Hit `ctrl+o` then `Enter` followed by `ctrl+x` if you are using nano and you will be done.
+
+#### Further tips
+If you want to be able to view .git/ directories in vscode do the following:
+
+1. Open the settings window by clicking on File -> Preferences -> Settings or by hitting `ctrl+,` on your keyboard.
+2. type `files.exclude` in the search bar.
+3. Highlight the row with .git by hovering over it with your mouse and clicking on the `x` button to remove it from the list files and folder patterns that vscode will automatically hide.
+
 ### Install the plugin
-Run the commands to install the plugin
+Before proceeding and in order to insure a clean install, make sure that:
+* Your `/horizon-policies-plugin/policy-ui/dist` is empty or doesn't contain a `policy-ui-X.X.X.tar.gz` file.
+* You don't have a `policy_ui.egg-info` folder in your `/horizon-policies-plugin/policy-ui/` directory.
+
+You can safely delete those files/folders.
+
+Now it is time to install the plugin. Run the following commands and in the following order:
 
 ```Bash
-cd horizon-policies-plugin/
+# /opt/stack/horizon/horizon-policies-plugin/policy-ui/
 python3 -m pip install -r requirements.txt
 python3 setup.py sdist
-python3 -m pip install dist/sample-dashboard-0.0.1.dev24.tar.gz
+python3 -m pip install dist/policy-ui-0.0.0.tar.gz
 ```
 
 ### Enable the plugin
 Add the plugin's enabled files to Horizon
 
 ```Bash
-cd ..
-cp horizon-policies-plugin/sample_dashboard/enabled/_1485_project_network_sample_enabled.py openstack_dashboard/enabled/
+cd /opt/stack/horizon/
+cp horizon-policies-plugin/policy-ui/policy_ui/enabled/_90_project_policy_panelgroup.py openstack_dashboard/enabled/
+cp horizon-policies-plugin/policy-ui/policy_ui/enabled/_91_project_policy_drinks_panel.py openstack_dashboard/enabled/
 ```
 
-### Copy static files to Horizon/static
+### Copy static files
 Copy the static files to Horizon's `static` directory
-
-#### Copy the files through script
-Run the following command
-
-```Bash
-cd horizon-policies-plugin/misc_goodies/
-chmod u+x copy_static_files.sh
-./copy_static_files.sh
-```
-#### Copy files manually
-Copy the following files
 ```Bash
 cd /opt/stack/horizon/
-
-# static/app/core/openstack-service-api/sample-network.service.js
-cp sample-horizon-angular-plugin/sample_dashboard/static/app/core/openstack-service-api/sample-network.service.js static/app/core/openstack-service-api/
-
-# static/dashboard/project/sample/sample.module.js
-mkdir static/dashboard/project/sample
-
-cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/sample.module.js static/dashboard/project/sample/
-
-# static/dashboard/project/sample/network/table.html
-mkdir static/dashboard/project/sample/network
-
-cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/network/table.html static/dashboard/project/sample/network/
-
-# static/dashboard/project/sample/network/networks.module.js
-cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/network/networks.module.js static/dashboard/project/sample/network/
-
-# static/dashboard/project/sample/network/networks.controller.js
-cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/network/networks.controller.js static/dashboard/project/sample/network/
-
-# static/dashboard/project/sample/network/actions/row-actions.service.js
-mkdir static/dashboard/project/sample/network/actions
-
-cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/network/actions/row-actions.service.js static/dashboard/project/sample/network/actions/
-
-# static/dashboard/project/sample/network/actions/batch-actions.service.js
-cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/network/actions/batch-actions.service.js static/dashboard/project/sample/network/actions/
-
-# static/dashboard/project/sample/network/actions/start_network/modal.service.js
-mkdir static/dashboard/project/sample/network/actions/start_network
-
-cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/network/actions/start_network/modal.service.js static/dashboard/project/sample/network/actions/start_network/
-
-# static/dashboard/project/sample/network/actions/stop_network/modal.service.js
-mkdir static/dashboard/project/sample/network/actions/stop_network
-
-cp sample-horizon-angular-plugin/sample_dashboard/static/dashboard/project/sample/network/actions/stop_network/modal.service.js static/dashboard/project/sample/network/actions/stop_network/
-
+cp -r horizon-policies-plugin/policy-ui/policy_ui/static/dashboard/. static/dashboard/
 ```
 
 ### Restart Horizon
