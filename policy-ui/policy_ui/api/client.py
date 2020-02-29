@@ -57,9 +57,9 @@ def apiclient(request):
     c = None
 
     try:
-        api_url = base.url_for(request, 'drink')
+        api_url = base.url_for(request, 'policy')
     except exceptions.ServiceCatalogException:
-        LOG.debug('No Drink Management service is configured.')
+        LOG.debug('No policy Management service is configured.')
         return None
 
     LOG.debug('policyclient connection created using the token "%s" and url'
@@ -73,7 +73,7 @@ def apiclient(request):
     return c
 
 
-def drink_create(request, **kwargs):
+def policy_create(request, **kwargs):
     args = {}
     for (key, value) in kwargs.items():
         if key in ATTRIBUTES:
@@ -81,7 +81,7 @@ def drink_create(request, **kwargs):
         else:
             raise exceptions.BadRequest(
                 "Key must be in %s" % ",".join(ATTRIBUTES))
-    # created = apiclient(request).drinks.create(**args)
+    # created = apiclient(request).policies.create(**args)
 
     # create dummy response
     args["uuid"] = uuid.uuid1().hex
@@ -94,7 +94,7 @@ def drink_create(request, **kwargs):
     return created
 
 
-def drink_update(request, id, **kwargs):
+def policy_update(request, id, **kwargs):
     args = {}
     for (key, value) in kwargs.items():
         if key in ATTRIBUTES:
@@ -102,7 +102,7 @@ def drink_update(request, id, **kwargs):
         else:
             raise exceptions.BadRequest(
                 "Key must be in %s" % ",".join(ATTRIBUTES))
-    # updated = apiclient(request).drink.update(id, **args)
+    # updated = apiclient(request).policy.update(id, **args)
 
     # update dummy response
     args["uuid"] = id
@@ -115,24 +115,24 @@ def drink_update(request, id, **kwargs):
     return updated
 
 
-def drink_delete(request, id):
-    # deleted = apiclient(request).drinks.delete(id)
+def policy_delete(request, id):
+    # deleted = apiclient(request).policies.delete(id)
     deleted = STUB_DATA.pop(id)
 
     return deleted
 
 
-def drink_list(
+def policy_list(
         request, limit=None, marker=None, sort_key=None,
         sort_dir=None, detail=True):
 
-    # list = apiclient(request).Drinks.list(limit, marker, sort_key,
+    # list = apiclient(request).Policies.list(limit, marker, sort_key,
     #                                             sort_dir, detail)
     list = [STUB_DATA[data] for data in STUB_DATA]
     return list
 
 
-def drink_show(request, id):
-    # show = apiclient(request).drinks.get(id)
+def policy_show(request, id):
+    # show = apiclient(request).policies.get(id)
     show = STUB_DATA.get(id)
     return show

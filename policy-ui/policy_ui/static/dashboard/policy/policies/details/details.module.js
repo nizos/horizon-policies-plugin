@@ -17,13 +17,13 @@
 
   /**
    * @ngdoc overview
-   * @ngname horizon.dashboard.policy.drinks.details
+   * @ngname horizon.dashboard.policy.policies.details
    *
    * @description
-   * Provides details features for Drink.
+   * Provides details features for policy.
    */
   angular
-    .module('horizon.dashboard.policy.drinks.details', [
+    .module('horizon.dashboard.policy.policies.details', [
       'horizon.app.core',
       'horizon.framework.conf'
     ])
@@ -31,8 +31,8 @@
 
   registerDetails.$inject = [
     'horizon.app.core.openstack-service-api.policy',
-    'horizon.dashboard.policy.drinks.basePath',
-    'horizon.dashboard.policy.drinks.resourceType',
+    'horizon.dashboard.policy.policies.basePath',
+    'horizon.dashboard.policy.policies.resourceType',
     'horizon.framework.conf.resource-type-registry.service'
   ];
 
@@ -45,13 +45,13 @@
     registry.getResourceType(resourceType)
       .setLoadFunction(loadFunction)
       .detailsViews.append({
-        id: 'drinkDetailsOverview',
+        id: 'policyDetailsOverview',
         name: gettext('Overview'),
         template: basePath + 'details/overview.html'
       });
 
     function loadFunction(identifier) {
-      return api.getDrink(identifier);
+      return api.getPolicy(identifier);
     }
   }
 })();

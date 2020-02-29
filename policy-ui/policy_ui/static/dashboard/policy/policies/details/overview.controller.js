@@ -15,8 +15,8 @@
   "use strict";
 
   angular
-    .module('horizon.dashboard.policy.drinks')
-    .controller('horizon.dashboard.policy.drinks.OverviewController', controller);
+    .module('horizon.dashboard.policy.policies')
+    .controller('horizon.dashboard.policy.policies.OverviewController', controller);
 
   controller.$inject = [
     '$scope'
@@ -26,12 +26,12 @@
     $scope
   ) {
     var ctrl = this;
-    ctrl.drink = {};
+    ctrl.policy = {};
 
-    $scope.context.loadPromise.then(onGetDrink);
+    $scope.context.loadPromise.then(onGetPolicy);
 
-    function onGetDrink(drink) {
-      ctrl.drink = drink.data;
+    function onGetPolicy(policy) {
+      ctrl.policy = policy.data;
     }
   }
 })();

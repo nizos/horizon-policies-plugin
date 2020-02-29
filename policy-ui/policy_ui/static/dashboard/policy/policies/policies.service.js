@@ -15,8 +15,8 @@
 (function() {
   "use strict";
 
-  angular.module('horizon.dashboard.policy.drinks')
-    .factory('horizon.dashboard.policy.drinks.service',
+  angular.module('horizon.dashboard.policy.policies')
+    .factory('horizon.dashboard.policy.policies.service',
       service);
 
   service.$inject = [
@@ -27,10 +27,10 @@
 
   /*
    * @ngdoc factory
-   * @name horizon.dashboard.policy.drinks.service
+   * @name horizon.dashboard.policy.policies.service
    *
    * @description
-   * This service provides functions that are used through the Drinks
+   * This service provides functions that are used through the Policies
    * features.  These are primarily used in the module registrations
    * but do not need to be restricted to such use.  Each exposed function
    * is documented below.
@@ -42,7 +42,7 @@
     };
 
     function getPromise(params) {
-      return api.getDrinks(params).then(modifyResponse);
+      return api.getPolicies(params).then(modifyResponse);
     }
 
     function modifyResponse(response) {
@@ -56,7 +56,7 @@
     }
 
     function urlFunction(item) {
-      return detailRoute + 'OS::Policy::Drink/' + item.id;
+      return detailRoute + 'OS::Policy::Policy/' + item.id;
     }
   }
 })();

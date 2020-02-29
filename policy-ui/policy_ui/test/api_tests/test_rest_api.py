@@ -13,7 +13,7 @@
 from openstack_dashboard.test import helpers as test
 
 
-class DrinksRestTestCase(test.TestCase):
+class PoliciesRestTestCase(test.TestCase):
 
     # Unit tests for REST API.
     def test_me(self):

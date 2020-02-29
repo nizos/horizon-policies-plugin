@@ -17,70 +17,70 @@
 
   /**
    * @ngdoc overview
-   * @ngname horizon.dashboard.policy.drinks.actions
+   * @ngname horizon.dashboard.policy.policies.actions
    *
    * @description
-   * Provides all of the actions for Drinks.
+   * Provides all of the actions for Policies.
    */
   angular
-    .module('horizon.dashboard.policy.drinks.actions', [
+    .module('horizon.dashboard.policy.policies.actions', [
       'horizon.framework',
       'horizon.dashboard.policy'
     ])
-    .run(registerDrinkActions);
+    .run(registerPolicyActions);
 
-  registerDrinkActions.$inject = [
+  registerPolicyActions.$inject = [
     'horizon.framework.conf.resource-type-registry.service',
     'horizon.framework.util.i18n.gettext',
-    'horizon.dashboard.policy.drinks.create.service',
-    'horizon.dashboard.policy.drinks.update.service',
-    'horizon.dashboard.policy.drinks.delete.service',
-    'horizon.dashboard.policy.drinks.resourceType'
+    'horizon.dashboard.policy.policies.create.service',
+    'horizon.dashboard.policy.policies.update.service',
+    'horizon.dashboard.policy.policies.delete.service',
+    'horizon.dashboard.policy.policies.resourceType'
   ];
 
-  function registerDrinkActions (
+  function registerPolicyActions (
     registry,
     gettext,
-    createDrinkService,
-    updateDrinkService,
-    deleteDrinkService,
+    createPolicyService,
+    updatePolicyService,
+    deletePolicyService,
     resourceType
   ) {
-    var drinksResourceType = registry.getResourceType(resourceType);
-    drinksResourceType.globalActions
+    var policiesResourceType = registry.getResourceType(resourceType);
+    policiesResourceType.globalActions
       .append({
-        id: 'createDrinkAction',
-        service: createDrinkService,
+        id: 'createPolicyAction',
+        service: createPolicyService,
         template: {
           type: 'create',
-          text: gettext('Create Drink')
+          text: gettext('Create Policy')
         }
       });
 
-    drinksResourceType.batchActions
+    policiesResourceType.batchActions
       .append({
-        id: 'batchDeleteDrinkAction',
-        service: deleteDrinkService,
+        id: 'batchDeletePolicyAction',
+        service: deletePolicyService,
         template: {
           type: 'delete-selected',
-          text: gettext('Delete Drinks')
+          text: gettext('Delete Policies')
         }
       });
 
-    drinksResourceType.itemActions
+    policiesResourceType.itemActions
       .append({
-        id: 'updateDrinkAction',
-        service: updateDrinkService,
+        id: 'updatePolicyAction',
+        service: updatePolicyService,
         template: {
-          text: gettext('Update Drink')
+          text: gettext('Update Policy')
         }
       })
       .append({
-        id: 'deleteDrinkAction',
-        service: deleteDrinkService,
+        id: 'deletePolicyAction',
+        service: deletePolicyService,
         template: {
           type: 'delete',
-          text: gettext('Delete Drink')
+          text: gettext('Delete Policy')
         }
       });
   }

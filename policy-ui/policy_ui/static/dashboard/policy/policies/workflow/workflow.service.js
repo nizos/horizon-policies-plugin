@@ -17,12 +17,12 @@
 
   /**
    * @ngdoc workflow
-   * @name horizon.dashboard.policy.drinks.workflow
+   * @name horizon.dashboard.policy.policies.workflow
    * @description Service for the create/update workflow
    */
   angular
-    .module('horizon.dashboard.policy.drinks')
-    .factory('horizon.dashboard.policy.drinks.workflow', workflow);
+    .module('horizon.dashboard.policy.policies')
+    .factory('horizon.dashboard.policy.policies.workflow', workflow);
 
   workflow.$inject = [
     'horizon.dashboard.policy.basePath',
@@ -88,11 +88,11 @@
           "tabs": [
             {
               "title": gettext("Info"),
-              "help": basePath + "drinks/workflow/info.help.html",
+              "help": basePath + "policies/workflow/info.help.html",
               "items": [
                 {
                   "key": "name",
-                  "placeholder": gettext("Name of the drink."),
+                  "placeholder": gettext("Name of the policy."),
                   "required": true
                 },
                 {
@@ -107,7 +107,7 @@
             },
             {
               "title": gettext("Recipe"),
-              "help": basePath + "drinks/workflow/recipe.help.html",
+              "help": basePath + "policies/workflow/recipe.help.html",
               "items": [
                 {
                   "key": "size",

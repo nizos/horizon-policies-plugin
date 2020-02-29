@@ -14,19 +14,19 @@
 (function() {
   "use strict";
 
-  describe('Drinks service', function() {
+  describe('Policies service', function() {
     var service;
     beforeEach(module('horizon.app.core.openstack-service-api'));
-    beforeEach(module('horizon.dashboard.policy.drinks'));
+    beforeEach(module('horizon.dashboard.policy.policies'));
     beforeEach(inject(function($injector) {
-      service = $injector.get('horizon.dashboard.policy.drinks.service');
+      service = $injector.get('horizon.dashboard.policy.policies.service');
     }));
 
     describe('getPromise', function() {
       it("provides a promise", inject(function($q, $injector, $timeout) {
         var api = $injector.get('horizon.app.core.openstack-service-api.policy');
         var deferred = $q.defer();
-        spyOn(api, 'getDrinks').and.returnValue(deferred.promise);
+        spyOn(api, 'getPolicies').and.returnValue(deferred.promise);
         var result = service.getPromise({});
         deferred.resolve({
           data:{
@@ -34,7 +34,7 @@
           }
         });
         $timeout.flush();
-        expect(api.getDrinks).toHaveBeenCalled();
+        expect(api.getPolicies).toHaveBeenCalled();
         expect(result.$$state.value.data.items[0].name).toBe('resource1');
       }));
     });
@@ -43,7 +43,7 @@
       it("get url", inject(function($injector) {
         var detailRoute = $injector.get('horizon.app.core.detailRoute');
         var result = service.urlFunction({id:"123abc"});
-        expect(result).toBe(detailRoute + "OS::Policy::Drink/123abc");
+        expect(result).toBe(detailRoute + "OS::Policy::Policy/123abc");
       }));
     });
 

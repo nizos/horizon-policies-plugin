@@ -14,9 +14,9 @@
 (function() {
   'use strict';
 
-  describe('horizon.dashboard.policy.drinks', function() {
+  describe('horizon.dashboard.policy.policies', function() {
     it('should exist', function() {
-      expect(angular.module('horizon.dashboard.policy.drinks')).toBeDefined();
+      expect(angular.module('horizon.dashboard.policy.policies')).toBeDefined();
     });
   });
 

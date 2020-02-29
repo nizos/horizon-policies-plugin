@@ -1,12 +1,12 @@
-<div ng-controller="horizon.dashboard.policy.drinks.OverviewController as ctrl">
+<div ng-controller="horizon.dashboard.policy.policies.OverviewController as ctrl">
   <div class="row">
     <div class="col-md-12 detail">
-      <h3 translate>Drink</h3>
+      <h3 translate>Policy</h3>
       <hr>
       <hz-resource-property-list
-        resource-type-name="OS::Policy::Drink"
+        resource-type-name="OS::Policy::Policy"
         cls="dl-horizontal"
-        item="ctrl.drink"
+        item="ctrl.policy"
         property-groups="[['name', 'description', 'enabled'],
                           ['size', 'temperature', 'base', 'flavor', 'topping'],
                           ['id', 'created_at', 'updated_at']]">

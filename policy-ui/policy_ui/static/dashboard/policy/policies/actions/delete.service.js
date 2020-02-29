@@ -17,15 +17,15 @@
 
   /**
    * @ngDoc factory
-   * @name horizon.dashboard.policy.drinks.delete.service
+   * @name horizon.dashboard.policy.policies.delete.service
    * @Description
-   * Brings up the delete drinks confirmation modal dialog.
+   * Brings up the delete policies confirmation modal dialog.
    * On submit, delete selected resources.
    * On cancel, do nothing.
    */
   angular
-    .module('horizon.dashboard.policy.drinks')
-    .factory('horizon.dashboard.policy.drinks.delete.service', deleteService);
+    .module('horizon.dashboard.policy.policies')
+    .factory('horizon.dashboard.policy.policies.delete.service', deleteService);
 
   deleteService.$inject = [
     '$location',
@@ -39,8 +39,8 @@
     'horizon.framework.widgets.modal.deleteModalService',
     'horizon.framework.widgets.table.events',
     'horizon.framework.widgets.toast.service',
-    'horizon.dashboard.policy.drinks.resourceType',
-    'horizon.dashboard.policy.drinks.events'
+    'horizon.dashboard.policy.policies.resourceType',
+    'horizon.dashboard.policy.policies.events'
   ];
 
   function deleteService(
@@ -59,7 +59,7 @@
       perform: perform
     };
     var notAllowedMessage =
-      gettext("You are not allowed to delete drinks: %s");
+      gettext("You are not allowed to delete policies: %s");
 
     return service;
 
@@ -74,7 +74,7 @@
     function allowed() {
       return $qExtensions.booleanAsPromise(true);
       // fixme: if you need to set policy, change as follow
-      //return policy.ifAllowed({ rules: [['drink', 'delete_drink']] });
+      //return policy.ifAllowed({ rules: [['policy', 'delete_policy']] });
     }
 
     // delete selected resource objects
@@ -87,18 +87,18 @@
 
     function labelize(count) {
       return {
-        title: ngettext('Confirm Delete Drink',
-                        'Confirm Delete Drinks', count),
+        title: ngettext('Confirm Delete policy',
+                        'Confirm Delete policies', count),
         /* eslint-disable max-len */
-        message: ngettext('You have selected "%s". Please confirm your selection. Deleted drink is not recoverable.',
-                          'You have selected "%s". Please confirm your selection. Deleted drinks are not recoverable.', count),
+        message: ngettext('You have selected "%s". Please confirm your selection. Deleted policy is not recoverable.',
+                          'You have selected "%s". Please confirm your selection. Deleted policies are not recoverable.', count),
         /* eslint-enable max-len */
-        submit: ngettext('Delete Drink',
-                         'Delete Drinks', count),
-        success: ngettext('Deleted Drink: %s.',
-                          'Deleted Drinks: %s.', count),
-        error: ngettext('Unable to delete Drink: %s.',
-                        'Unable to delete Drinks: %s.', count)
+        submit: ngettext('Delete policy',
+                         'Delete policies', count),
+        success: ngettext('Deleted policy: %s.',
+                          'Deleted policies: %s.', count),
+        error: ngettext('Unable to delete policy: %s.',
+                        'Unable to delete policies: %s.', count)
       };
     }
 
@@ -131,7 +131,7 @@
         result.failed(resourceType, getEntity(item).id);
       });
       if (result.result.failed.length === 0 && result.result.deleted.length > 0) {
-        $location.path('/project/drinks');
+        $location.path('/project/policies');
       } else {
         $rootScope.$broadcast(tableEvents.CLEAR_SELECTIONS);
         return result.result;
@@ -153,7 +153,7 @@
 
     // call delete REST API
     function deleteEntity(id) {
-      return api.deleteDrink(id, true);
+      return api.deletePolicy(id, true);
     }
   }
 })();

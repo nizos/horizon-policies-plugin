@@ -17,12 +17,12 @@
 
   /**
    * @ngdoc model
-   * @name horizon.dashboard.policy.drinks.model
-   * @description Service for the drink model
+   * @name horizon.dashboard.policy.policies.model
+   * @description Service for the policy model
    */
   angular
-    .module('horizon.dashboard.policy.drinks')
-    .factory('horizon.dashboard.policy.drinks.model', model);
+    .module('horizon.dashboard.policy.policies')
+    .factory('horizon.dashboard.policy.policies.model', model);
 
   model.$inject = [
   ];

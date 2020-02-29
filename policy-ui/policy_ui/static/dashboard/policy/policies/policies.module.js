@@ -17,52 +17,52 @@
 
   /**
    * @ngdoc overview
-   * @name horizon.dashboard.policy.drinks
+   * @name horizon.dashboard.policy.policies
    * @ngModule
    * @description
-   * Provides all the services and widgets require to display the Drink
+   * Provides all the services and widgets require to display the policy
    * panel
    */
   angular
-    .module('horizon.dashboard.policy.drinks', [
+    .module('horizon.dashboard.policy.policies', [
       'ngRoute',
-      'horizon.dashboard.policy.drinks.actions',
-      'horizon.dashboard.policy.drinks.details'
+      'horizon.dashboard.policy.policies.actions',
+      'horizon.dashboard.policy.policies.details'
     ])
-    .constant('horizon.dashboard.policy.drinks.events', events())
-    .constant('horizon.dashboard.policy.drinks.resourceType', 'OS::Policy::Drink')
+    .constant('horizon.dashboard.policy.policies.events', events())
+    .constant('horizon.dashboard.policy.policies.resourceType', 'OS::Policy::Policy')
     .run(run)
     .config(config);
 
   /**
    * @ngdoc constant
-   * @name horizon.dashboard.policy.drinks.events
-   * @description A list of events used by Drink
+   * @name horizon.dashboard.policy.policies.events
+   * @description A list of events used by Policy
    * @returns {Object} events
    */
   function events() {
     return {
-      CREATE_SUCCESS: 'horizon.dashboard.policy.drinks.CREATE_SUCCESS',
-      DELETE_SUCCESS: 'horizon.dashboard.policy.drinks.DELETE_SUCCESS'
+      CREATE_SUCCESS: 'horizon.dashboard.policy.policies.CREATE_SUCCESS',
+      DELETE_SUCCESS: 'horizon.dashboard.policy.policies.DELETE_SUCCESS'
     };
   }
 
   run.$inject = [
     'horizon.framework.conf.resource-type-registry.service',
-    'horizon.dashboard.policy.drinks.service',
-    'horizon.dashboard.policy.drinks.basePath',
-    'horizon.dashboard.policy.drinks.resourceType'
+    'horizon.dashboard.policy.policies.service',
+    'horizon.dashboard.policy.policies.basePath',
+    'horizon.dashboard.policy.policies.resourceType'
   ];
 
   function run(registry, service, basePath, resourceType) {
     registry.getResourceType(resourceType)
-    .setNames(gettext('Drink'), gettext('Drinks'))
+    .setNames(gettext('Policy'), gettext('Policies'))
     // for detail summary view on table row
     .setSummaryTemplateUrl(basePath + 'details/drawer.html')
     // set default url for index view. this will be used for reproducing
     // sidebar and breadcrumb when refreshing or accessing directly
     // details view.
-    .setDefaultIndexUrl('/project/drinks/')
+    .setDefaultIndexUrl('/project/policies/')
     // specify items for table row items, summary view and details view
     .setProperties(properties())
     // get items for table
@@ -164,9 +164,9 @@
    * @returns {undefined} Returns nothing
    */
   function config($provide, $windowProvider, $routeProvider) {
-    var path = $windowProvider.$get().STATIC_URL + 'dashboard/policy/drinks/';
-    $provide.constant('horizon.dashboard.policy.drinks.basePath', path);
-    $routeProvider.when('/project/drinks', {
+    var path = $windowProvider.$get().STATIC_URL + 'dashboard/policy/policies/';
+    $provide.constant('horizon.dashboard.policy.policies.basePath', path);
+    $routeProvider.when('/project/policies', {
       templateUrl: path + 'panel.html'
     });
   }

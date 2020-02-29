@@ -26,53 +26,53 @@
 
   function API(apiService, toastService, gettext) {
     var service = {
-      getDrink: getDrink,
-      getDrinks: getDrinks,
-      createDrink: createDrink,
-      updateDrink: updateDrink,
-      deleteDrink: deleteDrink
+      getPolicy: getPolicy,
+      getPolicies: getPolicies,
+      createPolicy: createPolicy,
+      updatePolicy: updatePolicy,
+      deletePolicy: deletePolicy
     };
 
     return service;
 
     ///////////////////////////////
-    // Drinks
+    // Policies
 
-    function getDrink(id) {
-      return apiService.get('/api/policy/drinks/' + id)
+    function getPolicy(id) {
+      return apiService.get('/api/policy/policies/' + id)
         .error(function() {
-          var msg = gettext('Unable to retrieve the Drink with id: %(id)s.');
+          var msg = gettext('Unable to retrieve the policy with id: %(id)s.');
           toastService.add('error', interpolate(msg, {id: id}, true));
         });
     }
 
-    function getDrinks() {
-      return apiService.get('/api/policy/drinks/')
+    function getPolicies() {
+      return apiService.get('/api/policy/policies/')
         .error(function() {
-          toastService.add('error', gettext('Unable to retrieve the Drinks.'));
+          toastService.add('error', gettext('Unable to retrieve the policies.'));
         });
     }
 
-    function createDrink(params) {
-      return apiService.put('/api/policy/drinks/', params)
+    function createPolicy(params) {
+      return apiService.put('/api/policy/policies/', params)
         .error(function() {
-          var msg = gettext('Unable to create the Drink with name: %(name)s');
+          var msg = gettext('Unable to create the policy with name: %(name)s');
           toastService.add('error', interpolate(msg, { name: params.name }, true));
         });
     }
 
-    function updateDrink(id, params) {
-      return apiService.post('/api/policy/drinks/' + id, params)
+    function updatePolicy(id, params) {
+      return apiService.post('/api/policy/policies/' + id, params)
         .error(function() {
-          var msg = gettext('Unable to update the Drink with id: %(id)s');
+          var msg = gettext('Unable to update the policy with id: %(id)s');
           toastService.add('error', interpolate(msg, { id: params.id }, true));
         });
     }
 
-    function deleteDrink(id, suppressError) {
-      var promise = apiService.delete('/api/policy/drinks/', [id]);
+    function deletePolicy(id, suppressError) {
+      var promise = apiService.delete('/api/policy/policies/', [id]);
       return suppressError ? promise : promise.error(function() {
-        var msg = gettext('Unable to delete the Drink with id: %(id)s');
+        var msg = gettext('Unable to delete the policy with id: %(id)s');
         toastService.add('error', interpolate(msg, { id: id }, true));
       });
     }

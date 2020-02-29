@@ -25,7 +25,7 @@
   /* eslint-disable no-unused-vars */
   angular
     .module('horizon.dashboard.policy', [
-      'horizon.dashboard.policy.drinks',
+      'horizon.dashboard.policy.policies',
       'ngRoute'
     ])
     .config(config);

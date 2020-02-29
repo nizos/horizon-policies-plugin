@@ -10,14 +10,12 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-from django.utils.translation import ugettext_lazy as _
-import horizon
+# The slug of the panel to be added to HORIZON_CONFIG. Required.
+PANEL = 'policies'
+# The slug of the panel group the PANEL is associated with.
+PANEL_GROUP = 'policy'
+# The slug of the dashboard the PANEL associated with. Required.
+PANEL_DASHBOARD = 'project'
 
-# This panel will be loaded from horizon, because specified in enabled file.
-# To register REST api, import below here.
-from policy_ui.api import rest_api  # noqa: F401
-
-
-class Drinks(horizon.Panel):
-    name = _("Drinks")
-    slug = "drinks"
+# Python panel class of the PANEL to be added.
+ADD_PANEL = 'policy_ui.content.policies.panel.Policies'
