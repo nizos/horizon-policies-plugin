@@ -153,7 +153,7 @@ Add the plugin's enabled files to Horizon
 ```Bash
 cd /opt/stack/horizon/
 cp horizon-policies-plugin/policy-ui/policy_ui/enabled/_90_project_policy_panelgroup.py openstack_dashboard/enabled/
-cp horizon-policies-plugin/policy-ui/policy_ui/enabled/_91_project_policy_drinks_panel.py openstack_dashboard/enabled/
+cp horizon-policies-plugin/policy-ui/policy_ui/enabled/_91_project_policy_policies_panel.py openstack_dashboard/enabled/
 ```
 
 ### Copy static files
