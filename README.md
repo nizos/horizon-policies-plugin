@@ -14,37 +14,6 @@ sudo apt update
 sudo apt upgrade
 ```
 
-### Install python3 and python3-pip
-```Bash
-sudo apt install python3
-```
-
-```Bash
-sudo apt install python3-pip
-```
-
-### Install Django
-```Bash
-python3 -m pip install Django==2.2
-```
-
-### Check versions
-
-```Bash
-python3 --version
-# Python 3.6.9
-```
-
-```Bash
-python3 -m pip --version
-# pip 20.0.2 from /home/<user>/.local/lib/python3.6/site-packages/pip (python 3.6)
-```
-
-```Bash
-python3 -m django --version
-# 2.2
-```
-
 ## Install DevStack
 The full guide for installing DevStack can be found [here](https://docs.openstack.org/devstack/train/) but bellow are the quick steps to get up and running.
 
@@ -78,6 +47,37 @@ This is the minimum required config to get started with DevStack.
 This will take a 15 - 20 minutes, largely depending on the speed of your internet connection. Many git trees and packages will be installed during this process.
 
 Your devstack will have installed keystone, glance, nova, placement, cinder, neutron, and horizon. Floating IPs will be available, guests have access to the external world.
+
+### Install python3 and python3-pip
+```Bash
+sudo apt install python3
+```
+
+```Bash
+sudo apt install python3-pip
+```
+
+### Install Django
+```Bash
+python3 -m pip install Django==2.2
+```
+
+### Check versions
+
+```Bash
+python3 --version
+# Python 3.6.9
+```
+
+```Bash
+python3 -m pip --version
+# pip 20.0.2 from /home/<user>/.local/lib/python3.6/site-packages/pip (python 3.6)
+```
+
+```Bash
+python3 -m django --version
+# 2.2
+```
 
 ## Install the plugin
 
@@ -161,6 +161,20 @@ Copy the static files to Horizon's `static` directory
 ```Bash
 cd /opt/stack/horizon/
 cp -r horizon-policies-plugin/policy-ui/policy_ui/static/dashboard/. static/dashboard/
+```
+
+### Offline Compression
+If you run into the error You have offline compression enabled but key is missing from offline manifest.
+```Bash
+cd /opt/stack/horizon/openstack_dashboard/local/
+```
+Open local_settings.py and change
+```Bash
+COMPRESS_OFFLINE = True
+```
+to
+```Bash
+COMPRESS_OFFLINE = False
 ```
 
 ### Restart Horizon
