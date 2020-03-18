@@ -97,7 +97,7 @@ python3 -m pip uninstall policy-ui
 
 ```Bash
 Found existing installation: policy-ui 0.0...
-_Not sure how to uninstall: policy-ui 0.0... - Check: /path/to/repository/horizon-policies-plugin/policy-ui_ **(extra text that you get with the _--verbose_ trigger)**
+Not sure how to uninstall: policy-ui 0.0... - Check: /path/to/repository/horizon-policies-plugin/policy-ui (extra text that you get with the --verbose trigger)
 Can't uninstall 'policy-ui'. No files were found to uninstall.
 ```
 
