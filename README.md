@@ -93,6 +93,16 @@ For example, to remove policy-ui:
 python3 -m pip uninstall policy-ui
 ```
 
+**WARNING**: The uninstallation may fail if your CWD is */path/to/repository/horizon-policies-plugin/policy-ui* with the message
+
+```Bash
+Found existing installation: policy-ui 0.0...
+_Not sure how to uninstall: policy-ui 0.0... - Check: /path/to/repository/horizon-policies-plugin/policy-ui_ **(extra text that you get with the _--verbose_ trigger)**
+Can't uninstall 'policy-ui'. No files were found to uninstall.
+```
+
+The solution is to change directory and try the same command again.
+
 #### Further tips
 To view a list of all packages type:
 ```Bash
@@ -108,21 +118,9 @@ python3 -m pip show policy-ui
 Now its time to install the plugin, we start by navigating  to `/opt/stack/horizon/` and cloning the repo.
 
 ```Bash
-cd /opt/stack/horizon/
+#Clone the repository anywhere in your file structure.
 git clone https://github.com/nizos/horizon-policies-plugin
 ```
-
-### Initialize policy-ui repo
-In order for the setup packager to work properly, we will need to initialize a repo in the `horizon-policies-plugin/policy-ui/` directory. If you already have .git folder in this directory and are having trouble with the installation, you can safely remove it before starting with the next step. If you are not sure if there is such a folder, check your vscode settings according to the next section or type `ls -all` while you are in the `horizon-policies-plugin/policy-ui/` directory.
-
-We do this by navigating into the directory and running the following commands
-```Bash
-cd horizon-policies-plugin/policy-ui/
-git init
-git add .
-git commit -a
-```
-Type a commit message in editor window above all the # lines. Hit `ctrl+o` then `Enter` followed by `ctrl+x` if you are using nano and you will be done.
 
 #### Further tips
 If you want to be able to view .git/ directories in vscode do the following:
@@ -132,36 +130,14 @@ If you want to be able to view .git/ directories in vscode do the following:
 3. Highlight the row with .git by hovering over it with your mouse and clicking on the `x` button to remove it from the list files and folder patterns that vscode will automatically hide.
 
 ### Install the plugin
-Before proceeding and in order to insure a clean install, make sure that:
-* Your `horizon-policies-plugin/policy-ui/dist` is empty or doesn't contain a `policy-ui-X.X.X.tar.gz` file.
-* You don't have a `policy_ui.egg-info` folder in your `horizon-policies-plugin/policy-ui/` directory.
 
-You can safely delete those files/folders.
-
-Now it is time to install the plugin. Run the following commands and in the following order:
+Make sure your CWD is _/path/to/repository_/horizon-policies-plugin/policy-ui/
 
 ```Bash
-# /opt/stack/horizon/horizon-policies-plugin/policy-ui/
-python3 -m pip install -r requirements.txt
-python3 setup.py sdist
-python3 -m pip install dist/policy-ui-0.0.0.tar.gz
+bash install.bash
 ```
 
-### Enable the plugin
-Add the plugin's enabled files to Horizon
-
-```Bash
-cd /opt/stack/horizon/
-cp horizon-policies-plugin/policy-ui/policy_ui/enabled/_90_project_policy_panelgroup.py openstack_dashboard/enabled/
-cp horizon-policies-plugin/policy-ui/policy_ui/enabled/_91_project_policy_policies_panel.py openstack_dashboard/enabled/
-```
-
-### Copy static files
-Copy the static files to Horizon's `static` directory
-```Bash
-cd /opt/stack/horizon/
-cp -r horizon-policies-plugin/policy-ui/policy_ui/static/dashboard/. static/dashboard/
-```
+Wait for the command to finish, make sure to follow any prompts that may occur.
 
 ### Offline Compression
 If you run into the error You have offline compression enabled but key is missing from offline manifest.
