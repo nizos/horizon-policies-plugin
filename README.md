@@ -81,39 +81,6 @@ python3 -m django --version
 
 ## Install the plugin
 
-### Remove previous plugin installation
-Make sure to remove any previously installed plugins using the similar name and any other previously installed and unwanted plugins.
-
-To remove a specific package
-```Bash
-python3 -m pip uninstall <package-name>
-```
-For example, to remove policy-ui:
-```Bash
-python3 -m pip uninstall policy-ui
-```
-
-**WARNING**: The uninstallation may fail if your CWD is */path/to/repository/horizon-policies-plugin/policy-ui* with the message
-
-```Bash
-Found existing installation: policy-ui 0.0...
-Not sure how to uninstall: policy-ui 0.0... - Check: /path/to/repository/horizon-policies-plugin/policy-ui (extra text that you get with the --verbose trigger)
-Can't uninstall 'policy-ui'. No files were found to uninstall.
-```
-
-The solution is to change directory and try the same command again.
-
-#### Further tips
-To view a list of all packages type:
-```Bash
-python3 -m pip list
-```
-
-To view details about a specific package type:
-```Bash
-python3 -m pip show policy-ui
-```
-
 ### Clone the repo
 Now its time to install the plugin, we start by navigating  to `/opt/stack/horizon/` and cloning the repo.
 
@@ -140,14 +107,17 @@ bash install.bash
 Wait for the command to finish, make sure to follow any prompts that may occur.
 
 ### Offline Compression
-If you run into the error You have offline compression enabled but key is missing from offline manifest.
+If you run into the error _You have offline compression enabled but key is missing from offline manifest._:
+
 ```Bash
 cd /opt/stack/horizon/openstack_dashboard/local/
 ```
+
 Open local_settings.py and change
 ```Bash
 COMPRESS_OFFLINE = True
 ```
+
 to
 ```Bash
 COMPRESS_OFFLINE = False
@@ -157,6 +127,41 @@ COMPRESS_OFFLINE = False
 ```Bash
 sudo service apache2 restart
 ```
+
+## Uninstalling the plugin
+
+To remove a specific package
+```Bash
+python3 -m pip uninstall <package-name>
+```
+For example, to remove policy-ui:
+```Bash
+python3 -m pip uninstall policy-ui
+```
+
+**WARNING**: The uninstallation may fail if your CWD is */path/to/repository/horizon-policies-plugin/policy-ui* with the message
+
+```Bash
+Found existing installation: policy-ui 0.0...
+# Extra text that you get with the --verbose trigger:
+Not sure how to uninstall: policy-ui 0.0... - Check: /path/to/repository/horizon-policies-plugin/policy-ui
+Can't uninstall 'policy-ui'. No files were found to uninstall.
+```
+
+The solution is to change directory and try the same command again.
+
+#### Further tips
+If you want to view a list of all package types:
+```Bash
+python3 -m pip list
+```
+
+To view details about a specific package type:
+```Bash
+python3 -m pip show policy-ui
+```
+
+These commands can help you verify that the plugin has been uninstalled.
 
 # Contributors
 Andreas, Nizar, Rickard, Joel & Wissam.
