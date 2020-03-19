@@ -82,10 +82,11 @@ python3 -m django --version
 ## Install the plugin
 
 ### Clone the repo
-Now its time to install the plugin, we start by navigating  to `/opt/stack/horizon/` and cloning the repo.
+Now its time to install the plugin, we start by navigating to where you would like to store the repository on your machine.
 
 ```Bash
-#Clone the repository anywhere in your file structure.
+# Clone the repository anywhere in your file structure.
+# Make sure your PWD is where you want to store the repository.
 git clone https://github.com/nizos/horizon-policies-plugin
 ```
 
@@ -98,7 +99,7 @@ If you want to be able to view .git/ directories in vscode do the following:
 
 ### Install the plugin
 
-Make sure your CWD is _/path/to/repository_/horizon-policies-plugin/policy-ui/
+Make sure your PWD is /path/to/repository/horizon-policies-plugin/policy-ui/
 
 ```Bash
 bash install.bash
@@ -107,7 +108,7 @@ bash install.bash
 Wait for the command to finish, make sure to follow any prompts that may occur.
 
 ### Offline Compression
-If you run into the error _You have offline compression enabled but key is missing from offline manifest._:
+If you run into the error _"You have offline compression enabled but key is missing from offline manifest."_:
 
 ```Bash
 cd /opt/stack/horizon/openstack_dashboard/local/
@@ -139,7 +140,7 @@ For example, to remove policy-ui:
 python3 -m pip uninstall policy-ui
 ```
 
-**WARNING**: The uninstallation may fail if your CWD is */path/to/repository/horizon-policies-plugin/policy-ui* with the message
+**WARNING**: The uninstallation may fail if your PWD is */path/to/repository/horizon-policies-plugin/policy-ui* with the message
 
 ```Bash
 Found existing installation: policy-ui 0.0...
