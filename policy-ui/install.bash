@@ -25,7 +25,7 @@ function getConfirmation
     read installConfirmation
       case $installConfirmation in
         [Yy]* ) startInstallation; break;;
-        [Nn]* ) cancelInstallation;;
+        [Nn]* ) cancelInstallation; break;;
         * ) echo "Please answer Y/y or N/n.";;
       esac
   done
