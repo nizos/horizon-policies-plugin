@@ -20,15 +20,15 @@ function getConfirmation
   echo -e "${DEFAULT}Add the plugin's enabled files to the Horizon dashboard.${DEFAULT}"
   echo -e "${DEFAULT}Prompt the user to restart the apache2 service for the actions to take effect.${DEFAULT}"
 
-  echo -e "${BLUE}Would you like to proceed? (y/n)${DEFAULT}"
-  read installConfirmation
-
-  if [installConfirmation == "y" || installConfirmation == "Y"]; then
-    startInstallation
-  else
-    echo -e "${YELLOW}Cancelling installation.${DEFAULT}"
-    echo -e "${GREEN}No changes have been made.${DEFAULT}"
-  fi
+  while true; do
+    echo -e "${BLUE}Would you like to proceed? (y/n)${DEFAULT}"
+    read installConfirmation
+      case $installConfirmation in
+        [Yy]* ) startInstallation; break;;
+        [Nn]* ) cancelInstallation;;
+        * ) echo "Please answer Y/y or N/n.";;
+      esac
+  done
 }
 
 function startInstallation
@@ -46,7 +46,7 @@ function startInstallation
   addEnabledFiles
 
   # Restart the Apache2 service
-  restartApache
+  restartApachePrompt
 
   # Show the result of the installation
   showResult
@@ -107,19 +107,32 @@ function addEnabledFiles
   echo -e "${GREEN}Enabled files added to Horizon dashboard successfully.${DEFAULT}"
 }
 
+# Ask user whether to restart the Apache2 service
+function restartApachePrompt
+{
+  while true; do
+    echo -e "${BLUE}Do you want to restart the apache2 service? (Y/n)${DEFAULT}"
+    read restartApacheInput
+    case $restartApacheInput in
+      [Yy]* ) restartApache; break;;
+      [Nn]* ) exit;;
+      * ) echo "Please answer Y/y or N/n.";;
+    esac
+  done
+}
+
+# Cancel plugin installation
+function cancelInstallation
+{
+  echo -e "${YELLOW}Cancelling installation.${DEFAULT}"
+  echo -e "${GREEN}No changes have been made.${DEFAULT}"
+}
+
 # Restart the Apache2 service
 function restartApache
 {
-  # Ask the user whether they would like to restart the apache2 service
-  echo -e "${BLUE}Do you want to restart the apache2 service? (Y/n)${DEFAULT}"
-  read restartApacheInput
-
-  if [apache2RestartInput == "y" || apache2RestartInput == "Y"]; then
-    sudo service apache2 restart
-    echo -e "${GREEN}Restarted Apache2 service${DEFAULT}"
-  else
-    echo -e "${YELLOW}Skipping restart of Apache2 service${DEFAULT}"
-  fi
+  sudo service apache2 restart
+  echo -e "${GREEN}Restarted Apache2 service${DEFAULT}"
 }
 
 # Show the result of the installation
