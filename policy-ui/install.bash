@@ -9,7 +9,7 @@ if ["$MESSAGE" == "$COMPARISON"]; then
     echo -e "${GREEN}Plugin not installed.${NOCOL}"
 else
     echo -e "${RED}Uninstalling the old version of the plugin...${NOCOL}"
-    pip uninstall policy-ui   
+    pip uninstall policy-ui
 fi
 
 echo -e "${GREEN}Installing the plugin...${NOCOL}"
@@ -34,9 +34,13 @@ echo -e "${CYAN}STEP 3 DONE${NOCOL}"
 sudo cp -vrf ./policy_ui/static/dashboard/. /opt/stack/horizon/static/dashboard/
 echo -e "${CYAN}Copied the dashboard!${NOCOL}"
 
-# Copy the static files to the correct folder. 
+# Copy the static files to the correct folder.
 # The -f trigger is there to force an overwrite in case the file already exists.
 # The -v flag is there to give a feeling of progress.
 sudo cp -vf ./policy_ui/enabled/_90_project_policy_panelgroup.py /opt/stack/horizon/openstack_dashboard/enabled/
 sudo cp -vf ./policy_ui/enabled/_91_project_policy_policies_panel.py /opt/stack/horizon/openstack_dashboard/enabled/
 echo -e "${CYAN}Copied the static files!${NOCOL}"
+
+# Restart Apache2 service
+sudo service apache2 restart
+echo -e "${CYAN}Restarted Apache2 service${NOCOL}"
