@@ -80,42 +80,29 @@ function checkForExistingPlugin
 # Install the plugin package
 function devInstallPlugin
 {
+  
+  sudo rm -r .git/
+  sudo rm -r ./policy_ui.egg-info
+  sudo rm -r ./dist/
+  
   # Ensure requirements are met
   python3 -m pip install -r requirements.txt
 
-  # Save the current repositories HEAD for future use
-  old="$(git rev-parse HEAD)"
-
-  # Add and commit all changes currently made
+  # This is an extremely hack-y way to do this.
+  git init
   git add .
   git commit -m "this will be deleted"
-
-  # Save new HEAD for comparison
-  add="$(git rev-parse HEAD)"
 
   # Create the package from the repository
   python3 setup.py sdist
 
   # This command will always install the latest version of the package in the directory
   pip install policy-ui --no-index --find-links ./dist/
+
+  sudo rm -r .git/
+  sudo rm -r ./policy_ui.egg-info
+  sudo rm -r ./dist/
   
-  # Echo comparison hashes from previously saved HEADs
-  echo "This is the old HEAD: ${old}"
-  echo "This is the new HEAD: ${add}"
-  
-  # Make a soft reset on the repository.
-  # Soft resets does not delete changes that you have made.
-  # Hard resets DELETES all changes. USE WITH CARE
-  git reset --soft ${old}
-
-  # Remove staged files from the git log
-  # This so temporary and unintended changes will not sneak through.
-  git reset
-
-  # Echo the current HEAD for comparison with the previous ones
-  cur="$(git rev-parse HEAD)"
-  echo "This is the cur HEAD: ${cur}"
-
 }
 
 # Add the static files to horizon dashboard
