@@ -20,15 +20,17 @@ function getConfirmation
   echo -e "${DEFAULT}Add the plugin's enabled files to the Horizon dashboard.${DEFAULT}"
   echo -e "${DEFAULT}Prompt the user to restart the apache2 service for the actions to take effect.${DEFAULT}"
 
-  while true; do
-    echo -e "${BLUE}Would you like to proceed? (y/n)${DEFAULT}"
-    read devConfirmation
-      case $devConfirmation in
-        [Yy]* ) devInstallation; break;;
-        [Nn]* ) cancelInstallation; break;;
-        * ) echo "Please answer Y/y or N/n.";;
-      esac
-  done
+  #while true; do
+  #  echo -e "${BLUE}Would you like to proceed? (y/n)${DEFAULT}"
+  #  read devConfirmation
+  #    case $devConfirmation in
+  #      [Yy]* ) devInstallation; break;;
+  #      [Nn]* ) cancelInstallation; break;;
+  #      * ) echo "Please answer Y/y or N/n.";;
+  #    esac
+  #done
+  
+  devInstallation
 }
 
 function devInstallation
@@ -68,7 +70,8 @@ function checkForExistingPlugin
     echo -e "${YELLOW}Uninstalling found installations of the plugin.${DEFAULT}"
 
     # Uninstall existing installation
-    pip uninstall policy-ui
+	# --yes to skip asking if you're sure
+    pip uninstall policy-ui --yes
     echo -e "${YELLOW}Uninstallation complete.${DEFAULT}"
     echo -e "${GREEN}Proceeding with new installation.${DEFAULT}"
   fi
@@ -138,15 +141,18 @@ function addEnabledFiles
 # Ask user whether to restart the Apache2 service
 function restartApachePrompt
 {
-  while true; do
-    echo -e "${BLUE}Do you want to restart the apache2 service? (Y/n)${DEFAULT}"
-    read restartApacheInput
-    case $restartApacheInput in
-      [Yy]* ) restartApache; break;;
-      [Nn]* ) exit;;
-      * ) echo "Please answer Y/y or N/n.";;
-    esac
-  done
+ # while true; do
+ #   echo -e "${BLUE}Do you want to restart the apache2 service? (Y/n)${DEFAULT}"
+ #   read restartApacheInput
+ #   case $restartApacheInput in
+ #     [Yy]* ) restartApache; break;;
+ #     [Nn]* ) exit;;
+ #     * ) echo "Please answer Y/y or N/n.";;
+ #   esac
+ # done
+ 
+ restartApache
+ 
 }
 
 # Cancel plugin installation
