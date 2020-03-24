@@ -26,55 +26,17 @@
 
   function API(apiService, toastService, gettext) {
     var service = {
-      getPolicy: getPolicy,
-      getPolicies: getPolicies,
-      createPolicy: createPolicy,
-      updatePolicy: updatePolicy,
-      deletePolicy: deletePolicy
+      getGreeting: getGreeting,
     };
 
     return service;
 
-    ///////////////////////////////
-    // Policies
-
-    function getPolicy(id) {
-      return apiService.get('/api/policy/policies/' + id)
+    // getString for backend connection test
+    function getGreeting() {
+      return apiService.get('/api/greeting/')
         .error(function() {
-          var msg = gettext('Unable to retrieve the policy with id: %(id)s.');
-          toastService.add('error', interpolate(msg, {id: id}, true));
+          toastService.add('error', gettext('Unable to retrieve the greeting.'));
         });
-    }
-
-    function getPolicies() {
-      return apiService.get('/api/policy/policies/')
-        .error(function() {
-          toastService.add('error', gettext('Unable to retrieve the policies.'));
-        });
-    }
-
-    function createPolicy(params) {
-      return apiService.put('/api/policy/policies/', params)
-        .error(function() {
-          var msg = gettext('Unable to create the policy with name: %(name)s');
-          toastService.add('error', interpolate(msg, { name: params.name }, true));
-        });
-    }
-
-    function updatePolicy(id, params) {
-      return apiService.post('/api/policy/policies/' + id, params)
-        .error(function() {
-          var msg = gettext('Unable to update the policy with id: %(id)s');
-          toastService.add('error', interpolate(msg, { id: params.id }, true));
-        });
-    }
-
-    function deletePolicy(id, suppressError) {
-      var promise = apiService.delete('/api/policy/policies/', [id]);
-      return suppressError ? promise : promise.error(function() {
-        var msg = gettext('Unable to delete the policy with id: %(id)s');
-        toastService.add('error', interpolate(msg, { id: id }, true));
-      });
     }
   }
 }());

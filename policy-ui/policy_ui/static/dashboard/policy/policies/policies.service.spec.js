@@ -15,36 +15,8 @@
   "use strict";
 
   describe('Policies service', function() {
-    var service;
-    beforeEach(module('horizon.app.core.openstack-service-api'));
-    beforeEach(module('horizon.dashboard.policy.policies'));
-    beforeEach(inject(function($injector) {
-      service = $injector.get('horizon.dashboard.policy.policies.service');
-    }));
-
-    describe('getPromise', function() {
-      it("provides a promise", inject(function($q, $injector, $timeout) {
-        var api = $injector.get('horizon.app.core.openstack-service-api.policy');
-        var deferred = $q.defer();
-        spyOn(api, 'getPolicies').and.returnValue(deferred.promise);
-        var result = service.getPromise({});
-        deferred.resolve({
-          data:{
-            items: [{id: '123abc', name: 'resource1'}]
-          }
-        });
-        $timeout.flush();
-        expect(api.getPolicies).toHaveBeenCalled();
-        expect(result.$$state.value.data.items[0].name).toBe('resource1');
-      }));
-    });
-
-    describe('urlFunction', function() {
-      it("get url", inject(function($injector) {
-        var detailRoute = $injector.get('horizon.app.core.detailRoute');
-        var result = service.urlFunction({id:"123abc"});
-        expect(result).toBe(detailRoute + "OS::Policy::Policy/123abc");
-      }));
+    it('should exist', function() {
+      expect(angular.module('horizon.dashboard.policy.policies')).toBeDefined();
     });
 
   });

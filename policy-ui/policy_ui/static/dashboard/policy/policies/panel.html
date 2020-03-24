@@ -1,6 +1,14 @@
-<hz-resource-panel resource-type-name="OS::Policy::Policy">
-  <hz-resource-table resource-type-name="OS::Policy::Policy"
-                     track-by="trackBy">
-  </hz-resource-table>
-</hz-resource-panel>
+<div ng-controller="horizon.dashboard.policy.OverviewController as ctrl">
+  <div class="row">
+    <div class="col-md-12 detail">
+      <h3 translate>Greeting</h3>
+      <hr>
+      <hz-resource-property-list
+        resource-type-name="OS::Policy::Policy"
+        cls="dl-horizontal"
+        item="ctrl.greeting">
+      </hz-resource-property-list>
+    </div>
+  </div>
+</div>
 
