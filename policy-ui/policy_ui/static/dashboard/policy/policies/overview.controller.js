@@ -16,7 +16,7 @@
 
   angular
     .module('horizon.dashboard.policy')
-    .controller('horizon.dashboard.policy.OverviewController', controller);
+    .controller('horizon.dashboard.policy.policies.OverviewController', controller);
 
   controller.$inject = [
     '$scope'
