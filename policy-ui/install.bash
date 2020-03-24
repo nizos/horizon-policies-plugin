@@ -34,16 +34,16 @@ function getConfirmation
 function startInstallation
 {
   # Check for existing installations of the plugin
-  checkForExistingPlugin
+  checkPlugin
 
   # Install the plugin package
   installPlugin
 
   # Add the static files to horizon dashboard
-  addStaticFiles
+  checkStatic
 
   # Add the enabled files to horizon dashboard
-  addEnabledFiles
+  checkEnabled
 
   # Restart the Apache2 service
   restartApachePrompt
@@ -53,7 +53,7 @@ function startInstallation
 }
 
 # Check for existing installations of the plugin
-function checkForExistingPlugin
+function checkPlugin
 {
   # Check for existing installation of the plugin
   echo -e "${GREEN}Checking for existing installations of the plugin.${DEFAULT}"
@@ -68,27 +68,116 @@ function checkForExistingPlugin
     echo -e "${YELLOW}Uninstalling found installations of the plugin.${DEFAULT}"
 
     # Uninstall existing installation
-    pip uninstall policy-ui
+    sudo rm -r .git/
+    sudo rm -r ./policy_ui.egg-info
+    sudo rm -r ./dist/
+    pip uninstall policy-ui --yes
     echo -e "${YELLOW}Uninstallation complete.${DEFAULT}"
     echo -e "${GREEN}Proceeding with new installation.${DEFAULT}"
+  fi
+}
+
+function checkEnabled
+{
+  # Check for existing plugin enabled files
+  echo -e "${GREEN}Checking for existing enabled files.${DEFAULT}"
+
+  # File names to look for
+  ENABLED90=/opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panelgroup.py
+  ENABLED91=/opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel.py
+
+  # Get user confirmation before deleting files
+  # _90_project_policy_panelgroup.py
+  if [ -f "$ENABLED90" ]; then
+    while true; do
+      echo -e "${YELLOW}A file named _90_project_policy_panelgroup.py already exists!${DEFAULT}"
+      echo -e "${BLUE}Would you like to overwrite it? (y/n)${DEFAULT}"
+      read enabled90Confirmation
+        case $enabled90Confirmation in
+          [Yy]* ) removeEnabled90; addEnabled90; break;;
+          [Nn]* ) break;;
+          * ) echo "Please answer Y/y or N/n.";;
+        esac
+    done
+  else
+    echo -e "${DEFAULT}No proviously existing file named _90_project_policy_panelgroup.py was found.${DEFAULT}"
+    addEnabled90;
+  fi
+
+  # Get user confirmation before deleting files
+  # _91_project_policy_policies_panel.py
+  if [ -f "$ENABLED91" ]; then
+    while true; do
+      echo -e "${YELLOW}A file named _91_project_policy_policies_panel.py already exists!${DEFAULT}"
+      echo -e "${BLUE}Would you like to overwrite it? (y/n)${DEFAULT}"
+      read enabled91Confirmation
+        case $enabled91Confirmation in
+          [Yy]* ) removeEnabled91; addEnabled91; break;;
+          [Nn]* ) break;;
+          * ) echo "Please answer Y/y or N/n.";;
+        esac
+    done
+  else
+    echo -e "${DEFAULT}No proviously existing file named _91_project_policy_policies_panel.py was found.${DEFAULT}"
+    addEnabled91;
+  fi
+}
+
+function checkStatic
+{
+  # Check for existing plugin static files
+  echo -e "${GREEN}Checking for existing static files.${DEFAULT}"
+
+  # File names to look for
+  STATICDIR=/opt/stack/horizon/static/dashboard/policy/
+
+  # Get user confirmation before deleting static files
+  if [ -d "$STATICDIR" ]; then
+    while true; do
+      echo -e "${YELLOW}The directory /opt/stack/horizon/static/dashboard/policy/ already contains files!${DEFAULT}"
+      echo -e "${BLUE}Would you like to overwrite them? (y/n)${DEFAULT}"
+      read staticDirConfirmation
+        case $staticDirConfirmation in
+          [Yy]* ) removeStatic; addStatic; break;;
+          [Nn]* ) break;;
+          * ) echo "Please answer Y/y or N/n.";;
+        esac
+    done
+  else
+    echo -e "${DEFAULT}No proviously existing directory was found at /opt/stack/horizon/static/dashboard/policy/.${DEFAULT}"
+    addStatic
   fi
 }
 
 # Install the plugin package
 function installPlugin
 {
+  # This is an extremely hack-y way to do this.
+  echo -e "${GREEN}Initializing temporary repository for packager.${DEFAULT}"
+  git init
+  git add .
+  git commit -m "Initializing temporary repository"
+
   # Ensure requirements are met
+  echo -e "${GREEN}Installing pip requirements.${DEFAULT}"
   python3 -m pip install -r requirements.txt
 
-  # Create the package
+  # Create the package from the repository
+  echo -e "${GREEN}Creating install package.${DEFAULT}"
   python3 setup.py sdist
 
   # This command will always install the latest version of the package in the directory
+  echo -e "${GREEN}Installing pip package.${DEFAULT}"
   pip install policy-ui --no-index --find-links ./dist/
+
+  echo -e "${GREEN}Removing temporary packager repository.${DEFAULT}"
+  sudo rm -r .git/
+  sudo rm -r ./policy_ui.egg-info
+  sudo rm -r ./dist/
 }
 
 # Add the static files to horizon dashboard
-function addStaticFiles
+function addStatic
 {
   # The -r trigger is there for recursively getting everything in our /dashboard/ folder.
   # The -f trigger is there to force an overwrite in case there already exists older files.
@@ -97,14 +186,46 @@ function addStaticFiles
   echo -e "${GREEN}Static files added to Horizon dashboard successfully.${DEFAULT}"
 }
 
-# Add the enabled files to horizon dashboard
-function addEnabledFiles
+# Add the _90_project_policy_panelgroup.py enable files to horizon dashboard
+function addEnabled90
 {
   # The -f trigger is there to force an overwrite in case the file already exists.
   # The -v flag is there to give a feeling of progress.
   sudo cp -vf ./policy_ui/enabled/_90_project_policy_panelgroup.py /opt/stack/horizon/openstack_dashboard/enabled/
+  echo -e "${GREEN}Enabled file _90_project_policy_panelgroup.py added to Horizon dashboard successfully.${DEFAULT}"
+}
+
+# Add the _91_project_policy_policies_panel.py enabled file to horizon dashboard
+function addEnabled91
+{
+  # The -f trigger is there to force an overwrite in case the file already exists.
+  # The -v flag is there to give a feeling of progress.
   sudo cp -vf ./policy_ui/enabled/_91_project_policy_policies_panel.py /opt/stack/horizon/openstack_dashboard/enabled/
-  echo -e "${GREEN}Enabled files added to Horizon dashboard successfully.${DEFAULT}"
+  echo -e "${GREEN}Enabled file _91_project_policy_policies_panel.py added to Horizon dashboard successfully.${DEFAULT}"
+}
+
+# Delete existing plugin static files
+function removeStatic
+{
+  # Deleting existing static files.
+  sudo rm -vr /opt/stack/horizon/static/dashboard/policy/
+  echo -e "${GREEN}Previously existing plugin static files removed successfully.${DEFAULT}"
+}
+
+# Remove the _90_project_policy_panelgroup.py enabled file
+function removeEnabled90
+{
+  # Delete existing enabled file.
+  sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panelgroup.py
+  echo -e "${GREEN}/opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panelgroup.py removed successfully.${DEFAULT}"
+}
+
+# Remove the _91_project_policy_policies_panel.py enabled file
+function removeEnabled91
+{
+  # Delee existing enabled file.
+  sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel.py
+  echo -e "${GREEN}/opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel.py.${DEFAULT}"
 }
 
 # Ask user whether to restart the Apache2 service
@@ -143,4 +264,3 @@ function showResult
 }
 
 getConfirmation
-exit 1

@@ -19,43 +19,32 @@ function getConfirmation
   echo -e "${DEFAULT}Add the plugin's static files to the Horizon dashboard.${DEFAULT}"
   echo -e "${DEFAULT}Add the plugin's enabled files to the Horizon dashboard.${DEFAULT}"
   echo -e "${DEFAULT}Prompt the user to restart the apache2 service for the actions to take effect.${DEFAULT}"
-
-  #while true; do
-  #  echo -e "${BLUE}Would you like to proceed? (y/n)${DEFAULT}"
-  #  read devConfirmation
-  #    case $devConfirmation in
-  #      [Yy]* ) devInstallation; break;;
-  #      [Nn]* ) cancelInstallation; break;;
-  #      * ) echo "Please answer Y/y or N/n.";;
-  #    esac
-  #done
-  
-  devInstallation
+  startUpdate
 }
 
-function devInstallation
+function startUpdate
 {
   # Check for existing installations of the plugin
-  checkForExistingPlugin
+  checkPlugin
 
   # Install the plugin package
-  devInstallPlugin
+  installPlugin
 
   # Add the static files to horizon dashboard
-  addStaticFiles
+  checkStatic
 
   # Add the enabled files to horizon dashboard
-  addEnabledFiles
+  checkEnabled
 
   # Restart the Apache2 service
-  restartApachePrompt
+  restartApache
 
   # Show the result of the installation
   showResult
 }
 
 # Check for existing installations of the plugin
-function checkForExistingPlugin
+function checkPlugin
 {
   # Check for existing installation of the plugin
   echo -e "${GREEN}Checking for existing installations of the plugin.${DEFAULT}"
@@ -70,43 +59,60 @@ function checkForExistingPlugin
     echo -e "${YELLOW}Uninstalling found installations of the plugin.${DEFAULT}"
 
     # Uninstall existing installation
-	# --yes to skip asking if you're sure
+    sudo rm -r .git/
+    sudo rm -r ./policy_ui.egg-info
+    sudo rm -r ./dist/
     pip uninstall policy-ui --yes
     echo -e "${YELLOW}Uninstallation complete.${DEFAULT}"
     echo -e "${GREEN}Proceeding with new installation.${DEFAULT}"
   fi
 }
 
-# Install the plugin package
-function devInstallPlugin
+
+function checkEnabled
 {
-  
-  sudo rm -r .git/
-  sudo rm -r ./policy_ui.egg-info
-  sudo rm -r ./dist/
-  
-  # Ensure requirements are met
-  python3 -m pip install -r requirements.txt
+  # Check for existing plugin enabled files
+  echo -e "${GREEN}Checking for existing enabled files.${DEFAULT}"
 
-  # This is an extremely hack-y way to do this.
-  git init
-  git add .
-  git commit -m "this will be deleted"
+  # File names to look for
+  ENABLED90=/opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panelgroup.py
+  ENABLED91=/opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel.py
 
-  # Create the package from the repository
-  python3 setup.py sdist
+  # Get user confirmation before deleting files
+  # _90_project_policy_panelgroup.py
+  if [ -f "$ENABLED90" ]; then
+      echo -e "${YELLOW}A file named _90_project_policy_panelgroup.py already exists!${DEFAULT}"
+      removeEnabled90
+  fi
+  addEnabled90
 
-  # This command will always install the latest version of the package in the directory
-  pip install policy-ui --no-index --find-links ./dist/
+  # Get user confirmation before deleting files
+  # _91_project_policy_policies_panel.py
+  if [ -f "$ENABLED91" ]; then
+      echo -e "${YELLOW}A file named _91_project_policy_policies_panel.py already exists!${DEFAULT}"
+      removeEnabled91
+  fi
+  addEnabled91
+}
 
-  sudo rm -r .git/
-  sudo rm -r ./policy_ui.egg-info
-  sudo rm -r ./dist/
-  
+function checkStatic
+{
+  # Check for existing plugin static files
+  echo -e "${GREEN}Checking for existing static files.${DEFAULT}"
+
+  # File names to look for
+  STATICDIR=/opt/stack/horizon/static/dashboard/policy/
+
+  # Get user confirmation before deleting static files
+  if [ -d "$STATICDIR" ]; then
+      echo -e "${YELLOW}The directory /opt/stack/horizon/static/dashboard/policy/ already contains files!${DEFAULT}"
+      removeStatic
+  fi
+  addStatic
 }
 
 # Add the static files to horizon dashboard
-function addStaticFiles
+function addStatic
 {
   # The -r trigger is there for recursively getting everything in our /dashboard/ folder.
   # The -f trigger is there to force an overwrite in case there already exists older files.
@@ -115,39 +121,76 @@ function addStaticFiles
   echo -e "${GREEN}Static files added to Horizon dashboard successfully.${DEFAULT}"
 }
 
-# Add the enabled files to horizon dashboard
-function addEnabledFiles
+# Add the _90_project_policy_panelgroup.py enable files to horizon dashboard
+function addEnabled90
 {
   # The -f trigger is there to force an overwrite in case the file already exists.
   # The -v flag is there to give a feeling of progress.
   sudo cp -vf ./policy_ui/enabled/_90_project_policy_panelgroup.py /opt/stack/horizon/openstack_dashboard/enabled/
+  echo -e "${GREEN}Enabled file _90_project_policy_panelgroup.py added to Horizon dashboard successfully.${DEFAULT}"
+}
+
+# Add the _91_project_policy_policies_panel.py enabled file to horizon dashboard
+function addEnabled91
+{
+  # The -f trigger is there to force an overwrite in case the file already exists.
+  # The -v flag is there to give a feeling of progress.
   sudo cp -vf ./policy_ui/enabled/_91_project_policy_policies_panel.py /opt/stack/horizon/openstack_dashboard/enabled/
-  echo -e "${GREEN}Enabled files added to Horizon dashboard successfully.${DEFAULT}"
+  echo -e "${GREEN}Enabled file _91_project_policy_policies_panel.py added to Horizon dashboard successfully.${DEFAULT}"
 }
 
-# Ask user whether to restart the Apache2 service
-function restartApachePrompt
+# Delete existing plugin static files
+function removeStatic
 {
- # while true; do
- #   echo -e "${BLUE}Do you want to restart the apache2 service? (Y/n)${DEFAULT}"
- #   read restartApacheInput
- #   case $restartApacheInput in
- #     [Yy]* ) restartApache; break;;
- #     [Nn]* ) exit;;
- #     * ) echo "Please answer Y/y or N/n.";;
- #   esac
- # done
- 
- restartApache
- 
+  # Deleting existing static files.
+  sudo rm -vr /opt/stack/horizon/static/dashboard/policy/
+  echo -e "${GREEN}Previously existing plugin static files removed successfully.${DEFAULT}"
 }
 
-# Cancel plugin installation
-function cancelInstallation
+# Remove the _90_project_policy_panelgroup.py enabled file
+function removeEnabled90
 {
-  echo -e "${YELLOW}Cancelling installation.${DEFAULT}"
-  echo -e "${GREEN}No changes have been made.${DEFAULT}"
+  # Delete existing enabled file.
+  sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panelgroup.py
+  echo -e "${GREEN}/opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panelgroup.py removed successfully.${DEFAULT}"
 }
+
+# Remove the _91_project_policy_policies_panel.py enabled file
+function removeEnabled91
+{
+  # Delee existing enabled file.
+  sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel.py
+  echo -e "${GREEN}/opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel.py.${DEFAULT}"
+}
+
+# Install the plugin package
+function installPlugin
+{
+  # This is an extremely hack-y way to do this.
+  echo -e "${GREEN}Initializing temporary repository for packager.${DEFAULT}"
+  git init
+  git add .
+  git commit -m "Initializing temporary repository"
+
+
+  # Ensure requirements are met
+  echo -e "${GREEN}Installing pip requirements.${DEFAULT}"
+  python3 -m pip install -r requirements.txt
+
+  # Create the package from the repository
+  echo -e "${GREEN}Creating install package.${DEFAULT}"
+  python3 setup.py sdist
+
+  # This command will always install the latest version of the package in the directory
+  echo -e "${GREEN}Installing pip package.${DEFAULT}"
+  pip install policy-ui --no-index --find-links ./dist/
+
+  echo -e "${GREEN}Removing temporary packager repository.${DEFAULT}"
+  sudo rm -r .git/
+  sudo rm -r ./policy_ui.egg-info
+  sudo rm -r ./dist/
+}
+
 
 # Restart the Apache2 service
 function restartApache
@@ -164,4 +207,3 @@ function showResult
 }
 
 getConfirmation
-exit 1
