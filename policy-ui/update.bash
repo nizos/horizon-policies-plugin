@@ -118,6 +118,8 @@ function addStatic
   # The -f trigger is there to force an overwrite in case there already exists older files.
   # The -v flag is there to give a feeling of progress.
   sudo cp -vrf ./policy_ui/static/dashboard/. /opt/stack/horizon/static/dashboard/
+  # FIXME: Generally a bad practice, remember to change this later.
+  sudo chmod -vR 777 /opt/stack/horizon/static/dashboard/policy/
   echo -e "${GREEN}Static files added to Horizon dashboard successfully.${DEFAULT}"
 }
 
@@ -127,6 +129,8 @@ function addEnabled90
   # The -f trigger is there to force an overwrite in case the file already exists.
   # The -v flag is there to give a feeling of progress.
   sudo cp -vf ./policy_ui/enabled/_90_project_policy_panelgroup.py /opt/stack/horizon/openstack_dashboard/enabled/
+  # FIXME: Generally a bad practice, remember to change this later.
+  sudo chmod -v 777 /opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panelgroup.py
   echo -e "${GREEN}Enabled file _90_project_policy_panelgroup.py added to Horizon dashboard successfully.${DEFAULT}"
 }
 
@@ -136,6 +140,8 @@ function addEnabled91
   # The -f trigger is there to force an overwrite in case the file already exists.
   # The -v flag is there to give a feeling of progress.
   sudo cp -vf ./policy_ui/enabled/_91_project_policy_policies_panel.py /opt/stack/horizon/openstack_dashboard/enabled/
+  # FIXME: Generally a bad practice, remember to change this later.
+  sudo chmod -v 777 /opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel.py
   echo -e "${GREEN}Enabled file _91_project_policy_policies_panel.py added to Horizon dashboard successfully.${DEFAULT}"
 }
 
@@ -195,8 +201,9 @@ function installPlugin
 # Restart the Apache2 service
 function restartApache
 {
+  sudo service memcached restart
   sudo service apache2 restart
-  echo -e "${GREEN}Restarted Apache2 service${DEFAULT}"
+  echo -e "${GREEN}Restarted Apache2 and Memcached services${DEFAULT}"
 }
 
 # Show the result of the installation
