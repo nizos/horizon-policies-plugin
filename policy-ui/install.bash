@@ -71,7 +71,7 @@ function checkPlugin
     sudo rm -r .git/
     sudo rm -r ./policy_ui.egg-info
     sudo rm -r ./dist/
-    pip uninstall policy-ui --yes
+    python3 -m pip uninstall policy-ui --yes
     echo -e "${YELLOW}Uninstallation complete.${DEFAULT}"
     echo -e "${GREEN}Proceeding with new installation.${DEFAULT}"
   fi
@@ -156,7 +156,7 @@ function installPlugin
   echo -e "${GREEN}Initializing temporary repository for packager.${DEFAULT}"
   git init
   git add .
-  git commit -m "Initializing temporary repository"
+  git commit -am "Initializing temporary repository"
 
   # Ensure requirements are met
   echo -e "${GREEN}Installing pip requirements.${DEFAULT}"
@@ -168,8 +168,8 @@ function installPlugin
 
   # This command will always install the latest version of the package in the directory
   echo -e "${GREEN}Installing pip package.${DEFAULT}"
-  pip install policy-ui --no-index --find-links ./dist/
-
+  python3 -m pip install dist/policy-ui-0.0.0.tar.gz
+  
   echo -e "${GREEN}Removing temporary packager repository.${DEFAULT}"
   sudo rm -r .git/
   sudo rm -r ./policy_ui.egg-info
