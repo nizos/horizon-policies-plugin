@@ -21,8 +21,8 @@ PANEL_DASHBOARD = 'project'
 
 # Python panel class of the PANEL to be added.
 ADD_PANEL = (
-    'sample_dashboard.dashboards.project.sample.panel'
-    '.Sample')
+    'sample_dashboard.dashboards.project.policy.panel'
+    '.Policies')
 
 
 

@@ -10,7 +10,7 @@ PANEL_GROUP_DASHBOARD = 'project'
 ADD_INSTALLED_APPS = ['sample_dashboard']
 
 ADD_ANGULAR_MODULES = [
-    'horizon.dashboard.project.sample'
+    'horizon.dashboard.project.policy'
 ]
 
 ADD_JS_FILES = [

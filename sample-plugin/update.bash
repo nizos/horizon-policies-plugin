@@ -126,7 +126,7 @@ function addApiStaticFile
 function addDashboardStaticFiles
 {
   sudo cp -vrf sample_dashboard/static/dashboard/project/. /opt/stack/horizon/static/dashboard/project/
-  sudo chmod -vR 777 /opt/stack/horizon/static/dashboard/project/sample/
+  sudo chmod -vR 777 /opt/stack/horizon/static/dashboard/project/policy/
   echo -e "${GREEN}Dashboard static files added to Horizon dashboard successfully.${DEFAULT}"
 }
 
@@ -224,13 +224,13 @@ function removeApiStaticFile
 function removeDashboardStaticFiles
 {
   # Deleting existing api static file.
-  DASHBOARD_STATIC=/opt/stack/horizon/static/dashboard/project/sample/
+  DASHBOARD_STATIC=/opt/stack/horizon/static/dashboard/project/policy/
   if [ -f "$DASHBOARD_STATIC" ]; then
       echo -e "${YELLOW}Found existing plugin dashboard static files!${DEFAULT}"
-      sudo rm -vr /opt/stack/horizon/static/dashboard/project/sample/
+      sudo rm -vr /opt/stack/horizon/static/dashboard/project/policy/
       echo -e "${DEFAULT}Plugin dashboard static files removed successfully.${DEFAULT}"
   else
-      echo -e "${DEFAULT}Did not find any existing plugin API static files.${DEFAULT}"
+      echo -e "${DEFAULT}Did not find any existing plugin dashboard static files.${DEFAULT}"
   fi
 }
 

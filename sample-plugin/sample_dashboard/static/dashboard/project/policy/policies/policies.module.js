@@ -24,6 +24,6 @@
    */
 
   angular
-    .module('horizon.dashboard.project.sample.networks', []);
+    .module('horizon.dashboard.project.policy.policies', []);
 
 })();

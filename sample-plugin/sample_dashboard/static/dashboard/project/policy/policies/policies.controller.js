@@ -15,7 +15,7 @@
   'use strict';
 
   angular
-    .module('horizon.dashboard.project.sample.networks')
+    .module('horizon.dashboard.project.policy.policies')
     .controller('SampleNetworkTableController', SampleNetworkTableController);
 
   SampleNetworkTableController.$inject = [

@@ -23,7 +23,7 @@ class Policy(horizon.PanelGroup):
     name = _("Policy")
     panels = ('sample',)
 
-class Sample(horizon.Panel):
+class Policies(horizon.Panel):
     name = _("Policies")
-    slug = 'sample'
+    slug = 'policies'
     permissions = ('openstack.services.network',)

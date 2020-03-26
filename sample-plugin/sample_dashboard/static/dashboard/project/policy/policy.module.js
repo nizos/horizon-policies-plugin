@@ -16,15 +16,15 @@
 
   /**
    * @ngdoc overview
-   * @name horizon.dashboard.project.sample
+   * @name horizon.dashboard.project.policy
    * @description
    * A sample top level module.
    */
 
   angular
-    .module('horizon.dashboard.project.sample', [
+    .module('horizon.dashboard.project.policy', [
       'ngRoute',
-      'horizon.dashboard.project.sample.networks'
+      'horizon.dashboard.project.policy.policies'
     ])
     .config(config);
     // this is the right place to add .constant() declarations for
@@ -37,13 +37,13 @@
   ];
 
   function config($provide, $windowProvider, $routeProvider) {
-    var basePath = $windowProvider.$get().STATIC_URL + 'dashboard/project/sample/';
-    $provide.constant('horizon.dashboard.project.sample.basePath', basePath);
+    var basePath = $windowProvider.$get().STATIC_URL + 'dashboard/project/policy/';
+    $provide.constant('horizon.dashboard.project.policy.basePath', basePath);
 
-    var networks = '/project/sample';
+    var policies = '/project/policies';
 
-    $routeProvider.when(networks, {
-        templateUrl: basePath + 'network/table.html'
+    $routeProvider.when(policies, {
+        templateUrl: basePath + 'policies/table.html'
       });
   }
 
