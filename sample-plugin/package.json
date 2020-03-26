@@ -1,7 +1,7 @@
 {
   "version": "0.0.0",
   "private": true,
-  "name": "sample-plugin",
+  "name": "horizon-policies-plugin",
   "description": "Role based access policies management plugin for OpenStack's dashboard Horizon.",
   "repository": "none",
   "license": "Apache 2.0",
