@@ -14,14 +14,14 @@
 import logging
 from django.utils.translation import ugettext_lazy as _
 import horizon
-from openstack_dashboard.api import neutron
+#from openstack_dashboard.api import neutron
 
 LOG = logging.getLogger(__name__)
 
 class Policy(horizon.PanelGroup):
     slug = "policy"
     name = _("Policy")
-    panels = ('sample',)
+    panels = ('policies',)
 
 class Policies(horizon.Panel):
     name = _("Policies")

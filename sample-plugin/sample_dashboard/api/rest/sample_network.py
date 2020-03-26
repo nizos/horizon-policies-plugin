@@ -17,7 +17,7 @@ from openstack_dashboard.api.rest import utils as rest_utils
 
 @urls.register
 class SampleNetwork(generic.View):
-    url_regex = r'sample-network/networks/$'
+    url_regex = r'policy-client/networks/$'
 
     @rest_utils.ajax()
     def get(self, request):

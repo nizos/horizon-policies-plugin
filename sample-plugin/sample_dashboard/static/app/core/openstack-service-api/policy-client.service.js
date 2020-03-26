@@ -16,7 +16,7 @@
 
   angular
     .module('horizon.app.core.openstack-service-api')
-    .factory('horizon.app.core.openstack-service-api.sample-network', networkAPI);
+    .factory('horizon.app.core.openstack-service-api.policy-client', networkAPI);
 
   networkAPI.$inject = [
     'horizon.framework.util.http.service',
@@ -25,7 +25,7 @@
 
   /**
    * @ngdoc service
-   * @name horizon.app.core.openstack-service-api.sample-network
+   * @name horizon.app.core.openstack-service-api.policy-client
    * @description Provides direct pass through to neutron API NO abstraction.
    * @param apiService The horizon core API service.
    * @param toastService The horizon toast service.
@@ -46,7 +46,7 @@
     // Networks
 
     /**
-     * @name horizon.app.core.openstack-service-api.sample-network.getNetworks
+     * @name horizon.app.core.openstack-service-api.policy-client.getNetworks
      * @description
      * Get a list of networks
      * The listing result is an object with property "items". Each item is
@@ -54,7 +54,7 @@
      */
 
     function getNetworks() {
-      return apiService.get('/api/sample-network/networks/')
+      return apiService.get('/api/policy-client/networks/')
         .error(function () {
           toastService.add('error', gettext('Unable to retrieve Networks.'));
         });
@@ -62,7 +62,7 @@
 
     function stopNetwork(network) {
       network.admin_state_up = false;
-      return apiService.put('/api/sample-network/networks/', network)
+      return apiService.put('/api/policy-client/networks/', network)
         .error(function () {
           toastService.add('error', gettext('Unable to stop Network.'));
         });
@@ -70,7 +70,7 @@
 
     function startNetwork(network) {
       network.admin_state_up = true;
-      return apiService.put('/api/sample-network/networks/', network)
+      return apiService.put('/api/policy-client/networks/', network)
         .error(function () {
           toastService.add('error', gettext('Unable to start network.'));
         });

@@ -19,7 +19,7 @@
     .controller('SampleNetworkTableController', SampleNetworkTableController);
 
   SampleNetworkTableController.$inject = [
-    'horizon.app.core.openstack-service-api.sample-network'
+    'horizon.app.core.openstack-service-api.policy-client'
   ];
 
   /**
