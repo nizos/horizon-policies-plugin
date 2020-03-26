@@ -16,9 +16,9 @@
 
   angular
     .module('horizon.app.core.openstack-service-api')
-    .factory('horizon.app.core.openstack-service-api.policy-client', networkAPI);
+    .factory('horizon.app.core.openstack-service-api.policy-client', policiesAPI);
 
-  networkAPI.$inject = [
+  policiesAPI.$inject = [
     'horizon.framework.util.http.service',
     'horizon.framework.widgets.toast.service'
   ];
@@ -32,7 +32,7 @@
    * @returns The sample network service API.
    */
 
-  function networkAPI(apiService, toastService) {
+  function policiesAPI(apiService, toastService) {
     var service = {
       getNetworks: getNetworks,
       stopNetwork: stopNetwork,
