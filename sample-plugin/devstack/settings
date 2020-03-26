@@ -1,0 +1,3 @@
+SAMPLE_DASHBOARD_DIR=$DEST/sample-dashboard
+
+SAMPLE_DASHBOARD_ENABLE_FILE=$SAMPLE_DASHBOARD_DIR/sample_dashboard/enabled/_1485_project_network_sample_enabled.py

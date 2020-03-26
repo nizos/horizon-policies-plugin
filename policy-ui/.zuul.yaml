@@ -1,4 +1,0 @@
-- project:
-    templates:
-      - horizon-nodejs10-jobs
-      - horizon-non-primary-django-jobs

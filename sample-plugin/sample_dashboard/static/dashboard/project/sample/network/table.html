@@ -1,0 +1,58 @@
+<hz-page-header header="{$ 'Sample' | translate $}"></hz-page-header>
+
+<table ng-controller="SampleNetworkTableController as table"
+       hz-table ng-cloak
+       st-table="table.items"
+       st-safe-src="table.src"
+       default-sort="name"
+       default-sort-reverse="false"
+       class="table table-striped table-rsp table-detail">
+
+  <thead>
+    <tr>
+      <th class="multi_select_column">
+        <input type="checkbox" hz-select-all="table.items">
+      </th>
+      <th class="expander"></th>
+      <th class="rsp-p1" st-sort="name" st-sort-default="name" translate>Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr ng-repeat-start="item in table.items track by item.id"
+        ng-class="{'st-selected': checked[item.id]}">
+
+      <td class="multi_select_column">
+        <input type="checkbox"
+               ng-model="tCtrl.selections[item.id].checked"
+               hz-select="item">
+      </td>
+      <td class="expander">
+        <span class="fa fa-chevron-right"
+           hz-expand-detail
+           duration="200">
+        </span>
+      </td>
+      <td class="rsp-p1"><a ng-href="project/sample/{$ ::item.id $}">{$ ::(item.name || item.id) $}</a></td>
+      </td>
+    </tr>
+
+    <tr ng-repeat-end class="detail-row">
+      <td class="detail" colspan="9">
+       <div translate class="row">
+         <div class="col-sm-8">
+          This is a details area. There's room to put all sorts of stuff in here,
+          including long text fragments like this one.
+         </div>
+       </div>
+        <div class="row">
+          <dl class="col-sm-2">
+            <dt translate>Name</dt>
+            <dd>{$ ::item.name $}</dd>
+          </dl>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot hz-table-footer items="table.items"></tfoot>
+</table>
