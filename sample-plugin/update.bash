@@ -48,7 +48,7 @@ function uninstall
   removeDistDir
   removeGitDir
   removeEggInfoDir
-  removeEnabledFile
+  removeEnabledFiles
   removeApiStaticFile
   removeDashboardStaticFiles
 }
@@ -57,7 +57,7 @@ function uninstall
 function install
 {
   addPipPackage
-  addEnabledFile
+  addEnabledFiles
   addApiStaticFile
   addDashboardStaticFiles
 }
@@ -105,10 +105,13 @@ function addPipPackage
 }
 
 ## Add the enabled file to horizon dashboard
-function addEnabledFile
+function addEnabledFiles
 {
-  sudo cp -vf sample_dashboard/enabled/_1485_project_network_sample_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
-  echo -e "${GREEN}Enabled file _1485_project_network_sample_enabled.py added to Horizon dashboard successfully.${DEFAULT}"
+  sudo cp -vf sample_dashboard/enabled/_90_project_policy_panel_group_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
+  echo -e "${GREEN}Enabled file _90_project_policy_panel_group_enabled.py added to Horizon dashboard successfully.${DEFAULT}"
+
+  sudo cp -vf sample_dashboard/enabled/_91_project_policy_policies_panel_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
+  echo -e "${GREEN}Enabled file _91_project_policy_policies_panel_enabled.py added to Horizon dashboard successfully.${DEFAULT}"
 }
 
 ## Add the API static files to horizon dashboard
@@ -232,16 +235,27 @@ function removeDashboardStaticFiles
 }
 
 ## Remove the enabled file
-function removeEnabledFile
+function removeEnabledFiles
 {
-    # Deleting existing api static file.
-  ENABLED_FILE=/opt/stack/horizon/openstack_dashboard/enabled/_1485_project_network_sample_enabled.py
-  if [ -f "$ENABLED_FILE" ]; then
-      echo -e "${YELLOW}Found existing plugin enabled file!${DEFAULT}"
-      sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_1485_project_network_sample_enabled.py
-      echo -e "${DEFAULT}Plugin enabled file removed successfully.${DEFAULT}"
+  # Deleting existing _90_project_policy_panel_group_enabled.py file.
+  ENABLED_FILE_90=/opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panel_group_enabled.py
+  if [ -f "$ENABLED_FILE_90" ]; then
+      echo -e "${YELLOW}Found existing _90_project_policy_panel_group_enabled.py enabled file!${DEFAULT}"
+      sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panel_group_enabled.py
+      echo -e "${DEFAULT}Plugin _90_project_policy_panel_group_enabled.py file removed successfully.${DEFAULT}"
   else
-      echo -e "${DEFAULT}Did not find any existing plugin enabled files.${DEFAULT}"
+      echo -e "${DEFAULT}Did not find any existing plugin _90_project_policy_panel_group_enabled.py file.${DEFAULT}"
+  fi
+
+
+  # Deleting existing _91_project_policy_policies_panel_enabled.py file.
+  ENABLED_FILE_91=/opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel_enabled.py
+  if [ -f "$ENABLED_FILE_91" ]; then
+      echo -e "${YELLOW}Found existing plugin _91_project_policy_policies_panel_enabled.py file!${DEFAULT}"
+      sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel_enabled.py
+      echo -e "${DEFAULT}Plugin _91_project_policy_policies_panel_enabled.py file removed successfully.${DEFAULT}"
+  else
+      echo -e "${DEFAULT}Did not find any existing plugin _91_project_policy_policies_panel_enabled.py files.${DEFAULT}"
   fi
 }
 

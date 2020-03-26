@@ -18,6 +18,11 @@ from openstack_dashboard.api import neutron
 
 LOG = logging.getLogger(__name__)
 
+class Policy(horizon.PanelGroup):
+    slug = "policy"
+    name = _("Policy")
+    panels = ('sample',)
+
 class Sample(horizon.Panel):
     name = _("Policies")
     slug = 'sample'
