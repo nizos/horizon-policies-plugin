@@ -24,7 +24,7 @@ DEFAULT='\e[39m'
 # PLUGIN_STATIC_DASHBOARD_SOURCE=sample_dashboard/static/dashboard/project/
 # PLUGIN_STATIC_DASHBOARD_DESTINATION=/opt/stack/horizon/static/dashboard/project/
 
-# PLUGIN_STATIC_API_SOURCE=sample_dashboard/static/app/core/openstack-service-api/sample-network.service.js
+# PLUGIN_STATIC_API_SOURCE=sample_dashboard/static/app/core/openstack-service-api/policy-client.service.js
 # PLUGIN_STATIC_API_DESTINATION=/opt/stack/horizon/static/app/core/openstack-service-api/
 
 
@@ -117,8 +117,8 @@ function addEnabledFiles
 ## Add the API static files to horizon dashboard
 function addApiStaticFile
 {
-  sudo cp -vf sample_dashboard/static/app/core/openstack-service-api/sample-network.service.js /opt/stack/horizon/static/app/core/openstack-service-api/
-  sudo chmod -vR 777 /opt/stack/horizon/static/app/core/openstack-service-api/sample-network.service.js
+  sudo cp -vf sample_dashboard/static/app/core/openstack-service-api/policy-client.service.js /opt/stack/horizon/static/app/core/openstack-service-api/
+  sudo chmod -vR 777 /opt/stack/horizon/static/app/core/openstack-service-api/policy-client.service.js
   echo -e "${GREEN}API static files added to Horizon dashboard successfully.${DEFAULT}"
 }
 
@@ -209,10 +209,10 @@ function removeEggInfoDir
 function removeApiStaticFile
 {
   # Deleting existing api static file.
-  API_STATIC=/opt/stack/horizon/static/app/core/openstack-service-api/sample-network.service.js
+  API_STATIC=/opt/stack/horizon/static/app/core/openstack-service-api/policy-client.service.js
   if [ -f "$API_STATIC" ]; then
       echo -e "${YELLOW}Found existing plugin API static files!${DEFAULT}"
-      sudo rm -v /opt/stack/horizon/static/app/core/openstack-service-api/sample-network.service.js
+      sudo rm -v /opt/stack/horizon/static/app/core/openstack-service-api/policy-client.service.js
       echo -e "${DEFAULT}Plugin API static files removed successfully.${DEFAULT}"
   else
       echo -e "${DEFAULT}Did not find any existing plugin API static files.${DEFAULT}"

@@ -23,4 +23,3 @@ class SampleNetwork(generic.View):
     def get(self, request):
         networks = neutron.network_list(request)
         return {'items': networks}
-
