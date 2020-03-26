@@ -12,15 +12,11 @@
 # under the License.
 
 import logging
-
 from django.utils.translation import ugettext_lazy as _
-
 import horizon
-
 from openstack_dashboard.api import neutron
 
 LOG = logging.getLogger(__name__)
-
 
 class Sample(horizon.Panel):
     name = _("Policies")
