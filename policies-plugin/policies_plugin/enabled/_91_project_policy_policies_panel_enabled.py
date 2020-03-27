@@ -21,7 +21,7 @@ PANEL_DASHBOARD = 'project'
 
 # Python panel class of the PANEL to be added.
 ADD_PANEL = (
-    'sample_dashboard.dashboards.project.policy.panel'
+    'policies_plugin.dashboards.project.policy.panel'
     '.Policies')
 
 
@@ -44,10 +44,10 @@ ADD_PANEL = (
 
 # # Python panel class of the PANEL to be added.
 # ADD_PANEL = (
-#     'sample_dashboard.dashboards.project.sample.panel'
+#     'policies_plugin.dashboards.project.sample.panel'
 #     '.Sample')
 
-# ADD_INSTALLED_APPS = ['sample_dashboard']
+# ADD_INSTALLED_APPS = ['policies_plugin']
 
 # ADD_ANGULAR_MODULES = ['horizon.dashboard.project.sample']
 

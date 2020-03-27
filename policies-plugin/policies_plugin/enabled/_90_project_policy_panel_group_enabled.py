@@ -7,7 +7,7 @@ PANEL_GROUP_NAME = _('Policy')
 # The slug of the dashboard the PANEL_GROUP associated with. Required.
 PANEL_GROUP_DASHBOARD = 'project'
 
-ADD_INSTALLED_APPS = ['sample_dashboard']
+ADD_INSTALLED_APPS = ['policies_plugin']
 
 ADD_ANGULAR_MODULES = [
     'horizon.dashboard.project.policy'

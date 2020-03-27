@@ -1,0 +1,28 @@
+{
+  "version": "0.0.0",
+  "private": true,
+  "name": "horizon-policies-plugin",
+  "description": "Role based access policies plugin for OpenStack dashboard Horizon",
+  "repository": "none",
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "eslint": "6.8.0",
+    "eslint-config-openstack": "4.0.1",
+    "eslint-plugin-angular": "4.0.1",
+    "jasmine-core": "3.5.0",
+    "karma": "4.4.1",
+    "karma-chrome-launcher": "3.1.0",
+    "karma-cli": "2.0.0",
+    "karma-coverage": "2.0.1",
+    "karma-jasmine": "3.1.1",
+    "karma-ng-html2js-preprocessor": "1.0.0",
+    "karma-phantomjs-launcher": "1.0.4",
+    "karma-threshold-reporter": "0.1.15",
+    "phantomjs": "2.1.7"
+  },
+  "scripts": {
+    "test": "karma start horizon-policies-plugin/karma.conf.js --single-run",
+    "lint": "eslint --no-color horizon-policies-plugin/static"
+  },
+  "dependencies": {}
+}

@@ -1,7 +1,21 @@
 # horizon-policies-plugin
 Plugin for OpenStack's dashboard Horizon for accessing and managing policies
 
-# Installation
+# Quick Start
+Instructions for running the plugin using DevStack, Python3.6, pip 20.0.2 and Django 2.2:
+```Bash
+cd /opt/stack/horizon/
+git clone https://github.com/nizos/horizon-policies-plugin
+cd horizon-policies-plugin/policies-plugin/
+bash install.bash
+```
+
+To view Horizon dashboard error logs run the following command:
+```Bash
+tail -f /var/log/apache2/horizon_error.log
+```
+
+# Full Installation
 
 ## Configuring the environment
 
@@ -99,7 +113,7 @@ If you want to be able to view .git/ directories in vscode do the following:
 
 ### Install the plugin
 
-Make sure your PWD is /path/to/repository/horizon-policies-plugin/policy-ui/
+Make sure your PWD is /path/to/repository/horizon-policies-plugin/policies-plugin/
 
 ```Bash
 bash install.bash
@@ -124,8 +138,9 @@ to
 COMPRESS_OFFLINE = False
 ```
 
-### Restart Horizon
+### Restart Memcached and Apache2
 ```Bash
+sudo service memcached restart
 sudo service apache2 restart
 ```
 
@@ -135,18 +150,18 @@ To remove a specific package
 ```Bash
 python3 -m pip uninstall <package-name>
 ```
-For example, to remove policy-ui:
+For example, to remove policies-plugin:
 ```Bash
-python3 -m pip uninstall policy-ui
+python3 -m pip uninstall policies-plugin
 ```
 
-**WARNING**: The uninstallation may fail if your PWD is */path/to/repository/horizon-policies-plugin/policy-ui* with the message
+**WARNING**: The uninstallation may fail if your PWD is */path/to/repository/horizon-policies-plugin/policies-plugin* with the message
 
 ```Bash
-Found existing installation: policy-ui 0.0...
+Found existing installation: policies-plugin 0.0...
 # Extra text that you get with the --verbose trigger:
-Not sure how to uninstall: policy-ui 0.0... - Check: /path/to/repository/horizon-policies-plugin/policy-ui
-Can't uninstall 'policy-ui'. No files were found to uninstall.
+Not sure how to uninstall: policies-plugin 0.0... - Check: /path/to/repository/horizon-policies-plugin/policies-plugin
+Can't uninstall 'policies-plugin'. No files were found to uninstall.
 ```
 
 The solution is to change directory and try the same command again.
@@ -159,7 +174,7 @@ python3 -m pip list
 
 To view details about a specific package type:
 ```Bash
-python3 -m pip show policy-ui
+python3 -m pip show policies-plugin
 ```
 
 These commands can help you verify that the plugin has been uninstalled.

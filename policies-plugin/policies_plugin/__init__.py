@@ -13,4 +13,4 @@
 import pbr.version
 
 __version__ = pbr.version.VersionInfo(
-    'sample_dashboard').version_string()
+    'policies_plugin').version_string()

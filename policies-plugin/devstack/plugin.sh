@@ -1,9 +1,9 @@
-function sample_dashboard_install {
-    setup_develop $SAMPLE_DASHBOARD_DIR
+function policies_plugin_install {
+    setup_develop $POLICIES_PLUGIN_DIR
 }
 
-function sample_dashboard_configure {
-    cp $SAMPLE_DASHBOARD_ENABLE_FILE \
+function policies_plugin_configure {
+    cp $POLICIES_PLUGIN_ENABLE_FILE \
         $HORIZON_DIR/openstack_dashboard/local/enabled/
 }
 
@@ -11,10 +11,10 @@ if is_service_enabled horizon; then
     if [[ "$1" == "stack" && "$2" == "install" ]]; then
         # Perform installation of service source
         echo_summary "Installing sample-dashboard"
-        sample_dashboard_install
+        policies_plugin_install
     elif [[ "$1" == "stack" && "$2" == "post-config" ]]; then
         echo_summary "Configuring sample-dashboard"
-        sample_dashboard_configure
+        policies_plugin_configure
     elif [[ "$1" == "stack" && "$2" == "extra" ]]; then
         # Initialize and start the sample service
         echo_summary "Initializing sample-dashboard"
@@ -31,5 +31,5 @@ if [[ "$1" == "clean" ]]; then
     # Remember clean.sh first calls unstack.sh
 
     # Remove lbaas-dashboard enabled file and pyc
-    rm -f ${SAMPLE_DASHBOARD_ENABLE_FILE}*
+    rm -f ${POLICIES_PLUGIN_ENABLE_FILE}*
 fi

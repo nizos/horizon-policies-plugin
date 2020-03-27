@@ -11,27 +11,27 @@ CYAN='\e[36m'
 DEFAULT='\e[39m'
 
 # DIRECTORIS
-# PLUGIN_PIP_PACKAGE_NAME=sample-dashboard
-# PLUGIN_PIP_PACKAGE_DIST=dist/sample-dashboard-0.0.0.tar.gz
+# PLUGIN_PIP_PACKAGE_NAME=policies-plugin
+# PLUGIN_PIP_PACKAGE_DIST=dist/policies-plugin-0.0.0.tar.gz
 
 # PLUGIN_GIT_DIR=.git/
 # PLUGIN_DIST_DIR=dist/
-# PLUGIN_EGG_DIR=sample_dashboard.egg-info/
+# PLUGIN_EGG_DIR=policies_plugin.egg-info/
 
-# PLUGIN_ENABLED_FILE_SOURCE=sample_dashboard/enabled/_1485_project_network_sample_enabled.py
+# PLUGIN_ENABLED_FILE_SOURCE=policies_plugin/enabled/_1485_project_network_sample_enabled.py
 # PLUGIN_ENABLED_FILE_DISTINATION=/opt/stack/horizon/openstack_dashboard/enabled/
 
-# PLUGIN_STATIC_DASHBOARD_SOURCE=sample_dashboard/static/dashboard/project/
+# PLUGIN_STATIC_DASHBOARD_SOURCE=policies_plugin/static/dashboard/project/
 # PLUGIN_STATIC_DASHBOARD_DESTINATION=/opt/stack/horizon/static/dashboard/project/
 
-# PLUGIN_STATIC_API_SOURCE=sample_dashboard/static/app/core/openstack-service-api/policy-client.service.js
+# PLUGIN_STATIC_API_SOURCE=policies_plugin/static/app/core/openstack-service-api/policy-client.service.js
 # PLUGIN_STATIC_API_DESTINATION=/opt/stack/horizon/static/app/core/openstack-service-api/
 
 
 # Get the user's confirmation to intitiate the plugin's installation process before proceeding
 
-# Plugin update
-function startUpdate
+# Plugin install
+function startInstall
 {
   showIntro
   uninstall
@@ -99,7 +99,7 @@ function addPipPackage
 
   # This command will always install the latest version of the package in the directory
   echo -e "${GREEN}Installing pip package.${DEFAULT}"
-  python3 -m pip install dist/sample-dashboard-0.0.0.tar.gz
+  python3 -m pip install dist/policies-plugin-0.0.0.tar.gz
 
   echo -e "${GREEN}Plugin pip package installed successfully.${DEFAULT}"
 }
@@ -107,17 +107,17 @@ function addPipPackage
 ## Add the enabled file to horizon dashboard
 function addEnabledFiles
 {
-  sudo cp -vf sample_dashboard/enabled/_90_project_policy_panel_group_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
+  sudo cp -vf policies_plugin/enabled/_90_project_policy_panel_group_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
   echo -e "${GREEN}Enabled file _90_project_policy_panel_group_enabled.py added to Horizon dashboard successfully.${DEFAULT}"
 
-  sudo cp -vf sample_dashboard/enabled/_91_project_policy_policies_panel_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
+  sudo cp -vf policies_plugin/enabled/_91_project_policy_policies_panel_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
   echo -e "${GREEN}Enabled file _91_project_policy_policies_panel_enabled.py added to Horizon dashboard successfully.${DEFAULT}"
 }
 
 ## Add the API static files to horizon dashboard
 function addApiStaticFile
 {
-  sudo cp -vf sample_dashboard/static/app/core/openstack-service-api/policy-client.service.js /opt/stack/horizon/static/app/core/openstack-service-api/
+  sudo cp -vf policies_plugin/static/app/core/openstack-service-api/policy-client.service.js /opt/stack/horizon/static/app/core/openstack-service-api/
   sudo chmod -vR 777 /opt/stack/horizon/static/app/core/openstack-service-api/policy-client.service.js
   echo -e "${GREEN}API static files added to Horizon dashboard successfully.${DEFAULT}"
 }
@@ -125,7 +125,7 @@ function addApiStaticFile
 ## Add the dashboard static files to horizon dashboard
 function addDashboardStaticFiles
 {
-  sudo cp -vrf sample_dashboard/static/dashboard/project/. /opt/stack/horizon/static/dashboard/project/
+  sudo cp -vrf policies_plugin/static/dashboard/project/. /opt/stack/horizon/static/dashboard/project/
   sudo chmod -vR 777 /opt/stack/horizon/static/dashboard/project/policy/
   echo -e "${GREEN}Dashboard static files added to Horizon dashboard successfully.${DEFAULT}"
 }
@@ -137,7 +137,7 @@ function removePipPackage
 {
   # Check for existing installation of the plugin
   echo -e "${GREEN}Checking for existing installations of the plugin.${DEFAULT}"
-  PackageAlreadyInstalled="$(pip show sample-dashboard)"
+  PackageAlreadyInstalled="$(pip show policies-plugin)"
 
   if ["$PackageAlreadyInstalled" == ""]; then
     # No installation was found.
@@ -145,7 +145,7 @@ function removePipPackage
   else
     # Existing installation found.
     echo -e "${YELLOW}Found an existing plugin installation!${DEFAULT}"
-    python3 -m pip uninstall sample-dashboard --yes
+    python3 -m pip uninstall policies-plugin --yes
     echo -e "${GREEN}Existing plugin installation uninstalled successfully.${DEFAULT}"
   fi
 }
@@ -190,17 +190,17 @@ function removeGitDir
 function removeEggInfoDir
 {
   # Check for existing installation of the plugin
-  echo -e "${GREEN}Checking for existing plugin sample_dashboard.egg-info/ directory.${DEFAULT}"
+  echo -e "${GREEN}Checking for existing plugin policies_plugin.egg-info/ directory.${DEFAULT}"
   # File names to look for
-  EGG_INFO_DIR=sample_dashboard.egg-info/
+  EGG_INFO_DIR=policies_plugin.egg-info/
 
   # Get user confirmation before deleting static files
   if [ -d "$EGG_INFO_DIR" ]; then
-      echo -e "${YELLOW}Found existing plugin sample_dashboard.egg-info/ directory.${DEFAULT}"
-      sudo rm -r sample_dashboard.egg-info/
-      echo -e "${GREEN}sample_dashboard.egg-info/ directory removed successfully.${DEFAULT}"
+      echo -e "${YELLOW}Found existing plugin policies_plugin.egg-info/ directory.${DEFAULT}"
+      sudo rm -r policies_plugin.egg-info/
+      echo -e "${GREEN}policies_plugin.egg-info/ directory removed successfully.${DEFAULT}"
   else
-      echo -e "${DEFAULT}Did not find an existing plugin sample_dashboard.egg-info/ directory.${DEFAULT}"
+      echo -e "${DEFAULT}Did not find an existing plugin policies_plugin.egg-info/ directory.${DEFAULT}"
   fi
 }
 
@@ -294,4 +294,4 @@ function showResult
   echo -e "${GREEN}Installation completed successfully.${DEFAULT}"
 }
 
-startUpdate
+startInstall
