@@ -1,3 +1,0 @@
-POLICIES_PLUGIN_DIR=$DEST/policies-plugin
-
-POLICIES_PLUGIN_ENABLE_FILE=$POLICIES_PLUGIN_DIR/policies_plugin/enabled/_1485_project_network_sample_enabled.py

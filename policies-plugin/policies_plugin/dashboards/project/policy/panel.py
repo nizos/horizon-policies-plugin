@@ -14,7 +14,6 @@
 import logging
 from django.utils.translation import ugettext_lazy as _
 import horizon
-#from openstack_dashboard.api import neutron
 
 LOG = logging.getLogger(__name__)
 
@@ -26,4 +25,3 @@ class Policy(horizon.PanelGroup):
 class Policies(horizon.Panel):
     name = _("Policies")
     slug = 'policies'
-    permissions = ('openstack.services.network',)

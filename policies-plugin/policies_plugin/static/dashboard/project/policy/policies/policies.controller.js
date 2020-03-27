@@ -16,24 +16,24 @@
 
   angular
     .module('horizon.dashboard.project.policy.policies')
-    .controller('SampleNetworkTableController', SampleNetworkTableController);
+    .controller('PoliciesController', PoliciesController);
 
-  SampleNetworkTableController.$inject = [
-    'horizon.app.core.openstack-service-api.policy-client'
+    PoliciesController.$inject = [
+    'horizon.dashboard.project.policy.policies.policy-client'
   ];
 
   /**
    * @ngdoc controller
-   * @name SampleNetworkTableController
+   * @name PoliciesController
    *
    * @description
-   * Controller for the Sample table. Serves as the focal point for table actions.
+   * Controller for the policies table. Serves as the focal point for table actions.
    *
-   * @param api The Sample Network service API.
+   * @param api The policies client service API.
    * @returns undefined
    */
 
-  function SampleNetworkTableController(api) {
+  function PoliciesController(api) {
 
     var ctrl = this;
     ctrl.items = [];
@@ -51,7 +51,7 @@
     ////////////////////////////////
 
     function init() {
-      api.getNetworks().success(success);
+      api.getPolicies().success(success);
     }
 
     function success(response) {

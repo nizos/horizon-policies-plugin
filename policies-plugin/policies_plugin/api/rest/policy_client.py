@@ -11,15 +11,18 @@
 # limitations under the License.
 
 from django.views import generic
-from openstack_dashboard.api import neutron
 from openstack_dashboard.api.rest import urls
 from openstack_dashboard.api.rest import utils as rest_utils
 
 @urls.register
-class SampleNetwork(generic.View):
-    url_regex = r'policy-client/networks/$'
+class PolicyClient(generic.View):
+    url_regex = r'policy-client/policies/$'
 
     @rest_utils.ajax()
     def get(self, request):
-        networks = neutron.network_list(request)
-        return {'items': networks}
+        greeting = {
+          'id': 'Hello',
+          'name': 'Hello world!'
+        }
+        policies = {'items': greeting}
+        return policies

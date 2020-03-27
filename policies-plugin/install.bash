@@ -10,25 +10,6 @@ MAGENTA='\e[35m'
 CYAN='\e[36m'
 DEFAULT='\e[39m'
 
-# DIRECTORIS
-# PLUGIN_PIP_PACKAGE_NAME=policies-plugin
-# PLUGIN_PIP_PACKAGE_DIST=dist/policies-plugin-0.0.0.tar.gz
-
-# PLUGIN_GIT_DIR=.git/
-# PLUGIN_DIST_DIR=dist/
-# PLUGIN_EGG_DIR=policies_plugin.egg-info/
-
-# PLUGIN_ENABLED_FILE_SOURCE=policies_plugin/enabled/_1485_project_network_sample_enabled.py
-# PLUGIN_ENABLED_FILE_DISTINATION=/opt/stack/horizon/openstack_dashboard/enabled/
-
-# PLUGIN_STATIC_DASHBOARD_SOURCE=policies_plugin/static/dashboard/project/
-# PLUGIN_STATIC_DASHBOARD_DESTINATION=/opt/stack/horizon/static/dashboard/project/
-
-# PLUGIN_STATIC_API_SOURCE=policies_plugin/static/app/core/openstack-service-api/policy-client.service.js
-# PLUGIN_STATIC_API_DESTINATION=/opt/stack/horizon/static/app/core/openstack-service-api/
-
-
-# Get the user's confirmation to intitiate the plugin's installation process before proceeding
 
 # Plugin install
 function startInstall
@@ -49,8 +30,7 @@ function uninstall
   removeGitDir
   removeEggInfoDir
   removeEnabledFiles
-  removeApiStaticFile
-  removeDashboardStaticFiles
+  removeStaticFiles
 }
 
 # Install new files
@@ -58,8 +38,7 @@ function install
 {
   addPipPackage
   addEnabledFiles
-  addApiStaticFile
-  addDashboardStaticFiles
+  addStaticFiles
 }
 
 # Remove left over files
@@ -114,16 +93,8 @@ function addEnabledFiles
   echo -e "${GREEN}Enabled file _91_project_policy_policies_panel_enabled.py added to Horizon dashboard successfully.${DEFAULT}"
 }
 
-## Add the API static files to horizon dashboard
-function addApiStaticFile
-{
-  sudo cp -vf policies_plugin/static/app/core/openstack-service-api/policy-client.service.js /opt/stack/horizon/static/app/core/openstack-service-api/
-  sudo chmod -vR 777 /opt/stack/horizon/static/app/core/openstack-service-api/policy-client.service.js
-  echo -e "${GREEN}API static files added to Horizon dashboard successfully.${DEFAULT}"
-}
-
 ## Add the dashboard static files to horizon dashboard
-function addDashboardStaticFiles
+function addStaticFiles
 {
   sudo cp -vrf policies_plugin/static/dashboard/project/. /opt/stack/horizon/static/dashboard/project/
   sudo chmod -vR 777 /opt/stack/horizon/static/dashboard/project/policy/
@@ -205,23 +176,8 @@ function removeEggInfoDir
 }
 
 
-## Remove  plugin api static file
-function removeApiStaticFile
-{
-  # Deleting existing api static file.
-  API_STATIC=/opt/stack/horizon/static/app/core/openstack-service-api/policy-client.service.js
-  if [ -f "$API_STATIC" ]; then
-      echo -e "${YELLOW}Found existing plugin API static files!${DEFAULT}"
-      sudo rm -v /opt/stack/horizon/static/app/core/openstack-service-api/policy-client.service.js
-      echo -e "${DEFAULT}Plugin API static files removed successfully.${DEFAULT}"
-  else
-      echo -e "${DEFAULT}Did not find any existing plugin API static files.${DEFAULT}"
-  fi
-}
-
-
 ## Remove plugin dashboard static files
-function removeDashboardStaticFiles
+function removeStaticFiles
 {
   # Deleting existing api static file.
   DASHBOARD_STATIC=/opt/stack/horizon/static/dashboard/project/policy/
