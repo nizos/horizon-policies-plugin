@@ -11,12 +11,14 @@
   <thead>
     <tr>
       <th class="rsp-p1" st-sort="name" st-sort-default="name" translate>Name</th>
+      <th>Description</th>
     </tr>
   </thead>
 
   <tbody>
     <tr ng-repeat-start="item in table.items track by item.id">
       <td class="rsp-p1">{$ ::(item.name || item.id) $}</td>
+      <td>{$ ::(item.description) $}</td>
     </tr>
     <tr ng-repeat-end class="detail-row"></tr>
   </tbody>

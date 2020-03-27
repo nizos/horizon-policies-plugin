@@ -26,22 +26,48 @@ class PolicyClient(generic.View):
 
     @rest_utils.ajax()
     def get(self, request):
-        list_of_policies = []
-        list_of_policies = get_text()
-        test_list = list_of_policies.items()
-        another_test_list = []
-        for items in test_list:
-          another_test_list.append(items[1])
+        #list_of_policies = []
+        #list_of_policies = get_text()
+
+        fromAPI = []
+        fromAPI = get_text()
+
+        #test_list = list_of_policies.items()
+        #another_test_list = []
+
+        items = fromAPI.items()
+        results = []
+        greeting = []
+        counter = 0
+        #for items in test_list:
+        #  another_test_list.append(items[1])
+
+        for item in items:
+          results.append(item[1])
         LOG.warning("##############################################")
         LOG.warning("!HERE client!")
-        for i in list(itertools.chain.from_iterable(another_test_list)):
-          LOG.warning(i)
+
+        #for i in list(itertools.chain.from_iterable(another_test_list)):
+        #  LOG.warning(i)
+
+        for policy in list(itertools.chain.from_iterable(results)):
+          policy_items = {
+            'id': repr(counter),
+            'name': repr(policy.name),
+            'description': repr(policy.description)
+          }
+          greeting.append(policy_items)
+          counter += 1
+          LOG.warning(policy)
         LOG.warning("##############################################")
+
         #test_list = list_of_policies.items()
-        greeting = {
-          'id': 'Test',
-          'name': test_list[3]
-        }
+
+        #greeting = {
+        #  'id': 'Test',
+        #  'name': 'Hello'
+        #}
+
         #greeting = {
         #  'id': 'Hello',
         #  'name': 'Hello world!'
