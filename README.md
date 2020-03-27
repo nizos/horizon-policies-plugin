@@ -9,7 +9,17 @@ git clone https://github.com/nizos/horizon-policies-plugin
 cd horizon-policies-plugin/policies-plugin/
 bash install.bash
 ```
-
+## Development Mode
+Inotify-tools allows us to automatically reinstall the plangin when any of changes are made to its file. If you do not have inotify-tools installed you can install it by running the following command:
+```Bash
+sudo apt install inotify-tools
+```
+Once installed, simply run the following command to start the development mode:
+```Bash
+# cd /opt/stack/horizon/horizon-policies-plugin/policies-plugin/
+bash develop.bash
+```
+## Viewing logs
 To view Horizon dashboard error logs run the following command:
 ```Bash
 tail -f /var/log/apache2/horizon_error.log
