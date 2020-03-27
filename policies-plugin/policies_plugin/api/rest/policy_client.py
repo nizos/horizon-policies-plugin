@@ -13,6 +13,7 @@
 from django.views import generic
 from openstack_dashboard.api.rest import urls
 from openstack_dashboard.api.rest import utils as rest_utils
+from policies_plugin.api.rest.policy_test_api import get_text
 
 @urls.register
 class PolicyClient(generic.View):
@@ -20,9 +21,14 @@ class PolicyClient(generic.View):
 
     @rest_utils.ajax()
     def get(self, request):
+        list_of_policies = get_text()
         greeting = {
-          'id': 'Hello',
-          'name': 'Hello world!'
+          'id': 'Test',
+          'name': list_of_policies[0]
         }
+        #greeting = {
+        #  'id': 'Hello',
+        #  'name': 'Hello world!'
+        #}
         policies = {'items': greeting}
         return policies
