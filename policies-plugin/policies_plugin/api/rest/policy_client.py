@@ -54,11 +54,12 @@ class PolicyClient(generic.View):
           policy_items = {
             'id': repr(counter),
             'name': repr(policy.name),
+            'check_str': repr(policy.check_str),
             'description': repr(policy.description)
           }
           greeting.append(policy_items)
           counter += 1
-          LOG.warning(policy)
+          # LOG.warning(policy)
         LOG.warning("##############################################")
 
         #test_list = list_of_policies.items()
