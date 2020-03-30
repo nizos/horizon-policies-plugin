@@ -39,10 +39,6 @@
 
     return service;
 
-    ///////////////
-
-    // Policies
-
     /**
      * @name horizon.dashboard.project.policy.policies.policy-client.getPolicies
      * @description

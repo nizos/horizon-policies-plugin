@@ -36,9 +36,7 @@
   function PoliciesController(api) {
 
     var ctrl = this;
-    ctrl.items = [];
     ctrl.src = [];
-    ctrl.checked = {};
 
     ctrl.admin_state = {
         'true': gettext('Up'),
