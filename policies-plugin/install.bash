@@ -86,18 +86,15 @@ function addPipPackage
 ## Add the enabled file to horizon dashboard
 function addEnabledFiles
 {
-  sudo cp -vf policies_plugin/enabled/_90_project_policy_panel_group_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
-  echo -e "${GREEN}Enabled file _90_project_policy_panel_group_enabled.py added to Horizon dashboard successfully.${DEFAULT}"
-
-  sudo cp -vf policies_plugin/enabled/_91_project_policy_policies_panel_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
-  echo -e "${GREEN}Enabled file _91_project_policy_policies_panel_enabled.py added to Horizon dashboard successfully.${DEFAULT}"
+  sudo cp -vf policies_plugin/enabled/_3100_identity_policy_policies_panel_enabled.py /opt/stack/horizon/openstack_dashboard/enabled/
+  echo -e "${GREEN}Enabled file _3100_identity_policy_policies_panel_enabled.py added to Horizon dashboard successfully.${DEFAULT}"
 }
 
 ## Add the dashboard static files to horizon dashboard
 function addStaticFiles
 {
-  sudo cp -vrf policies_plugin/static/dashboard/project/. /opt/stack/horizon/static/dashboard/project/
-  sudo chmod -vR 777 /opt/stack/horizon/static/dashboard/project/policy/
+  sudo cp -vrf policies_plugin/static/dashboard/identity/. /opt/stack/horizon/static/dashboard/identity/
+  sudo chmod -vR 777 /opt/stack/horizon/static/dashboard/identity/policy/
   echo -e "${GREEN}Dashboard static files added to Horizon dashboard successfully.${DEFAULT}"
 }
 
@@ -180,10 +177,10 @@ function removeEggInfoDir
 function removeStaticFiles
 {
   # Deleting existing api static file.
-  DASHBOARD_STATIC=/opt/stack/horizon/static/dashboard/project/policy/
+  DASHBOARD_STATIC=/opt/stack/horizon/static/dashboard/identity/policy/
   if [ -f "$DASHBOARD_STATIC" ]; then
       echo -e "${YELLOW}Found existing plugin dashboard static files!${DEFAULT}"
-      sudo rm -vr /opt/stack/horizon/static/dashboard/project/policy/
+      sudo rm -vr /opt/stack/horizon/static/dashboard/identity/policy/
       echo -e "${DEFAULT}Plugin dashboard static files removed successfully.${DEFAULT}"
   else
       echo -e "${DEFAULT}Did not find any existing plugin dashboard static files.${DEFAULT}"
@@ -193,25 +190,14 @@ function removeStaticFiles
 ## Remove the enabled file
 function removeEnabledFiles
 {
-  # Deleting existing _90_project_policy_panel_group_enabled.py file.
-  ENABLED_FILE_90=/opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panel_group_enabled.py
-  if [ -f "$ENABLED_FILE_90" ]; then
-      echo -e "${YELLOW}Found existing _90_project_policy_panel_group_enabled.py enabled file!${DEFAULT}"
-      sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_90_project_policy_panel_group_enabled.py
-      echo -e "${DEFAULT}Plugin _90_project_policy_panel_group_enabled.py file removed successfully.${DEFAULT}"
+  # Deleting existing _3100_identity_policy_policies_panel_enabled.py file.
+  ENABLED_FILE_3100=/opt/stack/horizon/openstack_dashboard/enabled/_3100_identity_policy_policies_panel_enabled.py
+  if [ -f "$ENABLED_FILE_3100" ]; then
+      echo -e "${YELLOW}Found existing plugin _3100_identity_policy_policies_panel_enabled.py file!${DEFAULT}"
+      sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_3100_identity_policy_policies_panel_enabled.py
+      echo -e "${DEFAULT}Plugin _3100_identity_policy_policies_panel_enabled.py file removed successfully.${DEFAULT}"
   else
-      echo -e "${DEFAULT}Did not find any existing plugin _90_project_policy_panel_group_enabled.py file.${DEFAULT}"
-  fi
-
-
-  # Deleting existing _91_project_policy_policies_panel_enabled.py file.
-  ENABLED_FILE_91=/opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel_enabled.py
-  if [ -f "$ENABLED_FILE_91" ]; then
-      echo -e "${YELLOW}Found existing plugin _91_project_policy_policies_panel_enabled.py file!${DEFAULT}"
-      sudo rm -v /opt/stack/horizon/openstack_dashboard/enabled/_91_project_policy_policies_panel_enabled.py
-      echo -e "${DEFAULT}Plugin _91_project_policy_policies_panel_enabled.py file removed successfully.${DEFAULT}"
-  else
-      echo -e "${DEFAULT}Did not find any existing plugin _91_project_policy_policies_panel_enabled.py files.${DEFAULT}"
+      echo -e "${DEFAULT}Did not find any existing plugin _3100_identity_policy_policies_panel_enabled.py files.${DEFAULT}"
   fi
 }
 

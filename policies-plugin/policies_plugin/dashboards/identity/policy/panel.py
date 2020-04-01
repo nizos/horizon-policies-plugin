@@ -17,11 +17,6 @@ import horizon
 
 LOG = logging.getLogger(__name__)
 
-class Policy(horizon.PanelGroup):
-    slug = "policy"
-    name = _("Policy")
-    panels = ('policies',)
-
 class Policies(horizon.Panel):
     name = _("Policies")
     slug = 'policies'

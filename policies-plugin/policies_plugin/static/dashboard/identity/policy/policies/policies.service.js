@@ -15,8 +15,8 @@
   'use strict';
 
   angular
-    .module('horizon.dashboard.project.policy.policies')
-    .factory('horizon.dashboard.project.policy.policies.policy-client', policiesAPI);
+    .module('horizon.dashboard.identity.policy.policies')
+    .factory('horizon.dashboard.identity.policy.policies.policy-client', policiesAPI);
 
   policiesAPI.$inject = [
     'horizon.framework.util.http.service',
@@ -25,7 +25,7 @@
 
   /**
    * @ngdoc service
-   * @name horizon.dashboard.project.policy.policies.policy-client
+   * @name horizon.dashboard.identity.policy.policies.policy-client
    * @description Provides direct pass through to policy-client.
    * @param apiService The horizon core API service.
    * @param toastService The horizon toast service.
@@ -40,7 +40,7 @@
     return service;
 
     /**
-     * @name horizon.dashboard.project.policy.policies.policy-client.getPolicies
+     * @name horizon.dashboard.identity.policy.policies.policy-client.getPolicies
      * @description
      * Get a list of policies
      * The listing result is an object with property "items". Each item is

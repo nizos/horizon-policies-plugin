@@ -15,11 +15,11 @@
   'use strict';
 
   angular
-    .module('horizon.dashboard.project.policy.policies')
+    .module('horizon.dashboard.identity.policy.policies')
     .controller('PoliciesController', PoliciesController);
 
     PoliciesController.$inject = [
-    'horizon.dashboard.project.policy.policies.policy-client'
+    'horizon.dashboard.identity.policy.policies.policy-client'
   ];
 
   /**

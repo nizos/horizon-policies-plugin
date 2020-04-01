@@ -16,15 +16,15 @@
 
   /**
    * @ngdoc overview
-   * @name horizon.dashboard.project.policy
+   * @name horizon.dashboard.identity.policy
    * @description
    * A sample top level module.
    */
 
   angular
-    .module('horizon.dashboard.project.policy', [
+    .module('horizon.dashboard.identity.policy', [
       'ngRoute',
-      'horizon.dashboard.project.policy.policies'
+      'horizon.dashboard.identity.policy.policies'
     ])
     .config(config);
     // this is the right place to add .constant() declarations for
@@ -37,10 +37,10 @@
   ];
 
   function config($provide, $windowProvider, $routeProvider) {
-    var basePath = $windowProvider.$get().STATIC_URL + 'dashboard/project/policy/';
-    $provide.constant('horizon.dashboard.project.policy.basePath', basePath);
+    var basePath = $windowProvider.$get().STATIC_URL + 'dashboard/identity/policy/';
+    $provide.constant('horizon.dashboard.identity.policy.basePath', basePath);
 
-    var policies = '/project/policies';
+    var policies = '/identity/policies';
 
     $routeProvider.when(policies, {
         templateUrl: basePath + 'policies/table.html'

@@ -15,15 +15,26 @@
 
 PANEL = 'policies'
 # The slug of the panel group the PANEL is associated with.
-PANEL_GROUP = 'policy'
+PANEL_GROUP = 'default'
 # The slug of the dashboard the PANEL associated with. Required.
-PANEL_DASHBOARD = 'project'
+PANEL_DASHBOARD = 'identity'
 
 # Python panel class of the PANEL to be added.
 ADD_PANEL = (
-    'policies_plugin.dashboards.project.policy.panel'
+    'policies_plugin.dashboards.identity.policy.panel'
     '.Policies')
 
+ADD_INSTALLED_APPS = ['policies_plugin']
+
+ADD_ANGULAR_MODULES = [
+    'horizon.dashboard.identity.policy'
+]
+
+ADD_JS_FILES = [
+    'horizon/lib/angular/angular-route.js'
+]
+
+AUTO_DISCOVER_STATIC_FILES = True
 
 
 
