@@ -1,4 +1,6 @@
 from oslo_policy import generator
 
-def get_policies():
-    return generator.get_policies_dict(["keystone"])
+class Policy_API:
+
+    def get_policies(self):
+        return generator.get_policies_dict(["keystone"])

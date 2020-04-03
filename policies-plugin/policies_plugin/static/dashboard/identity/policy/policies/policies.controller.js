@@ -19,7 +19,8 @@
     .controller('PoliciesController', PoliciesController);
 
     PoliciesController.$inject = [
-    'horizon.dashboard.identity.policy.policies.policy-client'
+    'horizon.dashboard.identity.policy.policies.policy-client',
+    '$scope'
   ];
 
   /**
@@ -33,29 +34,26 @@
    * @returns undefined
    */
 
-  function PoliciesController(api) {
+  function PoliciesController(api, $scope) {
 
     var ctrl = this;
     ctrl.src = [];
-
-    ctrl.admin_state = {
-        'true': gettext('Up'),
-        'false': gettext('Down')
-    };
-
+    ctrl.strLimit = 50;
+    ctrl.checked = {};
 
     init();
 
-    ////////////////////////////////
-
     function init() {
-      api.getPolicies().success(success);
+        api.getPolicies().success(success);
     }
 
     function success(response) {
-      ctrl.src = response.items;
+        ctrl.src = response.items;
     }
 
+    $scope.showMore = function() {
+        $scope.strLimit = ctrl.src.length;
+    };
   }
 
 })();

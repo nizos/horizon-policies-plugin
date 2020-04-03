@@ -27,8 +27,6 @@
       'horizon.dashboard.identity.policy.policies'
     ])
     .config(config);
-    // this is the right place to add .constant() declarations for
-    // the module
 
   config.$inject = [
     '$provide',

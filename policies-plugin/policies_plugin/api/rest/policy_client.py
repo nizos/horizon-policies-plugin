@@ -4,34 +4,32 @@ import itertools
 from django.views import generic
 from openstack_dashboard.api.rest import urls
 from openstack_dashboard.api.rest import utils as rest_utils
-from policies_plugin.api.rest.policy_api import get_policies
+from policies_plugin.api.rest.policy_api import Policy_API
+from policies_plugin.models.policy import Policy
 LOG = logging.getLogger(__name__)
-
 
 @urls.register
 class PolicyClient(generic.View):
     url_regex = r'policy-client/policies/$'
+    policy_API = Policy_API()
 
     @rest_utils.ajax()
     def get(self, request):
-
-        policies = get_policies()
+        policies = self.policy_API.get_policies()
         items = policies.items()
+
         results = []
+        for item in items:
+            results.append(item[1])
+
         policy_items = []
-        counter = 0
+        for result in list(itertools.chain.from_iterable(results)):
+            policy_item = Policy()
+            policy_item.from_item(result)
+            policy_items.append(policy_item)
 
-        for i in items:
-          results.append(i[1])
+        policy_objects = []
+        for policy_obj in policy_items:
+            policy_objects.append(policy_obj.to_json())
 
-        for policy in list(itertools.chain.from_iterable(results)):
-          policy_item = {
-            'id': repr(counter),
-            'name': repr(policy.name),
-            'check_str': repr(policy.check_str),
-            'description': repr(policy.description)
-          }
-          policy_items.append(policy_item)
-          counter += 1
-
-        return {'items': policy_items}
+        return {'items': policy_objects}

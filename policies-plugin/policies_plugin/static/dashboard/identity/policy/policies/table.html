@@ -1,28 +1,128 @@
 <hz-page-header header="{$ 'Policies' | translate $}"></hz-page-header>
 
+<label><input type="checkbox" ng-model="ruleFilter" ng-checked="ruleFilter" ng-init="ruleFilter=true"/> Rule </label>
+<label><input type="checkbox" ng-model="scopesFilter" ng-checked="scopesFilter" ng-init="scopesFilter=true"/> Scopes </label>
+<label><input type="checkbox" ng-model="operationsFilter" ng-checked="operationsFilter" ng-init="operationsFilter=true"/> Operations </label>
+<label><input type="checkbox" ng-model="descriptionFilter" ng-checked="descriptionFilter" ng-init="descriptionFilter=true"/> Description </label>
+
 <table ng-controller="PoliciesController as table"
-       hz-table ng-cloak
-       st-table="table.items"
-       st-safe-src="table.src"
-       default-sort="name"
-       default-sort-reverse="false"
-       class="table table-striped table-rsp table-detail">
+    hz-table ng-cloak
+    st-table="table.items"
+    st-safe-src="table.src"
+    default-sort="name"
+    default-sort-reverse="false"
+    class="table table-striped table-rsp table-detail">
+    <thead>
+        <tr>
+            <th class="multi_select_column">
+                <input type="checkbox" hz-select-all="table.items">
+            </th>
+            <th class="expander"></th>
+            <th class="rsp-p1" st-sort="project" translate>Project</th>
+            <th class="rsp-p1" st-sort="target" st-sort-default="target" translate>Target</th>
+            <th class="rsp-p1" st-sort="rule" ng-show="ruleFilter" translate>Rule</th>
+            <th class="rsp-p1" st-sort="scopes" ng-show="scopesFilter" translate>Scopes</th>
+            <th class="rsp-p1" st-sort="operations" ng-show="operationsFilter" translate>Operations</th>
+            <th class="rsp-p1" st-sort="description" ng-show="descriptionFilter" translate>Description</th>
+        </tr>
+    </thead>
 
-  <thead>
-    <tr>
-      <th class="rsp-p1" st-sort="name" st-sort-default="name" translate>Name</th>
-      <th translate>Check String</th>
-      <th translate>Description</th>
-    </tr>
-  </thead>
+    <tbody>
+        <tr ng-repeat-start="item in table.items track by item.target"
+            ng-class="{'st-selected': checked[item.target]}">
 
-  <tbody>
-    <tr ng-repeat-start="item in table.items track by item.id">
-      <td class="rsp-p1">{$ ::(item.name || item.id) $}</td>
-      <td>{$ ::(item.check_str) $}</td>
-      <td>{$ ::(item.description) $}</td>
-    </tr>
-    <tr ng-repeat-end class="detail-row"></tr>
-  </tbody>
+            <td class="multi_select_column">
+                <input type="checkbox"
+                        ng-model="tCtrl.selections[item.target].checked"
+                        hz-select="item">
+            </td>
+            <td class="expander">
+                <span class="fa fa-chevron-right"
+                        hz-expand-detail
+                        duration="200">
+                </span>
+            </td>
+
+            <td>{$ ::item.namespace | limitTo:35$}</td>
+
+            <td>{$ ::item.target | limitTo:35$}</td>
+
+            <td ng-show="ruleFilter">{$ ::item.rule | limitTo:35$}</td>
+
+            <td ng-show="scopesFilter">
+                <span>
+                    <span ng-repeat="scope in item.scopes">{$ ::(scope) | limitTo:35 $}<br/><span>
+                </span>
+            </td>
+
+            <td ng-show="operationsFilter">
+                <span>
+                    <span ng-repeat="operation in item.operations | limitTo:1">{$ ::(operation) | limitTo:35 $}<br/><span>
+                </span>
+            </td>
+
+            <td ng-show="descriptionFilter">{$ ::item.description | limitTo:35 $}</td>
+
+        <tr ng-repeat-end class="detail-row">
+
+            <td class="detail" colspan="12">
+            <!--
+            The responsive columns that disappear typically should reappear here
+            with the same responsive priority that they disappear.
+            E.g. table header with rsp-p2 should be here with rsp-alt-p2
+            -->
+                <div translate class="row">
+                </div>
+                <div class="row">
+                    <dl class="col-md-12">
+                        <dt translate>Project</dt>
+                        <dd>{$ ::item.namespace $}</dd>
+                    </dl>
+                </div>
+
+                <div class="row">
+                    <dl class="col-md-12">
+                        <dt translate>Target</dt>
+                        <dd>{$ ::item.target $}</dd>
+                    </dl>
+                </div>
+
+                <div class="row">
+                    <dl class="col-md-12">
+                        <dt translate>Rule</dt>
+                        <dd>{$ ::item.rule $}</dd>
+                    </dl>
+                </div>
+
+                <div class="row">
+                    <dl class="col-md-12">
+                        <dt translate>Scopes</dt>
+                        <span>
+                            <span ng-repeat="scope in item.scopes">{$ ::(scope) $}<br/><span>
+                        </span>
+                    </dl>
+                </div>
+
+                <div class="row">
+                    <dl class="col-md-12">
+                        <dt translate>Operations</dt>
+                        <span>
+                            <span ng-repeat="operation in item.operations">{$ ::(operation) $}<br/><span>
+                        </span>
+                    </dl>
+                </div>
+
+                <div class="row">
+                   <dl class="col-md-12">
+                        <dt translate>Description</dt>
+                        <dd>{$ ::item.description $}</dd>
+                    </dl>
+                </div>
+
+            </td>
+        </tr>
+    </tbody>
+
+    <tfoot hz-table-footer items="table.items"></tfoot>
 
 </table>
