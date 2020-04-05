@@ -12,10 +12,12 @@
 # limitations under the License.
 
 
-
+# The slug of the panel to be added to HORIZON_CONFIG. Required.
 PANEL = 'policies'
+
 # The slug of the panel group the PANEL is associated with.
 PANEL_GROUP = 'default'
+
 # The slug of the dashboard the PANEL associated with. Required.
 PANEL_DASHBOARD = 'identity'
 
@@ -24,42 +26,21 @@ ADD_PANEL = (
     'policies_plugin.dashboards.identity.policy.panel'
     '.Policies')
 
+# A list of applications to be prepended to INSTALLED_APPS
 ADD_INSTALLED_APPS = ['policies_plugin']
 
+# A list of AngularJS modules to be loaded when Angular bootstraps.
 ADD_ANGULAR_MODULES = [
     'horizon.dashboard.identity.policy'
 ]
 
+# A list of js files to be included in the compressed set of files
 ADD_JS_FILES = [
     'horizon/lib/angular/angular-route.js'
 ]
 
+# A list of scss files to be included in the compressed set of files
+ADD_SCSS_FILES = ['dashboard/identity/policy/policies/policies.scss']
+
+# Automatically discover static resources in installed apps
 AUTO_DISCOVER_STATIC_FILES = True
-
-
-
-
-
-
-
-
-# from django.utils.translation import ugettext_lazy as _
-# # The slug of the panel to be added to HORIZON_CONFIG. Required.
-# PANEL = 'sample'
-# # The slug of the dashboard the PANEL is associated with. Required.
-# PANEL_DASHBOARD = 'project'
-# # The slug of the panel group the PANEL is associated with.
-# PANEL_GROUP = 'policy'
-
-# PANEL_GROUP_NAME = _('Policy')
-
-# # Python panel class of the PANEL to be added.
-# ADD_PANEL = (
-#     'policies_plugin.dashboards.project.sample.panel'
-#     '.Sample')
-
-# ADD_INSTALLED_APPS = ['policies_plugin']
-
-# ADD_ANGULAR_MODULES = ['horizon.dashboard.project.sample']
-
-# AUTO_DISCOVER_STATIC_FILES = True

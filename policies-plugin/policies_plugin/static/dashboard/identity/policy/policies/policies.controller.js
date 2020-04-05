@@ -20,25 +20,23 @@
 
     PoliciesController.$inject = [
     'horizon.dashboard.identity.policy.policies.policy-client',
+    '$timeout',
     '$scope'
   ];
 
   /**
    * @ngdoc controller
    * @name PoliciesController
-   *
    * @description
    * Controller for the policies table. Serves as the focal point for table actions.
-   *
    * @param api The policies client service API.
    * @returns undefined
    */
-
-  function PoliciesController(api, $scope) {
+  function PoliciesController(api, $timeout, $scope) {
 
     var ctrl = this;
     ctrl.src = [];
-    ctrl.strLimit = 50;
+    $scope.charLimit = 50;
     ctrl.checked = {};
 
     init();
@@ -49,11 +47,27 @@
 
     function success(response) {
         ctrl.src = response.items;
+        ctrl.src.forEach(function(item){
+            item.expanded=false;
+            item.listLimit=1;
+        })
     }
 
-    $scope.showMore = function() {
-        $scope.strLimit = ctrl.src.length;
-    };
+    $scope.expandSelected=function(item){
+        if(item.expanded==true) {
+            ctrl.src.forEach(function(i){
+                i.expanded=false;
+                i.listLimit=1;
+              })
+        } else {
+            ctrl.src.forEach(function(i){
+                i.expanded=false;
+                i.listLimit=1;
+              })
+            item.expanded=true;
+            item.listLimit=100;
+        }
+    }
   }
 
 })();
