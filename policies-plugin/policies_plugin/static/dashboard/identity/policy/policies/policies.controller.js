@@ -65,7 +65,7 @@
                 i.listLimit=1;
               })
             item.expanded=true;
-            item.listLimit=100;
+            item.listLimit=10000;
         }
     }
   }

@@ -25,6 +25,10 @@
         <li class="table-settings-menu-item" role="menuitem">
             <input type="checkbox" ng-model="ruleFilter" ng-checked="ruleFilter" ng-init="ruleFilter=true"/> Rule
         </li>
+        <!-- Show/hide policy default rule column in policies table -->
+        <li class="table-settings-menu-item" role="menuitem">
+            <input type="checkbox" ng-model="defaultFilter" ng-checked="defaultFilter" ng-init="defaultFilter=true"/> Default
+        </li>
         <!-- Show/hide policy scopes column in policies table -->
         <li class="table-settings-menu-item" role="menuitem">
             <input type="checkbox" ng-model="scopesFilter" ng-checked="scopesFilter" ng-init="scopesFilter=true"/> Scopes
@@ -65,6 +69,8 @@
             <th class="rsp-p1" st-sort="target" ng-show="targetFilter" st-sort-default="target" translate>Target</th>
             <!-- Rule column header -->
             <th class="rsp-p1" st-sort="rule" ng-show="ruleFilter" translate>Rule</th>
+            <!-- Default rule column header -->
+            <th class="rsp-p1" st-sort="default" ng-show="defaultFilter" translate>Default</th>
             <!-- Scopes column header -->
             <th class="rsp-p1" st-sort="scopes" ng-show="scopesFilter" translate>Scopes</th>
             <!-- Operations column header -->
@@ -100,10 +106,10 @@
             <!--  Project column content -->
             <td ng-show="projectFilter">
                 <span ng-if="!item.expanded">
-                    {$ item.namespace | limitTo:charLimit $}
+                    {$ item.project | limitTo:charLimit $}
                 </span>
                 <span ng-if="item.expanded">
-                    {$ item.namespace $}
+                    {$ item.project $}
                 </span>
             </td>
             <!--  Target column content -->
@@ -122,6 +128,15 @@
                 </span>
                 <span ng-if="item.expanded">
                     {$ item.rule $}
+                </span>
+            </td>
+            <!--  Default rule column content -->
+            <td ng-show="defaultFilter">
+                <span ng-if="!item.expanded">
+                    {$ item.default | limitTo:charLimit $}
+                </span>
+                <span ng-if="item.expanded">
+                    {$ item.default $}
                 </span>
             </td>
             <!--  Scopes column content -->

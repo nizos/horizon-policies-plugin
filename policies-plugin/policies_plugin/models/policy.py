@@ -7,23 +7,26 @@ LOG = logging.getLogger(__name__)
 class Policy:
     # CONSTRUCTOR
     def __init__(self,
-                namespace="Default namespace",
-                target="Default target",
-                rule="Default rule",
-                scopes="Default scopes",
-                operations="Default operations",
-                description="Default description"):
-        self.namespace = namespace
+                project="Project",
+                target="Target",
+                rule="Rule",
+                default="Default rule",
+                scopes="Scopes",
+                operations="Operations",
+                description="Description"):
+        self.project = project
         self.target = target
         self.rule = rule
+        self.default = default
         self.scopes = scopes
         self.operations = operations
         self.description = description
 
     def from_item(self, item):
-        self.namespace = self.set_namespace_from_name(repr(item.name))
+        self.project = self.set_project_from_name(repr(item.name))
         self.target = self.set_target_from_name(repr(item.name))
         self.rule = self.strip_quotes(repr(item.check_str))
+        self.default = self.strip_quotes(repr(item.check_str))
         self.scopes = self.set_scopes(item)
         self.operations = self.set_operations(item)
         self.description = self.strip_quotes(repr(item.description))
@@ -36,7 +39,7 @@ class Policy:
             input_text = input_text[1:-1]
         return input_text
 
-    def set_namespace_from_name(self, name):
+    def set_project_from_name(self, name):
         part = self.strip_quotes(name)
         if ":" in part:
             part = part.split(':')[0]
@@ -89,9 +92,10 @@ class Policy:
      # GETTER
     def to_json(self):
         policy_json = {
-                'namespace': self.namespace,
+                'project': self.project,
                 'target': self.target,
                 'rule': self.rule,
+                'default': self.default,
                 'scopes': self.scopes,
                 'operations': self.operations,
                 'description': self.description
