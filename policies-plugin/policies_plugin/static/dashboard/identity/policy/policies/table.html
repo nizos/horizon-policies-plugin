@@ -3,48 +3,51 @@
 
 
 <!-- Table settings button -->
-<div class="btn-group pull-right" uib-dropdown is-open="status.isopen" auto-close="outsideClick">
-    <button id="single-button" type="button" class="btn btn-default table-settings-button pull-right" uib-dropdown-toggle>
-        <span class="fa fa-cog"></span> Table settings <span class="fa fa-caret-down"></span>
-    </button>
-    <!-- Settings button drop down menu-->
-    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
-        <!-- Menu section title -->
-        <li role="menuitem"><a>Show columns</a></li>
-        <!-- Menu section divider -->
-        <li class="divider"></li>
-        <!-- Show/hide policy project column in policies table -->
-        <li class="table-settings-menu-item" role="menuitem">
-            <input type="checkbox" ng-model="projectFilter" ng-checked="projectFilter" ng-init="projectFilter=true"/> Project
-        </li>
-        <!-- Show/hide policy target column in policies table -->
-        <li class="table-settings-menu-item" role="menuitem">
-            <input type="checkbox" ng-model="targetFilter" ng-checked="targetFilter" ng-init="targetFilter=true"/> Target
-        </li>
-        <!-- Show/hide policy rule column in policies table -->
-        <li class="table-settings-menu-item" role="menuitem">
-            <input type="checkbox" ng-model="ruleFilter" ng-checked="ruleFilter" ng-init="ruleFilter=true"/> Rule
-        </li>
-        <!-- Show/hide policy default rule column in policies table -->
-        <li class="table-settings-menu-item" role="menuitem">
-            <input type="checkbox" ng-model="defaultFilter" ng-checked="defaultFilter" ng-init="defaultFilter=false"/> Default
-        </li>
-        <!-- Show/hide policy scopes column in policies table -->
-        <li class="table-settings-menu-item" role="menuitem">
-            <input type="checkbox" ng-model="scopesFilter" ng-checked="scopesFilter" ng-init="scopesFilter=false"/> Scopes
-        </li>
-        <!-- Show/hide policy operations column in policies table -->
-        <li class="table-settings-menu-item" role="menuitem">
-            <input type="checkbox" ng-model="operationsFilter" ng-checked="operationsFilter" ng-init="operationsFilter=false"/> Operations
-        </li>
-        <!-- Show/hide policy description column in policies table -->
-        <li class="table-settings-menu-item" role="menuitem">
-            <input type="checkbox" ng-model="descriptionFilter" ng-checked="descriptionFilter" ng-init="descriptionFilter=true"/> Description
-        </li>
-    </ul>
+<div class="form-group">
+    <div class="input-group">
+        <input type="text" ng-model="searchText" uib-typeahead="item for item in table.items | filter:$viewValue | limitTo:8" class="form-control" placeholder="Search"/>
+        <div class="btn-group pull-right" uib-dropdown is-open="status.isopen" auto-close="outsideClick">
+            <button id="single-button" type="button" class="btn btn-default table-settings-button pull-right" uib-dropdown-toggle>
+                <span class="fa fa-cog"></span> Table settings <span class="fa fa-caret-down"></span>
+            </button>
+            <!-- Settings button drop down menu-->
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                <!-- Menu section title -->
+                <li role="menuitem"><a>Show columns</a></li>
+                <!-- Menu section divider -->
+                <li class="divider"></li>
+                <!-- Show/hide policy project column in policies table -->
+                <li class="table-settings-menu-item" role="menuitem">
+                    <input type="checkbox" ng-model="projectFilter" ng-checked="projectFilter" ng-init="projectFilter=true"/> Project
+                </li>
+                <!-- Show/hide policy target column in policies table -->
+                <li class="table-settings-menu-item" role="menuitem">
+                    <input type="checkbox" ng-model="targetFilter" ng-checked="targetFilter" ng-init="targetFilter=true"/> Target
+                </li>
+                <!-- Show/hide policy rule column in policies table -->
+                <li class="table-settings-menu-item" role="menuitem">
+                    <input type="checkbox" ng-model="ruleFilter" ng-checked="ruleFilter" ng-init="ruleFilter=true"/> Rule
+                </li>
+                <!-- Show/hide policy default rule column in policies table -->
+                <li class="table-settings-menu-item" role="menuitem">
+                    <input type="checkbox" ng-model="defaultFilter" ng-checked="defaultFilter" ng-init="defaultFilter=false"/> Default
+                </li>
+                <!-- Show/hide policy scopes column in policies table -->
+                <li class="table-settings-menu-item" role="menuitem">
+                    <input type="checkbox" ng-model="scopesFilter" ng-checked="scopesFilter" ng-init="scopesFilter=false"/> Scopes
+                </li>
+                <!-- Show/hide policy operations column in policies table -->
+                <li class="table-settings-menu-item" role="menuitem">
+                    <input type="checkbox" ng-model="operationsFilter" ng-checked="operationsFilter" ng-init="operationsFilter=false"/> Operations
+                </li>
+                <!-- Show/hide policy description column in policies table -->
+                <li class="table-settings-menu-item" role="menuitem">
+                    <input type="checkbox" ng-model="descriptionFilter" ng-checked="descriptionFilter" ng-init="descriptionFilter=true"/> Description
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
-
-<label>Search: <input ng-model="searchText"></label>
 
 <!-- Table -->
 <table ng-controller="PoliciesController as table"
