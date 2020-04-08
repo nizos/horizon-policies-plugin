@@ -1,4 +1,3 @@
-"identity:get_consumer": "role:admin and system_scope:all"
 "admin_required": "role:admin or is_admin:1"
 "service_role": "role:service"
 "service_or_admin": "rule:admin_required or rule:service_role"
@@ -24,6 +23,7 @@
 "identity:get_auth_projects": ""
 "identity:get_auth_domains": ""
 "identity:get_auth_system": ""
+"identity:get_consumer": "role:reader and system_scope:all"
 "identity:list_consumers": "role:reader and system_scope:all"
 "identity:create_consumer": "role:admin and system_scope:all"
 "identity:update_consumer": "role:admin and system_scope:all"
