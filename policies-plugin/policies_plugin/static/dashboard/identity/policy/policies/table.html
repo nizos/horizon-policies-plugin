@@ -180,8 +180,13 @@
 
         </tr>
     </tbody>
+    <input type="button" id="goToTop" class="goToTop" value="Scroll Top" style="display:none;background-color:#f9f9f9"  />
 
     <!--  Table footer -->
     <tfoot hz-table-footer items="table.items"></tfoot>
 
 </table>
+<script>  $('.goToTop').click(function () {
+    $("html, body").animate({ scrollTop: 0 }, 500);
+    return false;
+  });</script>

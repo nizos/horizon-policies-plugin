@@ -11,3 +11,18 @@
     width: 100%;
     display: flex;
 }
+
+.goToTop
+    {
+        position: fixed;
+        width: 100px;
+        height: 40px;
+        bottom: 0;
+        right: 0;
+        z-index: 100000;
+        cursor: pointer;
+        margin: 10px;
+        -moz-opacity: 0.60;
+        opacity: .60;
+        filter: alpha(opacity=60);
+    }
