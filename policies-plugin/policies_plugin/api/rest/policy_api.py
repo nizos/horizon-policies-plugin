@@ -24,19 +24,33 @@ class Policy_API:
             formatted = formatted.rstrip()
             target = formatted.split('": "')[0]
 
-            policy_item.default = keystone_docs[target]["default"]
-            policy_item.scopes = keystone_docs[target]["scopes"]
-            policy_item.operations = keystone_docs[target]["operations"]
-            policy_item.description = keystone_docs[target]["description"]
-            policy_item.rule = formatted.split('": "')[1]
-
             if ':' in target:
+                # Extract the project and target from the target string
                 policy_item.project = target.split(':')[0]
                 policy_item.target = target.split(':')[1]
             else:
+                # In case it did not have any project (and likely were a rule), set it to Global instead
                 policy_item.project = "Global"
                 policy_item.target = target
+
+            try:
+                # Attempt to get the default values from the dict
+                policy_item.default = keystone_docs[target]["default"]
+                policy_item.scopes = keystone_docs[target]["scopes"]
+                policy_item.operations = keystone_docs[target]["operations"]
+                policy_item.description = keystone_docs[target]["description"]
+            except KeyError:
+                # In case there was no defaults, set up the values for a home made policy.
+                policy_item.default = policy_item.target
+                policy_item.scopes = "HOME_BREW" # FIXME - There was another way to get scopes/targets?
+                policy_item.operations = "HOME_BREW" # FIXME - There was another way to get scopes/targets?
+                policy_item.description = "Non-default policy, made by the user"
+
+            policy_item.rule = formatted.split('": "')[1]
+
+
 
             policy_items.append(policy_item)
 
         return policy_items
+
