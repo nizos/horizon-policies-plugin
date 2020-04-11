@@ -12,17 +12,19 @@
  * limitations under the License.
  */
 (function() {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('horizon.dashboard.identity.policy.policies')
-    .controller('PoliciesController', PoliciesController);
+    angular
+        .module('horizon.dashboard.identity.policy.policies')
+        .controller('PoliciesController', PoliciesController);
 
     PoliciesController.$inject = [
-    'horizon.dashboard.identity.policy.policies.policy-client',
-    '$timeout',
-    '$scope'
-  ];
+        'horizon.dashboard.identity.policy.policies.policy-client',
+        '$scope',
+        '$log',
+        '$anchorScroll',
+        '$filter'
+    ];
 
   /**
    * @ngdoc controller
@@ -32,42 +34,72 @@
    * @param api The policies client service API.
    * @returns undefined
    */
-  function PoliciesController(api, $timeout, $scope) {
+    function PoliciesController(api, $scope, $log, $anchorScroll, $filter) {
 
-    var ctrl = this;
-    ctrl.src = [];
-    $scope.charLimit = 50;
-    ctrl.checked = {};
+        var ctrl = this;
+        $scope.data = [];
+        $scope.charLimit = 50;
+        ctrl.checked = {};
+        $scope.currentPage = 0;
+        $scope.pageSize = 20;
+        $scope.query = '';
+        $scope.column = 'target';
+        $scope.reverse = false;
 
-    init();
+        init();
 
-    function init() {
-        api.getPolicies().success(success);
-    }
-
-    function success(response) {
-        ctrl.src = response.items;
-        ctrl.src.forEach(function(item){
-            item.expanded=false;
-            item.listLimit=1;
-        })
-    }
-
-    $scope.expandSelected=function(item){
-        if(item.expanded==true) {
-            ctrl.src.forEach(function(i){
-                i.expanded=false;
-                i.listLimit=1;
-              })
-        } else {
-            ctrl.src.forEach(function(i){
-                i.expanded=false;
-                i.listLimit=1;
-              })
-            item.expanded=true;
-            item.listLimit=10000;
+        function init() {
+            api.getPolicies().success(success);
         }
-    }
-  }
 
+        function success(response) {
+            $scope.data = response.items;
+            $scope.data.forEach(function(item){
+                item.expanded=false;
+                item.listLimit=1;
+            })
+        }
+
+        $scope.expandSelected=function(item){
+            if(item.expanded==true) {
+                $scope.data.forEach(function(i){
+                    i.expanded=false;
+                    i.listLimit=1;
+                })
+            } else {
+                $scope.data.forEach(function(i){
+                    i.expanded=false;
+                    i.listLimit=1;
+                })
+                item.expanded=true;
+                item.listLimit=10000;
+            }
+        }
+
+        $scope.getData = function () {
+            return $filter('filter')($scope.data, $scope.query);
+        }
+
+        $scope.numberOfPages=function(){
+            return Math.ceil($scope.getData().length/$scope.pageSize);
+        }
+
+        $scope.$watch('query', function(newValue, oldValue) {
+            if(oldValue!=newValue) {
+                $scope.currentPage = 0;
+            }
+        },true);
+
+        // called on header click
+        $scope.sortColumn = function(col) {
+            $scope.column = col;
+            if($scope.reverse) {
+                $scope.reverse = false;
+            } else {
+                $scope.reverse = true;
+            }
+        };
+    }
 })();
+
+
