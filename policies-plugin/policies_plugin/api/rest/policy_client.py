@@ -54,14 +54,18 @@ class Policy_Client:
 
         return policy_items
 
-    def get_policy(self, request, target):
+    def get_policy(self, request, project, target):
         LOG.warning("Get policy called in Policy API")
         LOG.warning("identity:"+target)
         FILE_PATH = "/opt/stack/horizon/horizon-policies-plugin/" + "policies-plugin/policies_plugin/api/rest/policy_output.txt"
         generator._generate_policy("keystone", FILE_PATH)
 
+        requested = ""
+        if (project != "Global"):
+            requested = project+":"+target
+        else:
+            requested = target
 
-        requested = "identity:"+target
         LOG.warning("requested: " + requested)
         policy_line = requested
         with open(FILE_PATH) as file:

@@ -22,10 +22,10 @@ class Policies(generic.View):
 
 @urls.register
 class Policy(generic.View):
-    url_regex = r'policy-api/policy/(?P<target>[^/]+)$'
+    url_regex = r'policy-api/policy/(?P<project>[^/]+)/(?P<target>[^/]+)$'
     policy_Client = Policy_Client()
 
     @rest_utils.ajax()
-    def get(self, request, target):
-        policy = self.policy_Client.get_policy(request, target)
+    def get(self, request, project, target):
+        policy = self.policy_Client.get_policy(request, project, target)
         return {'item': policy.to_json()}

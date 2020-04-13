@@ -64,8 +64,8 @@
             $scope.policy = response.item;
         }
 
-        $scope.getPolicy=function(target){
-            api.getPolicy(target).success(policySuccess);
+        $scope.getPolicy=function(project, target){
+            api.getPolicy(project, target).success(policySuccess);
         }
 
         $scope.expandSelected=function(item){

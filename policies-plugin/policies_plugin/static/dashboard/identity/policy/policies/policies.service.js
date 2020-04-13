@@ -55,8 +55,8 @@
         });
     }
 
-    function getPolicy(target) {
-        return apiService.get('/api/policy-api/policy/'+target)
+    function getPolicy(project, target) {
+        return apiService.get('/api/policy-api/policy/'+project+"/"+target)
           .error(function () {
             toastService.add('error', gettext('Unable to retrieve policy.'));
           });

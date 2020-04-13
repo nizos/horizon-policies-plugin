@@ -184,7 +184,7 @@
                 </td>
 
                 <!--  Target column content -->
-                <td ng-show="targetFilter" ng-click="getPolicy(item.target)">
+                <td ng-show="targetFilter" ng-click="getPolicy(item.project, item.target)">
                     <span ng-if="!item.expanded">
                         {$ item.target | limitTo:charLimit $}
                     </span>
@@ -263,9 +263,6 @@
     </button>
 
     <div>
-        Policy: {$ policy $}
-    </div>
-    <div>
         Project: {$ policy.project $}
     </div>
     <div>
@@ -278,10 +275,10 @@
         Default: {$ policy.default $}
     </div>
     <div>
-        Scopes: {$ policy.scopes $}
+      <span ng-repeat="scope in policy.scopes">{$ scope $}<br/></span>
     </div>
     <div>
-        Operations: {$ policy.operations $}
+        <span ng-repeat="operation in policy.operations">{$ operation $}<br/></span>
     </div>
     <div>
         Description: {$ policy.description $}
