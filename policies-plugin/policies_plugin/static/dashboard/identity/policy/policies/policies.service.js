@@ -16,7 +16,7 @@
 
   angular
     .module('horizon.dashboard.identity.policy.policies')
-    .factory('horizon.dashboard.identity.policy.policies.policy-client', policiesAPI);
+    .factory('horizon.dashboard.identity.policy.policies.policy-api', policiesAPI);
 
   policiesAPI.$inject = [
     'horizon.framework.util.http.service',
@@ -25,7 +25,7 @@
 
   /**
    * @ngdoc service
-   * @name horizon.dashboard.identity.policy.policies.policy-client
+   * @name horizon.dashboard.identity.policy.policies.policy-api
    * @description Provides direct pass through to policy-client.
    * @param apiService The horizon core API service.
    * @param toastService The horizon toast service.
@@ -34,13 +34,14 @@
 
   function policiesAPI(apiService, toastService) {
     var service = {
-      getPolicies: getPolicies
+      getPolicies: getPolicies,
+      getPolicy: getPolicy
     };
 
     return service;
 
     /**
-     * @name horizon.dashboard.identity.policy.policies.policy-client.getPolicies
+     * @name horizon.dashboard.identity.policy.policies.policy-api.getPolicies
      * @description
      * Get a list of policies
      * The listing result is an object with property "items". Each item is
@@ -48,10 +49,17 @@
      */
 
     function getPolicies() {
-      return apiService.get('/api/policy-client/policies/')
+      return apiService.get('/api/policy-api/policies/')
         .error(function () {
           toastService.add('error', gettext('Unable to retrieve policies.'));
         });
     }
+
+    function getPolicy() {
+        return apiService.get('/api/policy-api/policy/authorize_request_token')
+          .error(function () {
+            toastService.add('error', gettext('Unable to retrieve policy.'));
+          });
+      }
   }
 })();

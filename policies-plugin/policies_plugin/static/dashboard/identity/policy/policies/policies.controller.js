@@ -19,11 +19,10 @@
         .controller('PoliciesController', PoliciesController);
 
     PoliciesController.$inject = [
-        'horizon.dashboard.identity.policy.policies.policy-client',
+        'horizon.dashboard.identity.policy.policies.policy-api',
         '$scope',
         '$log',
-        '$anchorScroll',
-        '$filter'
+        '$anchorScroll'
     ];
 
   /**
@@ -34,10 +33,11 @@
    * @param api The policies client service API.
    * @returns undefined
    */
-    function PoliciesController(api, $scope, $log, $anchorScroll, $filter) {
+    function PoliciesController(api, $scope, $log, $anchorScroll) {
 
         var ctrl = this;
         $scope.data = [];
+        $scope.policy = [];
         $scope.charLimit = 50;
         ctrl.checked = {};
         $scope.currentPage = 0;
@@ -50,6 +50,7 @@
 
         function init() {
             api.getPolicies().success(success);
+            api.getPolicy().success(success2);
         }
 
         function success(response) {
@@ -58,6 +59,10 @@
                 item.expanded=false;
                 item.listLimit=1;
             })
+        }
+
+        function success2(response) {
+            $scope.policy = response.item;
         }
 
         $scope.expandSelected=function(item){
@@ -76,12 +81,8 @@
             }
         }
 
-        $scope.getData = function () {
-            return $filter('filter')($scope.data, $scope.query);
-        }
-
         $scope.numberOfPages=function(){
-            return Math.ceil($scope.getData().length/$scope.pageSize);
+            return Math.ceil($scope.data.length/$scope.pageSize);
         }
 
         $scope.$watch('query', function(newValue, oldValue) {
