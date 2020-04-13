@@ -275,10 +275,10 @@
         Default: {$ policy.default $}
     </div>
     <div>
-      <span ng-repeat="scope in policy.scopes">{$ scope $}<br/></span>
+      Scopes:<span ng-repeat="scope in policy.scopes"> {$ scope $}</span>
     </div>
     <div>
-        <span ng-repeat="operation in policy.operations">{$ operation $}<br/></span>
+        Operations:<span ng-repeat="operation in policy.operations"> {$ operation $}</span>
     </div>
     <div>
         Description: {$ policy.description $}
