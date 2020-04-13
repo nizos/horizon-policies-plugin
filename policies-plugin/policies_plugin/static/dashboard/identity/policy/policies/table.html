@@ -1,5 +1,5 @@
 <!-- Policies table controller -->
-<div ng-controller="PoliciesController">
+<div ng-controller="PoliciesController" class="table-view">
 
     <!-- Page header -->
     <hz-page-header header="{$ 'Policies' | translate $}"></hz-page-header>
@@ -10,15 +10,59 @@
             <!-- Search bar -->
             <input ng-model="query" id="query" class="form-control" placeholder="Search">
 
-            <!-- Results per page drop down -->
-            <select ng-model="pageSize" id="pageSize" class="form-control" ng-init="pageSize = '20'">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-            </select>
+            <div class="btn-group pull-right" uib-dropdown is-open="status.isopen1" auto-close="outsideClick">
 
+                <!-- Table settings button -->
+                <button id="single-button" type="button" class="btn btn-default table-settings-button pull-right" uib-dropdown-toggle>
+                    <span class="fa fa-cog"></span>
+                    Search settings
+                    <span class="fa fa-caret-down"></span>
+                </button>
+
+                <!-- Settings button drop down menu-->
+                <ul class="dropdown-menu1" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                    <!-- Menu section title -->
+                    <li role="menuitem"><a>Search in columns:</a></li>
+
+                    <!-- Menu section divider -->
+                    <li class="divider"></li>
+
+                    <!-- Show/hide project column in policies table -->
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" id="projectSearch" ng-model="projectSearch" ng-checked="projectSearch" ng-init="projectSearch=true"/> Project
+                    </li>
+
+                    <!-- Show/hide  target column in policies table -->
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="targetSearch" ng-checked="targetSearch" ng-init="targetSearch=true"/> Target
+                    </li>
+
+                    <!-- Show/hide rule column in policies table -->
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="ruleSearch" ng-checked="ruleSearch" ng-init="ruleSearch=true"/> Rule
+                    </li>
+
+                    <!-- Show/hide default rule column in policies table -->
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="defaultSearch" ng-checked="defaultSearch" ng-init="defaultSearch=false"/> Default
+                    </li>
+
+                    <!-- Show/hide scopes column in policies table -->
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="scopesSearch" ng-checked="scopesSearch" ng-init="scopesSearch=false"/> Scopes
+                    </li>
+
+                    <!-- Show/hide operations column in policies table -->
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="operationsSearch" ng-checked="operationsSearch" ng-init="operationsSearch=false"/> Operations
+                    </li>
+
+                    <!-- Show/hide description column in policies table -->
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="descriptionSearch" ng-checked="descriptionSearch" ng-init="descriptionSearch=true"/> Description
+                    </li>
+                </ul>
+            </div>
             <!-- Table settings button group -->
             <div class="btn-group pull-right" uib-dropdown is-open="status.isopen" auto-close="outsideClick">
 
@@ -32,15 +76,10 @@
                 <!-- Settings button drop down menu-->
                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
 
-                    <!-- Menu section title -->
-                    <li role="menuitem"><a>Show columns</a></li>
-
-                    <!-- Menu section divider -->
-                    <li class="divider"></li>
-
+                    <li role="menuitem"><a>Show columns:</a></li>
                     <!-- Show/hide project column in policies table -->
                     <li class="table-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="projectFilter" ng-checked="projectFilter" ng-init="projectFilter=true"/> Project
+                        <input type="checkbox" id="projectFilter" ng-model="projectFilter" ng-checked="projectFilter" ng-init="projectFilter=true"/> Project
                     </li>
 
                     <!-- Show/hide  target column in policies table -->
@@ -73,6 +112,19 @@
                         <input type="checkbox" ng-model="descriptionFilter" ng-checked="descriptionFilter" ng-init="descriptionFilter=true"/> Description
                     </li>
 
+                    <!-- Menu section divider -->
+                    <li class="divider"></li>
+                    <!-- Results per page drop down -->
+                    <div class="select-control">
+                        <a>Items per page:</a>
+                        <select ng-model="pageSize" id="pageSize" class="form-control" ng-init="pageSize = '20'">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -184,7 +236,7 @@
                 </td>
 
                 <!--  Target column content -->
-                <td ng-show="targetFilter" ng-click="getPolicy(item.project, item.target)">
+                <td ng-show="targetFilter" ng-click="showForm(item)">
                     <span ng-if="!item.expanded">
                         {$ item.target | limitTo:charLimit $}
                     </span>
@@ -251,6 +303,10 @@
         </tbody>
     </table>
 
+    <!--  Scroll to top button -->
+
+    <input type="button" id="goToTop" class="goToTop" value="Scroll Top" style="display:none;background-color:#f9f9f9"/>
+
     <!--  Pagination -->
     <button ng-disabled="currentPage == 0"
             ng-click="currentPage=currentPage-1">
@@ -261,29 +317,4 @@
             ng-click="currentPage=currentPage+1">
             Next
     </button>
-
-    <div>
-        Project: {$ policy.project $}
-    </div>
-    <div>
-        Target: {$ policy.target $}
-    </div>
-    <div>
-        Rule: {$ policy.rule $}
-    </div>
-    <div>
-        Default: {$ policy.default $}
-    </div>
-    <div>
-      Scopes:<span ng-repeat="scope in policy.scopes"> {$ scope $}</span>
-    </div>
-    <div>
-        Operations:<span ng-repeat="operation in policy.operations"> {$ operation $}</span>
-    </div>
-    <div>
-        Description: {$ policy.description $}
-    </div>
-
-
-
 </div>

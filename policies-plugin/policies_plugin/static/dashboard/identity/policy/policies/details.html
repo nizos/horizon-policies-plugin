@@ -1,0 +1,25 @@
+<!-- Policy controller -->
+<div ng-controller="PoliciesController">
+    <div>
+        Project: {$ $ctrl.items.project $}
+    </div>
+
+    <div>
+        Target: {$ $ctrl.items.target $}
+    </div>
+    <div>
+        Rule: {$ $ctrl.items.rule $}
+    </div>
+    <div>
+        Default: {$ $ctrl.items.default $}
+    </div>
+    <div>
+        Scopes:<span ng-repeat="scope in $ctrl.items.scopes"> {$ scope $}</span>
+    </div>
+    <div>
+        Operations:<span ng-repeat="operation in $ctrl.items.operations"> {$ operation $}<br/></span>
+    </div>
+    <div>
+        Description: {$ $ctrl.items.description $}
+    </div>
+</div>

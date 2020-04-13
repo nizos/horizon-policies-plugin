@@ -26,5 +26,4 @@
   angular
     .module('horizon.dashboard.identity.policy.policies', []);
 
-
 })();

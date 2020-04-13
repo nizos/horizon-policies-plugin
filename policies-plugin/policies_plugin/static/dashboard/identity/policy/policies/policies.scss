@@ -1,3 +1,8 @@
+
+.table-view {
+    padding-bottom: 100px;
+}
+
 .table-settings-menu-item {
     padding-left: 1.5em;
     padding-right: 1.5em;
@@ -12,22 +17,25 @@
     display: flex;
 }
 
-.goToTop {
-    position: fixed;
-    width: 100px;
-    height: 40px;
-    bottom: 0;
-    right: 0;
-    z-index: 100000;
-    cursor: pointer;
-    margin: 10px;
-    -moz-opacity: 0.60;
-    opacity: .60;
-    filter: alpha(opacity=60);
-    display:none;
-    background-color:#f9f9f9;
+.modal-dialog {
+    width: 70%;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
 }
 
 .table tbody tr td {
     vertical-align: top;
+}
+
+.select-control {
+    width: 100%;
+    display: table-cell;
+    padding: 2px;
 }

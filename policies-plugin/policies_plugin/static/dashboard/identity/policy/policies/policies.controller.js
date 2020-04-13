@@ -15,13 +15,14 @@
     'use strict';
 
     angular
-        .module('horizon.dashboard.identity.policy.policies')
+        .module('horizon.dashboard.identity.policy.policies', ['ui.bootstrap'])
         .controller('PoliciesController', PoliciesController);
 
     PoliciesController.$inject = [
         'horizon.dashboard.identity.policy.policies.policy-api',
         '$scope',
         '$log',
+        '$uibModal',
         '$anchorScroll'
     ];
 
@@ -33,7 +34,7 @@
    * @param api The policies client service API.
    * @returns undefined
    */
-    function PoliciesController(api, $scope, $log, $anchorScroll) {
+    function PoliciesController(api, $scope, $log, $uibModal, $anchorScroll) {
 
         var ctrl = this;
         $scope.data = [];
@@ -45,6 +46,7 @@
         $scope.query = '';
         $scope.column = 'target';
         $scope.reverse = false;
+        $scope.items = {};
 
         init();
 
@@ -94,7 +96,6 @@
             }
         },true);
 
-        // called on header click
         $scope.sortColumn = function(col) {
             $scope.column = col;
             if($scope.reverse) {
@@ -103,7 +104,41 @@
                 $scope.reverse = true;
             }
         };
+
+        $scope.showForm = function(items_new) {
+            $scope.items = items_new;
+            var uibModalInstance = $uibModal.open({
+                templateUrl: 'static/dashboard/identity/policy/policies/details/details.html',
+                controller: 'DetailsController',
+                controllerAs: '$ctrl',
+                resolve: {
+                    $items: function () {
+                        return items_new;
+                    }
+                }
+            });
+
+            uibModalInstance.result.then();
+        }
     }
+
+    angular
+        .module('horizon.dashboard.identity.policy.policies')
+        .controller('DetailsController', [
+            '$uibModalInstance',
+            '$items',
+            function($uibModalInstance, $items) {
+                var $ctrl = this;
+                $ctrl.items = $items;
+
+                $ctrl.ok = function () {
+                    $uibModalInstance.close();
+                };
+
+                $ctrl.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            }
+        ]);
+
 })();
-
-
