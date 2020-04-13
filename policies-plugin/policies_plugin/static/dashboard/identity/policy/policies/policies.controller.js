@@ -49,11 +49,10 @@
         init();
 
         function init() {
-            api.getPolicies().success(success);
-            api.getPolicy().success(success2);
+            api.getPolicies().success(policiesSuccess);
         }
 
-        function success(response) {
+        function policiesSuccess(response) {
             $scope.data = response.items;
             $scope.data.forEach(function(item){
                 item.expanded=false;
@@ -61,8 +60,12 @@
             })
         }
 
-        function success2(response) {
+        function policySuccess(response) {
             $scope.policy = response.item;
+        }
+
+        $scope.getPolicy=function(target){
+            api.getPolicy(target).success(policySuccess);
         }
 
         $scope.expandSelected=function(item){

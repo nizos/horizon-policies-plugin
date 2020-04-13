@@ -184,7 +184,7 @@
                 </td>
 
                 <!--  Target column content -->
-                <td ng-show="targetFilter">
+                <td ng-show="targetFilter" ng-click="getPolicy(item.target)">
                     <span ng-if="!item.expanded">
                         {$ item.target | limitTo:charLimit $}
                     </span>

@@ -55,8 +55,8 @@
         });
     }
 
-    function getPolicy() {
-        return apiService.get('/api/policy-api/policy/authorize_request_token')
+    function getPolicy(target) {
+        return apiService.get('/api/policy-api/policy/'+target)
           .error(function () {
             toastService.add('error', gettext('Unable to retrieve policy.'));
           });
