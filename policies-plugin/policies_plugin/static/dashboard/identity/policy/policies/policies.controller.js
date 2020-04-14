@@ -108,7 +108,7 @@
         $scope.showForm = function(items_new) {
             $scope.items = items_new;
             var uibModalInstance = $uibModal.open({
-                templateUrl: 'static/dashboard/identity/policy/policies/details/details.html',
+                templateUrl: 'static/dashboard/identity/policy/policies/details.html',
                 controller: 'DetailsController',
                 controllerAs: '$ctrl',
                 resolve: {
