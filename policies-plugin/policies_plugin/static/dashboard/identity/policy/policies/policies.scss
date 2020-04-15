@@ -15,6 +15,7 @@
 .input-group {
     width: 100%;
     display: flex;
+    align-items: flex-end;
 }
 
 input {
@@ -40,8 +41,9 @@ input {
 
 .select-control {
     width: 100%;
-    display: table-cell;
+    display: flex;
     padding: 2px;
+    text-align: center;
 }
 
 label {
