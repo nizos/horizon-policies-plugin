@@ -50,10 +50,18 @@ label {
     width: 100%;
 }
 
+textarea {
+    margin-top: 6px;
+}
+
 span .fa fa-close {
     margin: 5px;
 }
 
 span .fa fa-check {
     margin: 5px;
+}
+
+.fa, .pie-chart-distribution .legend-symbol, .tablesorter-headerAsc .table-sort-indicator, .tablesorter-headerDesc .table-sort-indicator {
+    margin: 4px;
 }

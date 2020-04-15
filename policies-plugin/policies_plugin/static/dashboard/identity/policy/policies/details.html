@@ -10,34 +10,36 @@
         <div class="form-group hz-input  has-feedback">
 
     <div>
-        <label class="control-label "><span class="ng-binding">Project</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="project" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.project $}" ng-disabled="form.readonly"></label>
+        <label class="control-label "><span class="ng-binding">Project</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="project" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.project $}" ng-disabled="form.readonly" readonly></label>
         
     </div><br>
 
     <div>
-        <label class="control-label "><span class="ng-binding">Target</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="project" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.target $}" ng-disabled="form.readonly"></label>
+        <label class="control-label "><span class="ng-binding">Target</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="target" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.target $}" ng-disabled="form.readonly" readonly></label>
         
     </div><br>
     <div>
-        <label class="control-label "><span class="ng-binding">Rule</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="project" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.rule $}" ng-disabled="form.readonly"></label>
+        <label class="control-label "><span class="ng-binding">Rule</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="rule" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.rule $}" ng-disabled="form.readonly"></label>
         
     </div><br>
     <div>
-        <label class="control-label "><span class="ng-binding">Default</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="project" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.default $}" ng-disabled="form.readonly"></label>
+        <label class="control-label "><span class="ng-binding">Default</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="default" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.default $}" ng-disabled="form.readonly" readonly></label>
          
     </div><br>
     <div>
-        <label class="control-label "><span class="ng-binding">Scopes</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><span ng-repeat="scope in $ctrl.items.scopes"><input id="project" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ scope $}" ng-disabled="form.readonly"></label></span>
+        <label class="control-label "><span class="ng-binding">Scopes</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><span ng-repeat="scope in $ctrl.items.scopes"><input id="scopes" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ scope $}" ng-disabled="form.readonly" readonly></label></span>
 
     </div><br>
     <div>
-        <label class="control-label "><span class="ng-binding">Operations</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><span ng-repeat="operation in $ctrl.items.operations"><input id="project" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ operation $}" ng-disabled="form.readonly"></label></span>
+        <label class="control-label "><span class="ng-binding">Operations</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><span ng-repeat="operation in $ctrl.items.operations"><input id="operations" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ operation $}" ng-disabled="form.readonly" readonly></label></span>
 
     </div><br>
     <div>
-        <label class="control-label "><span class="ng-binding">Description</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="project" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.description $}" ng-disabled="form.readonly"></label>
+        <label class="control-label "><span class="ng-binding">Description</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><textarea id="description" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.description $}" ng-disabled="form.readonly" readonly></label></textarea>
     </div>
     </div>
+    </div>
+    
 </div>
     <div class="modal-footer ng-scope">
         <button class="btn btn-default pull-left" type="button" ng-click="$dismiss()"><span class="fa fa-close"></span>Cancel</button>
