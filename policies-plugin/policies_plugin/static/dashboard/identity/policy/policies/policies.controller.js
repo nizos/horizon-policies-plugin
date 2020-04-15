@@ -38,7 +38,7 @@
 
         var ctrl = this;
         $scope.data = [];
-        $scope.policy = [];
+        $scope.singlePolicy = [];
         $scope.charLimit = 50;
         ctrl.checked = {};
         $scope.currentPage = 0;
@@ -47,6 +47,17 @@
         $scope.column = 'target';
         $scope.reverse = false;
         $scope.items = {};
+
+        $scope.name = 'World';
+        $scope.policy = [];
+        $scope.editedPolicy = [];
+        $scope.editedPolicy.project = "None";
+        $scope.editedPolicy.target = "None";
+        $scope.editedPolicy.rule = "None";
+        $scope.editedPolicy.default = "None";
+        $scope.editedPolicy.scopes = "None";
+        $scope.editedPolicy.operations = "None";
+        $scope.editedPolicy.description = "None";
 
         init();
 
@@ -63,7 +74,7 @@
         }
 
         function policySuccess(response) {
-            $scope.policy = response.item;
+            $scope.singlePolicy = response.item;
         }
 
         $scope.getPolicy=function(project, target){
@@ -105,44 +116,64 @@
             }
         };
 
-
-
-        $scope.showForm = function(items_new) {
-            $scope.items = items_new;
-            var uibModalInstance = $uibModal.open({
+        $scope.OpenModal = function(policy){
+            var modalInstance = $uibModal.open({
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
                 templateUrl: 'static/dashboard/identity/policy/policies/details.html',
-                controller: 'DetailsController',
+                controller: 'modalController',
                 controllerAs: '$ctrl',
                 resolve: {
-                    $items: function () {
-                        return items_new;
+                    $policy: function () {
+                        return policy;
                     }
-                    
                 }
             });
 
-            uibModalInstance.result.then();
-        }
+            modalInstance.result.then(function (policy) {
+                $scope.editedPolicy = policy;
 
+            }, function () {
+            });
+        }
     }
 
     angular
         .module('horizon.dashboard.identity.policy.policies')
-        .controller('DetailsController', [
+        .controller('modalController', [
             '$uibModalInstance',
-            '$items',
-            function($uibModalInstance, $items) {
-                var $ctrl = this;
-                $ctrl.items = $items;
+            '$log',
+            '$scope',
+            '$policy',
+            function($uibModalInstance, $log, $scope, $policy) {
 
-                $ctrl.ok = function () {
-                    $uibModalInstance.close();
+                var $ctrl = this;
+                $ctrl.policy = $policy;
+
+                $scope.ok = function(policy) {
+                    $uibModalInstance.close(policy);
                 };
 
-                $ctrl.cancel = function () {
-                    console.log(prefix + '$dismiss returned ' + $ctrl.$dismiss('cancel'));
-                  };
-            
+                $scope.cancel = function() {
+                    $uibModalInstance.dismiss('cancel');
+                }
+
+                $scope.addScope = function() {
+                    $ctrl.policy.scopes.push("");
+                }
+
+                $scope.addOperation = function() {
+                    $ctrl.policy.operations.push("");
+                }
+
+                $scope.removeScope = function(index) {
+                    $ctrl.policy.scopes.splice(index, 1);
+                }
+
+                $scope.removeOperation = function(index) {
+                    $ctrl.policy.operations.splice(index, 1);
+                }
+
             }
         ]);
 

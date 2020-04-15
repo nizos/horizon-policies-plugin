@@ -1,48 +1,214 @@
-<!-- Policy controller -->
+<!-- Policies controller -->
 <div ng-controller="PoliciesController">
-    <div class="modal-header ng-scope">
-        <div class="h4 modal-title ng-binding">Edit policy
-        <a class="close" ng-click="$dismiss()">
-            <span class="fa fa-times"></span>
-        </a></div>
-    </div>
-    <div class="modal-body ng-scope">
-        <div class="form-group hz-input  has-feedback">
 
-    <div>
-        <label class="control-label "><span class="ng-binding">Project</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="project" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.project $}" ng-disabled="form.readonly" readonly></label>
-        
-    </div><br>
-
-    <div>
-        <label class="control-label "><span class="ng-binding">Target</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="target" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.target $}" ng-disabled="form.readonly" readonly></label>
-        
-    </div><br>
-    <div>
-        <label class="control-label "><span class="ng-binding">Rule</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="rule" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.rule $}" ng-disabled="form.readonly"></label>
-        
-    </div><br>
-    <div>
-        <label class="control-label "><span class="ng-binding">Default</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><input id="default" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.default $}" ng-disabled="form.readonly" readonly></label>
-         
-    </div><br>
-    <div>
-        <label class="control-label "><span class="ng-binding">Scopes</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><span ng-repeat="scope in $ctrl.items.scopes"><input id="scopes" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ scope $}" ng-disabled="form.readonly" readonly></label></span>
-
-    </div><br>
-    <div>
-        <label class="control-label "><span class="ng-binding">Operations</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><span ng-repeat="operation in $ctrl.items.operations"><input id="operations" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ operation $}" ng-disabled="form.readonly" readonly></label></span>
-
-    </div><br>
-    <div>
-        <label class="control-label "><span class="ng-binding">Description</span><span class="hz-icon-required fa fa-asterisk ng-scope"></span><br><textarea id="description" class="form-control  ng-not-empty ng-valid-schema-form ng-touched" type="text" value="{$ $ctrl.items.description $}" ng-disabled="form.readonly" readonly></label></textarea>
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Edit policy</h3>
     </div>
+
+    <!-- Modal Body -->
+    <div class="modal-body" id="modal-body">
+        <form>
+
+            <!-- Policy Project -->
+            <div class="form-group">
+                <!-- Policy Project Label -->
+                <label for="projectFieldInput">Project</label>
+                <div class="input-group">
+                    <!--  Policy Project Input Field -->
+                    <input type="text"
+                        class="form-control"
+                        id="projectFieldInput"
+                        ng-model="$ctrl.policy.project"
+                        value="{$ $ctrl.policy.project $}"
+                        ng-init="editProject = false"
+                        ng-disabled="!editProject">
+                    <!-- Policy Project Edit Button -->
+                    <button class="btn btn-primary"
+                        type="button"
+                        ng-click="editProject = !editProject">
+                        Edit
+                    </button>
+                </div>
+            </div>
+
+            <!-- Policy Target -->
+            <div class="form-group">
+                <!-- Policy Target Label -->
+                <label for="targetFieldInput">Target</label>
+                <div class="input-group">
+                    <!--  Policy Target Input Field -->
+                    <input type="text"
+                        class="form-control"
+                        id="targetFieldInput"
+                        ng-model="$ctrl.policy.target"
+                        value="{$ $ctrl.policy.target $}"
+                        ng-init="editTarget = false"
+                        ng-disabled="!editTarget">
+                    <!-- Policy Target Edit Button -->
+                    <button class="btn btn-primary"
+                        type="button"
+                        ng-click="editTarget = !editTarget">
+                        Edit
+                    </button>
+                </div>
+            </div>
+
+            <!-- Policy Rule -->
+            <div class="form-group">
+                <!-- Policy Rule Label -->
+                <label for="ruleFieldInput">Rule</label>
+                <div class="input-group">
+                    <!--  Policy Rule Input Field -->
+                    <input type="text"
+                        class="form-control"
+                        id="ruleFieldInput"
+                        ng-model="$ctrl.policy.rule"
+                        value="{$ $ctrl.policy.rule $}"
+                        ng-init="editRule = false"
+                        ng-disabled="!editRule">
+                    <!-- Policy Rule Edit Button -->
+                    <button class="btn btn-primary"
+                        type="button"
+                        ng-click="editRule = !editRule">
+                        Edit
+                    </button>
+                </div>
+            </div>
+
+            <!-- Policy Default Rule -->
+            <div class="form-group">
+                <!-- Policy Default Rule Label -->
+                <label for="defaultFieldInput">Default</label>
+                <div class="input-group">
+                    <!--  Policy Default Rule Input Field -->
+                    <input type="text"
+                        class="form-control"
+                        id="defaultFieldInput"
+                        ng-model="$ctrl.policy.default"
+                        value="{$ $ctrl.policy.default $}"
+                        ng-init="editDefault = false"
+                        ng-disabled="!editDefault">
+                    <!-- Policy Default Rule Edit Button -->
+                    <button class="btn btn-primary"
+                        type="button"
+                        ng-click="editDefault = !editDefault">
+                        Edit
+                    </button>
+                </div>
+            </div>
+
+            <!-- Policy Scopes -->
+            <div class="form-group">
+                <!-- Policy Scopes Label -->
+                <label for="scopesFieldInput">Scopes</label>
+                <div ng-repeat="scope in $ctrl.policy.scopes track by $index">
+                    <div class="input-group">
+                        <!--  Policy Scope Input Field -->
+                        <input type="text"
+                            class="form-control"
+                            ng-model="$ctrl.policy.scopes[$index]"
+                            value="{$ scope $}"
+                            ng-init="editScope = false"
+                            ng-disabled="!editScope">
+                        <!-- Policy Scope Edit Button -->
+                        <button class="btn btn-primary"
+                            type="button"
+                            ng-click="editScope = !editScope">
+                            Edit
+                        </button>
+                        <!-- Policy Scope Delete Button -->
+                        <button class="btn btn-danger"
+                            type="button"
+                            ng-click="removeScope($index)">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                <!-- Policy Scopes Add New Scope Button -->
+                <button class="btn btn-primary"
+                    type="button"
+                    ng-click="addScope()">
+                    Add new scope
+                </button>
+            </div>
+
+            <!-- Policy Operations -->
+            <div class="form-group">
+                <!-- Policy Operations Label -->
+                <label for="operationsFieldInput">Operations</label>
+                <div ng-repeat="operation in $ctrl.policy.operations track by $index">
+                    <div class="input-group">
+                        <!--  Policy Operation Input Field -->
+                        <input type="text"
+                            class="form-control"
+                            ng-model="$ctrl.policy.operations[$index]"
+                            value="{$ operation $}"
+                            ng-init="editOperation = false"
+                            ng-disabled="!editOperation">
+                        <!-- Policy Operation Edit Button -->
+                        <button class="btn btn-primary"
+                            type="button"
+                            ng-click="editOperation = !editOperation">
+                            Edit
+                        </button>
+                        <!-- Policy Operation Delete Button -->
+                        <button class="btn btn-danger"
+                            type="button"
+                            ng-click="removeOperation($index)">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+                <!-- Policy Operations Add New Operation Button -->
+                <button class="btn btn-primary"
+                    type="button"
+                    ng-click="addOperation()">
+                    Add new operation
+                </button>
+            </div>
+
+            <!-- Policy Description -->
+            <div class="form-group">
+                <!-- Policy Description Label -->
+                <label for="descriptionFieldInput">Description</label>
+                <div class="input-group">
+                    <!--  Policy Description Input Field -->
+                    <input type="text"
+                        class="form-control"
+                        id="descriptionFieldInput"
+                        ng-model="$ctrl.policy.description"
+                        value="{$ $ctrl.policy.description $}"
+                        ng-init="editDescription = false"
+                        ng-disabled="!editDescription">
+                    <!-- Policy Description Edit Button -->
+                    <button class="btn btn-primary"
+                        type="button"
+                        ng-click="editDescription = !editDescription">
+                        Edit
+                    </button>
+                </div>
+            </div>
+
+        </form>
     </div>
-    </div>
-    
-</div>
-    <div class="modal-footer ng-scope">
-        <button class="btn btn-default pull-left" type="button" ng-click="$dismiss()"><span class="fa fa-close"></span>Cancel</button>
-        <button class="btn btn-primary ng-binding" type="button" ng-disabled="schemaForm.$invalid" ng-click="ctrl.submit($event, schemaForm)"><span class="fa fa-check"></span>Submit</button>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+
+        <!-- Cancel Button -->
+        <button class="btn btn-warning"
+            type="button"
+            ng-click="cancel()">
+            Discard
+        </button>
+
+        <!-- OK Button -->
+        <button class="btn btn-primary"
+            type="button"
+            ng-click="ok($ctrl.policy)">
+            Save
+        </button>
+
     </div>
 </div>

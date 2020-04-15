@@ -205,7 +205,7 @@
         <!-- Table body -->
         <tbody>
             <!-- Table body rows -->
-            <tr ng-repeat-start="item in data | orderBy:column:reverse |filter:query | limitTo:pageSize:currentPage*pageSize">
+            <tr ng-repeat-start="item in data | orderBy:column:reverse | filter:query | limitTo:pageSize:currentPage*pageSize">
 
                 <!--  Checkbox column content -->
                 <td class="multi_select_column">
@@ -236,7 +236,7 @@
                 </td>
 
                 <!--  Target column content -->
-                <td ng-show="targetFilter" ng-click="showForm(item)">
+                <td ng-show="targetFilter" ng-click="OpenModal(item)">
                     <span ng-if="!item.expanded">
                         {$ item.target | limitTo:charLimit $}
                     </span>
@@ -267,7 +267,7 @@
 
                 <!--  Scopes column content -->
                 <td ng-show="scopesFilter">
-                    <span ng-repeat="scope in item.scopes">
+                    <span ng-repeat="scope in item.scopes track by $index">
                         <span ng-if="!item.expanded">
                             {$ scope | limitTo:charLimit $}
                         </span>
@@ -279,7 +279,7 @@
 
                 <!--  Operations column content -->
                 <td ng-show="operationsFilter">
-                    <span ng-repeat="operation in item.operations | limitTo:item.listLimit">
+                    <span ng-repeat="operation in item.operations | limitTo:item.listLimit track by $index">
                         <span ng-if="!item.expanded">
                             {$ operation | limitTo:charLimit $}
                         </span>
@@ -317,4 +317,5 @@
             ng-click="currentPage=currentPage+1">
             Next
     </button>
+
 </div>
