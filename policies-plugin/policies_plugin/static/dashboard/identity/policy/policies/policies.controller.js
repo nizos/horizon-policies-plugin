@@ -105,6 +105,8 @@
             }
         };
 
+
+
         $scope.showForm = function(items_new) {
             $scope.items = items_new;
             var uibModalInstance = $uibModal.open({
@@ -115,11 +117,13 @@
                     $items: function () {
                         return items_new;
                     }
+                    
                 }
             });
 
             uibModalInstance.result.then();
         }
+
     }
 
     angular
@@ -136,8 +140,9 @@
                 };
 
                 $ctrl.cancel = function () {
-                    $uibModalInstance.dismiss('cancel');
-                };
+                    console.log(prefix + '$dismiss returned ' + $ctrl.$dismiss('cancel'));
+                  };
+            
             }
         ]);
 

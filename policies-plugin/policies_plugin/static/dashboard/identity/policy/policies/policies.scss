@@ -17,6 +17,10 @@
     display: flex;
 }
 
+input {
+    margin-top: 6px;
+}
+
 .modal-dialog {
     width: 70%;
 }
@@ -38,4 +42,16 @@
     width: 100%;
     display: table-cell;
     padding: 2px;
+}
+
+label {
+    width: 100%;
+}
+
+span .fa fa-close {
+    margin: 5px;
+}
+
+span .fa fa-check {
+    margin: 5px;
 }
