@@ -1,13 +1,10 @@
-from oslo_policy import generator
 from policies_plugin.api.models.policy import Policy
-import os
+from policies_plugin.api.resources.policy_getter import local_get_policies
 import logging
 
 LOG = logging.getLogger(__name__)
 
 class Policy_Client:
-
-    FILE_PATH = "/opt/stack/horizon/horizon-policies-plugin/" + "policies-plugin/policies_plugin/api/resources/policy_output.txt"
 
     def get_policies(self):
         policy_lines = self.keystone_get_policies()
@@ -21,26 +18,20 @@ class Policy_Client:
         return Policy().from_line(policy_line)
 
     def keystone_get_policies(self):
-        generator._generate_policy("keystone", self.FILE_PATH)
         list_of_policies = []
-        with open(self.FILE_PATH) as file:
-            for line in file:
-                list_of_policies.append(line.rstrip())
-        os.remove(self.FILE_PATH)
+        for line in local_get_policies("keystone"): # FIXME - Should not be hard coded to "keystone"
+            list_of_policies.append(line.rstrip())
         return list_of_policies
 
     def keystone_get_policy(self, project, target):
-        generator._generate_policy("keystone", self.FILE_PATH)
-
         identifier = ""
         if (project != "global"):
             identifier = project+":"+target
         else:
             identifier = target
         policy_line = ""
-        with open(self.FILE_PATH) as file:
-            for line in file:
-                if identifier in line:
-                    policy_line = line.rstrip()
-        os.remove(self.FILE_PATH)
+
+        for line in local_get_policies("keystone"): # FIXME - Should not be hard coded to "keystone"
+            if identifier in line:
+                policy_line = line.rstrip()
         return policy_line
