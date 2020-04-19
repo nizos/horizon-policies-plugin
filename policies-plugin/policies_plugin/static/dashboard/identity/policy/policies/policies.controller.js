@@ -48,7 +48,7 @@
         $scope.reverse = false;
         $scope.items = {};
 
-        $scope.name = 'World';
+        /*$scope.name = 'World';
         $scope.policy = [];
         $scope.editedPolicy = [];
         $scope.editedPolicy.project = "None";
@@ -57,7 +57,8 @@
         $scope.editedPolicy.default = "None";
         $scope.editedPolicy.scopes = "None";
         $scope.editedPolicy.operations = "None";
-        $scope.editedPolicy.description = "None";
+        $scope.editedPolicy.description = "None";*/
+
 
         init();
 
@@ -74,6 +75,10 @@
         }
 
         function policySuccess(response) {
+            $scope.singlePolicy = response.item;
+        }
+
+        function setPolicySuccess(response) {
             $scope.singlePolicy = response.item;
         }
 
@@ -131,8 +136,7 @@
             });
 
             modalInstance.result.then(function (policy) {
-                $scope.editedPolicy = policy;
-
+                api.setPolicy( { rule: policy } ).success(setPolicySuccess);
             }, function () {
             });
         }

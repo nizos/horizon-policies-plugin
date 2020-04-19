@@ -35,7 +35,8 @@
   function policiesAPI(apiService, toastService) {
     var service = {
       getPolicies: getPolicies,
-      getPolicy: getPolicy
+      getPolicy: getPolicy,
+      setPolicy: setPolicy
     };
 
     return service;
@@ -59,6 +60,12 @@
         return apiService.get('/api/policy-api/policy/'+project+"/"+target)
           .error(function () {
             toastService.add('error', gettext('Unable to retrieve policy.'));
+          });
+      }
+      function setPolicy(data) {
+        return apiService.post('/api/policy-api/policies/', data)
+          .error(function () {
+            toastService.add('error', gettext('Unable to set policy.'));
           });
       }
   }
