@@ -48,7 +48,6 @@
         $scope.reverse = false;
         $scope.items = {};
 
-        /*$scope.name = 'World';
         $scope.policy = [];
         $scope.editedPolicy = [];
         $scope.editedPolicy.project = "None";
@@ -57,8 +56,21 @@
         $scope.editedPolicy.default = "None";
         $scope.editedPolicy.scopes = "None";
         $scope.editedPolicy.operations = "None";
-        $scope.editedPolicy.description = "None";*/
+        $scope.editedPolicy.description = "None";
 
+        $scope.projectColumnVisible = true;
+        $scope.targetColumnVisible = true;
+        $scope.ruleColumnVisible = true;
+        $scope.defaultRuleColumnVisible = false;
+        $scope.scopesColumnVisible = false;
+        $scope.operationsColumnVisible = false;
+        $scope.descriptionColumnVisible = true;
+        $scope.expandAll = false;
+
+        $scope.columnWidth = {
+            'width': getColumnWidth()+'%',
+            'word-wrap': 'break-word'
+        };
 
         init();
 
@@ -104,6 +116,77 @@
 
         $scope.numberOfPages=function(){
             return Math.ceil($scope.data.length/$scope.pageSize);
+        }
+
+        $scope.goToNextPage=function(){
+            if($scope.currentPage < $scope.data.length/$scope.pageSize - 1) {
+                $scope.currentPage = $scope.currentPage+1;
+            }
+        }
+
+        $scope.goToPreviousPage=function(){
+            if($scope.currentPage >= 1) {
+                $scope.currentPage = $scope.currentPage-1;
+            }
+        }
+
+        $scope.goToFirstPage=function(){
+                $scope.currentPage = 0;
+        }
+
+        $scope.goToLastPage=function(){
+            $scope.currentPage = $scope.numberOfPages()-1;
+        }
+
+        $scope.goToPage=function(page){
+            $scope.currentPage = page;
+        }
+
+        function getColumnWidth() {
+
+            var visibleColumns = 0;
+            var totalWidth = 100;
+
+            if($scope.projectColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.targetColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.ruleColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.defaultRuleColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.scopesColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.operationsColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.descriptionColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+
+            var columnWidth = (totalWidth / visibleColumns);
+            return columnWidth;
+        }
+
+        $scope.toggleExpandAll=function(){
+            if($scope.expandAll==false) {
+                $scope.data.forEach(function(i){
+                    i.expanded=true;
+                    i.listLimit=10000;
+                })
+                $scope.expandAll = true;
+            } else {
+                $scope.data.forEach(function(i){
+                    i.expanded=false;
+                    i.listLimit=1;
+                })
+                $scope.expandAll = false;
+            }
         }
 
         $scope.$watch('query', function(newValue, oldValue) {
