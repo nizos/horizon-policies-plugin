@@ -1,5 +1,4 @@
 import logging
-import json
 from django.http import HttpResponse
 
 from django.views import generic
@@ -21,13 +20,11 @@ class Policies(generic.View):
         for policy in policies:
             policy_objects.append(policy.to_json())
         return {'items': policy_objects}
-        
+
     @rest_utils.ajax(data_required=True)
     def post(self, request):
         policy = request.DATA['rule']
-        LOG.warning("++++++++++++++START+++++++++++++++")
-        LOG.warning(json.dumps(policy))
-        LOG.warning("##############END#################")
+        self.policy_Client.set_policy(policy)
         return HttpResponse("Done")
 
 @urls.register
