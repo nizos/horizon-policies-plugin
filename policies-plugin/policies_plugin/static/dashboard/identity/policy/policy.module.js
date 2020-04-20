@@ -25,7 +25,8 @@
     .module('horizon.dashboard.identity.policy', [
       'ngRoute',
       'ui.bootstrap',
-      'horizon.dashboard.identity.policy.policies'
+      'horizon.dashboard.identity.policy.policies',
+      'horizon.dashboard.identity.policy.policies.details'
     ])
     .config(config);
 

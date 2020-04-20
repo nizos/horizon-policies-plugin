@@ -210,8 +210,8 @@
             var modalInstance = $uibModal.open({
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: 'static/dashboard/identity/policy/policies/details.html',
-                controller: 'modalController',
+                templateUrl: 'static/dashboard/identity/policy/policies/details/details.html',
+                controller: 'detailsController',
                 controllerAs: '$ctrl',
                 resolve: {
                     $policy: function () {
@@ -226,44 +226,5 @@
             });
         }
     }
-
-    angular
-        .module('horizon.dashboard.identity.policy.policies')
-        .controller('modalController', [
-            '$uibModalInstance',
-            '$log',
-            '$scope',
-            '$policy',
-            function($uibModalInstance, $log, $scope, $policy) {
-
-                var $ctrl = this;
-                $ctrl.policy = $policy;
-
-                $scope.ok = function(policy) {
-                    $uibModalInstance.close(policy);
-                };
-
-                $scope.cancel = function() {
-                    $uibModalInstance.dismiss('cancel');
-                }
-
-                $scope.addScope = function() {
-                    $ctrl.policy.scopes.push("");
-                }
-
-                $scope.addOperation = function() {
-                    $ctrl.policy.operations.push("");
-                }
-
-                $scope.removeScope = function(index) {
-                    $ctrl.policy.scopes.splice(index, 1);
-                }
-
-                $scope.removeOperation = function(index) {
-                    $ctrl.policy.operations.splice(index, 1);
-                }
-
-            }
-        ]);
 
 })();
