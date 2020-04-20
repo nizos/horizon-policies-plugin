@@ -9,12 +9,11 @@
     <!-- Modal Body -->
     <div class="modal-body" id="modal-body">
         <form>
-
             <!-- Policy Project -->
             <div class="form-group">
                 <!-- Policy Project Label -->
-                <label for="projectFieldInput">Project</label>
-                <div class="input-group">
+                <label class="window-label" for="projectFieldInput">Project</label>
+                <div class="input-group-window">
                     <!--  Policy Project Input Field -->
                     <input type="text"
                         class="form-control"
@@ -25,12 +24,11 @@
                         ng-disabled="!editProject">
                 </div>
             </div>
-
             <!-- Policy Target -->
             <div class="form-group">
                 <!-- Policy Target Label -->
-                <label for="targetFieldInput">Target</label>
-                <div class="input-group">
+                <label class="window-label" for="targetFieldInput">Target</label>
+                <div class="input-group-window">
                     <!--  Policy Target Input Field -->
                     <input type="text"
                         class="form-control"
@@ -41,12 +39,11 @@
                         ng-disabled="!editTarget">
                 </div>
             </div>
-
             <!-- Policy Rule -->
             <div class="form-group">
                 <!-- Policy Rule Label -->
-                <label for="ruleFieldInput">Rule</label>
-                <div class="input-group">
+                <label class="window-label" for="ruleFieldInput">Rule</label>
+                <div class="input-group-window">
                     <!--  Policy Rule Input Field -->
                     <input type="text"
                         class="form-control"
@@ -63,12 +60,11 @@
                     </button>
                 </div>
             </div>
-
             <!-- Policy Default Rule -->
             <div class="form-group">
                 <!-- Policy Default Rule Label -->
-                <label for="defaultFieldInput">Default</label>
-                <div class="input-group">
+                <label class="window-label" for="defaultFieldInput">Default</label>
+                <div class="input-group-window">
                     <!--  Policy Default Rule Input Field -->
                     <input type="text"
                         class="form-control"
@@ -79,13 +75,12 @@
                         ng-disabled="!editDefault">
                 </div>
             </div>
-
             <!-- Policy Scopes -->
             <div class="form-group">
                 <!-- Policy Scopes Label -->
-                <label for="scopesFieldInput">Scopes</label>
+                <label class="window-label" for="scopesFieldInput">Scopes</label>
                 <div ng-repeat="scope in $ctrl.policy.scopes track by $index">
-                    <div class="input-group">
+                    <div class="input-group-window">
                         <!--  Policy Scope Input Field -->
                         <input type="text"
                             class="form-control"
@@ -96,13 +91,12 @@
                     </div>
                 </div>
             </div>
-
             <!-- Policy Operations -->
             <div class="form-group">
                 <!-- Policy Operations Label -->
-                <label for="operationsFieldInput">Operations</label>
+                <label class="window-label"  for="operationsFieldInput">Operations</label>
                 <div ng-repeat="operation in $ctrl.policy.operations track by $index">
-                    <div class="input-group">
+                    <div class="input-group-window">
                         <!--  Policy Operation Input Field -->
                         <input type="text"
                             class="form-control"
@@ -113,12 +107,11 @@
                     </div>
                 </div>
             </div>
-
             <!-- Policy Description -->
             <div class="form-group">
                 <!-- Policy Description Label -->
-                <label for="descriptionFieldInput">Description</label>
-                <div class="input-group">
+                <label class="window-label" for="descriptionFieldInput">Description</label>
+                <div class="input-group-window">
                     <!--  Policy Description Input Field -->
                     <input type="text"
                         class="form-control"
@@ -129,7 +122,6 @@
                         ng-disabled="!editDescription">
                 </div>
             </div>
-
         </form>
     </div>
 
