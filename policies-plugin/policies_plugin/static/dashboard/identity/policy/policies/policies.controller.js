@@ -49,14 +49,6 @@
         $scope.items = {};
 
         $scope.policy = [];
-        $scope.editedPolicy = [];
-        $scope.editedPolicy.project = "None";
-        $scope.editedPolicy.target = "None";
-        $scope.editedPolicy.rule = "None";
-        $scope.editedPolicy.default = "None";
-        $scope.editedPolicy.scopes = "None";
-        $scope.editedPolicy.operations = "None";
-        $scope.editedPolicy.description = "None";
 
         $scope.projectColumnVisible = true;
         $scope.targetColumnVisible = true;
@@ -83,8 +75,6 @@
         }
 
         function setPolicySuccess(response) {
-            $log.info("response:")
-            $log.info(response)
             $scope.singlePolicy = response.item;
         }
 

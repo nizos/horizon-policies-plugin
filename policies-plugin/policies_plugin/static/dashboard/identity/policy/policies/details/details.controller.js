@@ -21,22 +21,6 @@
                     $uibModalInstance.dismiss('cancel');
                 }
 
-                $scope.addScope = function() {
-                    $ctrl.policy.scopes.push("");
-                }
-
-                $scope.addOperation = function() {
-                    $ctrl.policy.operations.push("");
-                }
-
-                $scope.removeScope = function(index) {
-                    $ctrl.policy.scopes.splice(index, 1);
-                }
-
-                $scope.removeOperation = function(index) {
-                    $ctrl.policy.operations.splice(index, 1);
-                }
-
             }
         ]);
 

@@ -20,8 +20,7 @@
 
     policiesAPI.$inject = [
         'horizon.framework.util.http.service',
-        'horizon.framework.widgets.toast.service',
-        '$log'
+        'horizon.framework.widgets.toast.service'
     ];
 
   /**
@@ -33,7 +32,7 @@
    * @returns The sample policies service API.
    */
 
-    function policiesAPI(apiService, toastService, $log) {
+    function policiesAPI(apiService, toastService) {
         var service = {
         getPolicies: getPolicies,
         getPolicy: getPolicy,
@@ -58,7 +57,6 @@
         }
 
         function setPolicy(data) {
-            $log.info("Data: ", data)
             return apiService.post('/api/policy-api/policy/'+data.rule.project+'/'+data.rule.target, data)
                 .error(function () {
                     toastService.add('error', gettext('Unable to set policy.'))
