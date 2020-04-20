@@ -43,14 +43,13 @@
         $scope.charLimit = 50;
         ctrl.checked = {};
         $scope.currentPage = 0;
-        $scope.pageSize = 20;
+        $scope.itemsPerPage = 20;
         $scope.query = '';
         $scope.column = 'target';
         $scope.reverse = false;
         $scope.items = {};
 
         $scope.policy = [];
-
         $scope.projectColumnVisible = true;
         $scope.targetColumnVisible = true;
         $scope.ruleColumnVisible = true;
@@ -108,14 +107,11 @@
         }
 
         $scope.getData = function () {
-            // needed for the pagination calc
-            // https://docs.angularjs.org/api/ng/filter/filter
             return $filter('filter')($scope.data, $scope.query)
         }
 
         $scope.numberOfPages=function(){
-            $log.info(Math.ceil($scope.getData().length/$scope.pageSize));
-            return Math.ceil($scope.getData().length/$scope.pageSize);
+            return Math.ceil($scope.getData().length/$scope.itemsPerPage);
         }
 
         $scope.goToNextPage=function(){
@@ -131,7 +127,7 @@
         }
 
         $scope.goToFirstPage=function(){
-                $scope.currentPage = 0;
+            $scope.currentPage = 0;
         }
 
         $scope.goToLastPage=function(){
@@ -171,6 +167,36 @@
 
             var columnWidth = (totalWidth / visibleColumns);
             return columnWidth;
+        }
+
+        $scope.getCharLimit=function() {
+            var visibleColumns = 0;
+            var charLimit = 200;
+
+            if($scope.projectColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.targetColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.ruleColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.defaultRuleColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.scopesColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.operationsColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+            if($scope.descriptionColumnVisible == true) {
+                visibleColumns = visibleColumns +1;
+            }
+
+            var columCharLimit = (charLimit / visibleColumns);
+            return columCharLimit;
         }
 
         $scope.toggleExpandAll=function(){

@@ -102,7 +102,7 @@
 
                         <li role="menuitem"><a>Items per page:</a></li>
                         <div class="select-control">
-                            <select ng-model="pageSize" id="pageSize" class="form-control" ng-init="pageSize = '20'">
+                            <select ng-model="itemsPerPage" id="itemsPerPage" class="form-control" ng-init="itemsPerPage = '20'">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="50">50</option>
@@ -199,30 +199,28 @@
         <!-- Table body -->
         <tbody>
             <!-- Table body rows -->
-            <tr ng-repeat-start="item in data | orderBy:column:reverse | filter:query | limitTo:pageSize:currentPage*pageSize">
+            <tr ng-repeat-start="item in data | orderBy:column:reverse | filter:query | limitTo:itemsPerPage:currentPage*itemsPerPage">
 
                 <!--  Checkbox column content -->
                 <td class="multi_select_column">
-                    <input type="checkbox"
-                            ng-model="table.selections[item.target].checked">
+                    <input type="checkbox" ng-model="table.selections[item.target].checked">
                 </td>
 
                 <!--  Expander column content -->
                 <td class="expander expander-column" ng-click="expandSelected(item)">
-                    <span ng-if="!item.expanded"
-                            class="fa fa-chevron-right"
-                            duration="200">
-                    </span>
-                    <span ng-if="item.expanded"
-                            class="fa fa-chevron-down"
-                            duration="200">
-                    </span>
+                    <span ng-if="!item.expanded" class="fa fa-chevron-right" duration="200"></span>
+                    <span ng-if="item.expanded" class="fa fa-chevron-down" duration="200"></span>
                 </td>
 
                 <!--  Project column content -->
                 <td ng-show="projectColumnVisible" ng-style="columnWidth">
                     <span ng-if="!item.expanded">
-                        {$ item.project | limitTo:charLimit $}
+                        <span ng-if="item.project.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.project $}">
+                            {$ item.project | limitTo:getCharLimit() $}...
+                        </span>
+                        <span ng-if="item.project.length<=getCharLimit()">
+                            {$ item.project $}
+                        </span>
                     </span>
                     <span ng-if="item.expanded">
                         {$ item.project $}
@@ -232,7 +230,12 @@
                 <!--  Target column content -->
                 <td ng-show="targetColumnVisible" ng-click="OpenModal(item)" ng-style="columnWidth">
                     <span ng-if="!item.expanded">
-                        {$ item.target | limitTo:charLimit $}
+                        <span ng-if="item.target.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.target $}">
+                            {$ item.target | limitTo:getCharLimit() $}...
+                        </span>
+                        <span ng-if="item.target.length<=getCharLimit()">
+                            {$ item.target $}
+                        </span>
                     </span>
                     <span ng-if="item.expanded">
                         {$ item.target $}
@@ -242,7 +245,12 @@
                 <!--  Rule column content -->
                 <td ng-show="ruleColumnVisible" ng-style="columnWidth">
                     <span ng-if="!item.expanded">
-                        {$ item.rule | limitTo:charLimit $}
+                        <span ng-if="item.rule.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.rule $}">
+                            {$ item.rule | limitTo:getCharLimit() $}...
+                        </span>
+                        <span ng-if="item.rule.length<=getCharLimit()">
+                            {$ item.rule $}
+                        </span>
                     </span>
                     <span ng-if="item.expanded">
                         {$ item.rule $}
@@ -252,7 +260,12 @@
                 <!--  Default rule column content -->
                 <td ng-show="defaultRuleColumnVisible" ng-style="columnWidth">
                     <span ng-if="!item.expanded">
-                        {$ item.default | limitTo:charLimit $}
+                        <span ng-if="item.default.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.default $}">
+                            {$ item.default | limitTo:getCharLimit() $}...
+                        </span>
+                        <span ng-if="item.default.length<=getCharLimit()">
+                            {$ item.default $}
+                        </span>
                     </span>
                     <span ng-if="item.expanded">
                         {$ item.default $}
@@ -263,30 +276,60 @@
                 <td ng-show="scopesColumnVisible" ng-style="columnWidth">
                     <span ng-repeat="scope in item.scopes track by $index">
                         <span ng-if="!item.expanded">
-                            {$ scope | limitTo:charLimit $}
+                            <span ng-if="scope.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.scopes $}">
+                                {$ scope | limitTo:getCharLimit() $}...
+                            </span>
+                            <span ng-if="scope.length<=getCharLimit()">
+                                {$ scope $}
+                            </span>
                         </span>
                         <span ng-if="item.expanded">
-                            {$ scope $}<br/>
+                            {$ scope $}
                         </span>
                     <span>
                 </td>
 
                 <!--  Operations column content -->
+
                 <td ng-show="operationsColumnVisible" ng-style="columnWidth">
-                    <span ng-repeat="operation in item.operations | limitTo:item.listLimit track by $index">
-                        <span ng-if="!item.expanded">
-                            {$ operation | limitTo:charLimit $}
+                    <span ng-if="!item.expanded">
+                        <span ng-if="item.operations.length > 1" tooltip-placement="bottom" uib-tooltip="{$ item.operations $}">
+                            <span ng-repeat="operation in item.operations | limitTo:item.listLimit track by $index">
+                                <span ng-if="operation.length>getCharLimit()">
+                                    {$ operation | limitTo:getCharLimit() $}...
+                                </span>
+                                <span ng-if="operation.length<=getCharLimit()">
+                                    {$ operation $}
+                                </span>
+                            </span>
                         </span>
-                        <span ng-if="item.expanded">
-                            {$ operation $}<br/>
+                        <span ng-if="item.operations.length <= 1">
+                            <span ng-repeat="operation in item.operations track by $index" tooltip-placement="bottom" uib-tooltip="{$ item.operations $}">
+                                 <span ng-if="operation.length>getCharLimit()">
+                                    {$ operation | limitTo:getCharLimit() $}...
+                                </span>
+                                <span ng-if="operation.length<=getCharLimit()">
+                                    {$ operation $}
+                                </span>
+                            </span>
                         </span>
-                    <span>
+                    </span>
+                    <span ng-if="item.expanded">
+                        <span ng-repeat="operation in item.operations track by $index">
+                            {$ operation $}
+                        </span>
+                    </span>
                 </td>
 
                 <!--  Description column content -->
                 <td ng-show="descriptionColumnVisible" ng-style="columnWidth">
                     <span ng-if="!item.expanded">
-                        {$ item.description | limitTo:charLimit $}
+                        <span ng-if="item.description.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.description $}">
+                            {$ item.description | limitTo:getCharLimit() $}...
+                        </span>
+                        <span ng-if="item.description.length<=getCharLimit()">
+                            {$ item.description $}
+                        </span>
                     </span>
                     <span ng-if="item.expanded">
                         {$ item.description $}
@@ -298,41 +341,45 @@
     </table>
 
     <!--  Scroll to top button -->
-
     <input type="button" id="goToTop" class="goToTop" value="Scroll Top" style="display:none;background-color:#f9f9f9"/>
 
-
-
+    <!--  Page navigation -->
     <nav aria-label="Page navigation" align="center">
         <ul class="pagination">
 
+            <!--  Go to first page -->
             <li ng-disabled="currentPage==0">
                 <a aria-label="First" ng-click="goToFirstPage()" >
                     <span aria-hidden="true" class="fa fa-angle-double-left"></span>
                 </a>
             </li>
 
+            <!--  Go to previous page -->
             <li ng-disabled="currentPage==0">
                 <a aria-label="Previous" ng-click="goToPreviousPage()" >
                     <span aria-hidden="true" class="fa fa-angle-left"></span>
                 </a>
             </li>
 
+            <!--  Go to page in list of page numbers -->
             <li ng-repeat="page in [].constructor(numberOfPages()) track by $index" ng-class="{active:currentPage==$index}" ng-disabled="currentPage==$index">
                 <a ng-click="goToPage($index)">{$ $index+1 $}</a>
             </li>
 
+            <!--  Go to next page -->
             <li ng-disabled="currentPage >= numberOfPages()">
                 <a aria-label="Next" ng-click="goToNextPage()">
                     <span aria-hidden="true" class="fa fa-angle-right"></span>
                 </a>
             </li>
 
-            <li ng-disabled="currentPage >= data.length/pageSize - 1">
+            <!--  Go to last page -->
+            <li ng-disabled="currentPage >= data.length/itemsPerPage - 1">
                 <a aria-label="Last" ng-click="goToLastPage()">
                     <span aria-hidden="true" class="fa fa-angle-double-right"></span>
                 </a>
             </li>
+
         </ul>
     </nav>
 
