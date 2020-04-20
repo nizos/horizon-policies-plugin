@@ -23,7 +23,8 @@
         '$scope',
         '$log',
         '$uibModal',
-        '$anchorScroll'
+        '$anchorScroll',
+        '$filter'
     ];
 
   /**
@@ -34,7 +35,7 @@
    * @param api The policies client service API.
    * @returns undefined
    */
-    function PoliciesController(api, $scope, $log, $uibModal, $anchorScroll) {
+    function PoliciesController(api, $scope, $log, $uibModal, $anchorScroll, $filter) {
 
         var ctrl = this;
         $scope.data = [];
@@ -106,8 +107,14 @@
             }
         }
 
+        $scope.getData = function () {
+            // needed for the pagination calc
+            // https://docs.angularjs.org/api/ng/filter/filter
+            return $filter('filter')($scope.data, $scope.query)
+        }
+
         $scope.numberOfPages=function(){
-            return Math.ceil($scope.data.length/$scope.pageSize);
+            return Math.ceil($scope.getData().length/$scope.pageSize);
         }
 
         $scope.goToNextPage=function(){
