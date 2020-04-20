@@ -75,10 +75,20 @@
         init();
 
         function init() {
-            api.getPolicies().success(policiesSuccess);
+            api.getPolicies().success(getPoliciesSuccess);
         }
 
-        function policiesSuccess(response) {
+        function getPolicySuccess(response) {
+            $scope.singlePolicy = response.item;
+        }
+
+        function setPolicySuccess(response) {
+            $log.info("response:")
+            $log.info(response)
+            $scope.singlePolicy = response.item;
+        }
+
+        function getPoliciesSuccess(response) {
             $scope.data = response.items;
             $scope.data.forEach(function(item){
                 item.expanded=false;
@@ -86,16 +96,8 @@
             })
         }
 
-        function policySuccess(response) {
-            $scope.singlePolicy = response.item;
-        }
-
-        function setPolicySuccess(response) {
-            $scope.singlePolicy = response.item;
-        }
-
         $scope.getPolicy=function(project, target){
-            api.getPolicy(project, target).success(policySuccess);
+            api.getPolicy(project, target).success(getPolicySuccess);
         }
 
         $scope.expandSelected=function(item){

@@ -21,11 +21,6 @@ class Policies(generic.View):
             policy_objects.append(policy.to_json())
         return {'items': policy_objects}
 
-    @rest_utils.ajax(data_required=True)
-    def post(self, request):
-        policy = request.DATA['rule']
-        self.policy_Client.set_policy(policy)
-        return HttpResponse("Done")
 
 @urls.register
 class Policy(generic.View):
@@ -36,3 +31,9 @@ class Policy(generic.View):
     def get(self, request, project, target):
         policy = self.policy_Client.get_policy(request, project, target)
         return {'item': policy.to_json()}
+
+    @rest_utils.ajax(data_required=True)
+    def post(self, request, project, target):
+        policy = request.DATA['rule']
+        response = self.policy_Client.set_policy(policy)
+        return HttpResponse(response)

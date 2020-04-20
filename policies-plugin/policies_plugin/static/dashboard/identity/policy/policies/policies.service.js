@@ -12,16 +12,17 @@
  * limitations under the License.
  */
 (function () {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('horizon.dashboard.identity.policy.policies')
-    .factory('horizon.dashboard.identity.policy.policies.policy-api', policiesAPI);
+    angular
+        .module('horizon.dashboard.identity.policy.policies')
+        .factory('horizon.dashboard.identity.policy.policies.policy-api', policiesAPI);
 
-  policiesAPI.$inject = [
-    'horizon.framework.util.http.service',
-    'horizon.framework.widgets.toast.service'
-  ];
+    policiesAPI.$inject = [
+        'horizon.framework.util.http.service',
+        'horizon.framework.widgets.toast.service',
+        '$log'
+    ];
 
   /**
    * @ngdoc service
@@ -32,41 +33,47 @@
    * @returns The sample policies service API.
    */
 
-  function policiesAPI(apiService, toastService) {
-    var service = {
-      getPolicies: getPolicies,
-      getPolicy: getPolicy,
-      setPolicy: setPolicy
-    };
+    function policiesAPI(apiService, toastService, $log) {
+        var service = {
+        getPolicies: getPolicies,
+        getPolicy: getPolicy,
+        setPolicy: setPolicy
+        };
 
-    return service;
+        return service;
 
-    /**
-     * @name horizon.dashboard.identity.policy.policies.policy-api.getPolicies
-     * @description
-     * Get a list of policies
-     * The listing result is an object with property "items". Each item is
-     * a policy.
-     */
+        /**
+         * @name horizon.dashboard.identity.policy.policies.policy-api.getPolicies
+         * @description
+         * Get a list of policies
+         * The listing result is an object with property "items". Each item is
+         * a policy.
+         */
 
-    function getPolicies() {
-      return apiService.get('/api/policy-api/policies/')
-        .error(function () {
-          toastService.add('error', gettext('Unable to retrieve policies.'));
-        });
+        function getPolicy(project, target) {
+            return apiService.get('/api/policy-api/policy/'+project+"/"+target)
+                .error(function () {
+                toastService.add('error', gettext('Unable to retrieve policy.'));
+                });
+        }
+
+        function setPolicy(data) {
+            $log.info("Data: ", data)
+            return apiService.post('/api/policy-api/policy/'+data.rule.project+'/'+data.rule.target, data)
+                .error(function () {
+                    toastService.add('error', gettext('Unable to set policy.'))
+                })
+                .success(function () {
+                    toastService.add('success', gettext('Policy has been modified successfully!'))
+                });
+
+        }
+
+        function getPolicies() {
+            return apiService.get('/api/policy-api/policies/')
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve policies.'));
+                });
+        }
     }
-
-    function getPolicy(project, target) {
-        return apiService.get('/api/policy-api/policy/'+project+"/"+target)
-          .error(function () {
-            toastService.add('error', gettext('Unable to retrieve policy.'));
-          });
-      }
-      function setPolicy(data) {
-        return apiService.post('/api/policy-api/policies/', data)
-          .error(function () {
-            toastService.add('error', gettext('Unable to set policy.'));
-          });
-      }
-  }
 })();

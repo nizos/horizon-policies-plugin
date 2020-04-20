@@ -60,4 +60,4 @@ def local_set_policy(namespace, updateRule):
     with open('/etc/keystone/policy.json', 'w') as policyfile:
         json.dump(policy_dict, policyfile)
 
-    return True
+    return 200
