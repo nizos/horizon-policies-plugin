@@ -114,11 +114,12 @@
         }
 
         $scope.numberOfPages=function(){
+            $log.info(Math.ceil($scope.getData().length/$scope.pageSize));
             return Math.ceil($scope.getData().length/$scope.pageSize);
         }
 
         $scope.goToNextPage=function(){
-            if($scope.currentPage < $scope.data.length/$scope.pageSize - 1) {
+            if($scope.currentPage < $scope.numberOfPages()-1) {
                 $scope.currentPage = $scope.currentPage+1;
             }
         }

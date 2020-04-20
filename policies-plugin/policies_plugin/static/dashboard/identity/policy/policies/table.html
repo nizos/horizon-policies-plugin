@@ -322,7 +322,7 @@
                 <a ng-click="goToPage($index)">{$ $index+1 $}</a>
             </li>
 
-            <li ng-disabled="currentPage >= data.length/pageSize - 1">
+            <li ng-disabled="currentPage >= numberOfPages()">
                 <a aria-label="Next" ng-click="goToNextPage()">
                     <span aria-hidden="true" class="fa fa-angle-right"></span>
                 </a>
