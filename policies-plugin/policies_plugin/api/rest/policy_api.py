@@ -35,5 +35,4 @@ class Policy(generic.View):
     @rest_utils.ajax(data_required=True)
     def post(self, request, project, target):
         policy = request.DATA['rule']
-        response = self.policy_Client.set_policy(policy)
-        return HttpResponse(response)
+        return self.policy_Client.set_policy(policy)
