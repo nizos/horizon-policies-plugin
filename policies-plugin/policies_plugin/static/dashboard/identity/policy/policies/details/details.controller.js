@@ -12,6 +12,8 @@
 
                 var $ctrl = this;
                 $ctrl.policy = $policy;
+                $scope.showForm = false;
+                $scope.showJson = false;
 
                 $scope.ok = function(policy) {
                     $uibModalInstance.close(policy);

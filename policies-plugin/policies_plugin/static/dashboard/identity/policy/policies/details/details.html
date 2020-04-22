@@ -8,7 +8,18 @@
 
     <!-- Modal Body -->
     <div class="modal-body" id="modal-body">
-        <form>
+        <button class="btn btn-primary"
+            type="button"
+            ng-click="showForm = true; showJson = false">
+            Edit Form
+        </button>
+        <button class="btn btn-primary"
+            type="button"
+            ng-click="showJson = true; showForm = false">
+            Edit Json
+        </button>
+        <br>
+        <form ng-show="showForm">
             <!-- Policy Project -->
             <div class="form-group">
                 <!-- Policy Project Label -->
@@ -123,6 +134,9 @@
                 </div>
             </div>
         </form>
+        <div ng-show="showJson">
+            <h3>Test Json</h3>
+        </div>
     </div>
 
     <!-- Modal Footer -->
