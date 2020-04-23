@@ -24,6 +24,7 @@
   angular
     .module('horizon.dashboard.identity.policy', [
       'ngRoute',
+      'ngSanitize',
       'ui.bootstrap',
       'horizon.dashboard.identity.policy.policies',
       'horizon.dashboard.identity.policy.policies.details'

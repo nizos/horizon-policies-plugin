@@ -228,17 +228,17 @@
                 </td>
 
                 <!--  Target column content -->
-                <td ng-show="targetColumnVisible" ng-click="OpenModal(item)" ng-style="columnWidth">
+                <td ng-show="targetColumnVisible" ng-style="columnWidth">
                     <span ng-if="!item.expanded">
                         <span ng-if="item.target.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.target $}">
-                            {$ item.target | limitTo:getCharLimit() $}...
+                            <a ng-click="OpenModal(item)">{$ item.target | limitTo:getCharLimit() $}...</a>
                         </span>
                         <span ng-if="item.target.length<=getCharLimit()">
-                            {$ item.target $}
+                            <a ng-click="OpenModal(item)">{$ item.target $}</a>
                         </span>
                     </span>
                     <span ng-if="item.expanded">
-                        {$ item.target $}
+                        <a ng-click="OpenModal(item)">{$ item.target $}</a>
                     </span>
                 </td>
 
