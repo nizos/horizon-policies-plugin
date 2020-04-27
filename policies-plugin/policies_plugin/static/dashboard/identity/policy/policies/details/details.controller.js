@@ -5,10 +5,9 @@
         .module('horizon.dashboard.identity.policy.policies.details', ['ngSanitize'])
         .controller('detailsController', [
             '$uibModalInstance',
-            '$log',
             '$scope',
             '$policy',
-            function($uibModalInstance, $log, $scope, $policy) {
+            function($uibModalInstance, $scope, $policy) {
 
                 var $ctrl = this;
                 $ctrl.policy = $policy;
@@ -25,38 +24,46 @@
                     $uibModalInstance.dismiss('cancel');
                 }
 
-                function autocomp_suggestions(term) {
-                    var search_term = get_search_term();
-                    var search_results = get_search_suggestions(search_term);
+                function autocomp_suggestions() {
+                    var search_term = get_search_term(); // What is it that we should show suggestions for?
+                    var search_results = get_search_suggestions(search_term); // What suggestions do we have for it?
                     search_results.forEach(function (search_result) {
                         search_result.value = search_result.value;
                     });
                     return search_results;
                 };
 
-                function get_search_term() {
-                    var textarea = document.getElementsByClassName("autocomp")[0];
-                    var crtIndex = textarea.selectionStart;
-                    var lastDelim = get_last_delimiter_index(textarea.value.substring(0, crtIndex));
-                    var lineNr = textarea.value.substr(0, crtIndex).split('\n').length;
+                function get_search_term() { // Get the word to use for looking up the suggestions to provide
+                    var textarea = document.getElementsByClassName("autocomp")[0]; // get text are from html
+                    var crtIndex = textarea.selectionStart; // get keyboard caret position in the text area
+                    var lastDelim = get_last_delimiter_index(textarea.value.substring(0, crtIndex)); // get the position of last delimiter in the textarea before the caret
+                    var lineNr = textarea.value.substr(0, crtIndex).split('\n').length; // get the line number where the caret is in the text area
+
                     if (lineNr == 1) {
-                        return textarea.value.substring(lastDelim, crtIndex);
+                        return textarea.value.substring(lastDelim, crtIndex); // word to use for suggestion is from last delimiter to the caret
                     } else {
-                        return textarea.value.substring(lastDelim+1, crtIndex);
+                        return textarea.value.substring(lastDelim+1, crtIndex); // word to use for suggestion is from last delimiter plus 1 character to the caret
                     }
                 }
 
-                function get_search_suggestions(term) {
-                    var query = term.toLowerCase().trim();
-                    var results = [];
+                function get_search_suggestions(term) { // Get available suggestions for the provided word or characters
+                    var query = term.toLowerCase().trim(); // make all characters lower case and trim white space before and after it
+                    var results = []; // Create an array to store suggestions matching provided term
 
                     for (var i = 0; i < suggestions.length && results.length < $scope.resultsToShow; i++) {
-                        var suggestion = suggestions[i];
-                        if (suggestion.toLowerCase().indexOf(query) === 0) {
-                            results.push({ label: suggestion, value: suggestion });
+                        // loops from 0 until it finds results matching the set number of suggestions to show or until it reaches the end of suggestions
+                        var suggestion = suggestions[i]; // Save current i in suggestions as a suggestion variable
+                        if (suggestion.toLowerCase().indexOf(query) === 0) { // If the suggestion starts with the full search term
+                            // suggestion.indexOf(query) looks up where the query word exists in the string suggestion
+                            // if the query characters exist at the start of the string (at index 0) then it will return its position which is 0
+                            // If query is found in the suggestion string but not at the start, it will also return the position of where the query characters
+                            // appear which could be 1, 2, 3...
+                            // If the suggestions string does not contain the query characters, it will return -1.
+                            // To conclude, 0 indicated that the query string exists at the start of the suggestion string.
+                            results.push({ label: suggestion, value: suggestion }); // Add it to our results array
                         }
                     }
-                    return results;
+                    return results; // return the list of suggestions for the search term
                 }
 
                 function get_last_delimiter_index(input) {

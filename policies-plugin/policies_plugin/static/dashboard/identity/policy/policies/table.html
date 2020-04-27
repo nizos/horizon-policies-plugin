@@ -51,11 +51,19 @@
             <input type="hidden" name="search_param" value="all" id="search_param">
             <input type="text" class="form-control" name="x" id="search" placeholder="Search" ng-model="query">
 
-            <!-- Search button -->
             <span class="input-group-btn">
+
+                <!-- Search button -->
                 <button class="btn btn-default" type="button">
                     <span class="fa fa-search"></span>
                 </button>
+
+                <!-- Manage button -->
+                <div class="btn-group manage-button" ng-show="showManage">
+                    <button class="btn btn-primary" ng-click="OpenModal()" type="button">
+                        <span class="fa fa-edit">Manage</span>
+                    </button>
+                </div>
 
 
                 <!-- Table settings button -->
@@ -203,7 +211,7 @@
 
                 <!--  Checkbox column content -->
                 <td class="multi_select_column">
-                    <input type="checkbox" ng-model="table.selections[item.target].checked">
+                    <input type="checkbox" checklist-model="selected.items" checklist-value="item" checklist-change="selectionChanged()">
                 </td>
 
                 <!--  Expander column content -->

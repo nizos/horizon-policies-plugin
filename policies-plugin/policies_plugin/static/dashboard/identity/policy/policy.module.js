@@ -26,6 +26,7 @@
             'ngRoute',
             'ngSanitize',
             'ui.bootstrap',
+            'horizon.dashboard.identity.policy.policies.checklist-model',
             'horizon.dashboard.identity.policy.policies.autocomp',
             'horizon.dashboard.identity.policy.policies',
             'horizon.dashboard.identity.policy.policies.details'

@@ -21,9 +21,7 @@
     PoliciesController.$inject = [
         'horizon.dashboard.identity.policy.policies.policy-api',
         '$scope',
-        '$log',
         '$uibModal',
-        '$anchorScroll',
         '$filter'
     ];
 
@@ -35,19 +33,16 @@
    * @param api The policies client service API.
    * @returns undefined
    */
-    function PoliciesController(api, $scope, $log, $uibModal, $anchorScroll, $filter) {
+    function PoliciesController(api, $scope, $uibModal, $filter) {
 
-        var ctrl = this;
         $scope.data = [];
         $scope.singlePolicy = [];
         $scope.charLimit = 50;
-        ctrl.checked = {};
         $scope.currentPage = 0;
         $scope.itemsPerPage = 20;
         $scope.query = '';
         $scope.column = 'target';
         $scope.reverse = false;
-        $scope.items = {};
 
         $scope.policy = [];
         $scope.projectColumnVisible = true;
@@ -58,6 +53,12 @@
         $scope.operationsColumnVisible = false;
         $scope.descriptionColumnVisible = true;
         $scope.expandAll = false;
+        $scope.showManage = false;
+        $scope.items = [];
+
+        $scope.selected = {
+            items: []
+        }
 
         $scope.columnWidth = {
             'width': getColumnWidth()+'%',
@@ -85,7 +86,7 @@
                 item.listLimit=1;
             })
         }
-        
+
         $scope.savePolicy=function(policy) {
             api.setPolicy( { rule: policy } ).success(setPolicySuccess);
         }
@@ -107,6 +108,14 @@
                 })
                 item.expanded=true;
                 item.listLimit=10000;
+            }
+        }
+
+        $scope.selectionChanged=function() {
+            if($scope.selected.items.length > 0) {
+                $scope.showManage = true;
+            } else {
+                $scope.showManage = false;
             }
         }
 
@@ -234,7 +243,7 @@
             }
         };
 
-        $scope.OpenModal = function(policy){
+        $scope.OpenModal = function(){
             var modalInstance = $uibModal.open({
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
@@ -243,7 +252,7 @@
                 controllerAs: '$ctrl',
                 resolve: {
                     $policy: function () {
-                        return policy;
+                        return $scope.selected.items;
                     }
                 }
             });
@@ -256,11 +265,11 @@
     }
     angular
         .module('horizon.dashboard.identity.policy.policies')
-        .controller('ScrollController', 
-                ['$scope', '$location', '$anchorScroll',
-            function($scope, $location, $anchorScroll) {
+        .controller('ScrollController',
+                ['$scope', '$anchorScroll',
+            function($scope, $anchorScroll) {
                 $scope.gotoTop = function() {
-                    
+
                 // set the location.hash to the id of
                 // the element you wish to scroll to.
                 $("html, body").animate({ scrollTop: 0 }, 1000);
