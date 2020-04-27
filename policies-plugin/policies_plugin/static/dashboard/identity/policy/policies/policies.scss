@@ -1,5 +1,10 @@
 @import './details/details.scss';
 
+
+html {
+    scroll-behavior: smooth;
+}
+
 .table tbody tr td {
     vertical-align: top;
 }
@@ -16,6 +21,10 @@
     width: 100px;
 }
 
+.tooltip-inner  {
+    text-align: left !important;
+}
+
 .table-settings-menu-item {
     padding-left: 1.5em;
     padding-right: 1.5em;
@@ -28,4 +37,36 @@
 
 .odd-table-item {
     background-color: #f2f2f2;
+}
+
+.gotoTop {
+    width: auto;
+    height: 40px;
+    bottom: 0;
+    right: 0;
+    z-index: 100000;
+    cursor: pointer;
+    margin: 10px;
+    -moz-opacity: 0.6;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    padding: 3px;
+    border: 1px solid black;
+    padding: 10px;
+    background-color: #f2f2f2;
+    color: black;
+    float: right;
+    
+
+	&:hover {
+		opacity: 1;
+		cursor: pointer;
+	}
+
+	i {
+		font-size: 25px;
+		padding: 12px;
+		color: #FFF;
+	}
+
 }

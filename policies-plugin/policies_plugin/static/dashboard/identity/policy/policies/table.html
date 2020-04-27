@@ -346,7 +346,9 @@
     </table>
 
     <!--  Scroll to top button -->
-    <input type="button" id="goToTop" class="goToTop" value="Scroll Top" style="display:none;background-color:#f9f9f9"/>
+    <div id="scrollArea" ng-controller="ScrollController">
+        <a class="gotoTop" ng-click="gotoTop()">Go to top</a>
+    </div>
 
     <!--  Page navigation -->
     <nav aria-label="Page navigation" align="center">

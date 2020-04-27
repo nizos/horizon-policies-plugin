@@ -254,5 +254,20 @@
             });
         }
     }
+    angular
+        .module('horizon.dashboard.identity.policy.policies')
+        .controller('ScrollController', 
+                ['$scope', '$location', '$anchorScroll',
+            function($scope, $location, $anchorScroll) {
+                $scope.gotoTop = function() {
+                    
+                // set the location.hash to the id of
+                // the element you wish to scroll to.
+                $("html, body").animate({ scrollTop: 0 }, 1000);
+
+                // call $anchorScroll()
+                $anchorScroll();
+                };
+            }]);
 
 })();
