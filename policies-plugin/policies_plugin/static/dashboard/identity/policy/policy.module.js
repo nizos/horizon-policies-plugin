@@ -12,40 +12,41 @@
  * limitations under the License.
  */
 (function () {
-  'use strict';
+    'use strict';
 
-  /**
-   * @ngdoc overview
-   * @name horizon.dashboard.identity.policy
-   * @description
-   * A sample top level module.
-   */
+    /**
+     * @ngdoc overview
+     * @name horizon.dashboard.identity.policy
+     * @description
+     * A sample top level module.
+     */
 
-  angular
-    .module('horizon.dashboard.identity.policy', [
-      'ngRoute',
-      'ngSanitize',
-      'ui.bootstrap',
-      'horizon.dashboard.identity.policy.policies',
-      'horizon.dashboard.identity.policy.policies.details'
-    ])
-    .config(config);
+    angular
+        .module('horizon.dashboard.identity.policy', [
+            'ngRoute',
+            'ngSanitize',
+            'ui.bootstrap',
+            'horizon.dashboard.identity.policy.policies.autocomp',
+            'horizon.dashboard.identity.policy.policies',
+            'horizon.dashboard.identity.policy.policies.details'
+        ])
+        .config(config);
 
-  config.$inject = [
-    '$provide',
-    '$windowProvider',
-    '$routeProvider'
-  ];
+        config.$inject = [
+            '$provide',
+            '$windowProvider',
+            '$routeProvider'
+        ];
 
-  function config($provide, $windowProvider, $routeProvider) {
-    var basePath = $windowProvider.$get().STATIC_URL + 'dashboard/identity/policy/';
-    $provide.constant('horizon.dashboard.identity.policy.basePath', basePath);
+        function config($provide, $windowProvider, $routeProvider) {
+            var basePath = $windowProvider.$get().STATIC_URL + 'dashboard/identity/policy/';
+            $provide.constant('horizon.dashboard.identity.policy.basePath', basePath);
 
-    var policies = '/identity/policies';
+            var policies = '/identity/policies';
 
-    $routeProvider.when(policies, {
-        templateUrl: basePath + 'policies/table.html'
-      });
-  }
+            $routeProvider.when(policies, {
+                templateUrl: basePath + 'policies/table.html'
+            });
+        }
 
 }());

@@ -14,15 +14,6 @@
 (function() {
     'use strict';
 
-    /**
-     * @ngdoc overview
-     * @ngname horizon.dashboard.identity.sample.networks
-     *
-     * @description
-     * Provides the services and widgets required to support and display the identity
-     * sampmle networks panel
-     */
-
     angular
       .module('horizon.dashboard.identity.policy.policies.details', []);
 

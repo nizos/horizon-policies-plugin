@@ -229,11 +229,16 @@ function showIntro
   echo -e "${DEFAULT}Prompt the user to restart the apache2 service for the actions to take effect.${DEFAULT}"
 }
 
+function timestamp() {
+  date +"%T"
+}
+
 ## Show the result of the installation
 function showResult
 {
   # Installation completed successfully
   echo -e "${GREEN}Installation completed successfully.${DEFAULT}"
+  echo -e "${GREEN}Build finished: $(timestamp)${DEFAULT}"
 }
 
 startInstall
