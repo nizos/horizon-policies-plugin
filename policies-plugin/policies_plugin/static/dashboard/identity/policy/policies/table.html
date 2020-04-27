@@ -231,29 +231,34 @@
                 <td ng-show="targetColumnVisible" ng-style="columnWidth">
                     <span ng-if="!item.expanded">
                         <span ng-if="item.target.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.target $}">
-                            <a ng-click="OpenModal(item)">{$ item.target | limitTo:getCharLimit() $}...</a>
+                            {$ item.target | limitTo:getCharLimit() $}...
                         </span>
                         <span ng-if="item.target.length<=getCharLimit()">
-                            <a ng-click="OpenModal(item)">{$ item.target $}</a>
+                            {$ item.target $}
                         </span>
                     </span>
                     <span ng-if="item.expanded">
-                        <a ng-click="OpenModal(item)">{$ item.target $}</a>
+                        {$ item.target $}
                     </span>
                 </td>
 
                 <!--  Rule column content -->
                 <td ng-show="ruleColumnVisible" ng-style="columnWidth">
                     <span ng-if="!item.expanded">
-                        <span ng-if="item.rule.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.rule $}">
-                            {$ item.rule | limitTo:getCharLimit() $}...
+                        <span ng-if="(item.rule.length>getCharLimit()) && !item.editMode" tooltip-placement="bottom" uib-tooltip="{$ item.rule $}">
+                            <a ng-click="item.editMode = true">{$ item.rule | limitTo:getCharLimit() $}...</a>
                         </span>
-                        <span ng-if="item.rule.length<=getCharLimit()">
-                            {$ item.rule $}
+                        <span ng-if="(item.rule.length<=getCharLimit()) && !item.editMode">
+                            <a ng-click="item.editMode = true">{$ item.rule $}</a>
                         </span>
                     </span>
-                    <span ng-if="item.expanded">
-                        {$ item.rule $}
+                    <span ng-if="item.expanded && !item.editMode">
+                        <a ng-click="item.editMode = true">{$ item.rule $}</a>
+                    </span>
+                    <span ng-if="item.editMode">
+                        <input ng-model="item.rule" width=100%>
+                        <button ng-click="savePolicy(item); item.editMode = false">Save</button>
+                        <button ng-click="item.editMode = false">Cancel</button>
                     </span>
                 </td>
 

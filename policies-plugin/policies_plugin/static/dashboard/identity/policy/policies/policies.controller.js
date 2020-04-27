@@ -85,6 +85,10 @@
                 item.listLimit=1;
             })
         }
+        
+        $scope.savePolicy=function(policy) {
+            api.setPolicy( { rule: policy } ).success(setPolicySuccess);
+        }
 
         $scope.getPolicy=function(project, target){
             api.getPolicy(project, target).success(getPolicySuccess);

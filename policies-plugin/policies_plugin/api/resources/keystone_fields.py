@@ -855,7 +855,7 @@ keystone_docs = {
             "DELETE /v3/OS-INHERIT/domains/{domain_id}/users/{user_id}/roles/{role_id}/inherited_to_projects",
             "DELETE /v3/OS-INHERIT/domains/{domain_id}/groups/{group_id}/roles/{role_id}/inherited_to_projects"
         ],
-        "description":"\"Revoke a role grant between a target and an actor. A target can be either a domain or a project. An actor can be either a user or a group. These terms also apply to the OS-INHERIT APIs, where grants on the target are inherited to all projects in the subtree, if applicable. In that case, revoking the role grant in the target would remove the logical effect of inheriting it to the target\\'s projects subtree.\""
+        "description":"Revoke a role grant between a target and an actor. A target can be either a domain or a project. An actor can be either a user or a group. These terms also apply to the OS-INHERIT APIs, where grants on the target are inherited to all projects in the subtree, if applicable. In that case, revoking the role grant in the target would remove the logical effect of inheriting it to the target's projects subtree."
     },
     "identity:list_system_grants_for_user": {
         "target":"identity:list_system_grants_for_user",
@@ -864,7 +864,8 @@ keystone_docs = {
             "system"
         ],
         "operations":[
-            "['HEAD', 'GET'] /v3/system/users/{user_id}/roles"
+            "HEAD /v3/system/users/{user_id}/roles",
+            "GET /v3/system/users/{user_id}/roles"
         ],
         "description":"List all grants a specific user has on the system."
     },
@@ -875,7 +876,8 @@ keystone_docs = {
             "system"
         ],
         "operations":[
-            "['HEAD', 'GET'] /v3/system/users/{user_id}/roles/{role_id}"
+            "HEAD /v3/system/users/{user_id}/roles/{role_id}"
+            "GET /v3/system/users/{user_id}/roles/{role_id}"
         ],
         "description":"Check if a user has a role on the system."
     },
@@ -886,7 +888,7 @@ keystone_docs = {
             "system"
         ],
         "operations":[
-            "['PUT'] /v3/system/users/{user_id}/roles/{role_id}"
+            "PUT /v3/system/users/{user_id}/roles/{role_id}"
         ],
         "description":"Grant a user a role on the system."
     },
@@ -897,7 +899,7 @@ keystone_docs = {
             "system"
         ],
         "operations":[
-            "['DELETE'] /v3/system/users/{user_id}/roles/{role_id}"
+            "DELETE /v3/system/users/{user_id}/roles/{role_id}"
         ],
         "description":"Remove a role from a user on the system."
     },
@@ -908,7 +910,8 @@ keystone_docs = {
             "system"
         ],
         "operations":[
-            "['HEAD', 'GET'] /v3/system/groups/{group_id}/roles"
+            "HEAD /v3/system/groups/{group_id}/roles"
+            "GET /v3/system/groups/{group_id}/roles"
         ],
         "description":"List all grants a specific group has on the system."
     },
@@ -919,7 +922,8 @@ keystone_docs = {
             "system"
         ],
         "operations":[
-            "['HEAD', 'GET'] /v3/system/groups/{group_id}/roles/{role_id}"
+            "HEAD /v3/system/groups/{group_id}/roles/{role_id}",
+            "GET /v3/system/groups/{group_id}/roles/{role_id}"
         ],
         "description":"Check if a group has a role on the system."
     },
@@ -930,7 +934,7 @@ keystone_docs = {
             "system"
         ],
         "operations":[
-            "['PUT'] /v3/system/groups/{group_id}/roles/{role_id}"
+            "PUT /v3/system/groups/{group_id}/roles/{role_id}"
         ],
         "description":"Grant a group a role on the system."
     },
@@ -941,7 +945,7 @@ keystone_docs = {
             "system"
         ],
         "operations":[
-            "['DELETE'] /v3/system/groups/{group_id}/roles/{role_id}"
+            "DELETE /v3/system/groups/{group_id}/roles/{role_id}"
         ],
         "description":"Remove a role from a group on the system."
     },
