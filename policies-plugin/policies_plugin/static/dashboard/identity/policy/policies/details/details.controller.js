@@ -14,7 +14,7 @@
                 $scope.dirty = {};
                 $scope.resultsToShow = 5;
 
-                var suggestions = ["admin", "admin_required", "rule:admin_required", "rule:service_role", "rule:service_or_admin", "rule:token_subject", "target.credential.user_id", "target.domain.id", "target.domain_id", "target.group.domain_id", "target.limit.domain.id", "target.limit.project.domain_id", "target.limit.project_id", "target.trust.trustor_user_id", "target.trust.trustee_user_id", "target.project.domain_id", "target.project.id", "target.role.domain_id", "target.token.user_id", "target.user.id", "target.user.domain_id", "token.domain.id", "token.project.domain.id"];
+                var suggestions = ["admin", "admin_required", "rule:admin_required", "rule:service_role", "rule:service_or_admin", "rule:token_subject", "target.credential.user_id", "target.domain.id", "target.domain_id", "target.group.domain_id", "target.limit.domain.id", "target.limit.project.domain_id", "target.limit.project_id", "target:credential.user_id", "target.trust.trustor_user_id", "target.trust.trustee_user_id", "target.user.id", "target.project.domain_id", "target.project.id", "target.role.domain_id", "target.token.user_id", "target.user.domain_id", "token.domain.id", "token.project.domain.id", "role:reader", "role:admin", "and", "or", "rule:owner", "system_scope:all"];
 
                 $scope.ok = function(policy) {
                     $uibModalInstance.close(policy);
