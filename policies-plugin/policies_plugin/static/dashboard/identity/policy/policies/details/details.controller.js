@@ -24,6 +24,19 @@
                     $uibModalInstance.dismiss('cancel');
                 }
 
+                $scope.textAreaContent=function() {
+                    var json_format = '{' + '\n';
+                    for (var i = 0; i < $ctrl.policy.length; i++) {
+                        json_format += "    " + '"' + $ctrl.policy[i].target + '": "' + $ctrl.policy[i].rule + '"';
+                        i+1 < $ctrl.policy.length ? json_format += ',' + '\n' : json_format += '\n';
+                        console.log("i+1 = ", i+1);
+                        console.log("$ctrl.policy.length = ", $ctrl.policy.length);
+                    }
+                    json_format += '}';
+                    console.log("content: ", json_format);
+                    return json_format;
+                }
+
                 function autocomp_suggestions() {
                     var search_term = get_search_term(); // What is it that we should show suggestions for?
                     var search_results = get_search_suggestions(search_term); // What suggestions do we have for it?
