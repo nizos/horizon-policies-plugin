@@ -1,5 +1,8 @@
 @import './details/details.scss';
 
+html, body:not(#splash) {
+    height: auto;
+}
 
 html {
     scroll-behavior: smooth;
@@ -21,6 +24,10 @@ html {
     width: 100px;
 }
 
+.fa-edit {
+    margin-right: 3px;
+}
+
 .tooltip-inner  {
     text-align: left !important;
 }
@@ -40,33 +47,9 @@ html {
 }
 
 .gotoTop {
-    width: auto;
-    height: 40px;
     bottom: 0;
     right: 0;
-    z-index: 100000;
     cursor: pointer;
     margin: 10px;
-    -moz-opacity: 0.6;
-    opacity: 0.6;
-    filter: alpha(opacity=60);
-    padding: 3px;
-    border: 1px solid black;
-    padding: 10px;
-    background-color: #f2f2f2;
-    color: black;
     float: right;
-    
-
-	&:hover {
-		opacity: 1;
-		cursor: pointer;
-	}
-
-	i {
-		font-size: 25px;
-		padding: 12px;
-		color: #FFF;
-	}
-
 }

@@ -269,12 +269,7 @@
                 ['$scope', '$anchorScroll',
             function($scope, $anchorScroll) {
                 $scope.gotoTop = function() {
-
-                // set the location.hash to the id of
-                // the element you wish to scroll to.
-                $("html, body").animate({ scrollTop: 0 }, 1000);
-
-                // call $anchorScroll()
+                $("html, body").animate({ scrollTop: 0 }, 100);
                 $anchorScroll();
                 };
             }]);

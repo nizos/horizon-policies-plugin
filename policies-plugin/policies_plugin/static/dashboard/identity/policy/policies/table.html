@@ -61,7 +61,7 @@
                 <!-- Manage button -->
                 <div class="btn-group manage-button" ng-show="showManage">
                     <button class="btn btn-primary" ng-click="OpenModal()" type="button">
-                        <span class="fa fa-edit">Manage</span>
+                        <i class="fa fa-edit"></i>Manage
                     </button>
                 </div>
 
@@ -264,9 +264,9 @@
                         <a ng-click="item.editMode = true">{$ item.rule $}</a>
                     </span>
                     <span ng-if="item.editMode">
-                        <input ng-model="item.rule" width=100%>
-                        <button ng-click="savePolicy(item); item.editMode = false">Save</button>
-                        <button ng-click="item.editMode = false">Cancel</button>
+                        <input class="input-group-window-edit" ng-model="item.rule">
+                        <button class="btn-edit btn-primary" ng-click="savePolicy(item); item.editMode = false">Save</button>
+                        <button class="btn-edit btn-warning" ng-click="item.editMode = false">Cancel</button>
                     </span>
                 </td>
 
@@ -355,7 +355,7 @@
 
     <!--  Scroll to top button -->
     <div id="scrollArea" ng-controller="ScrollController">
-        <a class="gotoTop" ng-click="gotoTop()">Go to top</a>
+        <a class="btn btn-primary gotoTop" ng-click="gotoTop()">Go to top</a>
     </div>
 
     <!--  Page navigation -->
