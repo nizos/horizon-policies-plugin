@@ -35,16 +35,13 @@
    */
     function PoliciesController(api, $scope, $uibModal, $filter) {
 
+        // Table data scopes
         $scope.data = [];
         $scope.singlePolicy = [];
-        $scope.charLimit = 50;
-        $scope.currentPage = 0;
-        $scope.itemsPerPage = 20;
-        $scope.query = '';
-        $scope.column = 'target';
-        $scope.reverse = false;
-
         $scope.policy = [];
+        // Table search scope
+        $scope.query = '';
+        // Table filter scopes
         $scope.projectColumnVisible = true;
         $scope.targetColumnVisible = true;
         $scope.ruleColumnVisible = true;
@@ -52,14 +49,25 @@
         $scope.scopesColumnVisible = false;
         $scope.operationsColumnVisible = false;
         $scope.descriptionColumnVisible = true;
+        // Table sort scopes
+        $scope.column = 'target';
+        $scope.reverse = false;
+        // Table design scopes
+        $scope.charLimit = 50;
+        // Table display scopes
         $scope.expandAll = false;
-        $scope.showManage = false;
-        $scope.items = [];
-
-        $scope.selected = {
-            items: []
+        // Table page scopes
+        $scope.currentPage = 0;
+        $scope.itemsPerPage = 20;
+        // Table item modal scopes
+        $scope.showEditorModal = false;
+        // Table selected policies scopes
+        $scope.policies = [];
+        $scope.selectedPolicies = {
+            policies: []
         }
 
+        // table design scope
         $scope.columnWidth = {
             'width': getColumnWidth()+'%',
             'word-wrap': 'break-word'
@@ -67,10 +75,12 @@
 
         init();
 
+        // Functions to run on page load
         function init() {
             api.getPolicies().success(getPoliciesSuccess);
         }
 
+        // API functions
         function getPolicySuccess(response) {
             $scope.singlePolicy = response.item;
         }
@@ -95,6 +105,7 @@
             api.getPolicy(project, target).success(getPolicySuccess);
         }
 
+        // Table display functions
         $scope.expandSelected=function(item){
             if(item.expanded==true) {
                 $scope.data.forEach(function(i){
@@ -111,18 +122,15 @@
             }
         }
 
-        $scope.selectionChanged=function() {
-            if($scope.selected.items.length > 0) {
-                $scope.showManage = true;
-            } else {
-                $scope.showManage = false;
-            }
+        $scope.selectedPoliciesChanged=function() {
+            $scope.selectedPolicies.policies.length > 0 ? $scope.showEditorModal = true : $scope.showEditorModal = false;
         }
 
         $scope.getData = function () {
             return $filter('filter')($scope.data, $scope.query)
         }
 
+        // Table page navigation functions
         $scope.numberOfPages=function(){
             return Math.ceil($scope.getData().length/$scope.itemsPerPage);
         }
@@ -151,6 +159,7 @@
             $scope.currentPage = page;
         }
 
+        // Table design functions
         function getColumnWidth() {
 
             var visibleColumns = 0;
@@ -228,12 +237,14 @@
             }
         }
 
+        // Table search functions
         $scope.$watch('query', function(newValue, oldValue) {
             if(oldValue!=newValue) {
                 $scope.currentPage = 0;
             }
         },true);
 
+        // Table sort functions
         $scope.sortColumn = function(col) {
             $scope.column = col;
             if($scope.reverse) {
@@ -243,26 +254,44 @@
             }
         };
 
-        $scope.OpenModal = function(){
-            var modalInstance = $uibModal.open({
+        // Table item modal functions
+        $scope.openDetailsModal = function(){
+            var detailsModalInstance = $uibModal.open({
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
-                templateUrl: 'static/dashboard/identity/policy/policies/details/details.html',
-                controller: 'detailsController',
+                templateUrl: 'static/dashboard/identity/policy/policies/editor/editor.html',
+                controller: 'EditorController',
                 controllerAs: '$ctrl',
                 resolve: {
                     $policy: function () {
-                        return $scope.selected.items;
+                        return $scope.selectedPolicies.policies;
                     }
                 }
             });
 
-            modalInstance.result.then(function (policy) {
+            detailsModalInstance.result.then(function (policy) {
                 api.setPolicy( { rule: policy } ).success(setPolicySuccess);
             }, function () {
             });
         }
+
+
+        // Plugin Info modal functions
+        $scope.openInfoModal = function(){
+            var infoModalInstance = $uibModal.open({
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'static/dashboard/identity/policy/policies/info/info.html',
+                controller: 'InfoController',
+                controllerAs: '$ctrl'
+            });
+
+            infoModalInstance.result.then(function () {
+            }, function () {
+            });
+        }
     }
+    // Scroll to top button controller
     angular
         .module('horizon.dashboard.identity.policy.policies')
         .controller('ScrollController',

@@ -1,0 +1,37 @@
+<!-- Policies controller -->
+<div ng-controller="PoliciesController">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Edit policy</h3>
+    </div>
+
+    <!-- JSON Editor -->
+    <div class="editor-toolbar">toolbar</div>
+    <div class="editor">
+        <div class="editor-line-numbers">
+            <div ng-repeat="i in [].constructor(nrOfLines) track by $index">{$ $index+1 $}</div>
+        </div>
+        <div autocomp class="editor-field">
+            <textarea class="autocomp" ng-model="editorContent" ng-change="editorContentChanged()" ng-trim="false" autocomp-item="autocomp_results" ng-style="editorHeight" ng-init="editorInit()"></textarea>
+        </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+
+        <!-- Cancel Button -->
+        <button class="btn btn-warning"
+            type="button"
+            ng-click="cancel()">
+            Cancel
+        </button>
+
+        <!-- OK Button -->
+        <button class="btn btn-primary"
+            type="button"
+            ng-click="save(autocomp.value)">
+            Save
+        </button>
+    </div>
+</div>

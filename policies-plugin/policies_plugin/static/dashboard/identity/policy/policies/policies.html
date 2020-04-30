@@ -6,61 +6,53 @@
 
     <div class="form-group">
         <div class="input-group">
-
-            <!-- Search section -->
-            <div class="input-group-btn btn-group search-panel" uib-dropdown auto-close="outsideClick">
-
-                <!-- Search settings button -->
-                <button id="search-settings-button" type="button" class="btn btn-default" uib-dropdown-toggle>
-                     <span id="search_concept">Everything</span> <span class="caret"></span>
-                </button>
-                <!-- Search settings drop down menu-->
-                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="search-settings-button">
-                    <!-- Search in  project column -->
-                    <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchProject" ng-checked="searchProject" ng-init="searchProject=true"/> Project
-                    </li>
-                    <!-- Search in target column -->
-                    <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchTarget" ng-checked="searchTarget" ng-init="searchTarget=true"/> Target
-                    </li>
-                    <!-- Search in rule column -->
-                    <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchRule" ng-checked="searchRule" ng-init="searchRule=true"/> Rule
-                    </li>
-                    <!-- Search in default rule column -->
-                    <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchDefaultRule" ng-checked="searchDefaultRule" ng-init="searchDefaultRule=true"/> Default
-                    </li>
-                    <!-- Search in scopes column -->
-                    <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchScopes" ng-checked="searchScopes" ng-init="searchScopes=true"/> Scopes
-                    </li>
-                    <!-- Search in operations column -->
-                    <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchOperations" ng-checked="searchOperations" ng-init="searchOperations=true"/> Operations
-                    </li>
-                    <!-- Search in description column -->
-                    <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchDescription" ng-checked="searchDescription" ng-init="searchDescription=true"/> Description
-                    </li>
-                </ul>
-            </div>
-
             <!-- Search bar -->
             <input type="hidden" name="search_param" value="all" id="search_param">
             <input type="text" class="form-control" name="x" id="search" placeholder="Search" ng-model="query">
 
             <span class="input-group-btn">
 
-                <!-- Search button -->
-                <button class="btn btn-default" type="button">
-                    <span class="fa fa-search"></span>
-                </button>
+                <!-- Search settings button -->
+                <div class="btn-group" uib-dropdown auto-close="outsideClick">
+                    <button type="button" id="search-settings-button" class="btn btn-default" uib-dropdown-toggle>
+                        <span class="fa fa-search"></span> <span class="fa fa-caret-down"></span>
+                    </button>
+                    <!-- Search settings button drop down menu-->
+                    <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="search-settings-button">
+                        <!-- Search in  project column -->
+                        <li class="search-settings-menu-item" role="menuitem">
+                            <input type="checkbox" ng-model="searchProject" ng-checked="searchProject" ng-init="searchProject=true"/> Project
+                        </li>
+                        <!-- Search in target column -->
+                        <li class="search-settings-menu-item" role="menuitem">
+                            <input type="checkbox" ng-model="searchTarget" ng-checked="searchTarget" ng-init="searchTarget=true"/> Target
+                        </li>
+                        <!-- Search in rule column -->
+                        <li class="search-settings-menu-item" role="menuitem">
+                            <input type="checkbox" ng-model="searchRule" ng-checked="searchRule" ng-init="searchRule=true"/> Rule
+                        </li>
+                        <!-- Search in default rule column -->
+                        <li class="search-settings-menu-item" role="menuitem">
+                            <input type="checkbox" ng-model="searchDefaultRule" ng-checked="searchDefaultRule" ng-init="searchDefaultRule=true"/> Default
+                        </li>
+                        <!-- Search in scopes column -->
+                        <li class="search-settings-menu-item" role="menuitem">
+                            <input type="checkbox" ng-model="searchScopes" ng-checked="searchScopes" ng-init="searchScopes=true"/> Scopes
+                        </li>
+                        <!-- Search in operations column -->
+                        <li class="search-settings-menu-item" role="menuitem">
+                            <input type="checkbox" ng-model="searchOperations" ng-checked="searchOperations" ng-init="searchOperations=true"/> Operations
+                        </li>
+                        <!-- Search in description column -->
+                        <li class="search-settings-menu-item" role="menuitem">
+                            <input type="checkbox" ng-model="searchDescription" ng-checked="searchDescription" ng-init="searchDescription=true"/> Description
+                        </li>
+                    </ul>
+                </div>
 
                 <!-- Manage button -->
-                <div class="btn-group manage-button" ng-show="showManage">
-                    <button class="btn btn-primary" ng-click="OpenModal()" type="button">
+                <div class="btn-group manage-button" ng-show="showEditorModal">
+                    <button class="btn btn-primary" ng-click="openDetailsModal()" type="button">
                         <i class="fa fa-edit"></i>Manage
                     </button>
                 </div>
@@ -70,7 +62,7 @@
                 <div class="btn-group" uib-dropdown auto-close="outsideClick">
                     <button type="button" id="table-settings-button" class="btn btn-default" uib-dropdown-toggle>
                         <span class="fa fa-cog"></span>
-                        Table settings
+                        Table
                         <span class="fa fa-caret-down"></span>
                     </button>
                     <!-- Settings button drop down menu-->
@@ -119,6 +111,15 @@
                             </select>
                         </div>
                     </ul>
+                </div>
+
+                <!-- Help Info button -->
+                <div class="btn-group info-button">
+                    <button class="btn btn-default" ng-click="openInfoModal()" type="button">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                </div>
+
             </span>
         </div>
     </div>
@@ -131,7 +132,7 @@
             <tr>
                 <!-- Checkbox column header -->
                 <th class="multi-select-column">
-                    <input type="checkbox">
+                    <input type="checkbox" class="table-checkbox">
                 </th>
 
                 <!-- Expander column header -->
@@ -211,7 +212,7 @@
 
                 <!--  Checkbox column content -->
                 <td class="multi_select_column">
-                    <input type="checkbox" checklist-model="selected.items" checklist-value="item" checklist-change="selectionChanged()">
+                    <input type="checkbox"  class="table-checkbox" checklist-model="selectedPolicies.policies" checklist-value="item" checklist-change="selectedPoliciesChanged()">
                 </td>
 
                 <!--  Expander column content -->
@@ -265,8 +266,8 @@
                     </span>
                     <span ng-if="item.editMode">
                         <input class="input-group-window-edit" ng-model="item.rule">
-                        <button class="btn-edit btn-primary" ng-click="savePolicy(item); item.editMode = false">Save</button>
                         <button class="btn-edit btn-warning" ng-click="item.editMode = false">Cancel</button>
+                        <button class="btn-edit btn-primary" ng-click="savePolicy(item); item.editMode = false">Save</button>
                     </span>
                 </td>
 

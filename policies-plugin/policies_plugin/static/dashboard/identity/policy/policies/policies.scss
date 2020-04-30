@@ -1,4 +1,5 @@
-@import './details/details.scss';
+@import './editor/editor.scss';
+@import './info/info.scss';
 
 html, body:not(#splash) {
     height: auto;
@@ -52,4 +53,8 @@ html {
     cursor: pointer;
     margin: 10px;
     float: right;
+}
+
+.table-checkbox {
+    margin: 2px 0 0;
 }

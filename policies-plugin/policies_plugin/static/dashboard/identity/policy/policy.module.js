@@ -26,10 +26,12 @@
             'ngRoute',
             'ngSanitize',
             'ui.bootstrap',
-            'horizon.dashboard.identity.policy.policies.checklist-model',
-            'horizon.dashboard.identity.policy.policies.autocomp',
+            'horizon.dashboard.identity.policy.lib',
+            'horizon.dashboard.identity.policy.lib.checklist-model',
+            'horizon.dashboard.identity.policy.lib.autocomp',
             'horizon.dashboard.identity.policy.policies',
-            'horizon.dashboard.identity.policy.policies.details'
+            'horizon.dashboard.identity.policy.policies.editor',
+            'horizon.dashboard.identity.policy.policies.info'
         ])
         .config(config);
 
@@ -46,7 +48,7 @@
             var policies = '/identity/policies';
 
             $routeProvider.when(policies, {
-                templateUrl: basePath + 'policies/table.html'
+                templateUrl: basePath + 'policies/policies.html'
             });
         }
 
