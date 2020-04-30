@@ -14,7 +14,7 @@
 
                 <!-- Search settings button -->
                 <div class="btn-group" uib-dropdown auto-close="outsideClick">
-                    <button type="button" id="search-settings-button" class="btn btn-default" uib-dropdown-toggle>
+                    <button title="Search" type="button" id="search-settings-button" class="btn btn-default" uib-dropdown-toggle>
                         <span class="fa fa-search"></span> <span class="fa fa-caret-down"></span>
                     </button>
                     <!-- Search settings button drop down menu-->
@@ -52,7 +52,7 @@
 
                 <!-- Manage button -->
                 <div class="btn-group manage-button" ng-show="showEditorModal">
-                    <button class="btn btn-primary" ng-click="openDetailsModal()" type="button">
+                    <button title="Manage policy" class="btn btn-primary" ng-click="openDetailsModal()" type="button">
                         <i class="fa fa-edit"></i>Manage
                     </button>
                 </div>
@@ -60,7 +60,7 @@
 
                 <!-- Table settings button -->
                 <div class="btn-group" uib-dropdown auto-close="outsideClick">
-                    <button type="button" id="table-settings-button" class="btn btn-default" uib-dropdown-toggle>
+                    <button title="Table settings" type="button" id="table-settings-button" class="btn btn-default" uib-dropdown-toggle>
                         <span class="fa fa-cog"></span>
                         Table
                         <span class="fa fa-caret-down"></span>
@@ -115,7 +115,7 @@
 
                 <!-- Help Info button -->
                 <div class="btn-group info-button">
-                    <button class="btn btn-default" ng-click="openInfoModal()" type="button">
+                    <button title="Information" class="btn btn-default" ng-click="openInfoModal()" type="button">
                         <i class="fa fa-info-circle"></i>
                     </button>
                 </div>
@@ -125,7 +125,7 @@
     </div>
 
     <!-- Table -->
-    <table class="table table-detail" style="table-layout: fixed;">
+    <table id="allTable" class="table table-detail" style="table-layout: fixed;">
         <!-- Table headers -->
         <thead>
             <!-- Table headers row-->
@@ -137,7 +137,7 @@
 
                 <!-- Expander column header -->
                 <th class="expander expander-column" ng-click="toggleExpandAll()">
-                    <span ng-if="!expandAll"
+                    <span title="Expand all" ng-if="!expandAll"
                                 class="fa fa-chevron-right"
                                 duration="200">
                     </span>
@@ -148,7 +148,7 @@
                 </th>
 
                 <!-- Project column header -->
-                <th class="project-column" ng-show="projectColumnVisible" ng-click="sortColumn('project')" translate>Project
+                <th title="Sort by project" class="project-column" ng-show="projectColumnVisible" ng-click="sortColumn('project')" translate>Project
                     <span ng-show="column == 'project'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -156,7 +156,7 @@
                 </th>
 
                 <!-- Target column header -->
-                <th ng-show="targetColumnVisible" ng-click="sortColumn('target')" ng-style="columnWidth" translate>Target
+                <th title="Sort by target"  ng-show="targetColumnVisible" ng-click="sortColumn('target')" ng-style="columnWidth" translate>Target
                     <span ng-show="column == 'target'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -164,7 +164,7 @@
                 </th>
 
                 <!-- Rule column header -->
-                <th ng-show="ruleColumnVisible" ng-click="sortColumn('rule')" ng-style="columnWidth" translate>Rule
+                <th title="Sort by rule"  ng-show="ruleColumnVisible" ng-click="sortColumn('rule')" ng-style="columnWidth" translate>Rule
                     <span ng-show="column == 'rule'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -172,7 +172,7 @@
                 </th>
 
                 <!-- Default rule column header -->
-                <th ng-show="defaultRuleColumnVisible" ng-click="sortColumn('default')" ng-style="columnWidth" translate>Default
+                <th title="Sort by default"  ng-show="defaultRuleColumnVisible" ng-click="sortColumn('default')" ng-style="columnWidth" translate>Default
                     <span ng-show="column == 'default'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -180,7 +180,7 @@
                 </th>
 
                 <!-- Scopes column header -->
-                <th ng-show="scopesColumnVisible" ng-click="sortColumn('scopes')" ng-style="columnWidth" translate>Scopes
+                <th title="Sort by scopes"  ng-show="scopesColumnVisible" ng-click="sortColumn('scopes')" ng-style="columnWidth" translate>Scopes
                     <span ng-show="column == 'scopes'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -188,7 +188,7 @@
                 </th>
 
                 <!-- Operations column header -->
-                <th ng-show="operationsColumnVisible" ng-click="sortColumn('operations')" ng-style="columnWidth" translate>Operations
+                <th title="Sort by operations"  ng-show="operationsColumnVisible" ng-click="sortColumn('operations')" ng-style="columnWidth" translate>Operations
                     <span ng-show="column == 'operations'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -196,7 +196,7 @@
                 </th>
 
                 <!-- Description column header -->
-                <th ng-show="descriptionColumnVisible" ng-click="sortColumn('description')" ng-style="columnWidth" translate>Description
+                <th title="Sort by description" ng-show="descriptionColumnVisible" ng-click="sortColumn('description')" ng-style="columnWidth" translate>Description
                     <span ng-show="column == 'description'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -216,7 +216,7 @@
                 </td>
 
                 <!--  Expander column content -->
-                <td class="expander expander-column" ng-click="expandSelected(item)">
+                <td title="Expand column content" class="expander expander-column" ng-click="expandSelected(item)">
                     <span ng-if="!item.expanded" class="fa fa-chevron-right" duration="200"></span>
                     <span ng-if="item.expanded" class="fa fa-chevron-down" duration="200"></span>
                 </td>
@@ -258,7 +258,7 @@
                             <a ng-click="item.editMode = true">{$ item.rule | limitTo:getCharLimit() $}...</a>
                         </span>
                         <span ng-if="(item.rule.length<=getCharLimit()) && !item.editMode">
-                            <a ng-click="item.editMode = true">{$ item.rule $}</a>
+                            <a title="Click to edit rule" ng-click="item.editMode = true">{$ item.rule $}</a>
                         </span>
                     </span>
                     <span ng-if="item.expanded && !item.editMode">
@@ -266,8 +266,8 @@
                     </span>
                     <span ng-if="item.editMode">
                         <input class="input-group-window-edit" ng-model="item.rule">
-                        <button class="btn-edit btn-warning" ng-click="item.editMode = false">Cancel</button>
-                        <button class="btn-edit btn-primary" ng-click="savePolicy(item); item.editMode = false">Save</button>
+                        <button title="Cancel changes" class="btn-edit btn-warning" ng-click="item.editMode = false">Cancel</button>
+                        <button title="Save changes" class="btn-edit btn-primary" ng-click="savePolicy(item); item.editMode = false">Save</button>
                     </span>
                 </td>
 
@@ -356,7 +356,7 @@
 
     <!--  Scroll to top button -->
     <div id="scrollArea" ng-controller="ScrollController">
-        <a class="btn btn-primary gotoTop" ng-click="gotoTop()">Go to top</a>
+        <a id="btnUp" style="display:none;" class="btn btn-primary gotoTop" ng-click="gotoTop()">Go to top</a>
     </div>
 
     <!--  Page navigation -->
@@ -398,5 +398,4 @@
 
         </ul>
     </nav>
-
 </div>

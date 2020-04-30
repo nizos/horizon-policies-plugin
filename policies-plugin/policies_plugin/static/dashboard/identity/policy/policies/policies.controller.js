@@ -292,11 +292,22 @@
         }
     }
     // Scroll to top button controller
+    // Scroll to top button controller
     angular
         .module('horizon.dashboard.identity.policy.policies')
         .controller('ScrollController',
                 ['$scope', '$anchorScroll',
             function($scope, $anchorScroll) {
+                var lastScrollTop = 100;
+                $(window).scroll(function(event){
+                    var st = $(this).scrollTop();
+                    if (st > lastScrollTop){
+                        $('#btnUp').fadeIn();
+                    } else {
+                        $('#btnUp').fadeOut();
+                    }
+                    lastScrollTop = st;
+                 });
                 $scope.gotoTop = function() {
                 $("html, body").animate({ scrollTop: 0 }, 100);
                 $anchorScroll();
