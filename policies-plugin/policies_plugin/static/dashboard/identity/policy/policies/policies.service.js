@@ -29,11 +29,10 @@
    * @description Provides direct pass through to policy-client.
    * @param apiService The horizon core API service.
    * @param toastService The horizon toast service.
-   * @returns The sample policies service API.
+   * @returns The policies service API.
    */
-
     function policiesAPI(apiService, toastService) {
-        var service = {
+        let service = {
         getPolicies: getPolicies,
         getPolicy: getPolicy,
         setPolicy: setPolicy
@@ -48,7 +47,6 @@
          * The listing result is an object with property "items". Each item is
          * a policy.
          */
-
         function getPolicy(project, target) {
             return apiService.get('/api/policy-api/policy/'+project+"/"+target)
                 .error(function () {
@@ -64,7 +62,6 @@
                 .success(function () {
                     toastService.add('success', gettext('Policy has been modified successfully!'))
                 });
-
         }
 
         function getPolicies() {

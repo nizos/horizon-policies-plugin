@@ -17,11 +17,9 @@
   /**
    * @ngdoc overview
    * @ngname horizon.dashboard.identity.policy.policies
-   *
    * @description
    */
-
-  angular
-    .module('horizon.dashboard.identity.policy.policies', []);
+    angular
+        .module('horizon.dashboard.identity.policy.policies', []);
 
 })();

@@ -4,7 +4,7 @@
     angular
         .module('horizon.dashboard.identity.policy.lib.autocomp', ['ngSanitize'])
         .provider('autocompConfig', function () {
-            var config = this;
+            const config = this;
 
             config.KEYS = {
                 TAB: 9,
@@ -31,21 +31,152 @@
                 return prefix + '_' + Math.random().toString().substring(2);
             };
 
+            function _createForOfIteratorHelper(o) {
+                if (typeof Symbol === 'undefined' || o[Symbol.iterator] == null) {
+                    if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) {
+                        let i = 0;
+                        let F = function F() {};
+                        return {
+                            s: F,
+                            n: function n() {
+                                if (i >= o.length) return { done: true };
+                                return { done: false, value: o[i++] };
+                            },
+                            e: function e(_e) {
+                                throw _e;
+                            },
+                            f: F
+                        };
+                    }
+                    throw new TypeError(
+                        'Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.'
+                    );
+                }
+                let it,
+                    normalCompletion = true,
+                    didErr = false,
+                    err;
+                return {
+                    s: function s() {
+                        it = o[Symbol.iterator]();
+                    },
+                    n: function n() {
+                        let step = it.next();
+                        normalCompletion = step.done;
+                        return step;
+                    },
+                    e: function e(_e2) {
+                        didErr = true;
+                        err = _e2;
+                    },
+                    f: function f() {
+                        try {
+                            if (!normalCompletion && it.return != null) it.return();
+                        } finally {
+                            if (didErr) throw err;
+                        }
+                    }
+                };
+            }
+
+            function _unsupportedIterableToArray(o, minLen) {
+                if (!o) {
+                    return;
+                }
+                if (typeof o === 'string') {
+                    return _arrayLikeToArray(o, minLen);
+                }
+                let n = Object.prototype.toString.call(o).slice(8, -1);
+                if (n === 'Object' && o.constructor) {
+                    n = o.constructor.name;
+                }
+                if (n === 'Map' || n === 'Set') {
+                    return Array.from(o);
+                }
+                if (n === 'Arguments' || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) {
+                    return _arrayLikeToArray(o, minLen);
+                }
+            }
+
+            function _arrayLikeToArray(arr, len) {
+                if (len == null || len > arr.length) {
+                    len = arr.length;
+                }
+                for (let i = 0, arr2 = new Array(len); i < len; i++) {
+                    arr2[i] = arr[i];
+                }
+                return arr2;
+            }
+
+            const getCursorXY = function getCursorXY(input, selectionPoint) {
+                // create a dummy element that will be a clone of our input
+                let inputX = input.offsetLeft;
+                let inputY = input.offsetTop;
+                // get the computed style of the input and clone it onto the dummy element
+                let div = document.createElement('div');
+                let copyStyle = getComputedStyle(input);
+                let _iterator = _createForOfIteratorHelper(copyStyle);
+                let _step;
+                try {
+                    // we need a character that will replace whitespace when filling our dummy element if it's a single line <input/>
+                    for (_iterator.s(); !(_step = _iterator.n()).done; ) {
+                        let prop = _step.value;
+                        div.style[prop] = copyStyle[prop];
+                    }
+                } catch (err) {
+                    _iterator.e(err);
+                } finally {
+                    _iterator.f();
+                }
+                // set the div content to that of the textarea up until selection
+                let inputValue = input.value;
+                // set the text content of the dummy element div
+                let textContent = inputValue.substr(0, selectionPoint);
+                div.textContent = textContent;
+                div.style.height = 'auto';
+                // create a marker element to obtain caret position
+                let span = document.createElement('span');
+                // give the span the textContent of remaining content so that the recreated dummy element is as close as possible
+                span.textContent = inputValue.substr(selectionPoint) || '.';
+                // append the span marker to the div
+                div.appendChild(span);
+                // append the dummy element to the body
+                document.body.appendChild(div);
+                // get the marker position, this is the caret position top and left relative to the input
+                let spanX = span.offsetLeft;
+                let spanY = span.offsetTop;
+                // lastly, remove that dummy element
+                document.body.removeChild(div);
+                // return an object with the x and y of the caret. account for input positioning so that you don't need to wrap the input
+                return {
+                    x: inputX + spanX,
+                    y: inputY + spanY
+                };
+            };
+
+
             // Position ac container given a target element
             config.position_autocomplete = function (container, target) {
                 if (typeof target !== 'undefined') {
-                    var textarea = document.getElementsByClassName("autocomp")[0];
-
-                    var crtIndex = textarea.selectionStart;
-                    var preCrtString = textarea.value.substr(0, textarea.selectionStart);
-                    var lineStartIndex = preCrtString.lastIndexOf('\n');
-                    lineStartIndex == -1 ? lineStartIndex = 0 : lineStartIndex += 1;
-
-                    var caret_pos_x = crtIndex - lineStartIndex;
-                    var caret_pos_y = textarea.value.substr(0, textarea.selectionStart).split('\n').length;
-
-                    container[0].style.top = (caret_pos_y * 13) + 160 + 'px';
-                    container[0].style.left = (caret_pos_x * 7) + 20 + 'px';
+                    let input = document.querySelector('.editor-textarea');
+                    let selectionEnd = input.selectionStart;
+                    // grab the properties from the input that we are interested in
+                    let offsetLeft = input.offsetLeft;
+                    let offsetTop = input.offsetTop;
+                    let offsetHeight = input.offsetHeight;
+                    let offsetWidth = input.offsetWidth;
+                    let scrollLeft = input.scrollLeft;
+                    let scrollTop = input.scrollTop;
+                    let selectionEnd = input.selectionEnd;
+                    // get style property values that we are interested in
+                    let _getComputedStyle = getComputedStyle(input);
+                    let lineHeight = _getComputedStyle.lineHeight;
+                    let paddingRight = _getComputedStyle.paddingRight;
+                    let _getCursorXY = getCursorXY(input, selectionEnd);
+                    let x = _getCursorXY.x;
+                    let y = _getCursorXY.y;
+                    container[0].style.top = Math.min(y - scrollTop, offsetTop + offsetHeight - parseInt(lineHeight, 10)) + 'px';
+                    container[0].style.left = Math.min(x - scrollLeft, offsetLeft + offsetWidth - parseInt(paddingRight, 10)) + 'px';
                 }
             };
 
@@ -86,22 +217,22 @@
                     },
 
                     controller: ['$scope', function ($scope) {
-                        var that = this;
+                        const that = this;
 
-                        var bound_events = {};
+                        let bound_events = {};
                         bound_events[config.EVENTS.BLUR] = null;
                         bound_events[config.EVENTS.KEYDOWN] = null;
                         bound_events[config.EVENTS.RESIZE] = null;
 
-                        var _user_options = $scope.options() || {};
-                        var user_options = {
+                        let _user_options = $scope.options() || {};
+                        let user_options = {
                             debounce_position: _user_options.debounce_position || config.DEBOUNCE.position,
                             debounce_attach: _user_options.debounce_attach || config.DEBOUNCE.attach,
                             debounce_suggest: _user_options.debounce_suggest || config.DEBOUNCE.suggest,
                             debounce_blur: _user_options.debounce_blur || config.DEBOUNCE.blur
                         };
 
-                        var current_element,
+                        let current_element,
                             current_model,
                             current_options,
                             previous_value,
@@ -122,16 +253,16 @@
 
                         // Debounce - taken from underscore.
                         function debounce(func, wait, immediate) {
-                            var timeoutPromise;
+                            let timeoutPromise;
                             return function () {
-                                var context = this, args = arguments;
-                                var later = function () {
+                                let context = this, args = arguments;
+                                let later = function () {
                                     timeoutPromise = null;
                                     if (!immediate) {
                                         func.apply(context, args);
                                     }
                                 };
-                                var callNow = immediate && !timeoutPromise;
+                                let callNow = immediate && !timeoutPromise;
                                 $timeout.cancel(timeoutPromise);
                                 timeoutPromise = $timeout(later, wait);
                                 if (callNow) {
@@ -154,7 +285,7 @@
                             config.position_autocomplete($scope.container, current_element);
                         }
 
-                        var position_autocomplete = debounce(_position_autocomplete, user_options.debounce_position);
+                        let position_autocomplete = debounce(_position_autocomplete, user_options.debounce_position);
 
                         function _suggest(term, target_element) {
                             $scope.selected_index = 0;
@@ -205,7 +336,7 @@
                                 $scope.$apply();
                             }
                         }
-                        var suggest = debounce(_suggest, user_options.debounce_suggest);
+                        let suggest = debounce(_suggest, user_options.debounce_suggest);
 
                         // Attach autocomplete behavior to an input element.
                         function _attach(ngmodel, target_element, options) {
@@ -263,7 +394,7 @@
                         // this directive to the input element.
                         that.detach = function () {
                             if (current_element) {
-                                var value = current_element.val();
+                                let value = current_element.val();
                                 update_model_value(value);
                                 if (current_options.on_detach) {
                                     current_options.on_detach(value);
@@ -307,7 +438,7 @@
                             // We use value instead of setting the model's view value
                             // because we watch the model value and setting it will trigger
                             // a new suggestion cycle.
-                            var selected = $scope.results[i];
+                            let selected = $scope.results[i];
                             // current_element.val(selected.value); // Stops the textarea value from changing while navigating menu
                             $scope.selected_index = i;
                             $scope.container[0].setAttribute('aria-activedescendant', selected.id);
@@ -323,7 +454,7 @@
                                 return;
                             }
 
-                            var selected = set_selection(i);
+                            let selected = set_selection(i);
                             last_selected_value = selected.value;
                             // update_model_value(selected.value); // Commenting out stops the text area value from being trimmed of space on first line
                             hide_autocomplete();
@@ -396,7 +527,7 @@
                                     // to default behavior.
                                     case config.KEYS.TAB:
                                             e.preventDefault();
-                                            var s = this.selectionStart;
+                                            let s = this.selectionStart;
                                             this.value = this.value.substring(0,this.selectionStart) + "    " + this.value.substring(this.selectionEnd);
                                             this.selectionEnd = s+4;
                                             $scope.$apply();
@@ -456,11 +587,11 @@
                         // Prevent html5/browser auto completion.
                         attrs.$set('autocomplete', 'off');
 
-                        var acContainer = required[0];
-                        var ngModel = required[1];
+                        let acContainer = required[0];
+                        let ngModel = required[1];
 
                         element.bind('focus', function () {
-                            var options = scope.autocompItem();
+                            let options = scope.autocompItem();
                             if (!options) {
                                 throw new Error('Invalid options');
                             }

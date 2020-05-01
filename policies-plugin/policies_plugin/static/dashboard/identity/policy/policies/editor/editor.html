@@ -7,14 +7,16 @@
     </div>
 
     <!-- JSON Editor -->
-    <div class="editor-toolbar">toolbar</div>
+    <div class="editor-toolbar">
+    toolbar
+    </div>
     <div class="editor">
-        <div class="editor-line-numbers">
+        <span class="editor-line-numbers">
             <div ng-repeat="i in [].constructor(nrOfLines) track by $index">{$ $index+1 $}</div>
-        </div>
-        <div autocomp class="editor-field">
-            <textarea class="autocomp" ng-model="editorContent" ng-change="editorContentChanged()" ng-trim="false" autocomp-item="autocomp_results" ng-style="editorHeight" ng-init="editorInit()"></textarea>
-        </div>
+        </span>
+        <span autocomp class="editor-field">
+            <textarea class="editor-textarea editor-input" ng-model="editorContent" ng-change="editorContentChanged()" spellcheck="false" ng-trim="false" autocomp-item="autocomp_results" ng-init="init()"></textarea>
+        </span>
     </div>
 
     <!-- Modal Footer -->
@@ -30,7 +32,7 @@
         <!-- OK Button -->
         <button class="btn btn-primary"
             type="button"
-            ng-click="save(autocomp.value)">
+            ng-click="save(editor-textarea.value)">
             Save
         </button>
     </div>

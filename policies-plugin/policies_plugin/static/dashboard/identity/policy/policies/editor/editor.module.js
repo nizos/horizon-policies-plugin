@@ -15,6 +15,6 @@
     'use strict';
 
     angular
-      .module('horizon.dashboard.identity.policy.policies.editor', []);
+        .module('horizon.dashboard.identity.policy.policies.editor', []);
 
 })();

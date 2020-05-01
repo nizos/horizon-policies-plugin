@@ -18,7 +18,7 @@
      * @ngdoc overview
      * @name horizon.dashboard.identity.policy
      * @description
-     * A sample top level module.
+     * Plugin's top level module.
      */
 
     angular
@@ -42,10 +42,10 @@
         ];
 
         function config($provide, $windowProvider, $routeProvider) {
-            var basePath = $windowProvider.$get().STATIC_URL + 'dashboard/identity/policy/';
+            let basePath = $windowProvider.$get().STATIC_URL + 'dashboard/identity/policy/';
             $provide.constant('horizon.dashboard.identity.policy.basePath', basePath);
 
-            var policies = '/identity/policies';
+            const policies = '/identity/policies';
 
             $routeProvider.when(policies, {
                 templateUrl: basePath + 'policies/policies.html'
