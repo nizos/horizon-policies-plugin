@@ -11,8 +11,6 @@
                 $scope.exit = function() {
                     $uibModalInstance.dismiss('cancel');
                 }
-
             }
         ]);
-
 })();

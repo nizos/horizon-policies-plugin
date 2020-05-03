@@ -16,9 +16,9 @@
 
     angular
         .module('horizon.dashboard.identity.policy.policies')
-        .factory('horizon.dashboard.identity.policy.policies.policy-api', policiesAPI);
+        .factory('horizon.dashboard.identity.policy.policies.api', Api);
 
-    policiesAPI.$inject = [
+    Api.$inject = [
         'horizon.framework.util.http.service',
         'horizon.framework.widgets.toast.service'
     ];
@@ -29,13 +29,15 @@
    * @description Provides direct pass through to policy-client.
    * @param apiService The horizon core API service.
    * @param toastService The horizon toast service.
-   * @returns The policies service API.
+   * @returns The sample policies service API.
    */
-    function policiesAPI(apiService, toastService) {
-        let service = {
-        getPolicies: getPolicies,
-        getPolicy: getPolicy,
-        setPolicy: setPolicy
+
+    function Api(apiService, toastService) {
+        const service = {
+        getRule: getRule,
+        setRule: setRule,
+        getRules: getRules,
+        setRules: setRules
         };
 
         return service;
@@ -47,28 +49,40 @@
          * The listing result is an object with property "items". Each item is
          * a policy.
          */
-        function getPolicy(project, target) {
-            return apiService.get('/api/policy-api/policy/'+project+"/"+target)
+        function getRule(project, target) {
+            return apiService.get('/api/rule/'+project+"/"+target)
                 .error(function () {
-                toastService.add('error', gettext('Unable to retrieve policy.'));
+                    toastService.add('error', gettext('Unable to retrieve rule.'));
                 });
         }
 
-        function setPolicy(data) {
-            return apiService.post('/api/policy-api/policy/'+data.rule.project+'/'+data.rule.target, data)
+        function setRule(rule) {
+            return apiService.post('/api/rule/'+rule.project+'/'+rule.target, rule)
                 .error(function () {
-                    toastService.add('error', gettext('Unable to set policy.'))
+                    toastService.add('error', gettext('Unable to set rule.'))
                 })
                 .success(function () {
-                    toastService.add('success', gettext('Policy has been modified successfully!'))
+                    toastService.add('success', gettext('Rule has been successfully modified!'))
+                });
+
+        }
+
+        function getRules() {
+            return apiService.get('/api/rules/')
+                .error(function () {
+                    toastService.add('error', gettext('Unable to retrieve rules.'));
                 });
         }
 
-        function getPolicies() {
-            return apiService.get('/api/policy-api/policies/')
+        function setRules(rules) {
+            return apiService.post('/api/rules/', rules)
                 .error(function () {
-                    toastService.add('error', gettext('Unable to retrieve policies.'));
+                    toastService.add('error', gettext('Unable to set rules.'))
+                })
+                .success(function () {
+                    toastService.add('success', gettext('Rule has been successfully modified!'))
                 });
+
         }
     }
 })();

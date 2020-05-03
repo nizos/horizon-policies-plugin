@@ -18,4 +18,5 @@ in https://wiki.openstack.org/wiki/APIChangeGuidelines.
 """
 
 # import REST API modules here
-from policies_plugin.api.rest import policy_api  # noqa
+from policies_plugin.api.rest import api  # noqa
+from policies_plugin.api.rest import client  # noqa

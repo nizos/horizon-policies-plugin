@@ -12,13 +12,14 @@
  * limitations under the License.
  */
 (function() {
-  'use strict';
+    'use strict';
 
-  /**
-   * @ngdoc overview
-   * @ngname horizon.dashboard.identity.policy.policies
-   * @description
-   */
+    /**
+     * @ngdoc overview
+     * @ngname horizon.dashboard.identity.policy.policies
+     *
+     * @description
+     */
     angular
         .module('horizon.dashboard.identity.policy.policies', []);
 
