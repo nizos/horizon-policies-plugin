@@ -19,7 +19,7 @@
         .controller('PoliciesController', PoliciesController);
 
     PoliciesController.$inject = [
-        'horizon.dashboard.identity.policy.policies.policy-api',
+        'horizon.dashboard.identity.policy.policies.api',
         '$scope',
         '$uibModal',
         '$filter'
@@ -77,32 +77,40 @@
 
         // Functions to run on page load
         function init() {
-            api.getPolicies().success(getPoliciesSuccess);
+            api.getRules().success(getRulesSuccess);
         }
 
         // API functions
-        function getPolicySuccess(response) {
-            $scope.singlePolicy = response.item;
+        function getRules() {
+            api.getRules().success(getRulesSuccess);
         }
 
-        function setPolicySuccess(response) {
-            $scope.singlePolicy = response.item;
+        function getRuleSuccess(response) {
+            $scope.singlePolicy = response;
         }
 
-        function getPoliciesSuccess(response) {
-            $scope.data = response.items;
-            $scope.data.forEach(function(item){
+        function setRuleSuccess(response) {
+            $scope.singlePolicy = response;
+        }
+
+        function setRules(rules) {
+            api.setRules(rules).success(getRules);
+        }
+
+        function getRulesSuccess(response) {
+            $scope.data = response;
+            $scope.data.forEach(function(item) {
                 item.expanded=false;
                 item.listLimit=1;
             })
         }
 
-        $scope.savePolicy=function(policy) {
-            api.setPolicy( { rule: policy } ).success(setPolicySuccess);
+        $scope.saveRule=function(rule) {
+            api.setRule( { 'rule': rule } ).success(setRuleSuccess);
         }
 
-        $scope.getPolicy=function(project, target){
-            api.getPolicy(project, target).success(getPolicySuccess);
+        $scope.getRule=function(project, target){
+            api.getRule(project, target).success(getRuleSuccess);
         }
 
         // Table display functions
@@ -161,6 +169,7 @@
 
         // Table design functions
         function getColumnWidth() {
+
             let visibleColumns = 0;
             let totalWidth = 100;
 
@@ -185,7 +194,7 @@
             if($scope.descriptionColumnVisible == true) {
                 visibleColumns = visibleColumns +1;
             }
-            return (totalWidth / visibleColumns);
+            return totalWidth / visibleColumns;
         }
 
         $scope.getCharLimit=function() {
@@ -213,7 +222,8 @@
             if($scope.descriptionColumnVisible == true) {
                 visibleColumns = visibleColumns +1;
             }
-            return (charLimit / visibleColumns);
+
+            return charLimit / visibleColumns;
         }
 
         $scope.toggleExpandAll=function(){
@@ -251,7 +261,7 @@
 
         // Table item modal functions
         $scope.openDetailsModal = function(){
-            let detailsModalInstance = $uibModal.open({
+            const detailsModalInstance = $uibModal.open({
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 templateUrl: 'static/dashboard/identity/policy/policies/editor/editor.html',
@@ -264,15 +274,15 @@
                 }
             });
 
-            detailsModalInstance.result.then(function (policy) {
-                api.setPolicy( { rule: policy } ).success(setPolicySuccess);
+            detailsModalInstance.result.then(function (rules) {
+                setRules(rules)
             });
         }
 
 
         // Plugin Info modal functions
         $scope.openInfoModal = function(){
-            let infoModalInstance = $uibModal.open({
+            const infoModalInstance = $uibModal.open({
                 ariaLabelledBy: 'modal-title',
                 ariaDescribedBy: 'modal-body',
                 templateUrl: 'static/dashboard/identity/policy/policies/info/info.html',
@@ -280,11 +290,9 @@
                 controllerAs: '$ctrl'
             });
 
-            infoModalInstance.result.then(function () {
-            });
+            infoModalInstance.result.then(function () {});
         }
     }
-
     // Scroll to top button controller
     angular
         .module('horizon.dashboard.identity.policy.policies')

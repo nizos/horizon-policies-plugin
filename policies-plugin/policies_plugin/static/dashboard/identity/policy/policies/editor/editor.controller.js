@@ -30,26 +30,38 @@
                 };
 
                 // Modal window functions
-                $scope.save = function(content) {
-                    $uibModalInstance.close(content);
+                $scope.save = function() {
+                    const requests = validateSubmission();
+                    $uibModalInstance.close(requests);
                 };
 
                 $scope.cancel = function() {
                     $uibModalInstance.dismiss('cancel');
                 }
 
-                // Modal window functions
-                $scope.save = function(content) {
-                    const submission = validateSubmission(content);
-                    $uibModalInstance.close(submission);
-                };
-
-                $scope.cancel = function() {
-                    $uibModalInstance.dismiss('cancel');
-                }
-
-                function validateSubmission(content) {
-
+                function validateSubmission() {
+                    const input = document.querySelector('.editor-textarea').value;
+                    const lines = input.split(/\r?\n/);
+                    let requests = [];
+                    for (let i = 0; i < lines.length; i++) {
+                        if(lines[i].indexOf(':') != -1) {
+                            const target_string = lines[i].substring(lines[i].indexOf('"'), lines[i].indexOf(':'));
+                            const rule_string = lines[i].substring(lines[i].indexOf(':'), lines[i].length);
+                            const request_target = target_string.substring(target_string.indexOf('"')+1, target_string.lastIndexOf('"'));
+                            const request_rule = rule_string.substring(rule_string.indexOf('"')+1, rule_string.lastIndexOf('"'));
+                            for (let j = 0; j < $ctrl.policy.length; j++) {
+                                if($ctrl.policy[j].target == request_target) {
+                                    const request = {
+                                        'project': $ctrl.policy[j].project,
+                                        'target': request_target,
+                                        'rule': request_rule
+                                    }
+                                    requests.push(request);
+                                }
+                            }
+                        }
+                    }
+                    return requests;
                 }
 
                 function setNumberOfLines() {
@@ -155,8 +167,6 @@
                         apply_selected_suggestion(selected);
                     }
                 };
-
             }
         ]);
-
 })();

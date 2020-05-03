@@ -167,7 +167,6 @@
                     let offsetWidth = input.offsetWidth;
                     let scrollLeft = input.scrollLeft;
                     let scrollTop = input.scrollTop;
-                    let selectionEnd = input.selectionEnd;
                     // get style property values that we are interested in
                     let _getComputedStyle = getComputedStyle(input);
                     let lineHeight = _getComputedStyle.lineHeight;

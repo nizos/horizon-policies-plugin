@@ -20,8 +20,7 @@
      *
      * @description
      */
-
     angular
-      .module('horizon.dashboard.identity.policy.lib', []);
+        .module('horizon.dashboard.identity.policy.lib', []);
 
 })();
