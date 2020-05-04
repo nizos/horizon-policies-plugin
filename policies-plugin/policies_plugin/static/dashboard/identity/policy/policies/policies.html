@@ -4,125 +4,122 @@
     <!-- Page header -->
     <hz-page-header header="{$ 'Policies' | translate $}"></hz-page-header>
 
-    <div class="form-group">
-        <div class="input-group">
-            <!-- Search bar -->
-            <input type="hidden" name="search_param" value="all" id="search_param">
-            <input type="text" class="form-control" name="x" id="search" placeholder="Search" ng-model="query">
 
-            <span class="input-group-btn">
+    <!-- Search bar -->
+    <div class="input-group">
+        <input ng-model="query" id="query" class="form-control" placeholder="Search">
 
-                <!-- Search settings button -->
-                <div class="btn-group" uib-dropdown auto-close="outsideClick">
-                    <button title="Search" type="button" id="search-settings-button" class="btn btn-default" uib-dropdown-toggle>
-                        <span class="fa fa-search"></span> <span class="fa fa-caret-down"></span>
-                    </button>
-                    <!-- Search settings button drop down menu-->
-                    <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="search-settings-button">
-                        <!-- Search in  project column -->
-                        <li class="search-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="searchProject" ng-checked="searchProject" ng-init="searchProject=true"/> Project
-                        </li>
-                        <!-- Search in target column -->
-                        <li class="search-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="searchTarget" ng-checked="searchTarget" ng-init="searchTarget=true"/> Target
-                        </li>
-                        <!-- Search in rule column -->
-                        <li class="search-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="searchRule" ng-checked="searchRule" ng-init="searchRule=true"/> Rule
-                        </li>
-                        <!-- Search in default rule column -->
-                        <li class="search-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="searchDefaultRule" ng-checked="searchDefaultRule" ng-init="searchDefaultRule=true"/> Default
-                        </li>
-                        <!-- Search in scopes column -->
-                        <li class="search-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="searchScopes" ng-checked="searchScopes" ng-init="searchScopes=true"/> Scopes
-                        </li>
-                        <!-- Search in operations column -->
-                        <li class="search-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="searchOperations" ng-checked="searchOperations" ng-init="searchOperations=true"/> Operations
-                        </li>
-                        <!-- Search in description column -->
-                        <li class="search-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="searchDescription" ng-checked="searchDescription" ng-init="searchDescription=true"/> Description
-                        </li>
-                    </ul>
-                </div>
+        <div class="input-group-btn">
 
-                <!-- Manage button -->
-                <div class="btn-group manage-button" ng-show="showEditorModal">
-                    <button title="Manage policy" class="btn btn-primary" ng-click="openDetailsModal()" type="button">
-                        <i class="fa fa-edit"></i>Manage
-                    </button>
-                </div>
+            <!-- Search settings button -->
+            <div class="btn-group" uib-dropdown auto-close="outsideClick">
+                <button title="Search" type="button" id="search-settings-button" class="btn btn-default" uib-dropdown-toggle>
+                    <span class="fa fa-search"></span> <span class="fa fa-caret-down"></span>
+                </button>
+                <!-- Search settings button drop down menu-->
+                <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="search-settings-button">
+                    <!-- Search in  project column -->
+                    <li class="search-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="searchProject" ng-checked="searchProject" ng-init="searchProject=true"/> Project
+                    </li>
+                    <!-- Search in target column -->
+                    <li class="search-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="searchTarget" ng-checked="searchTarget" ng-init="searchTarget=true"/> Target
+                    </li>
+                    <!-- Search in rule column -->
+                    <li class="search-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="searchRule" ng-checked="searchRule" ng-init="searchRule=true"/> Rule
+                    </li>
+                    <!-- Search in default rule column -->
+                    <li class="search-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="searchDefaultRule" ng-checked="searchDefaultRule" ng-init="searchDefaultRule=true"/> Default
+                    </li>
+                    <!-- Search in scopes column -->
+                    <li class="search-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="searchScopes" ng-checked="searchScopes" ng-init="searchScopes=true"/> Scopes
+                    </li>
+                    <!-- Search in operations column -->
+                    <li class="search-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="searchOperations" ng-checked="searchOperations" ng-init="searchOperations=true"/> Operations
+                    </li>
+                    <!-- Search in description column -->
+                    <li class="search-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="searchDescription" ng-checked="searchDescription" ng-init="searchDescription=true"/> Description
+                    </li>
+                </ul>
+            </div>
 
+            <!-- Manage button -->
+            <div class="btn-group manage-button" ng-show="showEditorModal">
+                <button title="Manage policy" class="btn btn-primary" ng-click="openDetailsModal()" type="button">
+                    <i class="fa fa-edit"></i>Manage
+                </button>
+            </div>
 
-                <!-- Table settings button -->
-                <div class="btn-group" uib-dropdown auto-close="outsideClick">
-                    <button title="Table settings" type="button" id="table-settings-button" class="btn btn-default" uib-dropdown-toggle>
-                        <span class="fa fa-cog"></span>
-                        Table
-                        <span class="fa fa-caret-down"></span>
-                    </button>
-                    <!-- Settings button drop down menu-->
-                    <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="table-settings-button">
-                        <!-- Show/hide project column in policies table -->
-                        <li role="menuitem"><a>Show columns:</a></li>
+            <!-- Table settings button -->
+            <div class="btn-group" uib-dropdown auto-close="outsideClick">
+                <button title="Table settings" type="button" id="table-settings-button" class="btn btn-default" uib-dropdown-toggle>
+                    <span class="fa fa-cog"></span>
+                    Table
+                    <span class="fa fa-caret-down"></span>
+                </button>
+                <!-- Settings button drop down menu-->
+                <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="table-settings-button">
+                    <!-- Show/hide project column in policies table -->
+                    <li role="menuitem"><a>Show columns:</a></li>
 
-                        <li class="table-settings-menu-item" role="menuitem">
-                            <input type="checkbox" id="projectFilter" ng-model="projectColumnVisible" ng-checked="projectColumnVisible"/> Project
-                        </li>
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" id="projectFilter" ng-model="projectColumnVisible" ng-checked="projectColumnVisible"/> Project
+                    </li>
 
-                        <li class="table-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="targetColumnVisible" ng-checked="targetColumnVisible"/> Target
-                        </li>
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="targetColumnVisible" ng-checked="targetColumnVisible"/> Target
+                    </li>
 
-                        <li class="table-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="ruleColumnVisible" ng-checked="ruleColumnVisible"/> Rule
-                        </li>
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="ruleColumnVisible" ng-checked="ruleColumnVisible"/> Rule
+                    </li>
 
-                        <li class="table-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="defaultRuleColumnVisible" ng-checked="defaultRuleColumnVisible"/> Default
-                        </li>
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="defaultRuleColumnVisible" ng-checked="defaultRuleColumnVisible"/> Default
+                    </li>
 
-                        <li class="table-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="scopesColumnVisible" ng-checked="scopesColumnVisible"/> Scopes
-                        </li>
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="scopesColumnVisible" ng-checked="scopesColumnVisible"/> Scopes
+                    </li>
 
-                        <li class="table-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="operationsColumnVisible" ng-checked="operationsColumnVisible"/> Operations
-                        </li>
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="operationsColumnVisible" ng-checked="operationsColumnVisible"/> Operations
+                    </li>
 
-                        <li class="table-settings-menu-item" role="menuitem">
-                            <input type="checkbox" ng-model="descriptionColumnVisible" ng-checked="descriptionColumnVisible"/> Description
-                        </li>
+                    <li class="table-settings-menu-item" role="menuitem">
+                        <input type="checkbox" ng-model="descriptionColumnVisible" ng-checked="descriptionColumnVisible"/> Description
+                    </li>
 
-                        <li class="divider"></li>
+                    <li class="divider"></li>
 
-                        <li role="menuitem"><a>Items per page:</a></li>
-                        <div class="select-control">
-                            <select ng-model="itemsPerPage" id="itemsPerPage" class="form-control" ng-init="itemsPerPage = '20'">
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                                <option value="200">200</option>
-                            </select>
-                        </div>
-                    </ul>
-                </div>
+                    <li role="menuitem"><a>Items per page:</a></li>
+                    <div class="select-control">
+                        <select ng-model="itemsPerPage" id="itemsPerPage" class="form-control" ng-init="itemsPerPage = '20'">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+                    </div>
+                </ul>
+            </div>
 
-                <!-- Help Info button -->
-                <div class="btn-group info-button">
-                    <button title="Information" class="btn btn-default" ng-click="openInfoModal()" type="button">
-                        <i class="fa fa-info-circle"></i>
-                    </button>
-                </div>
-
-            </span>
+            <!-- Help Info button -->
+            <div class="btn-group info-button">
+                <button title="Information" class="btn btn-default" ng-click="openInfoModal()" type="button">
+                    <i class="fa fa-info-circle"></i>
+                </button>
+            </div>
         </div>
     </div>
+    <br>
 
     <!-- Table -->
     <table class="table-data" style="float:left" cell-cursor="cc" cell-cursor-copy="cc.getSelectedCellValues()|cellCursorToTsv" cell-cursor-paste="cc.setSelectedCellValues($data)" ng-keydown="keydown($event)" ng-class="{dragable:dragable()}">
@@ -227,7 +224,7 @@
         <!-- Table body -->
         <tbody>
             <!-- Table body rows -->
-            <tr ng-repeat-start="item in data | orderBy:column:reverse | filter:query | limitTo:itemsPerPage:currentPage*itemsPerPage" ng-class-odd="'odd-table-item'">
+            <tr ng-repeat-start="item in data | orderBy:column:reverse | filter:query | limitTo:itemsPerPage:currentPage*itemsPerPage" ng-class-even="'even-table-item'">
 
                 <!--  Checkbox column content -->
                 <td class="multi_select_column">

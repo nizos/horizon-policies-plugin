@@ -10,10 +10,22 @@ html {
     scroll-behavior: smooth;
 }
 
+
+.table-settings-menu-item {
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+}
+
 .col-header {
     margin-left: 5px;
     margin-right: 5px;
 }
+
+table.table-data thead tr {
+    background: #e0e0e0;
+    height: 32px;
+}
+
 
 .table tbody tr td {
     vertical-align: top;
@@ -49,7 +61,7 @@ html {
     padding-right: 1.5em;
 }
 
-.odd-table-item {
+.even-table-item {
     background-color: #f2f2f2;
 }
 
@@ -111,7 +123,6 @@ table.table-data tbody {
 }
 
 table.table-data tbody td {
-   border:1px dotted lightgray;
    overflow: hidden;
 }
 
