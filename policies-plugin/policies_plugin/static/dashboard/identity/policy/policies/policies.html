@@ -152,8 +152,9 @@
 
 
                 <!-- Project column header -->
-                <th title="Sort by project" class="project-column" ng-show="projectColumnVisible" ng-click="sortColumn('project')">
-                    <div class="cell-cursor-col-resize"></div>Project
+                <th title="Sort by project" class="project-column" ng-show="projectColumnVisible">
+                    <div class="cell-cursor-col-resize"></div>
+                    <span class="col-header" ng-click="sortColumn('project')">Project</span>
                     <span ng-show="column == 'project'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -161,8 +162,9 @@
                 </th>
 
                 <!-- Target column header -->
-                <th title="Sort by target"  ng-show="targetColumnVisible" ng-click="sortColumn('target')" ng-style="columnWidth">
-                    <div class="cell-cursor-col-resize"></div>Target
+                <th title="Sort by target"  ng-show="targetColumnVisible">
+                    <div class="cell-cursor-col-resize"></div>
+                    <span class="col-header" ng-click="sortColumn('target')">Target</span>
                     <span ng-show="column == 'target'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -170,8 +172,9 @@
                 </th>
 
                 <!-- Rule column header -->
-                <th title="Sort by rule"  ng-show="ruleColumnVisible" ng-click="sortColumn('rule')" ng-style="columnWidth">
-                    <div class="cell-cursor-col-resize"></div>Rule
+                <th title="Sort by rule"  ng-show="ruleColumnVisible">
+                    <div class="cell-cursor-col-resize"></div>
+                    <span class="col-header" ng-click="sortColumn('rule')">Rule</span>
                     <span ng-show="column == 'rule'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -179,8 +182,9 @@
                 </th>
 
                 <!-- Default rule column header -->
-                <th title="Sort by default"  ng-show="defaultRuleColumnVisible" ng-click="sortColumn('default')" ng-style="columnWidth">
-                    <div class="cell-cursor-col-resize"></div>Default
+                <th title="Sort by default" ng-show="defaultRuleColumnVisible">
+                    <div class="cell-cursor-col-resize"></div>
+                    <span class="col-header" ng-click="sortColumn('default')">Default</span>
                     <span ng-show="column == 'default'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -188,8 +192,9 @@
                 </th>
 
                 <!-- Scopes column header -->
-                <th title="Sort by scopes"  ng-show="scopesColumnVisible" ng-click="sortColumn('scopes')" ng-style="columnWidth">
-                    <div class="cell-cursor-col-resize"></div>Scopes
+                <th title="Sort by scopes"  ng-show="scopesColumnVisible">
+                    <div class="cell-cursor-col-resize"></div>
+                    <span class="col-header" ng-click="sortColumn('scopes')">Scopes</span>
                     <span ng-show="column == 'scopes'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -197,8 +202,9 @@
                 </th>
 
                 <!-- Operations column header -->
-                <th title="Sort by operations"  ng-show="operationsColumnVisible" ng-click="sortColumn('operations')" ng-style="columnWidth">
-                    <div class="cell-cursor-col-resize"></div>Operations
+                <th title="Sort by operations"  ng-show="operationsColumnVisible">
+                    <div class="cell-cursor-col-resize"></div>
+                    <span class="col-header" ng-click="sortColumn('operations')">Operations</span>
                     <span ng-show="column == 'operations'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -206,8 +212,9 @@
                 </th>
 
                 <!-- Description column header -->
-                <th title="Sort by description" ng-show="descriptionColumnVisible" ng-click="sortColumn('description')" ng-style="columnWidth">
-                    <div class="cell-cursor-col-resize"></div>Description
+                <th title="Sort by description" ng-show="descriptionColumnVisible">
+                    <div class="cell-cursor-col-resize"></div>
+                    <span class="col-header" ng-click="sortColumn('description')">Description</span>
                     <span ng-show="column == 'description'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
