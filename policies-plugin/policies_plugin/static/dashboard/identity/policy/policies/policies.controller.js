@@ -276,6 +276,7 @@
 
             detailsModalInstance.result.then(function (rules) {
                 setRules(rules)
+                $scope.selectedPolicies.policies = null;
             });
         }
 
