@@ -27,8 +27,10 @@
             'ngSanitize',
             'ui.bootstrap',
             'horizon.dashboard.identity.policy.lib',
+            'horizon.dashboard.identity.policy.policies.cell-cursor',
             'horizon.dashboard.identity.policy.lib.checklist-model',
             'horizon.dashboard.identity.policy.lib.autocomp',
+            'horizon.dashboard.identity.policy.policies.svg-icon',
             'horizon.dashboard.identity.policy.policies',
             'horizon.dashboard.identity.policy.policies.editor',
             'horizon.dashboard.identity.policy.policies.info'

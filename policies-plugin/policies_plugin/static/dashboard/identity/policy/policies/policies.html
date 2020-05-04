@@ -125,18 +125,21 @@
     </div>
 
     <!-- Table -->
-    <table id="allTable" class="table table-detail" style="table-layout: fixed;">
+    <table class="table-data" style="float:left" cell-cursor="cc" cell-cursor-copy="cc.getSelectedCellValues()|cellCursorToTsv" cell-cursor-paste="cc.setSelectedCellValues($data)" ng-keydown="keydown($event)" ng-class="{dragable:dragable()}">
         <!-- Table headers -->
         <thead>
             <!-- Table headers row-->
             <tr>
+
                 <!-- Checkbox column header -->
                 <th class="multi-select-column">
+                    <div class="cell-cursor-col-resize"></div>
                     <input type="checkbox" class="table-checkbox">
                 </th>
 
                 <!-- Expander column header -->
                 <th class="expander expander-column" ng-click="toggleExpandAll()">
+                    <div class="cell-cursor-col-resize"></div>
                     <span title="Expand all" ng-if="!expandAll"
                                 class="fa fa-chevron-right"
                                 duration="200">
@@ -147,8 +150,10 @@
                     </span>
                 </th>
 
+
                 <!-- Project column header -->
-                <th title="Sort by project" class="project-column" ng-show="projectColumnVisible" ng-click="sortColumn('project')" translate>Project
+                <th title="Sort by project" class="project-column" ng-show="projectColumnVisible" ng-click="sortColumn('project')">
+                    <div class="cell-cursor-col-resize"></div>Project
                     <span ng-show="column == 'project'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -156,7 +161,8 @@
                 </th>
 
                 <!-- Target column header -->
-                <th title="Sort by target"  ng-show="targetColumnVisible" ng-click="sortColumn('target')" ng-style="columnWidth" translate>Target
+                <th title="Sort by target"  ng-show="targetColumnVisible" ng-click="sortColumn('target')" ng-style="columnWidth">
+                    <div class="cell-cursor-col-resize"></div>Target
                     <span ng-show="column == 'target'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -164,7 +170,8 @@
                 </th>
 
                 <!-- Rule column header -->
-                <th title="Sort by rule"  ng-show="ruleColumnVisible" ng-click="sortColumn('rule')" ng-style="columnWidth" translate>Rule
+                <th title="Sort by rule"  ng-show="ruleColumnVisible" ng-click="sortColumn('rule')" ng-style="columnWidth">
+                    <div class="cell-cursor-col-resize"></div>Rule
                     <span ng-show="column == 'rule'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -172,7 +179,8 @@
                 </th>
 
                 <!-- Default rule column header -->
-                <th title="Sort by default"  ng-show="defaultRuleColumnVisible" ng-click="sortColumn('default')" ng-style="columnWidth" translate>Default
+                <th title="Sort by default"  ng-show="defaultRuleColumnVisible" ng-click="sortColumn('default')" ng-style="columnWidth">
+                    <div class="cell-cursor-col-resize"></div>Default
                     <span ng-show="column == 'default'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -180,7 +188,8 @@
                 </th>
 
                 <!-- Scopes column header -->
-                <th title="Sort by scopes"  ng-show="scopesColumnVisible" ng-click="sortColumn('scopes')" ng-style="columnWidth" translate>Scopes
+                <th title="Sort by scopes"  ng-show="scopesColumnVisible" ng-click="sortColumn('scopes')" ng-style="columnWidth">
+                    <div class="cell-cursor-col-resize"></div>Scopes
                     <span ng-show="column == 'scopes'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -188,7 +197,8 @@
                 </th>
 
                 <!-- Operations column header -->
-                <th title="Sort by operations"  ng-show="operationsColumnVisible" ng-click="sortColumn('operations')" ng-style="columnWidth" translate>Operations
+                <th title="Sort by operations"  ng-show="operationsColumnVisible" ng-click="sortColumn('operations')" ng-style="columnWidth">
+                    <div class="cell-cursor-col-resize"></div>Operations
                     <span ng-show="column == 'operations'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
@@ -196,12 +206,14 @@
                 </th>
 
                 <!-- Description column header -->
-                <th title="Sort by description" ng-show="descriptionColumnVisible" ng-click="sortColumn('description')" ng-style="columnWidth" translate>Description
+                <th title="Sort by description" ng-show="descriptionColumnVisible" ng-click="sortColumn('description')" ng-style="columnWidth">
+                    <div class="cell-cursor-col-resize"></div>Description
                     <span ng-show="column == 'description'">
                         <span ng-show="!reverse" class="fa fa-sort-down"></span>
                         <span ng-show="reverse" class="fa fa-sort-up"></span>
                     </span>
                 </th>
+
             </tr>
         </thead>
 
@@ -212,141 +224,139 @@
 
                 <!--  Checkbox column content -->
                 <td class="multi_select_column">
-                    <input type="checkbox"  class="table-checkbox" checklist-model="selectedPolicies.policies" checklist-value="item" checklist-change="selectedPoliciesChanged()">
+                    <div class="wrap">
+                        <input type="checkbox" class="table-checkbox" checklist-model="selectedPolicies.policies" checklist-value="item" checklist-change="selectedPoliciesChanged()">
+                    </div>
                 </td>
 
                 <!--  Expander column content -->
                 <td title="Expand column content" class="expander expander-column" ng-click="expandSelected(item)">
-                    <span ng-if="!item.expanded" class="fa fa-chevron-right" duration="200"></span>
-                    <span ng-if="item.expanded" class="fa fa-chevron-down" duration="200"></span>
+                    <div class="wrap">
+                        <span ng-if="!item.expanded" class="fa fa-chevron-right" duration="200"></span>
+                        <span ng-if="item.expanded" class="fa fa-chevron-down" duration="200"></span>
+                    </div>
                 </td>
 
                 <!--  Project column content -->
-                <td ng-show="projectColumnVisible" ng-style="columnWidth">
+                <td ng-show="projectColumnVisible">
                     <span ng-if="!item.expanded">
-                        <span ng-if="item.project.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.project $}">
-                            {$ item.project | limitTo:getCharLimit() $}...
-                        </span>
-                        <span ng-if="item.project.length<=getCharLimit()">
-                            {$ item.project $}
-                        </span>
+                        <div class="wrap" style="max-height: 22px;">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ item.project $}">
+                                {$ item.project $}
+                            </span>
+                        </div>
                     </span>
                     <span ng-if="item.expanded">
-                        {$ item.project $}
+                        <div class="wrap" style="max-height: 500px;">
+                            {$ item.project $}
+                        </div>
                     </span>
                 </td>
 
                 <!--  Target column content -->
-                <td ng-show="targetColumnVisible" ng-style="columnWidth">
+                <td ng-show="targetColumnVisible">
                     <span ng-if="!item.expanded">
-                        <span ng-if="item.target.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.target $}">
-                            {$ item.target | limitTo:getCharLimit() $}...
-                        </span>
-                        <span ng-if="item.target.length<=getCharLimit()">
-                            {$ item.target $}
-                        </span>
+                        <div class="wrap" style="max-height: 22px;">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ item.target $}">
+                                {$ item.target  $}
+                            </span>
+                        </div>
                     </span>
                     <span ng-if="item.expanded">
-                        {$ item.target $}
+                        <div class="wrap" style="max-height: 500px;">
+                            {$ item.target $}
+                        </div>
                     </span>
                 </td>
 
                 <!--  Rule column content -->
-                <td ng-show="ruleColumnVisible" ng-style="columnWidth">
+                <td ng-show="ruleColumnVisible">
                     <span ng-if="!item.expanded">
-                        <span ng-if="(item.rule.length>getCharLimit()) && !item.editMode" tooltip-placement="bottom" uib-tooltip="{$ item.rule $}">
-                            <a ng-click="item.editMode = true">{$ item.rule | limitTo:getCharLimit() $}...</a>
-                        </span>
-                        <span ng-if="(item.rule.length<=getCharLimit()) && !item.editMode">
-                            <a title="Click to edit rule" ng-click="item.editMode = true">{$ item.rule $}</a>
-                        </span>
+                        <div class="wrap" style="max-height: 22px;">
+                            <span ng-if="!item.editMode" tooltip-placement="bottom" uib-tooltip="{$ item.rule $}">
+                                <a ng-click="item.editMode = true">{$ item.rule $}</a>
+                            </span>
+                        </div>
                     </span>
                     <span ng-if="item.expanded && !item.editMode">
-                        <a ng-click="item.editMode = true">{$ item.rule $}</a>
+                        <div class="wrap" style="max-height: 500px;">
+                            <a ng-click="item.editMode = true">{$ item.rule $}</a>
+                        </div>
                     </span>
                     <span ng-if="item.editMode">
-                        <input class="input-group-window-edit" ng-model="item.rule">
-                        <button title="Cancel changes" class="btn-edit btn-warning" ng-click="item.editMode = false">Cancel</button>
-                        <button title="Save changes" class="btn-edit btn-primary" ng-click="savePolicy(item); item.editMode = false">Save</button>
+                        <div class="wrap" style="max-height: 500px;">
+                            <input class="input-group-window-edit" ng-model="item.rule">
+                            <button title="Cancel changes" class="btn-edit btn-warning" ng-click="item.editMode = false">Cancel</button>
+                            <button title="Save changes" class="btn-edit btn-primary" ng-click="savePolicy(item); item.editMode = false">Save</button>
+                        </div>
                     </span>
                 </td>
 
                 <!--  Default rule column content -->
-                <td ng-show="defaultRuleColumnVisible" ng-style="columnWidth">
+                <td ng-show="defaultRuleColumnVisible">
                     <span ng-if="!item.expanded">
-                        <span ng-if="item.default.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.default $}">
-                            {$ item.default | limitTo:getCharLimit() $}...
-                        </span>
-                        <span ng-if="item.default.length<=getCharLimit()">
-                            {$ item.default $}
-                        </span>
+                        <div class="wrap" style="max-height: 22px;">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ item.default $}">
+                                {$ item.default  $}
+                            </span>
+                        </div>
                     </span>
                     <span ng-if="item.expanded">
-                        {$ item.default $}
+                        <div class="wrap" style="max-height: 500px;">
+                            {$ item.default $}
+                        </div>
                     </span>
                 </td>
 
                 <!--  Scopes column content -->
-                <td ng-show="scopesColumnVisible" ng-style="columnWidth">
-                    <span ng-repeat="scope in item.scopes track by $index">
-                        <span ng-if="!item.expanded">
-                            <span ng-if="scope.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.scopes $}">
-                                {$ scope | limitTo:getCharLimit() $}...
+                <td ng-show="scopesColumnVisible">
+                    <div ng-if="!item.expanded" class="wrap" style="max-height: 22px;">
+                        <div ng-repeat="scope in item.scopes track by $index">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ item.scopes $}">
+                                {$ scope  $}
                             </span>
-                            <span ng-if="scope.length<=getCharLimit()">
+                        </div>
+                    </div>
+                    <div ng-if="item.expanded" class="wrap" style="max-height: 500px;">
+                        <div ng-repeat="scope in item.scopes track by $index">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ item.scopes $}">
                                 {$ scope $}
                             </span>
-                        </span>
-                        <span ng-if="item.expanded">
-                            {$ scope $}
-                        </span>
-                    <span>
+                        </div>
+                    </div>
                 </td>
 
                 <!--  Operations column content -->
-
-                <td ng-show="operationsColumnVisible" ng-style="columnWidth">
-                    <span ng-if="!item.expanded">
-                        <span ng-if="item.operations.length > 1" tooltip-placement="bottom" uib-tooltip="{$ item.operations $}">
-                            <span ng-repeat="operation in item.operations | limitTo:item.listLimit track by $index">
-                                <span ng-if="operation.length>getCharLimit()">
-                                    {$ operation | limitTo:getCharLimit() $}...
-                                </span>
-                                <span ng-if="operation.length<=getCharLimit()">
-                                    {$ operation $}
-                                </span>
+                <td ng-show="operationsColumnVisible">
+                    <div ng-if="!item.expanded" class="wrap" style="max-height: 22px;">
+                        <div ng-repeat="operation in item.operations track by $index">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ item.operations $}">
+                                {$ operation $}
                             </span>
-                        </span>
-                        <span ng-if="item.operations.length <= 1">
-                            <span ng-repeat="operation in item.operations track by $index" tooltip-placement="bottom" uib-tooltip="{$ item.operations $}">
-                                 <span ng-if="operation.length>getCharLimit()">
-                                    {$ operation | limitTo:getCharLimit() $}...
-                                </span>
-                                <span ng-if="operation.length<=getCharLimit()">
-                                    {$ operation $}
-                                </span>
+                        </div>
+                    </div>
+                    <div ng-if="item.expanded" class="wrap" style="max-height: 500px;">
+                        <div ng-repeat="operation in item.operations track by $index">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ item.operations $}">
+                                {$ operation $}
                             </span>
-                        </span>
-                    </span>
-                    <span ng-if="item.expanded">
-                        <span ng-repeat="operation in item.operations track by $index">
-                            {$ operation $}
-                        </span>
-                    </span>
+                        </div>
+                    </div>
                 </td>
 
                 <!--  Description column content -->
-                <td ng-show="descriptionColumnVisible" ng-style="columnWidth">
+                <td ng-show="descriptionColumnVisible">
                     <span ng-if="!item.expanded">
-                        <span ng-if="item.description.length>getCharLimit()" tooltip-placement="bottom" uib-tooltip="{$ item.description $}">
-                            {$ item.description | limitTo:getCharLimit() $}...
-                        </span>
-                        <span ng-if="item.description.length<=getCharLimit()">
-                            {$ item.description $}
-                        </span>
+                        <div class="wrap" style="max-height: 22px;">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ item.description $}">
+                                {$ item.description $}
+                            </span>
+                        </div>
                     </span>
                     <span ng-if="item.expanded">
-                        {$ item.description $}
+                        <div class="wrap" style="max-height: 500px;">
+                            {$ item.description $}
+                        </div>
                     </span>
                 </td>
 

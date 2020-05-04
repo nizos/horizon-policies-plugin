@@ -67,6 +67,10 @@
             policies: []
         }
 
+        $scope.resizeMode = "OverflowResizer";
+
+        $scope.table = undefined;
+
         // table design scope
         $scope.columnWidth = {
             'width': getColumnWidth()+'%',

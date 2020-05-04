@@ -1,6 +1,7 @@
 @import './editor/editor.scss';
 @import './info/info.scss';
 
+
 html, body:not(#splash) {
     height: auto;
 }
@@ -58,4 +59,109 @@ html {
 
 .table-checkbox {
     margin: 2px 0 0;
+}
+
+
+
+thead td[ng-click]{
+    cursor: pointer;
+}
+
+.drag-handler{
+    visibility: hidden;
+}
+
+.dragable .drag-handler{
+    visibility: visible;
+    border:outset 1px lightgray;
+    cursor:row-resize;
+    font-size:60%;
+    margin:4px;
+}
+
+.id{
+    background:#F3F3F3;
+}
+
+tr.cursor .id{
+    background:#E3E3E3;
+}
+
+tr .wrap{
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+table.table-data {
+    background: white;
+    border-collapse:collapse;
+}
+
+table.table-data td {
+    padding:4px;
+}
+
+table.table-data tbody {
+    background-color: white;
+}
+
+table.table-data tbody td {
+   border:1px dotted lightgray;
+   overflow: hidden;
+}
+
+table.table-data tbody tr .wrap {
+    overflow: hidden;
+}
+
+
+table.table-data tr.area-t > td.area {
+    border-top: 1px solid #9ABAF1;
+}
+
+table.table-data tr.area-b > td.area {
+    border-bottom: 1px solid #9ABAF1;
+}
+
+table.table-data td.area.area-l {
+   border-left: 1px solid #9ABAF1;
+}
+
+table.table-data td.area.area-r  {
+    border-right: 1px solid #9ABAF1;
+}
+
+table.table-data td.area.cursor,
+table.table-data td.cursor {
+    border: 1px solid #9ABAF1;
+        background: #FAFAFF;
+}
+
+table.table-data.focus td.area.cursor,
+table.table-data.focus td.cursor {
+        background: #FAFAFF;
+    border: 1px solid #4285F4;
+}
+
+table.table-data td.area {
+    background: #ECF3FF;
+}
+
+table.table-data thead td {
+    background: #F3F3F3;
+    border-left:1px solid #CCCCCC;
+    border-bottom:1px solid #CCCCCC;
+    text-align: center;
+}
+
+.row.vdivide [class*='col-']:not(:last-child):after {
+    background: #e0e0e0;
+    width: 1px;
+    content: "";
+    display:block;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    right: 0;
+    min-height: 70px;
 }
