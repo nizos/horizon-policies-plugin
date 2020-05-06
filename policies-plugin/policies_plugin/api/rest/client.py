@@ -20,7 +20,7 @@ class Client:
             return resp
 
         # Get the current rules from the policy file
-        rules = self.get_rules()
+        rules = self.get_rules(request)
         # Get the requested rule's identifier
         rule_id = self.get_identifier(project, target)
 
@@ -36,7 +36,6 @@ class Client:
 
     # Modify single rule by providing its values in the request parameter
     def set_rule(self, request):
-
         # Verify that the user attempting this is authorized to do so.
         if not verify.check((("identity", "identity:modify_policy"),), request):
             resp = HttpResponse()
@@ -45,13 +44,13 @@ class Client:
 
         # Test the parsing of the rule before proceeding
         new_rule = request.DATA
-        try:
-            val = self.test_parsing(new_rule['rule'])
-        except ValueError as e:
-            resp = HttpResponse()
-            resp.status_code = 400
-            resp.content = str(e)
-            return resp
+        #try:
+        #    val = self.test_parsing(new_rule['rule'])
+        #except ValueError as e:
+        #    resp = HttpResponse()
+        #    resp.status_code = 400
+        #    resp.content = str(e)
+        #    return resp
 
         # Ensure that existing rules are up to date
         enforcer = generator._get_enforcer("keystone")
@@ -67,7 +66,10 @@ class Client:
 
         # Loop through the existing rules and add them to the new rules dictionary
         for rule in sorted(current_rules_dict.keys()):
-            new_rules_dict[current_rules_dict[rule].name] = current_rules_dict[rule].check_str
+            rule_defaults = current_rules_dict[rule]
+            for rule_default in rule_defaults:
+                # add the rules to the new rules dictionary
+                new_rules_dict[rule_default.name] = rule_default.check_str
 
         # Get the new rules identifier and add/update it in the new rules dictionary
         new_rule_id = self.get_identifier(new_rule['project'], new_rule['target'])

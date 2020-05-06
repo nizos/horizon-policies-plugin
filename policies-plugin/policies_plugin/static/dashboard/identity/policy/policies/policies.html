@@ -279,7 +279,7 @@
                         <div class="wrap" style="max-height: 500px;">
                             <input class="input-group-window-edit" ng-model="item.rule">
                             <button title="Cancel changes" class="btn-edit btn-warning" ng-click="item.editMode = false; item.rule = ruleBackUp">Cancel</button>
-                            <button title="Save changes" class="btn-edit btn-primary" ng-click="savePolicy(item); item.editMode = false">Save</button>
+                            <button title="Save changes" class="btn-edit btn-primary" ng-click="setRule(item); item.editMode = false">Save</button>
                         </div>
                     </span>
                 </td>

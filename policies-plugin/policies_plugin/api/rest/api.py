@@ -17,7 +17,7 @@ class Rule(generic.View):
 
     @rest_utils.ajax(data_required=True)
     def post(self, request, project, target):
-        return self.client.set_rule(request.DATA['rule'])
+        return self.client.set_rule(request)
 
 @urls.register
 class Rules(generic.View):

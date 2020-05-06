@@ -95,12 +95,12 @@
             $scope.singlePolicy = response;
         }
 
-        function setRuleSuccess(response) {
-            $scope.singlePolicy = response;
-        }
-
         function setRules(rules) {
             api.setRules(rules).success(getRules);
+        }
+
+        $scope.setRule = function(rule) {
+            api.setRule(rule).success(getRules);
         }
 
         function getRulesSuccess(response) {
@@ -109,10 +109,6 @@
                 item.expanded=false;
                 item.listLimit=1;
             })
-        }
-
-        $scope.saveRule=function(rule) {
-            api.setRule( { 'rule': rule } ).success(setRuleSuccess);
         }
 
         $scope.getRule=function(project, target){
