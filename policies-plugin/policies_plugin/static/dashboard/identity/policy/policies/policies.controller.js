@@ -55,8 +55,8 @@
         // Table display scopes
         $scope.expandAll = false;
         // Table page scopes
-        $scope.currentPage = 0;
-        $scope.itemsPerPage = 20;
+        $scope.currentPage;
+        $scope.itemsPerPage;
         // Table item modal scopes
         $scope.showEditorModal = false;
         // Table selected policies scopes
@@ -75,6 +75,8 @@
         function init() {
             loadVisibleCols();
             loadColWidths();
+            loadItemsPerPage();
+            loadCurrentPage();
             api.getRules().success(getRulesSuccess);
         }
 
@@ -132,6 +134,30 @@
                 'description' : $scope.descriptionColumnVisible
             }
             localStorage.setItem("visibleCols", JSON.stringify($scope.visibleCols));
+        }
+
+        $scope.saveItemsPerPage = function() {
+            localStorage.setItem("itemsPerPage", $scope.itemsPerPage);
+        }
+
+        function loadItemsPerPage() {
+            if (localStorage.getItem('itemsPerPage') != null){
+                $scope.itemsPerPage = localStorage.getItem('itemsPerPage');
+            } else {
+                $scope.itemsPerPage = 20;
+            }
+        }
+
+        $scope.saveCurrentPage = function() {
+            localStorage.setItem("currentPage", $scope.currentPage);
+        }
+
+        function loadCurrentPage() {
+            if (localStorage.getItem('currentPage') != null){
+                $scope.currentPage = localStorage.getItem('currentPage');
+            } else {
+                $scope.currentPage = 0;
+            }
         }
 
         function loadVisibleCols() {
@@ -240,24 +266,29 @@
             if($scope.currentPage < $scope.numberOfPages()-1) {
                 $scope.currentPage = $scope.currentPage+1;
             }
+            $scope.saveCurrentPage();
         }
 
         $scope.goToPreviousPage=function(){
             if($scope.currentPage >= 1) {
                 $scope.currentPage = $scope.currentPage-1;
             }
+            $scope.saveCurrentPage();
         }
 
         $scope.goToFirstPage=function(){
             $scope.currentPage = 0;
+            $scope.saveCurrentPage();
         }
 
         $scope.goToLastPage=function(){
             $scope.currentPage = $scope.numberOfPages()-1;
+            $scope.saveCurrentPage();
         }
 
         $scope.goToPage=function(page){
             $scope.currentPage = page;
+            $scope.saveCurrentPage();
         }
 
         $scope.toggleExpandAll=function(){

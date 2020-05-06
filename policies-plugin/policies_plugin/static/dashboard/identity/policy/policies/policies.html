@@ -207,7 +207,7 @@
 
                                 <li class="table-settings-menu-item" role="menuitem">Results per page</li>
                                 <div class="select-control">
-                                    <select ng-model="itemsPerPage" id="itemsPerPage" class="form-control" ng-init="itemsPerPage = '20'">
+                                    <select ng-model="itemsPerPage" id="itemsPerPage" class="form-control" ng-change="saveItemsPerPage()">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
                                         <option value="50">50</option>
