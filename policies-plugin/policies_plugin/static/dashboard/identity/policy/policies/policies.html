@@ -245,7 +245,7 @@
                 <!--  Project column content -->
                 <td id="project-column-body" ng-show="projectColumnVisible">
                     <span ng-if="!item.expanded">
-                        <div class="wrap" style="max-height: 22px;">
+                        <div class="wrap" style="max-height: 20px;">
                             <span tooltip-placement="bottom" uib-tooltip="{$ item.project $}">
                                 {$ item.project $}
                             </span>
@@ -261,7 +261,7 @@
                 <!--  Target column content -->
                 <td id="target-column-body" ng-show="targetColumnVisible">
                     <span ng-if="!item.expanded">
-                        <div class="wrap" style="max-height: 22px;">
+                        <div class="wrap" style="max-height: 20px;">
                             <span tooltip-placement="bottom" uib-tooltip="{$ item.target $}">
                                 {$ item.target  $}
                             </span>
@@ -277,7 +277,7 @@
                 <!--  Rule column content -->
                 <td id="rule-column-body" ng-show="ruleColumnVisible">
                     <span ng-if="!item.expanded">
-                        <div class="wrap" style="max-height: 22px;">
+                        <div class="wrap" style="max-height: 20px;">
                             <span ng-if="!item.editMode" tooltip-placement="bottom" uib-tooltip="{$ item.rule $}">
                                 <a ng-click="backupRule(item.rule); item.editMode = true">{$ item.rule $}</a>
                             </span>
@@ -300,7 +300,7 @@
                 <!--  Default rule column content -->
                 <td id="default-column-body" ng-show="defaultRuleColumnVisible">
                     <span ng-if="!item.expanded">
-                        <div class="wrap" style="max-height: 22px;">
+                        <div class="wrap" style="max-height: 20px;">
                             <span tooltip-placement="bottom" uib-tooltip="{$ item.default $}">
                                 {$ item.default  $}
                             </span>
@@ -315,7 +315,7 @@
 
                 <!--  Scopes column content -->
                 <td id="scopes-column-body" ng-show="scopesColumnVisible">
-                    <div ng-if="!item.expanded" class="wrap" style="max-height: 22px;">
+                    <div ng-if="!item.expanded" class="wrap" style="max-height: 20px;">
                         <div ng-repeat="scope in item.scopes track by $index">
                             <span tooltip-placement="bottom" uib-tooltip="{$ item.scopes $}">
                                 {$ scope  $}
@@ -333,7 +333,7 @@
 
                 <!--  Operations column content -->
                 <td id="operations-column-body" ng-show="operationsColumnVisible">
-                    <div ng-if="!item.expanded" class="wrap" style="max-height: 22px;">
+                    <div ng-if="!item.expanded" class="wrap" style="max-height: 20px;">
                         <div ng-repeat="operation in item.operations track by $index">
                             <span tooltip-placement="bottom" uib-tooltip="{$ item.operations $}">
                                 {$ operation $}
@@ -352,7 +352,7 @@
                 <!--  Description column content -->
                 <td id="description-column-body" ng-show="descriptionColumnVisible">
                     <span ng-if="!item.expanded">
-                        <div class="wrap" style="max-height: 22px;">
+                        <div class="wrap" style="max-height: 20px;">
                             <span tooltip-placement="bottom" uib-tooltip="{$ item.description $}">
                                 {$ item.description $}
                             </span>
