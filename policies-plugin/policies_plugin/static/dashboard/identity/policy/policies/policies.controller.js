@@ -67,6 +67,8 @@
             policies: []
         }
 
+        $scope.ruleBackUp = "";
+
         $scope.resizeMode = "OverflowResizer";
 
         $scope.table = undefined;
@@ -115,6 +117,10 @@
 
         $scope.getRule=function(project, target){
             api.getRule(project, target).success(getRuleSuccess);
+        }
+
+        $scope.backupRule=function(rule) {
+            $scope.ruleBackUp = rule;
         }
 
         // Table display functions
