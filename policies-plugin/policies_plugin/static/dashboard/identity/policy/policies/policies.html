@@ -261,7 +261,7 @@
                 <!--  Target column content -->
                 <td id="target-column-body" ng-show="targetColumnVisible">
                     <span ng-if="!item.expanded">
-                        <div class="wrap" style="max-height: 20px;">
+                        <div class="wrap" style="max-height: 22px;">
                             <span tooltip-placement="bottom" uib-tooltip="{$ item.target $}">
                                 {$ item.target  $}
                             </span>
@@ -277,15 +277,15 @@
                 <!--  Rule column content -->
                 <td id="rule-column-body" ng-show="ruleColumnVisible">
                     <span ng-if="!item.expanded">
-                        <div class="wrap" style="max-height: 20px;">
+                        <div class="wrap" style="max-height: 22px;">
                             <span ng-if="!item.editMode" tooltip-placement="bottom" uib-tooltip="{$ item.rule $}">
-                                <a ng-click="backupRule(item.rule); item.editMode = true">{$ item.rule $}</a>
+                                <a ng-click="OpenModal(item)">{$ item.rule $}</a>
                             </span>
                         </div>
                     </span>
                     <span ng-if="item.expanded && !item.editMode">
                         <div class="wrap" style="max-height: 500px;">
-                            <a ng-click="backupRule(item.rule); item.editMode = true">{$ item.rule $}</a>
+                            <a ng-click="OpenModal(item)">{$ item.rule $}</a>
                         </div>
                     </span>
                     <span ng-if="item.editMode">

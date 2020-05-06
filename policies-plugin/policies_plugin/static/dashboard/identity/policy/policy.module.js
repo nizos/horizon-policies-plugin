@@ -32,6 +32,7 @@
             'horizon.dashboard.identity.policy.policies.svg-icon',
             'horizon.dashboard.identity.policy.policies',
             'horizon.dashboard.identity.policy.policies.editor',
+            'horizon.dashboard.identity.policy.policies.details',
             'horizon.dashboard.identity.policy.policies.info'
         ])
         .config(config);

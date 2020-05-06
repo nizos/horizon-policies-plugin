@@ -323,6 +323,26 @@
                 $scope.reverse = true;
             }
         };
+        
+        // Plugin details modal functions
+        $scope.OpenModal = function(policy){
+            var modalInstance = $uibModal.open({
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: 'static/dashboard/identity/policy/policies/details/details.html',
+                controller: 'detailsController',
+                controllerAs: '$ctrl',
+                resolve: {
+                    $policy: function () {
+                        return policy;
+                    }
+                }
+            });
+            modalInstance.result.then(function (policy) {
+                api.setPolicy( { rule: policy } ).success(setPolicySuccess);
+            }, function () {
+            });
+        }
 
         // Table item modal functions
         $scope.openDetailsModal = function(){
