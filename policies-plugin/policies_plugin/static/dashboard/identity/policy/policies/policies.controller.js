@@ -55,6 +55,7 @@
         // Table page scopes
         $scope.currentPage;
         $scope.itemsPerPage;
+        $scope.nrOfPages;
         // Table item modal scopes
         $scope.showEditorModal = false;
         // Table selected policies scopes
@@ -66,7 +67,8 @@
         $scope.ruleBackUp = "";
         $scope.visibleCols;
         $scope.colWidths;
-        $scope.search = {
+        $scope.query;
+        $scope.searchInColumns = {
             project: true,
             target: true,
             rule: true,
@@ -229,6 +231,7 @@
                 item.expanded=false;
                 item.listLimit=1;
             })
+            $scope.updateView();
         }
 
         $scope.getRule=function(project, target){
@@ -261,7 +264,7 @@
         }
 
         $scope.getData = function () {
-            return $filter('filter')($scope.data, $scope.search.$);
+            return $scope.searchFilter();
         }
 
         // Table page navigation functions
@@ -269,8 +272,12 @@
             return Math.ceil($scope.getData().length/$scope.itemsPerPage);
         }
 
+        $scope.updateNumberOfPages = function() {
+            $scope.nrOfPages = Math.ceil($scope.getData().length/$scope.itemsPerPage);
+        }
+
         $scope.goToNextPage=function(){
-            if($scope.currentPage < $scope.numberOfPages()-1) {
+            if($scope.currentPage < $scope.nrOfPages-1) {
                 $scope.currentPage = $scope.currentPage+1;
             }
             $scope.saveCurrentPage();
@@ -289,7 +296,7 @@
         }
 
         $scope.goToLastPage=function(){
-            $scope.currentPage = $scope.numberOfPages()-1;
+            $scope.currentPage = $scope.nrOfPages-1;
             $scope.saveCurrentPage();
         }
 
@@ -315,34 +322,48 @@
         }
 
         // Table search functions
-        $scope.$watch('search.$', function(newValue, oldValue) {
+        $scope.$watch('query', function(newValue, oldValue) {
             if(oldValue!=newValue) {
-                $scope.currentPage = 0;
+                $scope.updateView();
             }
         },true);
 
+        $scope.updateView = function() {
+            $scope.currentPage = 0;
+            $scope.updateNumberOfPages();
+        }
 
-        $scope.customFilter = function (item) {
+
+        $scope.searchFilter = function() {
             // search is empty
-            if (!$scope.search.$) {
-                return true;
+            if (!$scope.query) {
+                return $scope.data;
             }
 
-            let searchVal = $scope.search.$;
-            //special chars
-            let regex = new RegExp('' + searchVal.replace(/([()[{*+.$^\\|?])/g, '\\$1'), 'i');
-            const keys = ["project", "target", "rule", "default", "scopes", "operations", "description"];
-            let key;
-            let keyIndex;
-            for(keyIndex in keys) {
-                key = keys[keyIndex];
-                if($scope.search[key]) {
-                    if (regex.test(item[key]) ) {
-                    return true;
+            let column;
+            let columnIndex;
+            const columns = ["project", "target", "rule", "default", "scopes", "operations", "description"];
+            let filtered = [];
+            for (let i = 0; i < $scope.data.length; i++) {
+
+                let policy = $scope.data[i];
+                let found = false;
+
+                for(columnIndex in columns) {
+                    if(!found) {
+
+                        column = columns[columnIndex];
+
+                        if($scope.searchInColumns[column]) {
+                            if (policy[column].indexOf($scope.query) != -1) {
+                                filtered.push(policy);
+                                found = true;
+                            }
+                        }
+                    }
                 }
-              }
             }
-            return false;
+            return filtered;
         }
 
         // Table sort functions

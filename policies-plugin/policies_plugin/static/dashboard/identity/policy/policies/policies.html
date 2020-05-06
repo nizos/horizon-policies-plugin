@@ -6,7 +6,7 @@
 
     <!-- Search bar -->
     <div class="input-group">
-        <input ng-model="search.$" id="query" class="form-control" placeholder="Search">
+        <input ng-model="query" id="query" class="form-control" placeholder="Search">
 
         <div class="input-group-btn">
 
@@ -19,31 +19,31 @@
                 <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="search-settings-button">
                     <!-- Search in  project column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="search.project" ng-checked="search.project" ng-init="search.project=true"/> Project
+                        <input type="checkbox" ng-model="searchInColumns.project" ng-checked="searchInColumns.project" ng-init="searchInColumns.project=true" ng-change="updateView()"/> Project
                     </li>
                     <!-- Search in target column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="search.target" ng-checked="search.target" ng-init="search.target=true"/> Target
+                        <input type="checkbox" ng-model="searchInColumns.target" ng-checked="searchInColumns.target" ng-init="searchInColumns.target=true" ng-change="updateView()"/> Target
                     </li>
                     <!-- Search in rule column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="search.rule" ng-checked="search.rule" ng-init="search.rule=true"/> Rule
+                        <input type="checkbox" ng-model="searchInColumns.rule" ng-checked="searchInColumns.rule" ng-init="searchInColumns.rule=true" ng-change="updateView()"/> Rule
                     </li>
                     <!-- Search in default rule column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="search.default" ng-checked="search.default" ng-init="search.default=true"/> Default
+                        <input type="checkbox" ng-model="searchInColumns.default" ng-checked="searchInColumns.default" ng-init="searchInColumns.default=true" ng-change="updateView()"/> Default
                     </li>
                     <!-- Search in scopes column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="search.scopes" ng-checked="search.scopes" ng-init="search.scopes=true"/> Scopes
+                        <input type="checkbox" ng-model="searchInColumns.scopes" ng-checked="searchInColumns.scopes" ng-init="searchInColumns.scopes=true" ng-change="updateView()"/> Scopes
                     </li>
                     <!-- Search in operations column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="search.operations" ng-checked="search.operations" ng-init="search.operations=true"/> Operations
+                        <input type="checkbox" ng-model="searchInColumns.operations" ng-checked="searchInColumns.operations" ng-init="searchInColumns.operations=true" ng-change="updateView()"/> Operations
                     </li>
                     <!-- Search in description column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="search.description" ng-checked="search.description" ng-init="search.description=true"/> Description
+                        <input type="checkbox" ng-model="searchInColumns.description" ng-checked="searchInColumns.description" ng-init="searchInColumns.description=true" ng-change="updateView()"/> Description
                     </li>
                 </ul>
             </div>
@@ -225,7 +225,7 @@
         <!-- Table body -->
         <tbody>
             <!-- Table body rows -->
-            <tr ng-repeat-start="item in data | orderBy:column:reverse | filter:customFilter | limitTo:itemsPerPage:currentPage*itemsPerPage" ng-class-even="'even-table-item'">
+            <tr ng-repeat-start="item in searchFilter() | orderBy:column:reverse | limitTo:itemsPerPage:currentPage*itemsPerPage" ng-class-even="'even-table-item'">
 
                 <!--  Checkbox column content -->
                 <td id="checkbox-column-body" class="multi_select_column">
@@ -396,19 +396,19 @@
             </li>
 
             <!--  Go to page in list of page numbers -->
-            <li ng-repeat="page in [].constructor(numberOfPages()) track by $index" ng-class="{active:currentPage==$index}" ng-disabled="currentPage==$index">
+            <li ng-repeat="page in [].constructor(nrOfPages) track by $index" ng-class="{active:currentPage==$index}" ng-disabled="currentPage==$index">
                 <a ng-click="goToPage($index)">{$ $index+1 $}</a>
             </li>
 
             <!--  Go to next page -->
-            <li ng-disabled="currentPage >= numberOfPages()">
+            <li ng-disabled="currentPage >= nrOfPages">
                 <a aria-label="Next" ng-click="goToNextPage()">
                     <span aria-hidden="true" class="fa fa-angle-right"></span>
                 </a>
             </li>
 
             <!--  Go to last page -->
-            <li ng-disabled="currentPage >= data.length/itemsPerPage - 1">
+            <li ng-disabled="currentPage >= nrOfPages-1">
                 <a aria-label="Last" ng-click="goToLastPage()">
                     <span aria-hidden="true" class="fa fa-angle-double-right"></span>
                 </a>
