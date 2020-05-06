@@ -39,8 +39,6 @@
         $scope.data = [];
         $scope.singlePolicy = [];
         $scope.policy = [];
-        // Table search scope
-        $scope.query = '';
         // Table filter scopes
         $scope.projectColumnVisible = true;
         $scope.targetColumnVisible = true;
@@ -68,6 +66,15 @@
         $scope.ruleBackUp = "";
         $scope.visibleCols;
         $scope.colWidths;
+        $scope.search = {
+            project: true,
+            target: true,
+            rule: true,
+            default: true,
+            scopes: true,
+            operations: true,
+            description: true
+        };
 
         init();
 
@@ -254,7 +261,7 @@
         }
 
         $scope.getData = function () {
-            return $filter('filter')($scope.data, $scope.query)
+            return $filter('filter')($scope.data, $scope.search.$);
         }
 
         // Table page navigation functions
@@ -308,11 +315,35 @@
         }
 
         // Table search functions
-        $scope.$watch('query', function(newValue, oldValue) {
+        $scope.$watch('search.$', function(newValue, oldValue) {
             if(oldValue!=newValue) {
                 $scope.currentPage = 0;
             }
         },true);
+
+
+        $scope.customFilter = function (item) {
+            // search is empty
+            if (!$scope.search.$) {
+                return true;
+            }
+
+            let searchVal = $scope.search.$;
+            //special chars
+            let regex = new RegExp('' + searchVal.replace(/([()[{*+.$^\\|?])/g, '\\$1'), 'i');
+            const keys = ["project", "target", "rule", "default", "scopes", "operations", "description"];
+            let key;
+            let keyIndex;
+            for(keyIndex in keys) {
+                key = keys[keyIndex];
+                if($scope.search[key]) {
+                    if (regex.test(item[key]) ) {
+                    return true;
+                }
+              }
+            }
+            return false;
+        }
 
         // Table sort functions
         $scope.sortColumn = function(col) {
@@ -323,7 +354,7 @@
                 $scope.reverse = true;
             }
         };
-        
+
         // Plugin details modal functions
         $scope.OpenModal = function(policy){
             var modalInstance = $uibModal.open({

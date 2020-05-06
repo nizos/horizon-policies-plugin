@@ -6,7 +6,7 @@
 
     <!-- Search bar -->
     <div class="input-group">
-        <input ng-model="query" id="query" class="form-control" placeholder="Search">
+        <input ng-model="search.$" id="query" class="form-control" placeholder="Search">
 
         <div class="input-group-btn">
 
@@ -19,31 +19,31 @@
                 <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="search-settings-button">
                     <!-- Search in  project column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchProject" ng-checked="searchProject" ng-init="searchProject=true"/> Project
+                        <input type="checkbox" ng-model="search.project" ng-checked="search.project" ng-init="search.project=true"/> Project
                     </li>
                     <!-- Search in target column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchTarget" ng-checked="searchTarget" ng-init="searchTarget=true"/> Target
+                        <input type="checkbox" ng-model="search.target" ng-checked="search.target" ng-init="search.target=true"/> Target
                     </li>
                     <!-- Search in rule column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchRule" ng-checked="searchRule" ng-init="searchRule=true"/> Rule
+                        <input type="checkbox" ng-model="search.rule" ng-checked="search.rule" ng-init="search.rule=true"/> Rule
                     </li>
                     <!-- Search in default rule column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchDefaultRule" ng-checked="searchDefaultRule" ng-init="searchDefaultRule=true"/> Default
+                        <input type="checkbox" ng-model="search.default" ng-checked="search.default" ng-init="search.default=true"/> Default
                     </li>
                     <!-- Search in scopes column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchScopes" ng-checked="searchScopes" ng-init="searchScopes=true"/> Scopes
+                        <input type="checkbox" ng-model="search.scopes" ng-checked="search.scopes" ng-init="search.scopes=true"/> Scopes
                     </li>
                     <!-- Search in operations column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchOperations" ng-checked="searchOperations" ng-init="searchOperations=true"/> Operations
+                        <input type="checkbox" ng-model="search.operations" ng-checked="search.operations" ng-init="search.operations=true"/> Operations
                     </li>
                     <!-- Search in description column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchDescription" ng-checked="searchDescription" ng-init="searchDescription=true"/> Description
+                        <input type="checkbox" ng-model="search.description" ng-checked="search.description" ng-init="search.description=true"/> Description
                     </li>
                 </ul>
             </div>
@@ -225,7 +225,7 @@
         <!-- Table body -->
         <tbody>
             <!-- Table body rows -->
-            <tr ng-repeat-start="item in data | orderBy:column:reverse | filter:query | limitTo:itemsPerPage:currentPage*itemsPerPage" ng-class-even="'even-table-item'">
+            <tr ng-repeat-start="item in data | orderBy:column:reverse | filter:customFilter | limitTo:itemsPerPage:currentPage*itemsPerPage" ng-class-even="'even-table-item'">
 
                 <!--  Checkbox column content -->
                 <td id="checkbox-column-body" class="multi_select_column">
