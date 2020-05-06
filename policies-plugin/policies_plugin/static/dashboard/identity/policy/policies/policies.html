@@ -202,6 +202,19 @@
                                 <li class="table-settings-menu-item" role="menuitem">
                                     <input type="checkbox" ng-model="descriptionColumnVisible" ng-checked="descriptionColumnVisible"/> Description
                                 </li>
+
+                                <li class="divider"></li>
+
+                                <li class="table-settings-menu-item" role="menuitem">Results per page</li>
+                                <div class="select-control">
+                                    <select ng-model="itemsPerPage" id="itemsPerPage" class="form-control" ng-init="itemsPerPage = '20'">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                    </select>
+                                </div>
                             </ul>
                         </div>
                     </div>
