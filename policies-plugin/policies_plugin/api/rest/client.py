@@ -1,6 +1,7 @@
 from policies_plugin.api.models.policy import Policy
 from oslo_policy import generator, policy, _parser
 from django.http import HttpResponse
+from openstack_auth import policy as verify
 import json
 import logging
 
@@ -11,6 +12,13 @@ class Client:
 
     # Get a single rule by specifying its project and target values
     def get_rule(self, request, project, target):
+
+        # Verify that the user attempting this is authorized to do so.
+        if not verify.check((("identity", "identity:get_policy"),), request):
+            resp = HttpResponse()
+            resp.status_code = 404 # 404 due to 401 foring system logout.
+            return resp
+
         # Get the current rules from the policy file
         rules = self.get_rules()
         # Get the requested rule's identifier
@@ -28,6 +36,13 @@ class Client:
 
     # Modify single rule by providing its values in the request parameter
     def set_rule(self, request):
+
+        # Verify that the user attempting this is authorized to do so.
+        if not verify.check((("identity", "identity:modify_policy"),), request):
+            resp = HttpResponse()
+            resp.status_code = 404 # 404 due to 401 foring system logout.
+            return resp
+
         # Test the parsing of the rule before proceeding
         new_rule = request.DATA
         try:
@@ -69,7 +84,14 @@ class Client:
         return resp
 
     # Get all the available rules
-    def get_rules(self):
+    def get_rules(self, request):
+
+        # Verify that the user attempting this is authorized to do so.
+        if not verify.check((("identity", "identity:get_policy"),), request):
+            resp = HttpResponse()
+            resp.status_code = 404 # 404 due to 401 foring system logout.
+            return resp
+
         # Ensure that existing rules are up to date
         enforcer = generator._get_enforcer("keystone")
         enforcer.load_rules()
@@ -91,7 +113,14 @@ class Client:
 
 
     def set_rules(self, request):
-        # Test the parsing of the new rules before proceeding
+
+        # Verify that the user attempting this is authorized to do so.
+        if not verify.check((("identity", "identity:modify_policy"),), request):
+            resp = HttpResponse()
+            resp.status_code = 404 # 404 due to 401 foring system logout.
+            return resp
+
+        # Test the parsing of the new rules before proceeding for early failure
         new_rules = request.DATA
         for new_rule in new_rules:
             try:

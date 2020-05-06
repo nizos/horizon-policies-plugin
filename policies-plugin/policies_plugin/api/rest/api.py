@@ -26,7 +26,7 @@ class Rules(generic.View):
 
     @rest_utils.ajax()
     def get(self, request):
-        return self.client.get_rules()
+        return self.client.get_rules(request)
 
     @rest_utils.ajax(data_required=True)
     def post(self, request):
