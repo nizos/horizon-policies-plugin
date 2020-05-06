@@ -44,13 +44,13 @@ class Client:
 
         # Test the parsing of the rule before proceeding
         new_rule = request.DATA
-        #try:
-        #    val = self.test_parsing(new_rule['rule'])
-        #except ValueError as e:
-        #    resp = HttpResponse()
-        #    resp.status_code = 400
-        #    resp.content = str(e)
-        #    return resp
+        try:
+           val = self.test_parsing(new_rule['rule'])
+        except ValueError as e:
+           resp = HttpResponse()
+           resp.status_code = 400
+           resp.content = str(e)
+           return resp
 
         # Ensure that existing rules are up to date
         enforcer = generator._get_enforcer("keystone")
