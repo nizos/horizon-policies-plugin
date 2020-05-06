@@ -52,8 +52,6 @@
         // Table sort scopes
         $scope.column = 'target';
         $scope.reverse = false;
-        // Table design scopes
-        $scope.charLimit = 50;
         // Table display scopes
         $scope.expandAll = false;
         // Table page scopes
@@ -68,22 +66,111 @@
         }
 
         $scope.ruleBackUp = "";
-
-        $scope.resizeMode = "OverflowResizer";
-
-        $scope.table = undefined;
-
-        // table design scope
-        $scope.columnWidth = {
-            'width': getColumnWidth()+'%',
-            'word-wrap': 'break-word'
-        };
+        $scope.visibleCols;
+        $scope.colWidths;
 
         init();
 
         // Functions to run on page load
         function init() {
+            loadVisibleCols();
+            loadColWidths();
             api.getRules().success(getRulesSuccess);
+        }
+
+        // Table column functions
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#project-column-header').style.width);
+           }, function(newVal, oldVal) {
+            saveColWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#target-column-header').style.width);
+           }, function(newVal, oldVal) {
+            saveColWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#rule-column-header').style.width);
+           }, function(newVal, oldVal) {
+            saveColWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#default-column-header').style.width);
+           }, function(newVal, oldVal) {
+            saveColWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#scopes-column-header').style.width);
+           }, function(newVal, oldVal) {
+            saveColWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#operations-column-header').style.width);
+           }, function(newVal, oldVal) {
+            saveColWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#description-column-header').style.width);
+           }, function(newVal, oldVal) {
+            saveColWidths();
+        });
+
+        $scope.saveVisibleCols = function() {
+            $scope.visibleCols = {
+                'project' : $scope.projectColumnVisible,
+                'target' : $scope.targetColumnVisible,
+                'rule' : $scope.ruleColumnVisible,
+                'default' : $scope.defaultRuleColumnVisible,
+                'scopes' : $scope.scopesColumnVisible,
+                'operations' : $scope.operationsColumnVisible,
+                'description' : $scope.descriptionColumnVisible
+            }
+            localStorage.setItem("visibleCols", JSON.stringify($scope.visibleCols));
+        }
+
+        function loadVisibleCols() {
+            if (localStorage.getItem('visibleCols') != null){
+                $scope.visibleCols = JSON.parse(localStorage.getItem('visibleCols'));
+                $scope.projectColumnVisible = $scope.visibleCols['project'];
+                $scope.targetColumnVisible = $scope.visibleCols['target'];
+                $scope.ruleColumnVisible = $scope.visibleCols['rule'];
+                $scope.defaultRuleColumnVisible = $scope.visibleCols['default'];
+                $scope.scopesColumnVisible = $scope.visibleCols['scopes'];
+                $scope.operationsColumnVisible = $scope.visibleCols['operations'];
+                $scope.descriptionColumnVisible = $scope.visibleCols['description'];
+            }
+        }
+
+        function saveColWidths() {
+            $scope.colWidths = {
+                'project' : parseInt(document.querySelector('#project-column-header').style.width),
+                'target' : parseInt(document.querySelector('#target-column-header').style.width),
+                'rule' : parseInt(document.querySelector('#rule-column-header').style.width),
+                'default' : parseInt(document.querySelector('#default-column-header').style.width),
+                'scopes' : parseInt(document.querySelector('#scopes-column-header').style.width),
+                'operations' : parseInt(document.querySelector('#operations-column-header').style.width),
+                'description' : parseInt(document.querySelector('#description-column-header').style.width)
+            }
+            localStorage.setItem("colWidths", JSON.stringify($scope.colWidths));
+        }
+
+        function loadColWidths() {
+            if (localStorage.getItem('colWidths') != null){
+                $scope.colWidths = JSON.parse(localStorage.getItem('colWidths'));
+                document.querySelector('#project-column-header').style.width = $scope.colWidths['project'] + 'px';
+                document.querySelector('#target-column-header').style.width = $scope.colWidths['target'] + 'px';
+                document.querySelector('#rule-column-header').style.width = $scope.colWidths['rule'] + 'px';
+                document.querySelector('#default-column-header').style.width = $scope.colWidths['default'] + 'px';
+                document.querySelector('#scopes-column-header').style.width = $scope.colWidths['scopes'] + 'px';
+                document.querySelector('#operations-column-header').style.width = $scope.colWidths['operations'] + 'px';
+                document.querySelector('#description-column-header').style.width = $scope.colWidths['description'] + 'px';
+            }
         }
 
         // API functions
@@ -171,65 +258,6 @@
 
         $scope.goToPage=function(page){
             $scope.currentPage = page;
-        }
-
-        // Table design functions
-        function getColumnWidth() {
-
-            let visibleColumns = 0;
-            let totalWidth = 100;
-
-            if($scope.projectColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.targetColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.ruleColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.defaultRuleColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.scopesColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.operationsColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.descriptionColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            return totalWidth / visibleColumns;
-        }
-
-        $scope.getCharLimit=function() {
-            let visibleColumns = 0;
-            let charLimit = 200;
-
-            if($scope.projectColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.targetColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.ruleColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.defaultRuleColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.scopesColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.operationsColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-            if($scope.descriptionColumnVisible == true) {
-                visibleColumns = visibleColumns +1;
-            }
-
-            return charLimit / visibleColumns;
         }
 
         $scope.toggleExpandAll=function(){

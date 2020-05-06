@@ -176,32 +176,45 @@
                                 <li class="divider"></li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" id="projectFilter" ng-model="projectColumnVisible" ng-checked="projectColumnVisible"/> Project
+                                    <input type="checkbox" id="projectFilter" ng-model="projectColumnVisible" ng-checked="projectColumnVisible" ng-change="saveVisibleCols()"/> Project
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="targetColumnVisible" ng-checked="targetColumnVisible"/> Target
+                                    <input type="checkbox" ng-model="targetColumnVisible" ng-checked="targetColumnVisible" ng-change="saveVisibleCols()"/> Target
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="ruleColumnVisible" ng-checked="ruleColumnVisible"/> Rule
+                                    <input type="checkbox" ng-model="ruleColumnVisible" ng-checked="ruleColumnVisible" ng-change="saveVisibleCols()"/> Rule
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="defaultRuleColumnVisible" ng-checked="defaultRuleColumnVisible"/> Default
+                                    <input type="checkbox" ng-model="defaultRuleColumnVisible" ng-checked="defaultRuleColumnVisible" ng-change="saveVisibleCols()"/> Default
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="scopesColumnVisible" ng-checked="scopesColumnVisible"/> Scopes
+                                    <input type="checkbox" ng-model="scopesColumnVisible" ng-checked="scopesColumnVisible" ng-change="saveVisibleCols()"/> Scopes
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="operationsColumnVisible" ng-checked="operationsColumnVisible"/> Operations
+                                    <input type="checkbox" ng-model="operationsColumnVisible" ng-checked="operationsColumnVisible" ng-change="saveVisibleCols()"/> Operations
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="descriptionColumnVisible" ng-checked="descriptionColumnVisible"/> Description
+                                    <input type="checkbox" ng-model="descriptionColumnVisible" ng-checked="descriptionColumnVisible" ng-change="saveVisibleCols()"/> Description
                                 </li>
+
+                                <li class="divider"></li>
+
+                                <li class="table-settings-menu-item" role="menuitem">Results per page</li>
+                                <div class="select-control">
+                                    <select ng-model="itemsPerPage" id="itemsPerPage" class="form-control" ng-init="itemsPerPage = '20'">
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                    </select>
+                                </div>
                             </ul>
                         </div>
                     </div>
