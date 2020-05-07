@@ -195,10 +195,6 @@
             api.getRules().success(getRulesSuccess);
         }
 
-        function getRuleSuccess(response) {
-            $scope.singlePolicy = response;
-        }
-
         function setRules(rules) {
             api.setRules(rules).success(getRules);
         }
@@ -208,10 +204,12 @@
         }
 
         function getRulesSuccess(response) {
+            $scope.policies = [];
             $scope.policies = response;
             $scope.policies.forEach(function(policy) {
                 policy.expanded=false;
             });
+            $scope.filteredPolicies = [];
             $scope.filteredPolicies = $scope.policies;
             $scope.updateView();
         }
@@ -392,34 +390,33 @@
             }
         };
 
-        // Plugin details modal functions
-        $scope.OpenModal = function(policy){
-            var modalInstance = $uibModal.open({
-                ariaLabelledBy:     'modal-title',
-                ariaDescribedBy:    'modal-body',
-                templateUrl:        'static/dashboard/identity/policy/policies/details/details.html',
-                controller:         'detailsController',
-                controllerAs:       '$ctrl',
+        // Details modal
+        $scope.OpenDetailsModal = function(policy){
+            let modalInstance =         $uibModal.open({
+                ariaLabelledBy:         'modal-title',
+                ariaDescribedBy:        'modal-body',
+                templateUrl:            'static/dashboard/identity/policy/policies/details/details.html',
+                controller:             'DetailsController',
+                controllerAs:           '$ctrl',
                 resolve: {
                     $policy: function () {
                         return policy;
                     }
                 }
             });
-            modalInstance.result.then(function (rule) {
-                api.setRule(rule).success(getRules);
-            }, function () {
+            modalInstance.result.then(function (policy) {
+                $scope.setRule(policy);
             });
         }
 
-        // Table item modal functions
-        $scope.openDetailsModal = function(){
-            const detailsModalInstance = $uibModal.open({
-                ariaLabelledBy:     'modal-title',
-                ariaDescribedBy:    'modal-body',
-                templateUrl:        'static/dashboard/identity/policy/policies/editor/editor.html',
-                controller:         'EditorController',
-                controllerAs:       '$ctrl',
+        // Editor modal
+        $scope.openEditorModal = function(){
+            let modalInstance =         $uibModal.open({
+                ariaLabelledBy:         'modal-title',
+                ariaDescribedBy:        'modal-body',
+                templateUrl:            'static/dashboard/identity/policy/policies/editor/editor.html',
+                controller:             'EditorController',
+                controllerAs:           '$ctrl',
                 resolve: {
                     $policy: function () {
                         return $scope.selectedPolicies.policies;
@@ -427,16 +424,15 @@
                 }
             });
 
-            detailsModalInstance.result.then(function (rules) {
+            modalInstance.result.then(function (rules) {
                 setRules(rules);
-                $scope.selectedPolicies.policies = null;
             });
         }
 
 
-        // Plugin Info modal functions
+        // Info modal
         $scope.openInfoModal = function(){
-            const infoModalInstance = $uibModal.open({
+            let modalInstance =     $uibModal.open({
                 ariaLabelledBy:     'modal-title',
                 ariaDescribedBy:    'modal-body',
                 templateUrl:        'static/dashboard/identity/policy/policies/info/info.html',
@@ -444,7 +440,7 @@
                 controllerAs:       '$ctrl'
             });
 
-            infoModalInstance.result.then(function () {});
+            modalInstance.result.then(function () {});
         }
     }
     // Scroll to top button controller

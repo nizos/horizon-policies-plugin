@@ -50,7 +50,7 @@
 
             <!-- Manage button -->
             <div class="btn-group manage-button" ng-show="showEditorModal">
-                <button title="Manage policy" class="btn btn-primary" ng-click="openDetailsModal()" type="button">
+                <button title="Manage policy" class="btn btn-primary" ng-click="openEditorModal()" type="button">
                     <i class="fa fa-edit"></i>Manage
                 </button>
             </div>
@@ -285,20 +285,13 @@
                     <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 20px;">
                             <span ng-if="!policy.editMode" tooltip-placement="bottom" uib-tooltip="{$ policy.rule $}">
-                                <a ng-click="OpenModal(policy)">{$ policy.rule $}</a>
+                                <a ng-click="OpenDetailsModal(policy)">{$ policy.rule $}</a>
                             </span>
                         </div>
                     </span>
                     <span ng-if="policy.expanded && !policy.editMode">
                         <div class="wrap" style="max-height: 500px;">
-                            <a ng-click="OpenModal(policy)">{$ policy.rule $}</a>
-                        </div>
-                    </span>
-                    <span ng-if="policy.editMode">
-                        <div class="wrap" style="max-height: 500px;">
-                            <input class="input-group-window-edit" ng-model="policy.rule">
-                            <button title="Cancel changes" class="btn-edit btn-warning" ng-click="policy.editMode = false; policy.rule = ruleBackUp">Cancel</button>
-                            <button title="Save changes" class="btn-edit btn-primary" ng-click="setRule(policy); policy.editMode = false">Save</button>
+                            <a ng-click="OpenDetailsModal(policy)">{$ policy.rule $}</a>
                         </div>
                     </span>
                 </td>

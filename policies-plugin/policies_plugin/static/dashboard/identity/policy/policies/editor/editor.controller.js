@@ -40,8 +40,7 @@
                 }
 
                 $scope.downloadFile = function() {
-                    let tArea = document.querySelector('.editor-textarea').value;
-                    //let textToJSON = JSON.stringify(tArea);
+                    const tArea = document.querySelector('.editor-textarea').value;
                     const textToBLOB = new Blob([tArea], {type: 'application/json'});
                     const fileName = 'policy.json';
 

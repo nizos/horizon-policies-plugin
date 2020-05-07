@@ -3,27 +3,32 @@
 
     angular
         .module('horizon.dashboard.identity.policy.policies.details')
-        .controller('detailsController', [
+        .controller('DetailsController', [
             '$uibModalInstance',
             '$scope',
             '$policy',
             function($uibModalInstance, $scope, $policy) {
+
                 var $ctrl = this;
                 $ctrl.policy = $policy;
+                $ctrl.project = $policy['project'];
+                $ctrl.target = $policy['target'];
+                $ctrl.rule = $policy['rule'];
+                $ctrl.defaultRule = $policy['default'];
+                $ctrl.scopes = $policy['scopes'];
+                $ctrl.operations = $policy['operations'];
+                $ctrl.description = $policy['description'];
                 $scope.showForm = false;
                 $scope.showJson = false;
-                const ruleBackUp = $policy.rule;
 
-                $scope.ok = function(policy) {
-                    $uibModalInstance.close(policy);
+                $scope.ok = function() {
+                    $policy['rule'] = $ctrl.rule;
+                    $uibModalInstance.close($policy);
                 };
 
                 $scope.cancel = function() {
-                    $policy.rule = ruleBackUp;
                     $uibModalInstance.dismiss('cancel');
                 }
-
             }
         ]);
-
 })();
