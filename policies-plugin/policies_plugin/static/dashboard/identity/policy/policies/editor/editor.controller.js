@@ -7,7 +7,8 @@
             '$uibModalInstance',
             '$scope',
             '$policy',
-            function($uibModalInstance, $scope, $policy) {
+            '$timeout',
+            function($uibModalInstance, $scope, $policy, $timeout) {
 
                 const $ctrl = this;
                 $ctrl.policy = $policy;
