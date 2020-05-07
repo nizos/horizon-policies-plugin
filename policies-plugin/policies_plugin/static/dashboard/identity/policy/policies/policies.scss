@@ -99,6 +99,20 @@ html {
     position: fixed;
 }
 
+.downloadBtn {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.uploadBtn {
+    background-color: #4ab848;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
 .table-checkbox {
     margin: 2px 0 0;
 }

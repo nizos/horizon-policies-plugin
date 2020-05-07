@@ -33,21 +33,22 @@
             <!-- Upload Button -->
             <div class="btn-group-leftside">
                 <div class="btn-group uploadButton">
-                    <button class="btn btn-default"
+                    <button class="btn btn-primary uploadBtn"
                         type="button"
                         title="Upload"
                         ng-click="uploadFile()">
+                        <span class="fa fa-upload"></span>
                         Upload
                     </button>
                 </div>
 
                 <!-- Download Button -->
                 <div class="btn-group downloadButton">
-                    <button class ="btn btn-default mr-1"
+                    <button class ="btn btn-primary downloadBtn"
                         type="button"
                         title="Download"
                         ng-click="downloadFile()">
-                        <span class="fa fa-file-download"></span>
+                        <span class="fa fa-download"></span>
                         Download
                     </button>
                 </div>
@@ -58,6 +59,7 @@
                 <button class="btn btn-warning"
                     type="button"
                     ng-click="cancel()">
+                    <span class="fa fa-times"></span>
                     Cancel
                 </button>
 
@@ -65,6 +67,7 @@
                 <button class="btn btn-primary mr-1"
                     type="button"
                     ng-click="save()">
+                    <span class="fa fa-check"></span>
                     Save
                 </button>
             </div>
