@@ -39,6 +39,26 @@
                     $uibModalInstance.dismiss('cancel');
                 }
 
+                $scope.downloadFile = function() {
+                    let tArea = document.querySelector('.editor-textarea').value;
+                    //let textToJSON = JSON.stringify(tArea);
+                    const textToBLOB = new Blob([tArea], {type: 'application/json'});
+                    const fileName = 'policy.json';
+
+                    let newLink = document.createElement("a");
+                    newLink.download = fileName;
+
+                    if (window.webkitURL != null) {
+                        newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+                    }
+                    else {
+                        newLink.href = window.URL.createObjectURL(textToBLOB);
+                        newLink.style.display = "none";
+                        document.body.appendChild(newLink);
+                    }
+                    newLink.click();
+                }
+
                 function validateSubmission() {
                     const input = document.querySelector('.editor-textarea').value;
                     const lines = input.split(/\r?\n/);
