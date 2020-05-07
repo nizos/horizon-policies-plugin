@@ -406,8 +406,8 @@
                     }
                 }
             });
-            modalInstance.result.then(function (policy) {
-                api.setPolicy( { rule: policy } ).success(setPolicySuccess);
+            modalInstance.result.then(function (rule) {
+                api.setRule(rule).success(getRules);
             }, function () {
             });
         }

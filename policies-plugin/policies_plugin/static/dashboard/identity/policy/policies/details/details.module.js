@@ -13,9 +13,8 @@
  */
 (function() {
     'use strict';
-  
+
     angular
       .module('horizon.dashboard.identity.policy.policies.details', []);
-  
+
   })();
-  
