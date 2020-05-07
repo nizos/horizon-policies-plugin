@@ -55,6 +55,12 @@
                 </button>
             </div>
 
+            <!-- Refresh button -->
+            <div class="btn-group info-button">
+                <button title="Refresh" class="btn btn-default" ng-click="refreshPolicies()" type="button">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
 
             <!-- Help Info button -->
             <div class="btn-group info-button">
@@ -261,7 +267,7 @@
                 <!--  Target column content -->
                 <td id="target-column-body" ng-show="visibleColumns.target">
                     <span ng-if="!policy.expanded">
-                        <div class="wrap" style="max-height: 22px;">
+                        <div class="wrap" style="max-height: 20px;">
                             <span tooltip-placement="bottom" uib-tooltip="{$ policy.target $}">
                                 {$ policy.target  $}
                             </span>
@@ -277,7 +283,7 @@
                 <!--  Rule column content -->
                 <td id="rule-column-body" ng-show="visibleColumns.rule">
                     <span ng-if="!policy.expanded">
-                        <div class="wrap" style="max-height: 22px;">
+                        <div class="wrap" style="max-height: 20px;">
                             <span ng-if="!policy.editMode" tooltip-placement="bottom" uib-tooltip="{$ policy.rule $}">
                                 <a ng-click="OpenModal(policy)">{$ policy.rule $}</a>
                             </span>

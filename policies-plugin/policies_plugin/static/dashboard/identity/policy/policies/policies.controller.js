@@ -297,6 +297,12 @@
             }
         }
 
+        // Refresh button function
+        $scope.refreshPolicies = function() {
+            $scope.policies = [];
+            getRules();
+        }
+
         // Table search functions
         $scope.$watch('query', function(newValue, oldValue) {
             if(oldValue!=newValue) {
