@@ -19,31 +19,31 @@
                 <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="search-settings-button">
                     <!-- Search in  project column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchInColumns.project" ng-checked="searchInColumns.project" ng-init="searchInColumns.project=true" ng-change="updateView()"/> Project
+                        <input type="checkbox" ng-model="searchProject" ng-checked="searchProject" ng-init="searchProject=true" ng-change="updateView()"/> Project
                     </li>
                     <!-- Search in target column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchInColumns.target" ng-checked="searchInColumns.target" ng-init="searchInColumns.target=true" ng-change="updateView()"/> Target
+                        <input type="checkbox" ng-model="searchTarget" ng-checked="searchTarget" ng-init="searchTarget=true" ng-change="updateView()"/> Target
                     </li>
                     <!-- Search in rule column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchInColumns.rule" ng-checked="searchInColumns.rule" ng-init="searchInColumns.rule=true" ng-change="updateView()"/> Rule
+                        <input type="checkbox" ng-model="searchRule" ng-checked="searchRule" ng-init="searchRule=true" ng-change="updateView()"/> Rule
                     </li>
                     <!-- Search in default rule column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchInColumns.default" ng-checked="searchInColumns.default" ng-init="searchInColumns.default=true" ng-change="updateView()"/> Default
+                        <input type="checkbox" ng-model="searchDefault" ng-checked="searchDefault" ng-init="searchDefault=true" ng-change="updateView()"/> Default
                     </li>
                     <!-- Search in scopes column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchInColumns.scopes" ng-checked="searchInColumns.scopes" ng-init="searchInColumns.scopes=true" ng-change="updateView()"/> Scopes
+                        <input type="checkbox" ng-model="searchScopes" ng-checked="searchScopes" ng-init="searchScopes=true" ng-change="updateView()"/> Scopes
                     </li>
                     <!-- Search in operations column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchInColumns.operations" ng-checked="searchInColumns.operations" ng-init="searchInColumns.operations=true" ng-change="updateView()"/> Operations
+                        <input type="checkbox" ng-model="searchOperations" ng-checked="searchOperations" ng-init="searchOperations=true" ng-change="updateView()"/> Operations
                     </li>
                     <!-- Search in description column -->
                     <li class="search-settings-menu-item" role="menuitem">
-                        <input type="checkbox" ng-model="searchInColumns.description" ng-checked="searchInColumns.description" ng-init="searchInColumns.description=true" ng-change="updateView()"/> Description
+                        <input type="checkbox" ng-model="searchDescription" ng-checked="searchDescription" ng-init="searchDescription=true" ng-change="updateView()"/> Description
                     </li>
                 </ul>
             </div>
@@ -95,7 +95,7 @@
                 </th>
 
                 <!-- Project column header -->
-                <th class="resizable-column" id="project-column-header" ng-show="projectColumnVisible">
+                <th class="resizable-column" id="project-column-header" ng-show="visibleColumns.project">
                     <div class="col-header col-project" title="Sort by project" ng-click="sortColumn('project')">Project
                         <span ng-show="column == 'project'">
                             <span ng-show="!reverse" class="fa fa-sort-down"></span>
@@ -105,7 +105,7 @@
                 </th>
 
                 <!-- Target column header -->
-                <th class="resizable-column" id="target-column-header" ng-show="targetColumnVisible">
+                <th class="resizable-column" id="target-column-header" ng-show="visibleColumns.target">
                     <div class="col-header col-target" title="Sort by target" ng-click="sortColumn('target')">Target
                         <span ng-show="column == 'target'">
                             <span ng-show="!reverse" class="fa fa-sort-down"></span>
@@ -115,7 +115,7 @@
                 </th>
 
                 <!-- Rule column header -->
-                <th class="resizable-column" id="rule-column-header" ng-show="ruleColumnVisible">
+                <th class="resizable-column" id="rule-column-header" ng-show="visibleColumns.rule">
                     <div class="col-header col-rule" title="Sort by rule" ng-click="sortColumn('rule')">Rule
                         <span ng-show="column == 'rule'">
                             <span ng-show="!reverse" class="fa fa-sort-down"></span>
@@ -125,9 +125,9 @@
                 </th>
 
                 <!-- Default rule column header -->
-                <th class="resizable-column" id="default-column-header" ng-show="defaultRuleColumnVisible">
-                    <div class="col-header col-default" title="Sort by default" ng-click="sortColumn('default')">Default
-                        <span ng-show="column == 'default'">
+                <th class="resizable-column" id="default-column-header" ng-show="visibleColumns.defaultRule">
+                    <div class="col-header col-default" title="Sort by default" ng-click="sortColumn('defaultRule')">Default
+                        <span ng-show="column == 'defaultRule'">
                             <span ng-show="!reverse" class="fa fa-sort-down"></span>
                             <span ng-show="reverse" class="fa fa-sort-up"></span>
                         </span>
@@ -135,7 +135,7 @@
                 </th>
 
                 <!-- Scopes column header -->
-                <th class="resizable-column" id="scopes-column-header" ng-show="scopesColumnVisible">
+                <th class="resizable-column" id="scopes-column-header" ng-show="visibleColumns.scopes">
                     <div class="col-header col-scopes" title="Sort by scopes" ng-click="sortColumn('scopes')">Scopes
                         <span ng-show="column == 'scopes'">
                             <span ng-show="!reverse" class="fa fa-sort-down"></span>
@@ -145,7 +145,7 @@
                 </th>
 
                 <!-- Operations column header -->
-                <th class="resizable-column" id="operations-column-header" ng-show="operationsColumnVisible">
+                <th class="resizable-column" id="operations-column-header" ng-show="visibleColumns.operations">
                     <div class="col-header col-operations" title="Sort by operations" ng-click="sortColumn('operations')">Operations
                         <span ng-show="column == 'operations'">
                             <span ng-show="!reverse" class="fa fa-sort-down"></span>
@@ -155,7 +155,7 @@
                 </th>
 
                 <!-- Description column header -->
-                <th class="resizable-column" id="description-column-header" ng-show="descriptionColumnVisible">
+                <th class="resizable-column" id="description-column-header" ng-show="visibleColumns.description">
                     <div class="col-header col-description" title="Sort by description" ng-click="sortColumn('description')">Description
                         <span ng-show="column == 'description'">
                             <span ng-show="!reverse" class="fa fa-sort-down"></span>
@@ -176,31 +176,31 @@
                                 <li class="divider"></li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" id="projectFilter" ng-model="projectColumnVisible" ng-checked="projectColumnVisible" ng-change="saveVisibleCols()"/> Project
+                                    <input type="checkbox" id="projectFilter" ng-model="visibleColumns.project" ng-checked="visibleColumns.project" ng-change="storeVisibleColumns()"/> Project
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="targetColumnVisible" ng-checked="targetColumnVisible" ng-change="saveVisibleCols()"/> Target
+                                    <input type="checkbox" ng-model="visibleColumns.target" ng-checked="visibleColumns.target" ng-change="storeVisibleColumns()"/> Target
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="ruleColumnVisible" ng-checked="ruleColumnVisible" ng-change="saveVisibleCols()"/> Rule
+                                    <input type="checkbox" ng-model="visibleColumns.rule" ng-checked="visibleColumns.rule" ng-change="storeVisibleColumns()"/> Rule
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="defaultRuleColumnVisible" ng-checked="defaultRuleColumnVisible" ng-change="saveVisibleCols()"/> Default
+                                    <input type="checkbox" ng-model="visibleColumns.defaultRule" ng-checked="visibleColumns.defaultRule" ng-change="storeVisibleColumns()"/> Default
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="scopesColumnVisible" ng-checked="scopesColumnVisible" ng-change="saveVisibleCols()"/> Scopes
+                                    <input type="checkbox" ng-model="visibleColumns.scopes" ng-checked="visibleColumns.scopes" ng-change="storeVisibleColumns()"/> Scopes
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="operationsColumnVisible" ng-checked="operationsColumnVisible" ng-change="saveVisibleCols()"/> Operations
+                                    <input type="checkbox" ng-model="visibleColumns.operations" ng-checked="visibleColumns.operations" ng-change="storeVisibleColumns()"/> Operations
                                 </li>
 
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="descriptionColumnVisible" ng-checked="descriptionColumnVisible" ng-change="saveVisibleCols()"/> Description
+                                    <input type="checkbox" ng-model="visibleColumns.description" ng-checked="visibleColumns.description" ng-change="storeVisibleColumns()"/> Description
                                 </li>
 
                                 <li class="divider"></li>
@@ -225,106 +225,106 @@
         <!-- Table body -->
         <tbody>
             <!-- Table body rows -->
-            <tr ng-repeat-start="item in searchFilter() | orderBy:column:reverse | limitTo:itemsPerPage:currentPage*itemsPerPage" ng-class-even="'even-table-item'">
+            <tr ng-repeat-start="policy in filteredPolicies | orderBy:column:reverse | limitTo:itemsPerPage:currentPage*itemsPerPage track by $index" ng-class-even="'even-table-item'">
 
                 <!--  Checkbox column content -->
                 <td id="checkbox-column-body" class="multi_select_column">
                     <div class="wrap">
-                        <input type="checkbox" class="table-checkbox" checklist-model="selectedPolicies.policies" checklist-value="item" checklist-change="selectedPoliciesChanged()">
+                        <input type="checkbox" class="table-checkbox" checklist-model="selectedPolicies.policies" checklist-value="policy" checklist-change="selectedPoliciesChanged()">
                     </div>
                 </td>
 
                 <!--  Expander column content -->
-                <td id="expander-column-body" title="Expand column content" class="expander expander-column" ng-click="expandSelected(item)">
+                <td id="expander-column-body" title="Expand column content" class="expander expander-column" ng-click="expandSelected(policy)">
                     <div class="wrap">
-                        <span ng-if="!item.expanded" class="fa fa-chevron-right" duration="200"></span>
-                        <span ng-if="item.expanded" class="fa fa-chevron-down" duration="200"></span>
+                        <span ng-if="!policy.expanded" class="fa fa-chevron-right" duration="200"></span>
+                        <span ng-if="policy.expanded" class="fa fa-chevron-down" duration="200"></span>
                     </div>
                 </td>
 
                 <!--  Project column content -->
-                <td id="project-column-body" ng-show="projectColumnVisible">
-                    <span ng-if="!item.expanded">
+                <td id="project-column-body" ng-show="visibleColumns.project">
+                    <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 20px;">
-                            <span tooltip-placement="bottom" uib-tooltip="{$ item.project $}">
-                                {$ item.project $}
+                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.project $}">
+                                {$ policy.project $}
                             </span>
                         </div>
                     </span>
-                    <span ng-if="item.expanded">
+                    <span ng-if="policy.expanded">
                         <div class="wrap" style="max-height: 500px;">
-                            {$ item.project $}
+                            {$ policy.project $}
                         </div>
                     </span>
                 </td>
 
                 <!--  Target column content -->
-                <td id="target-column-body" ng-show="targetColumnVisible">
-                    <span ng-if="!item.expanded">
+                <td id="target-column-body" ng-show="visibleColumns.target">
+                    <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 22px;">
-                            <span tooltip-placement="bottom" uib-tooltip="{$ item.target $}">
-                                {$ item.target  $}
+                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.target $}">
+                                {$ policy.target  $}
                             </span>
                         </div>
                     </span>
-                    <span ng-if="item.expanded">
+                    <span ng-if="policy.expanded">
                         <div class="wrap" style="max-height: 500px;">
-                            {$ item.target $}
+                            {$ policy.target $}
                         </div>
                     </span>
                 </td>
 
                 <!--  Rule column content -->
-                <td id="rule-column-body" ng-show="ruleColumnVisible">
-                    <span ng-if="!item.expanded">
+                <td id="rule-column-body" ng-show="visibleColumns.rule">
+                    <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 22px;">
-                            <span ng-if="!item.editMode" tooltip-placement="bottom" uib-tooltip="{$ item.rule $}">
-                                <a ng-click="OpenModal(item)">{$ item.rule $}</a>
+                            <span ng-if="!policy.editMode" tooltip-placement="bottom" uib-tooltip="{$ policy.rule $}">
+                                <a ng-click="OpenModal(policy)">{$ policy.rule $}</a>
                             </span>
                         </div>
                     </span>
-                    <span ng-if="item.expanded && !item.editMode">
+                    <span ng-if="policy.expanded && !policy.editMode">
                         <div class="wrap" style="max-height: 500px;">
-                            <a ng-click="OpenModal(item)">{$ item.rule $}</a>
+                            <a ng-click="OpenModal(policy)">{$ policy.rule $}</a>
                         </div>
                     </span>
-                    <span ng-if="item.editMode">
+                    <span ng-if="policy.editMode">
                         <div class="wrap" style="max-height: 500px;">
-                            <input class="input-group-window-edit" ng-model="item.rule">
-                            <button title="Cancel changes" class="btn-edit btn-warning" ng-click="item.editMode = false; item.rule = ruleBackUp">Cancel</button>
-                            <button title="Save changes" class="btn-edit btn-primary" ng-click="setRule(item); item.editMode = false">Save</button>
+                            <input class="input-group-window-edit" ng-model="policy.rule">
+                            <button title="Cancel changes" class="btn-edit btn-warning" ng-click="policy.editMode = false; policy.rule = ruleBackUp">Cancel</button>
+                            <button title="Save changes" class="btn-edit btn-primary" ng-click="setRule(policy); policy.editMode = false">Save</button>
                         </div>
                     </span>
                 </td>
 
                 <!--  Default rule column content -->
-                <td id="default-column-body" ng-show="defaultRuleColumnVisible">
-                    <span ng-if="!item.expanded">
+                <td id="default-column-body" ng-show="visibleColumns.defaultRule">
+                    <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 20px;">
-                            <span tooltip-placement="bottom" uib-tooltip="{$ item.default $}">
-                                {$ item.default  $}
+                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.default $}">
+                                {$ policy.default  $}
                             </span>
                         </div>
                     </span>
-                    <span ng-if="item.expanded">
+                    <span ng-if="policy.expanded">
                         <div class="wrap" style="max-height: 500px;">
-                            {$ item.default $}
+                            {$ policy.default $}
                         </div>
                     </span>
                 </td>
 
                 <!--  Scopes column content -->
-                <td id="scopes-column-body" ng-show="scopesColumnVisible">
-                    <div ng-if="!item.expanded" class="wrap" style="max-height: 20px;">
-                        <div ng-repeat="scope in item.scopes track by $index">
-                            <span tooltip-placement="bottom" uib-tooltip="{$ item.scopes $}">
+                <td id="scopes-column-body" ng-show="visibleColumns.scopes">
+                    <div ng-if="!policy.expanded" class="wrap" style="max-height: 20px;">
+                        <div ng-repeat="scope in policy.scopes track by $index">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.scopes $}">
                                 {$ scope  $}
                             </span>
                         </div>
                     </div>
-                    <div ng-if="item.expanded" class="wrap" style="max-height: 500px;">
-                        <div ng-repeat="scope in item.scopes track by $index">
-                            <span tooltip-placement="bottom" uib-tooltip="{$ item.scopes $}">
+                    <div ng-if="policy.expanded" class="wrap" style="max-height: 500px;">
+                        <div ng-repeat="scope in policy.scopes track by $index">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.scopes $}">
                                 {$ scope $}
                             </span>
                         </div>
@@ -332,17 +332,17 @@
                 </td>
 
                 <!--  Operations column content -->
-                <td id="operations-column-body" ng-show="operationsColumnVisible">
-                    <div ng-if="!item.expanded" class="wrap" style="max-height: 20px;">
-                        <div ng-repeat="operation in item.operations track by $index">
-                            <span tooltip-placement="bottom" uib-tooltip="{$ item.operations $}">
+                <td id="operations-column-body" ng-show="visibleColumns.operations">
+                    <div ng-if="!policy.expanded" class="wrap" style="max-height: 20px;">
+                        <div ng-repeat="operation in policy.operations track by $index">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.operations $}">
                                 {$ operation $}
                             </span>
                         </div>
                     </div>
-                    <div ng-if="item.expanded" class="wrap" style="max-height: 500px;">
-                        <div ng-repeat="operation in item.operations track by $index">
-                            <span tooltip-placement="bottom" uib-tooltip="{$ item.operations $}">
+                    <div ng-if="policy.expanded" class="wrap" style="max-height: 500px;">
+                        <div ng-repeat="operation in policy.operations track by $index">
+                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.operations $}">
                                 {$ operation $}
                             </span>
                         </div>
@@ -350,17 +350,17 @@
                 </td>
 
                 <!--  Description column content -->
-                <td id="description-column-body" ng-show="descriptionColumnVisible">
-                    <span ng-if="!item.expanded">
+                <td id="description-column-body" ng-show="visibleColumns.description">
+                    <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 20px;">
-                            <span tooltip-placement="bottom" uib-tooltip="{$ item.description $}">
-                                {$ item.description $}
+                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.description $}">
+                                {$ policy.description $}
                             </span>
                         </div>
                     </span>
-                    <span ng-if="item.expanded">
+                    <span ng-if="policy.expanded">
                         <div class="wrap" style="max-height: 500px;">
-                            {$ item.description $}
+                            {$ policy.description $}
                         </div>
                     </span>
                 </td>

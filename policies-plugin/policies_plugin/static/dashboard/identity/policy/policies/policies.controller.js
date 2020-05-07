@@ -34,19 +34,9 @@
    * @returns undefined
    */
     function PoliciesController(api, $scope, $uibModal, $filter) {
-
         // Table data scopes
-        $scope.data = [];
-        $scope.singlePolicy = [];
-        $scope.policy = [];
-        // Table filter scopes
-        $scope.projectColumnVisible = true;
-        $scope.targetColumnVisible = true;
-        $scope.ruleColumnVisible = true;
-        $scope.defaultRuleColumnVisible = false;
-        $scope.scopesColumnVisible = false;
-        $scope.operationsColumnVisible = false;
-        $scope.descriptionColumnVisible = true;
+        $scope.policies = [];
+        $scope.filteredPolicies = [];
         // Table sort scopes
         $scope.column = 'target';
         $scope.reverse = false;
@@ -59,97 +49,76 @@
         // Table item modal scopes
         $scope.showEditorModal = false;
         // Table selected policies scopes
-        $scope.policies = [];
         $scope.selectedPolicies = {
             policies: []
         }
-
-        $scope.ruleBackUp = "";
+        $scope.ruleBackUp;
         $scope.visibleCols;
         $scope.colWidths;
         $scope.query;
-        $scope.searchInColumns = {
-            project: true,
-            target: true,
-            rule: true,
-            default: true,
-            scopes: true,
-            operations: true,
-            description: true
+        $scope.searchProject = true;
+        $scope.searchTarget = true;
+        $scope.searchRule = true;
+        $scope.searchDefault = true;
+        $scope.searchScopes = true;
+        $scope.searchOperations = true;
+        $scope.searchDescription = true;
+        $scope.visibleColumns = {
+            project:        true,
+            target:         true,
+            rule:           true,
+            defaultRule:    true,
+            scopes:         true,
+            operations:     true,
+            description:    true
         };
 
         init();
 
         // Functions to run on page load
         function init() {
-            loadVisibleCols();
-            loadColWidths();
-            loadItemsPerPage();
-            loadCurrentPage();
+            restoreItemsPerPage();
+            restoreCurrentPage();
+            restoreVisibleColumns();
+            restoreColumnWidths();
             api.getRules().success(getRulesSuccess);
         }
 
         // Table column functions
         $scope.$watch(function () {
             return parseInt(document.querySelector('#project-column-header').style.width);
-           }, function(newVal, oldVal) {
-            saveColWidths();
-        });
+           }, storeColumnWidths());
 
         $scope.$watch(function () {
             return parseInt(document.querySelector('#target-column-header').style.width);
-           }, function(newVal, oldVal) {
-            saveColWidths();
-        });
+           }, storeColumnWidths());
 
         $scope.$watch(function () {
             return parseInt(document.querySelector('#rule-column-header').style.width);
-           }, function(newVal, oldVal) {
-            saveColWidths();
-        });
+           }, storeColumnWidths());
 
         $scope.$watch(function () {
             return parseInt(document.querySelector('#default-column-header').style.width);
-           }, function(newVal, oldVal) {
-            saveColWidths();
-        });
+           }, storeColumnWidths());
 
         $scope.$watch(function () {
             return parseInt(document.querySelector('#scopes-column-header').style.width);
-           }, function(newVal, oldVal) {
-            saveColWidths();
-        });
+           }, storeColumnWidths());
 
         $scope.$watch(function () {
             return parseInt(document.querySelector('#operations-column-header').style.width);
-           }, function(newVal, oldVal) {
-            saveColWidths();
-        });
+           }, storeColumnWidths());
 
         $scope.$watch(function () {
             return parseInt(document.querySelector('#description-column-header').style.width);
-           }, function(newVal, oldVal) {
-            saveColWidths();
-        });
+           }, storeColumnWidths());
 
-        $scope.saveVisibleCols = function() {
-            $scope.visibleCols = {
-                'project' : $scope.projectColumnVisible,
-                'target' : $scope.targetColumnVisible,
-                'rule' : $scope.ruleColumnVisible,
-                'default' : $scope.defaultRuleColumnVisible,
-                'scopes' : $scope.scopesColumnVisible,
-                'operations' : $scope.operationsColumnVisible,
-                'description' : $scope.descriptionColumnVisible
-            }
-            localStorage.setItem("visibleCols", JSON.stringify($scope.visibleCols));
-        }
 
-        $scope.saveItemsPerPage = function() {
+        $scope.storeItemsPerPage = function() {
             localStorage.setItem("itemsPerPage", $scope.itemsPerPage);
         }
 
-        function loadItemsPerPage() {
+        function restoreItemsPerPage() {
             if (localStorage.getItem('itemsPerPage') != null){
                 $scope.itemsPerPage = localStorage.getItem('itemsPerPage');
             } else {
@@ -157,11 +126,11 @@
             }
         }
 
-        $scope.saveCurrentPage = function() {
+        function storeCurrentPage() {
             localStorage.setItem("currentPage", $scope.currentPage);
         }
 
-        function loadCurrentPage() {
+        function restoreCurrentPage() {
             if (localStorage.getItem('currentPage') != null){
                 $scope.currentPage = localStorage.getItem('currentPage');
             } else {
@@ -169,42 +138,55 @@
             }
         }
 
-        function loadVisibleCols() {
-            if (localStorage.getItem('visibleCols') != null){
-                $scope.visibleCols = JSON.parse(localStorage.getItem('visibleCols'));
-                $scope.projectColumnVisible = $scope.visibleCols['project'];
-                $scope.targetColumnVisible = $scope.visibleCols['target'];
-                $scope.ruleColumnVisible = $scope.visibleCols['rule'];
-                $scope.defaultRuleColumnVisible = $scope.visibleCols['default'];
-                $scope.scopesColumnVisible = $scope.visibleCols['scopes'];
-                $scope.operationsColumnVisible = $scope.visibleCols['operations'];
-                $scope.descriptionColumnVisible = $scope.visibleCols['description'];
+        $scope.storeVisibleColumns = function() {
+            const columns = {
+                'project':      $scope.visibleColumns.project,
+                'target':       $scope.visibleColumns.target,
+                'rule':         $scope.visibleColumns.rule,
+                'defaultRule':  $scope.visibleColumns.defaultRule,
+                'scopes':       $scope.visibleColumns.scopes,
+                'operations':   $scope.visibleColumns.operations,
+                'description':  $scope.visibleColumns.description
+            }
+            localStorage.setItem("visibleColumns", JSON.stringify(columns));
+        }
+
+        function restoreVisibleColumns() {
+            if (localStorage.getItem('visibleColumns') != null){
+                const columns = JSON.parse(localStorage.getItem('visibleColumns'));
+                $scope.visibleColumns.project =       columns['project'];
+                $scope.visibleColumns.target =        columns['target'];
+                $scope.visibleColumns.rule =          columns['rule'];
+                $scope.visibleColumns.defaultRule =   columns['defaultRule'];
+                $scope.visibleColumns.scopes =        columns['scopes'];
+                $scope.visibleColumns.operations =    columns['operations'];
+                $scope.visibleColumns.description =   columns['description'];
             }
         }
 
-        function saveColWidths() {
-            $scope.colWidths = {
-                'project' : parseInt(document.querySelector('#project-column-header').style.width),
-                'target' : parseInt(document.querySelector('#target-column-header').style.width),
-                'rule' : parseInt(document.querySelector('#rule-column-header').style.width),
-                'default' : parseInt(document.querySelector('#default-column-header').style.width),
-                'scopes' : parseInt(document.querySelector('#scopes-column-header').style.width),
-                'operations' : parseInt(document.querySelector('#operations-column-header').style.width),
-                'description' : parseInt(document.querySelector('#description-column-header').style.width)
+        function storeColumnWidths() {
+            const columns = {
+                'project':      parseInt(document.querySelector('#project-column-header').style.width),
+                'target':       parseInt(document.querySelector('#target-column-header').style.width),
+                'rule':         parseInt(document.querySelector('#rule-column-header').style.width),
+                'defaultRule':  parseInt(document.querySelector('#default-column-header').style.width),
+                'scopes':       parseInt(document.querySelector('#scopes-column-header').style.width),
+                'operations':   parseInt(document.querySelector('#operations-column-header').style.width),
+                'description':  parseInt(document.querySelector('#description-column-header').style.width)
             }
-            localStorage.setItem("colWidths", JSON.stringify($scope.colWidths));
+            localStorage.setItem("columnWidths", JSON.stringify(columns));
         }
 
-        function loadColWidths() {
-            if (localStorage.getItem('colWidths') != null){
-                $scope.colWidths = JSON.parse(localStorage.getItem('colWidths'));
-                document.querySelector('#project-column-header').style.width = $scope.colWidths['project'] + 'px';
-                document.querySelector('#target-column-header').style.width = $scope.colWidths['target'] + 'px';
-                document.querySelector('#rule-column-header').style.width = $scope.colWidths['rule'] + 'px';
-                document.querySelector('#default-column-header').style.width = $scope.colWidths['default'] + 'px';
-                document.querySelector('#scopes-column-header').style.width = $scope.colWidths['scopes'] + 'px';
-                document.querySelector('#operations-column-header').style.width = $scope.colWidths['operations'] + 'px';
-                document.querySelector('#description-column-header').style.width = $scope.colWidths['description'] + 'px';
+        function restoreColumnWidths() {
+            if (localStorage.getItem('columnWidths') != null){
+                const columns = JSON.parse(localStorage.getItem('columnWidths'));
+                document.querySelector('#project-column-header').style.width =      columns['project'] + 'px';
+                document.querySelector('#target-column-header').style.width =       columns['target'] + 'px';
+                document.querySelector('#rule-column-header').style.width =         columns['rule'] + 'px';
+                document.querySelector('#default-column-header').style.width =      columns['defaultRule'] + 'px';
+                document.querySelector('#scopes-column-header').style.width =       columns['scopes'] + 'px';
+                document.querySelector('#operations-column-header').style.width =   columns['operations'] + 'px';
+                document.querySelector('#description-column-header').style.width =  columns['description'] + 'px';
             }
         }
 
@@ -226,11 +208,11 @@
         }
 
         function getRulesSuccess(response) {
-            $scope.data = response;
-            $scope.data.forEach(function(item) {
-                item.expanded=false;
-                item.listLimit=1;
-            })
+            $scope.policies = response;
+            $scope.policies.forEach(function(policy) {
+                policy.expanded=false;
+            });
+            $scope.filteredPolicies = $scope.policies;
             $scope.updateView();
         }
 
@@ -243,19 +225,17 @@
         }
 
         // Table display functions
-        $scope.expandSelected=function(item){
-            if(item.expanded==true) {
-                $scope.data.forEach(function(i){
+        $scope.expandSelected=function(policy){
+            if(policy.expanded==true) {
+                $scope.policies.forEach(function(i){
                     i.expanded=false;
-                    i.listLimit=1;
                 })
             } else {
-                $scope.data.forEach(function(i){
+                $scope.policies.forEach(function(i){
                     i.expanded=false;
                     i.listLimit=1;
                 })
-                item.expanded=true;
-                item.listLimit=10000;
+                policy.expanded=true;
             }
         }
 
@@ -263,57 +243,53 @@
             $scope.selectedPolicies.policies.length > 0 ? $scope.showEditorModal = true : $scope.showEditorModal = false;
         }
 
-        $scope.getData = function () {
-            return $scope.searchFilter();
-        }
-
         // Table page navigation functions
         $scope.numberOfPages=function(){
-            return Math.ceil($scope.getData().length/$scope.itemsPerPage);
+            return Math.ceil($scope.filteredPolicies.length/$scope.itemsPerPage);
         }
 
         $scope.updateNumberOfPages = function() {
-            $scope.nrOfPages = Math.ceil($scope.getData().length/$scope.itemsPerPage);
+            $scope.nrOfPages = Math.ceil($scope.filteredPolicies.length/$scope.itemsPerPage);
         }
 
         $scope.goToNextPage=function(){
             if($scope.currentPage < $scope.nrOfPages-1) {
                 $scope.currentPage = $scope.currentPage+1;
             }
-            $scope.saveCurrentPage();
+            storeCurrentPage();
         }
 
         $scope.goToPreviousPage=function(){
             if($scope.currentPage >= 1) {
                 $scope.currentPage = $scope.currentPage-1;
             }
-            $scope.saveCurrentPage();
+            storeCurrentPage();
         }
 
         $scope.goToFirstPage=function(){
             $scope.currentPage = 0;
-            $scope.saveCurrentPage();
+            storeCurrentPage();
         }
 
         $scope.goToLastPage=function(){
             $scope.currentPage = $scope.nrOfPages-1;
-            $scope.saveCurrentPage();
+            storeCurrentPage();
         }
 
         $scope.goToPage=function(page){
             $scope.currentPage = page;
-            $scope.saveCurrentPage();
+            storeCurrentPage();
         }
 
         $scope.toggleExpandAll=function(){
             if($scope.expandAll==false) {
-                $scope.data.forEach(function(i){
+                $scope.policies.forEach(function(i){
                     i.expanded=true;
                     i.listLimit=10000;
                 })
                 $scope.expandAll = true;
             } else {
-                $scope.data.forEach(function(i){
+                $scope.policies.forEach(function(i){
                     i.expanded=false;
                     i.listLimit=1;
                 })
@@ -324,6 +300,7 @@
         // Table search functions
         $scope.$watch('query', function(newValue, oldValue) {
             if(oldValue!=newValue) {
+                filterPolicies();
                 $scope.updateView();
             }
         },true);
@@ -334,36 +311,69 @@
         }
 
 
-        $scope.searchFilter = function() {
+        function filterPolicies() {
             // search is empty
-            if (!$scope.query) {
-                return $scope.data;
+            if (!$scope.query || $scope.query == '' || $scope.query == undefined) {
+                $scope.filteredPolicies = [];
+                $scope.filteredPolicies = $scope.policies;
             }
 
-            let column;
-            let columnIndex;
-            const columns = ["project", "target", "rule", "default", "scopes", "operations", "description"];
             let filtered = [];
-            for (let i = 0; i < $scope.data.length; i++) {
+            for (let i = 0; i < $scope.policies.length; i++) {
+                let policy = $scope.policies[i];
+                let added = false;
+                const query = $scope.query.toLowerCase();
 
-                let policy = $scope.data[i];
-                let found = false;
+                if ($scope.searchProject) {
+                    if (policy['project'].toLowerCase().indexOf(query) != -1) {
+                        filtered.push(policy);
+                        added = true;
+                    }
+                }
+                if ($scope.searchTarget && !added) {
+                    if (policy['target'].toLowerCase().indexOf(query) != -1) {
+                        filtered.push(policy);
+                        added = true;
+                    }
+                }
+                if ($scope.searchRule && !added) {
+                    if (policy['rule'].toLowerCase().indexOf(query) != -1) {
+                        filtered.push(policy);
+                        added = true;
+                    }
+                }
+                if ($scope.searchDefault && !added) {
+                    if (policy['default'].toLowerCase().indexOf(query) != -1) {
+                        filtered.push(policy);
+                        added = true;
+                    }
+                }
+                if ($scope.searchScopes && !added) {
+                    for (let i = 0; i < policy['scopes'].length; i++) {
+                        if (policy['scopes'][i].toLowerCase().indexOf(query) != -1 && !added) {
+                            filtered.push(policy);
+                            added = true;
+                        }
+                    }
 
-                for(columnIndex in columns) {
-                    if(!found) {
-
-                        column = columns[columnIndex];
-
-                        if($scope.searchInColumns[column]) {
-                            if (policy[column].indexOf($scope.query) != -1) {
-                                filtered.push(policy);
-                                found = true;
-                            }
+                }
+                if ($scope.searchOperations && !added) {
+                    for (let i = 0; i < policy['operations'].length; i++) {
+                        if (policy['operations'][i].toLowerCase().indexOf(query) != -1 && !added) {
+                            filtered.push(policy);
+                            added = true;
                         }
                     }
                 }
+                if ($scope.searchDescription && !added) {
+                    if (policy['description'].toLowerCase().indexOf(query) != -1) {
+                        filtered.push(policy);
+                        added = true;
+                    }
+                }
             }
-            return filtered;
+            $scope.filteredPolicies = [];
+            $scope.filteredPolicies = filtered;
         }
 
         // Table sort functions
@@ -379,11 +389,11 @@
         // Plugin details modal functions
         $scope.OpenModal = function(policy){
             var modalInstance = $uibModal.open({
-                ariaLabelledBy: 'modal-title',
-                ariaDescribedBy: 'modal-body',
-                templateUrl: 'static/dashboard/identity/policy/policies/details/details.html',
-                controller: 'detailsController',
-                controllerAs: '$ctrl',
+                ariaLabelledBy:     'modal-title',
+                ariaDescribedBy:    'modal-body',
+                templateUrl:        'static/dashboard/identity/policy/policies/details/details.html',
+                controller:         'detailsController',
+                controllerAs:       '$ctrl',
                 resolve: {
                     $policy: function () {
                         return policy;
@@ -399,11 +409,11 @@
         // Table item modal functions
         $scope.openDetailsModal = function(){
             const detailsModalInstance = $uibModal.open({
-                ariaLabelledBy: 'modal-title',
-                ariaDescribedBy: 'modal-body',
-                templateUrl: 'static/dashboard/identity/policy/policies/editor/editor.html',
-                controller: 'EditorController',
-                controllerAs: '$ctrl',
+                ariaLabelledBy:     'modal-title',
+                ariaDescribedBy:    'modal-body',
+                templateUrl:        'static/dashboard/identity/policy/policies/editor/editor.html',
+                controller:         'EditorController',
+                controllerAs:       '$ctrl',
                 resolve: {
                     $policy: function () {
                         return $scope.selectedPolicies.policies;
@@ -421,11 +431,11 @@
         // Plugin Info modal functions
         $scope.openInfoModal = function(){
             const infoModalInstance = $uibModal.open({
-                ariaLabelledBy: 'modal-title',
-                ariaDescribedBy: 'modal-body',
-                templateUrl: 'static/dashboard/identity/policy/policies/info/info.html',
-                controller: 'InfoController',
-                controllerAs: '$ctrl'
+                ariaLabelledBy:     'modal-title',
+                ariaDescribedBy:    'modal-body',
+                templateUrl:        'static/dashboard/identity/policy/policies/info/info.html',
+                controller:         'InfoController',
+                controllerAs:       '$ctrl'
             });
 
             infoModalInstance.result.then(function () {});
