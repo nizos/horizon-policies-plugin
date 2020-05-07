@@ -58,6 +58,24 @@
                     newLink.click();
                 }
 
+                $scope.uploadFile = function() {
+                    let file = document.getElementById('uploadFile').files[0];
+                    if (file) {
+                        let reader = new FileReader();
+                        reader.onload = function(e) {
+                            let data = e.target.result;
+                            console.log("data", data);
+                            $timeout(function(){
+                                    $scope.editorContent = data;
+                            }, 100);
+                        }
+                        reader.readAsBinaryString(file);
+                    }
+                    else {
+                        console.log("File could not be found");
+                    }
+                }
+
                 function validateSubmission() {
                     const input = document.querySelector('.editor-textarea').value;
                     const lines = input.split(/\r?\n/);

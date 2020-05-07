@@ -140,3 +140,21 @@
     max-width: 1000px;
     margin: 0 auto;
 }
+
+.input-group.file-upload {
+    width: 100%;
+    display: table;
+}
+
+.fileUpload {
+    float: left;
+    max-width: 170px;
+}
+
+.btn-group-leftside {
+    float: left;
+}
+
+.btn-group-rightside {
+    float: right;
+}

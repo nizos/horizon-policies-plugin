@@ -21,29 +21,53 @@
         </span>
     </div>
 
-
     <!-- Modal Footer -->
     <div class="modal-footer">
 
-        <button class ="btn btn-default"
-            type="button"
-            ng-click="downloadFile()">
-            <i class="fa-file-download"></i>
-            Download
-        </button>
+        <div class="input-group file-upload">
+            <!--File input field-->
+            <div class="fileUpload">
+                <input type="file" id="uploadFile" name="uploadFile"/>
+            </div>
+            
+            <!-- Upload Button -->
+            <div class="btn-group-leftside">
+                <div class="btn-group uploadButton">
+                    <button class="btn btn-default"
+                        type="button"
+                        title="Upload"
+                        ng-click="uploadFile()">
+                        Upload
+                    </button>
+                </div>
 
-        <!-- Cancel Button -->
-        <button class="btn btn-warning"
-            type="button"
-            ng-click="cancel()">
-            Cancel
-        </button>
+                <!-- Download Button -->
+                <div class="btn-group downloadButton">
+                    <button class ="btn btn-default mr-1"
+                        type="button"
+                        title="Download"
+                        ng-click="downloadFile()">
+                        <span class="fa fa-file-download"></span>
+                        Download
+                    </button>
+                </div>
+            </div>
 
-        <!-- OK Button -->
-        <button class="btn btn-primary"
-            type="button"
-            ng-click="save()">
-            Save
-        </button>
+            <div class="btn-group-rightside">
+                <!-- Cancel Button -->
+                <button class="btn btn-warning"
+                    type="button"
+                    ng-click="cancel()">
+                    Cancel
+                </button>
+
+                <!-- OK Button -->
+                <button class="btn btn-primary mr-1"
+                    type="button"
+                    ng-click="save()">
+                    Save
+                </button>
+            </div>
+        </div>
     </div>
 </div>
