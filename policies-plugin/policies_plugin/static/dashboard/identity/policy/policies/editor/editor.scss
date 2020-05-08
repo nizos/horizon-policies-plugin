@@ -21,17 +21,31 @@
 .editor {
     width: 100%;
     height: 400px;
+    background: #f2f2f2;
 }
 
+// Toolbar
 .editor-toolbar {
     width: 100%;
     height: 30px;
-    border: 1px solid #ccc;
     background: #ccc;
-    display: block;
-    text-align: center;
+    display: flex;
+    padding-left: 35px;
+    justify-content: space-between;
 }
 
+// Toolbar buttons
+.toolbar-btn {
+    width: 42px;
+    height: 30px;
+}
+
+.toolbar-btn svg-icon {
+    width: auto;
+    height: 24px;
+}
+
+// Editor line numbers
 .editor-line-numbers {
     display: inline-block;
     width: 35px;
@@ -77,6 +91,7 @@
     outline: 0;
     overflow-y: auto;
     resize: none;
+    background: #f2f2f2;
 }
 
 /* Modal Content */
@@ -88,7 +103,7 @@
     width: 80%;
 }
 
-
+// Autocomplete suggestions
 .ac-container {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
@@ -141,11 +156,12 @@
     margin: 0 auto;
 }
 
-.input-group.file-upload {
+.input-group .file-upload {
     width: 100%;
     display: table;
 }
 
+// Buttons
 .fileUpload {
     float: left;
     max-width: 170px;
@@ -157,4 +173,23 @@
 
 .btn-group-rightside {
     float: right;
+}
+
+#save-btn svg, #cancel-btn svg {
+    width: 16px;
+    vertical-align: text-bottom;
+}
+
+
+// Button icons justification
+#ruler-btn {
+    padding-left: 4px;
+}
+
+#upload-btn {
+    padding-left: 2px;
+}
+
+#download-btn {
+    padding-left: 2px;
 }
