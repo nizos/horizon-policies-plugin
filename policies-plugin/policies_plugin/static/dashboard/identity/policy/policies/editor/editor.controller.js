@@ -8,7 +8,8 @@
             '$scope',
             '$policy',
             '$timeout',
-            function($uibModalInstance, $scope, $policy, $timeout) {
+            '$copyToClipboard',
+            function($uibModalInstance, $scope, $policy, $timeout, $copyToClipboard) {
 
                 const $ctrl = this;
                 $ctrl.policy = $policy;
@@ -205,6 +206,13 @@
                         apply_selected_suggestion(selected);
                     }
                 };
+
+                $scope.copyTextToClipboard = function() {
+                    const strToBeCopied = document.querySelector('.editor-textarea').value;
+                    $copyToClipboard.copy(strToBeCopied).then(function () {
+                        //show some notification?
+                });
+            };
             }
         ]);
 })();

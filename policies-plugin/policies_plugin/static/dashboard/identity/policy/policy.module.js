@@ -33,7 +33,8 @@
             'horizon.dashboard.identity.policy.policies',
             'horizon.dashboard.identity.policy.policies.editor',
             'horizon.dashboard.identity.policy.policies.details',
-            'horizon.dashboard.identity.policy.policies.info'
+            'horizon.dashboard.identity.policy.policies.info',
+            'horizon.dashboard.identity.policy.lib.clipboard'
         ])
         .config(config);
 
