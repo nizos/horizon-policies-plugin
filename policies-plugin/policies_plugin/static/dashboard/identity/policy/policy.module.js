@@ -26,15 +26,19 @@
             'ngRoute',
             'ngSanitize',
             'ui.bootstrap',
-            'horizon.dashboard.identity.policy.lib',
-            'horizon.dashboard.identity.policy.lib.checklist-model',
-            'horizon.dashboard.identity.policy.lib.autocomp',
-            'horizon.dashboard.identity.policy.policies.svg-icon',
+            'horizon.dashboard.identity.policy.api',
             'horizon.dashboard.identity.policy.policies',
-            'horizon.dashboard.identity.policy.policies.editor',
-            'horizon.dashboard.identity.policy.policies.details',
-            'horizon.dashboard.identity.policy.policies.info',
-            'horizon.dashboard.identity.policy.lib.clipboard'
+            'horizon.dashboard.identity.policy.policies.checklist-model',
+            'horizon.dashboard.identity.policy.policies.plugin-info',
+            'horizon.dashboard.identity.policy.policies.policies-details',
+            'horizon.dashboard.identity.policy.policies.policies-editor',
+            'horizon.dashboard.identity.policy.policies.policies-editor.editor-autocomplete',
+            'horizon.dashboard.identity.policy.policies.policies-editor.editor-autocomplete.autocomplete-item',
+            'horizon.dashboard.identity.policy.policies.policies-pagination',
+            'horizon.dashboard.identity.policy.policies.policies-search',
+            'horizon.dashboard.identity.policy.policies.policies-table',
+            'horizon.dashboard.identity.policy.policies.scroll-up',
+            'horizon.dashboard.identity.policy.policies.svg-icon'
         ])
         .config(config);
 

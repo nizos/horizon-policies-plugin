@@ -14,7 +14,12 @@
 (function() {
     'use strict';
 
-    angular
-        .module('horizon.dashboard.identity.policy.policies.info', []);
+    /**
+     * @ngdoc overview
+     * @ngname horizon.dashboard.identity.policy.policies
+     *
+     * @description
+     */
+    angular.module('horizon.dashboard.identity.policy.api', []);
 
 })();

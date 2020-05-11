@@ -14,7 +14,6 @@
 (function() {
     'use strict';
 
-    angular
-        .module('horizon.dashboard.identity.policy.policies.editor', []);
+    angular.module('horizon.dashboard.identity.policy.policies.policies-editor.editor-autocomplete.autocomplete-item', []);
 
 })();

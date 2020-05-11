@@ -14,13 +14,7 @@
 (function() {
     'use strict';
 
-    /**
-     * @ngdoc overview
-     * @ngname horizon.dashboard.identity.policy.lib
-     *
-     * @description
-     */
     angular
-        .module('horizon.dashboard.identity.policy.lib', []);
+        .module('horizon.dashboard.identity.policy.policies.checklist-model', []);
 
 })();

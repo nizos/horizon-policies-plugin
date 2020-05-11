@@ -1,5 +1,10 @@
-@import './editor/editor.scss';
-@import './info/info.scss';
+@import './plugin-info/plugin-info.scss';
+@import './policies-details/policies-details.scss';
+@import './policies-editor/policies-editor.scss';
+@import './policies-pagination/policies-pagination.scss';
+@import './policies-search/policies-search.scss';
+@import './policies-table/policies-table.scss';
+@import './scroll-up/scroll-up.scss';
 
 
 html, body:not(#splash) {

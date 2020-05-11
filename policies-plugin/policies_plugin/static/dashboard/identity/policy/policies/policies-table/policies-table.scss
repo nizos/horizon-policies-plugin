@@ -1,0 +1,39 @@
+
+
+.selection-manager.wipe-in {
+    width: 100%;
+    display: inline-flex;
+    position:relative;
+    background: #bdbdbd;
+    opacity: 1;
+    height: 40px;
+    line-height: 20px;
+    padding: 10px;
+}
+
+.selection-manager {
+    line-height: 0;
+    opacity: 0;
+    padding: 0 10px;
+    height: 0px;
+    -webkit-transition: all linear 0.2s;
+            transition: all linear 0.2s;
+}
+
+.manager-buttons {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    padding-right: 10px;
+}
+
+// Toolbar buttons
+.manager-button {
+    width: 110px;
+    height: 30px;
+}
+
+.manager-button svg-icon svg {
+    width: auto;
+    height: 14px;
+}

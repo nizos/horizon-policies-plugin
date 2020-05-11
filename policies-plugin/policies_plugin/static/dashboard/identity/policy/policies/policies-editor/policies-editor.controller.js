@@ -2,14 +2,13 @@
     'use strict';
 
     angular
-        .module('horizon.dashboard.identity.policy.policies.editor', ['ngSanitize'])
+        .module('horizon.dashboard.identity.policy.policies.policies-editor', ['ngSanitize'])
         .controller('EditorController', [
             '$uibModalInstance',
             '$scope',
             '$policy',
             '$timeout',
-            '$copyToClipboard',
-            function($uibModalInstance, $scope, $policy, $timeout, $copyToClipboard) {
+            function($uibModalInstance, $scope, $policy, $timeout) {
 
                 const $ctrl = this;
                 $ctrl.policy = $policy;
@@ -206,13 +205,6 @@
                         apply_selected_suggestion(selected);
                     }
                 };
-
-                $scope.copyTextToClipboard = function() {
-                    const strToBeCopied = document.querySelector('.editor-textarea').value;
-                    $copyToClipboard.copy(strToBeCopied).then(function () {
-                        //show some notification?
-                });
-            };
             }
         ]);
 })();

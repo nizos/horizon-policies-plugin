@@ -1,5 +1,5 @@
 <!-- Policies controller -->
-<div ng-controller="PoliciesController">
+<div ng-controller="TableController">
 
     <!-- Modal Header -->
     <div class="modal-header">
@@ -33,7 +33,7 @@
             <button class="btn btn-default toolbar-btn"
                 type="button"
                 title="Copy policies"
-                ng-click="copyTextToClipboard($event)">
+                ng-click="">
                 <svg-icon p="copy_solid" id="copy-btn"></svg-icon>
             </button>
             <!-- Paste button -->
@@ -158,8 +158,8 @@
         <span class="editor-line-numbers">
             <div ng-repeat="i in [].constructor(nrOfLines) track by $index">{$ $index+1 $}</div>
         </span>
-        <span autocomp class="editor-field">
-            <textarea class="editor-textarea editor-input" ng-model="editorContent" ng-change="editorContentChanged()" spellcheck="false" ng-trim="false" autocomp-item="autocomp_results" ng-init="init()"></textarea>
+        <span editor-autocomplete class="editor-field">
+            <textarea class="editor-textarea editor-input" ng-model="editorContent" ng-change="editorContentChanged()" spellcheck="false" ng-trim="false" autocomplete-item="autocomp_results" ng-init="init()"></textarea>
         </span>
     </div>
 
