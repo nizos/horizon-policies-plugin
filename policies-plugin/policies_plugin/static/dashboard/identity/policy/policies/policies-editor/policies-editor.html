@@ -115,14 +115,17 @@
             <button class="btn btn-default toolbar-btn"
                 type="button"
                 title="Download policies"
-                ng-click="">
+                ng-click="downloadFile()">
                 <svg-icon p="file_download" id="download-btn"></svg-icon>
             </button>
             <!-- Upload button -->
-            <button class="btn btn-default toolbar-btn"
+            <button class="btn btn-default toolbar-btn upload-button"
                 type="button"
-                title="Upload policies"
-                ng-click="">
+                ng-class="{'wipe-in': showUpload}"
+                ng-model="showUpload"
+                title="Upload from file"
+                uib-btn-checkbox btn-checkbox-true="1"
+                btn-checkbox-false="0">
                 <svg-icon p="file_upload" id="upload-btn"></svg-icon>
             </button>
             <!-- Print button -->
@@ -153,6 +156,21 @@
         </div>
     </div>
 
+    <!-- Custom search -->
+    <div class="file-upload-form" ng-class="{'wipe-in': showUpload}">
+        <!--File input field-->
+        <input class="file-upload-input" type="file" id="uploadFile" name="uploadFile", accept=".json, application/json"/>
+
+        <!-- Upload Button -->
+        <button class="btn btn-primary file-upload-button"
+            type="button"
+            title="Upload"
+            ng-click="uploadFile()">
+            <span class="fa fa-upload"></span>
+            Upload
+        </button>
+    </div>
+
     <!-- Editor -->
     <div class="editor">
         <span class="editor-line-numbers">
@@ -166,53 +184,22 @@
     <!-- Modal Footer -->
     <div class="modal-footer">
 
-        <div class="input-group file-upload">
-            <!--File input field-->
-            <div class="fileUpload">
-                <input type="file" id="uploadFile" name="uploadFile", accept=".json, application/json"/>
-            </div>
+        <div class="btn-group-rightside">
+            <!-- Cancel Button -->
+            <button class="btn btn-warning"
+                type="button"
+                ng-click="cancel()">
+                <svg-icon p="times_circle_solid" id="cancel-btn"></svg-icon>
+                Cancel
+            </button>
 
-            <!-- Upload Button -->
-            <div class="btn-group-leftside">
-                <div class="btn-group uploadButton">
-                    <button class="btn btn-primary uploadBtn"
-                        type="button"
-                        title="Upload"
-                        ng-click="uploadFile()">
-                        <span class="fa fa-upload"></span>
-                        Upload
-                    </button>
-                </div>
-
-                <!-- Download Button -->
-                <div class="btn-group downloadButton">
-                    <button class ="btn btn-primary downloadBtn"
-                        type="button"
-                        title="Download"
-                        ng-click="downloadFile()">
-                        <span class="fa fa-download"></span>
-                        Download
-                    </button>
-                </div>
-            </div>
-
-            <div class="btn-group-rightside">
-                <!-- Cancel Button -->
-                <button class="btn btn-warning"
-                    type="button"
-                    ng-click="cancel()">
-                    <svg-icon p="times_circle_solid" id="cancel-btn"></svg-icon>
-                    Cancel
-                </button>
-
-                <!-- OK Button -->
-                <button class="btn btn-primary mr-1"
-                    type="button"
-                    ng-click="save()">
-                    <svg-icon p="save_solid" id="save-btn"></svg-icon>
-                    Save
-                </button>
-            </div>
+            <!-- OK Button -->
+            <button class="btn btn-primary mr-1"
+                type="button"
+                ng-click="save()">
+                <svg-icon p="save_solid" id="save-btn"></svg-icon>
+                Save
+            </button>
         </div>
     </div>
 </div>

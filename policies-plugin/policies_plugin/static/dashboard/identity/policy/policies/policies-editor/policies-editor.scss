@@ -156,24 +156,6 @@
     margin: 0 auto;
 }
 
-.input-group .file-upload {
-    width: 100%;
-    display: table;
-}
-
-// Buttons
-.fileUpload {
-    float: left;
-    max-width: 170px;
-}
-
-.btn-group-leftside {
-    float: left;
-}
-
-.btn-group-rightside {
-    float: right;
-}
 
 #save-btn svg, #cancel-btn svg {
     width: 16px;
@@ -192,4 +174,41 @@
 
 #download-btn {
     padding-left: 2px;
+}
+
+.file-upload-form.wipe-in {
+    width: 100%;
+    display: inline-flex;
+    position:relative;
+    justify-content: space-evenly;
+    background: #e0e0e0;
+    opacity: 1;
+    height: 40px;
+    line-height: 20px;
+    padding-top: 2px;
+    padding-bottom: 5px;
+}
+
+.file-upload-form {
+    line-height: 1px;
+    opacity: 0;
+    padding: 0 10px;
+    height: 1px;
+    -webkit-transition: all linear 0.2s;
+            transition: all linear 0.2s;
+}
+
+.file-upload-input {
+    align-self: center;
+}
+
+
+.file-upload-button {
+    height: 24px;
+    padding-top: 2px;
+    align-self: center;
+}
+
+.upload-button.wipe-in {
+    border-bottom-width: 0px;
 }

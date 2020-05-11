@@ -44,10 +44,14 @@
 
         // Functions to run on page load
         function init() {
-            Api.getRules().success(getRulesSuccess);
+            updateRules();
         }
 
-        function getRulesSuccess(response) {
+        function updateRules() {
+            Api.getRules().success(updateView);
+        }
+
+        function updateView(response) {
             let res = response;
             res.forEach(function(policy) {
                 policy.selected=false;
@@ -58,6 +62,14 @@
             Policies.setCurrentPage(0);
             Policies.setItemsPerPage(20);
             Policies.setNumberOfPages(Math.ceil(Policies.policies.filteredPolicies.length/Policies.policies.itemsPerPage));
+        }
+
+        $scope.setRule = function(rule) {
+            Api.setRule(rule).success(updateRules);
+        }
+
+        function setRules(rules) {
+            Api.setRules(rules).success(updateRules);
         }
 
         $scope.itemsPerPageChanged = function(itemsPerPage) {
