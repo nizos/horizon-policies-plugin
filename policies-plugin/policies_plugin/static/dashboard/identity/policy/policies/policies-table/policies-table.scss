@@ -3,8 +3,9 @@
 .selection-manager.wipe-in {
     width: 100%;
     display: inline-flex;
-    position:relative;
-    background: #bdbdbd;
+    position: sticky;
+    top: 37px;
+    background: #e0e0e0;
     opacity: 1;
     height: 40px;
     line-height: 20px;
@@ -12,6 +13,11 @@
 }
 
 .selection-manager {
+    width: 100%;
+    display: inline-flex;
+    background: #bdbdbd;
+    position: sticky;
+    top: 0px;
     line-height: 0;
     opacity: 0;
     padding: 0 10px;
@@ -24,7 +30,9 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
-    padding-right: 10px;
+    padding-right: 5px;
+    margin-bottom: 5px;
+    padding-top: 0;
 }
 
 // Toolbar buttons
@@ -37,3 +45,19 @@
     width: auto;
     height: 14px;
 }
+
+
+.policies-table.wipe-in thead th {
+    position: sticky;
+    top: 77px;
+    background: #e0e0e0;
+}
+
+.policies-table thead th {
+    position: sticky;
+    top: 37px;
+    background: #e0e0e0;
+    -webkit-transition: all linear 0.2s;
+            transition: all linear 0.2s;
+}
+

@@ -77,8 +77,10 @@ html {
     margin-right: 5px;
 }
 
-.tooltip-inner  {
+.tooltip-inner,
+.tooltip  {
     text-align: left !important;
+    transition: opacity  0s linear 1s;
 }
 
 .table-settings-menu-item {
