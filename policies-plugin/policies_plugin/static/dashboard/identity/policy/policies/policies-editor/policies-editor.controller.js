@@ -4,12 +4,13 @@
     angular
         .module('horizon.dashboard.identity.policy.policies.policies-editor', ['ngSanitize'])
         .controller('EditorController', [
+            '$clipboardCopy',
             'horizon.framework.widgets.toast.service',
             '$uibModalInstance',
             '$scope',
             '$policy',
             '$timeout',
-            function(toastService, $uibModalInstance, $scope, $policy, $timeout) {
+            function($clipboardCopy, toastService, $uibModalInstance, $scope, $policy, $timeout) {
 
                 const $ctrl = this;
                 $ctrl.policy = $policy;
@@ -84,6 +85,13 @@
                         console.log("File could not be found");
                     }
                 }
+
+                $scope.clipboardCopy = function() {
+                    const toCopy = document.querySelector('.editor-textarea').value;
+                    $clipboardCopy.copy(toCopy).then(function () {
+                        toastService.add('success', gettext('Text successfully copied to clipboard'));
+                    });
+                };
 
                 function validateSubmission() {
                     const input = document.querySelector('.editor-textarea').value;
