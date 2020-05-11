@@ -7,7 +7,8 @@
 
         SearchController.$inject = [
         '$scope',
-        'horizon.dashboard.identity.policy.policies'
+        'horizon.dashboard.identity.policy.policies',
+        'horizon.dashboard.identity.policy.api'
     ];
 
     function SearchController($scope, Policies) {
@@ -35,6 +36,23 @@
                 filterPolicies();
             }
         },true);
+
+        $scope.refreshPolicies = function () {
+            Api.getRules().success(refreshView);
+        }
+
+        function refreshView(response) {
+            let res = response;
+            res.forEach(function(policy) {
+                policy.selected=false;
+                policy.expanded=false;
+            });
+            Policies.setAllPolicies(res);
+            Policies.setFilteredPolicies(res);
+            Policies.setCurrentPage(0);
+            Policies.setItemsPerPage(20);
+            Policies.setNumberOfPages(Math.ceil(Policies.policies.filteredPolicies.length/Policies.policies.itemsPerPage));
+        }
 
         function filterPolicies() {
             // search is empty
