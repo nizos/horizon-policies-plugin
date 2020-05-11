@@ -4,11 +4,12 @@
     angular
         .module('horizon.dashboard.identity.policy.policies.policies-editor', ['ngSanitize'])
         .controller('EditorController', [
+            'horizon.framework.widgets.toast.service',
             '$uibModalInstance',
             '$scope',
             '$policy',
             '$timeout',
-            function($uibModalInstance, $scope, $policy, $timeout) {
+            function(toastService, $uibModalInstance, $scope, $policy, $timeout) {
 
                 const $ctrl = this;
                 $ctrl.policy = $policy;
@@ -60,19 +61,26 @@
                 }
 
                 $scope.uploadFile = function() {
+                    let extension = ['json',];
                     let file = document.getElementById('uploadFile').files[0];
                     if (file) {
-                        let reader = new FileReader();
-                        reader.onload = function(e) {
-                            let data = e.target.result;
-                            console.log("data", data);
-                            $timeout(function(){
-                                    $scope.editorContent = data;
-                            }, 100);
+                        if (extension.indexOf(file.name.split('.')[1]) > -1) {
+                            let reader = new FileReader();
+                            reader.onload = function(e) {
+                                let data = e.target.result;
+                                console.log("data", data);
+                                $timeout(function(){
+                                        $scope.editorContent = data;
+                                }, 100);
+                            }
+                            reader.readAsBinaryString(file);
                         }
-                        reader.readAsBinaryString(file);
+                        else {
+                            toastService.add('error', gettext('File type is not supported'));
+                        }
                     }
                     else {
+                        toastService.add('error', gettext('File could not be found!'));
                         console.log("File could not be found");
                     }
                 }
