@@ -132,7 +132,7 @@
             <button class="btn btn-default toolbar-btn"
                 type="button"
                 title="Print policies"
-                ng-click="">
+                ng-click="print()">
                 <svg-icon p="print" id="print-btn"></svg-icon>
             </button>
         </div>
@@ -177,7 +177,7 @@
             <div ng-repeat="i in [].constructor(nrOfLines) track by $index">{$ $index+1 $}</div>
         </span>
         <span editor-autocomplete class="editor-field">
-            <textarea class="editor-textarea editor-input" ng-model="editorContent" ng-change="editorContentChanged()" spellcheck="false" ng-trim="false" autocomplete-item="autocomp_results" ng-init="init()"></textarea>
+            <textarea class="editor-textarea editor-input" id="text-editor" ng-model="editorContent" ng-change="editorContentChanged()" spellcheck="false" ng-trim="false" autocomplete-item="autocomp_results" ng-init="init()"></textarea>
         </span>
     </div>
 

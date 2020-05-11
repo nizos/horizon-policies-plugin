@@ -7,10 +7,11 @@
             '$clipboardCopy',
             'horizon.framework.widgets.toast.service',
             '$uibModalInstance',
+            '$window',
             '$scope',
             '$policy',
             '$timeout',
-            function($clipboardCopy, toastService, $uibModalInstance, $scope, $policy, $timeout) {
+            function($clipboardCopy, toastService, $uibModalInstance, $window, $scope, $policy, $timeout) {
 
                 const $ctrl = this;
                 $ctrl.policy = $policy;
@@ -95,6 +96,34 @@
                         toastService.add('success', gettext('Text successfully copied to clipboard'));
                     });
                 };
+
+                $scope.print = function() {
+                    const contents = document.querySelector('.editor-textarea').value;
+                    const body = document.getElementsByTagName("BODY")[0];
+
+                    //Create a dynamic IFRAME.
+                    const frame1 = document.createElement("IFRAME");
+                    frame1.name = "frame1";
+                    frame1.setAttribute("style", "position:absolute;top:-1000000px");
+                    body.appendChild(frame1);
+
+                    //Create a Frame Document.
+                    const frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+                    frameDoc.document.open();
+                    //Create a new HTML document.
+                    frameDoc.document.write('<html><head><title>Policies</title>');
+                    frameDoc.document.write('</head><body>');
+                    //Append the DIV contents.
+                    frameDoc.document.write(contents);
+                    frameDoc.document.write('</body></html>');
+                    frameDoc.document.close();
+
+                    $window.setTimeout(function () {
+                        $window.frames["frame1"].focus();
+                        $window.frames["frame1"].print();
+                        body.removeChild(frame1);
+                    }, 500);
+                }
 
                 function validateSubmission() {
                     const input = document.querySelector('.editor-textarea').value;
