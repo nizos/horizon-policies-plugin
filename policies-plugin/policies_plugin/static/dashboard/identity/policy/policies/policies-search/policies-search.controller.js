@@ -11,8 +11,7 @@
         'horizon.dashboard.identity.policy.api'
     ];
 
-    function SearchController($scope, Policies) {
-        var $ctrl = this;
+    function SearchController($scope, Policies, Api) {
         $scope.policies = Policies.policies;
         $scope.query;
         $scope.showOptions = false;
