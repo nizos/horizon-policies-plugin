@@ -7,11 +7,11 @@
 
     SearchController.$inject = [
         'horizon.dashboard.identity.policy.model.policies-model',
-        '$scope'
+        '$scope',
+        'horizon.dashboard.identity.policy.api'
     ];
 
-    function SearchController(PoliciesModel, $scope) {
-        var $ctrl = this;
+    function SearchController(PoliciesModel, $scope, Api) {
         $scope.policies = PoliciesModel.data;
         $scope.query;
         $scope.showOptions = false;
@@ -42,16 +42,14 @@
         }
 
         function refreshView(response) {
-            let res = response;
-            res.forEach(function(policy) {
-                policy.selected=false;
+            response.forEach(function(policy) {
                 policy.expanded=false;
             });
-            Policies.setAllPolicies(res);
-            Policies.setFilteredPolicies(res);
-            Policies.setCurrentPage(0);
-            Policies.setItemsPerPage(20);
-            Policies.setNumberOfPages(Math.ceil(Policies.policies.filteredPolicies.length/Policies.policies.itemsPerPage));
+            PoliciesModel.setAllPolicies(response);
+            PoliciesModel.setFilteredPolicies(response);
+            PoliciesModel.setCurrentPage(0);
+            PoliciesModel.setItemsPerPage(20);
+            PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
         }
 
         // Rerun search filter after search option changed
