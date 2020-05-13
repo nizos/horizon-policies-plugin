@@ -12,7 +12,7 @@
             transition: all ease 0.2s;
 }
 
-// Search options bar visible
+/* Search options bar visible */
 .search-options.options-visible {
     visibility: visible;
     width: 100%;
@@ -31,7 +31,7 @@
             transition: visibility 0s 0s, top 0.2s 0s, opacity 0s 0s, height 0s 0s, line-height 0s 0s, padding 0s 0s, border-bottom-right-radius 0s 0s, border-bottom-left-radius 0s 0s;
 }
 
-// Search options bar hidden
+/* Search options bar hidden */
 .search-options {
     visibility: hidden;
     width: 100%;
@@ -52,7 +52,7 @@
 
 
 
-// Search input group when search options bar is visible
+/* Search input group when search options bar is visible */
 .input-group.options-visible {
     margin-bottom: 0px !important;
     padding-bottom: 0px !important;
@@ -61,18 +61,18 @@
     border-top-left-radius: 5px;
 }
 
-// Search options button when search options is visible
+/* Search options button when search options is visible */
 .search-options-button.options-visible {
     border-bottom-width: 0px;
 }
 
-// Search input group
+/* Search input group */
 .input-group {
     margin-bottom: 0px !important;
     padding-bottom: 0px !important;
 }
 
-// Search bar's plugin-info button
+/* Search bar's plugin-info button */
 .info-button {
     border-bottom-right-radius: 0px;
 }

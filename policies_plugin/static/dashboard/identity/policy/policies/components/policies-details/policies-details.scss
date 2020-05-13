@@ -8,8 +8,6 @@
 .modal-content {
     background-color: #fefefe;
     margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
     width: 80%;
 }
 
@@ -24,11 +22,8 @@
 	overflow:hidden;
 	line-height: 13px;
 	font-size: 13px;
-	border:1px solid #999;
-	padding:10px;
 	margin:0;
 	display:block;
-    outline:none;
     white-space: pre-wrap;
 }
 
@@ -74,6 +69,5 @@
 }
 
 .ac-container .ac-menu .ac-state-focus {
-    outline: none;
     background-color: #e0eaff;
 }
