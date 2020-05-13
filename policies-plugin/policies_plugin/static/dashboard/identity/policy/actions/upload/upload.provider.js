@@ -42,6 +42,7 @@
                                                         if (!successful) {
                                                             throw successful;
                                                         } else {
+                                                            toastService.add('success', gettext('File uploaded successfully'));
                                                             deferred.resolve(successful);
                                                         }
                                                 }, 100);

@@ -50,9 +50,7 @@
 
                 // Download editor contents as file quick action
                 $scope.downloadFile = function() {
-                    $actionsDownload.download($scope.editorContent).then(function () {
-                        toastService.add('success', gettext('File downloaded successfully'));
-                    });
+                    $actionsDownload.downloadContents($scope.editorContent);
                 };
 
                 // Set editor contents from file upload quick action
@@ -60,22 +58,17 @@
                     const file = document.getElementById('uploadFile').files[0];
                     $actionsUpload.upload(file).then(function (response) {
                         $scope.editorContent = response;
-                        toastService.add('success', gettext('File uploaded successfully'));
                     });
                 };
 
                 // Copy editor contents to clipboard quick action
                 $scope.clipboardCopy = function() {
-                    $actionsCopy.copy($scope.editorContent).then(function () {
-                        toastService.add('success', gettext('Text successfully copied to clipboard'));
-                    });
+                    $actionsCopy.copyContents($scope.editorContent);
                 };
 
                 // Print editor contents quick action
                 $scope.print = function() {
-                    $actionsPrint.print($scope.editorContent).then(function () {
-                        toastService.add('success', gettext('Print document successfully created'));
-                    });
+                    $actionsPrint.printContents($scope.editorContent);
                 }
 
                 // Validate contents of text editor

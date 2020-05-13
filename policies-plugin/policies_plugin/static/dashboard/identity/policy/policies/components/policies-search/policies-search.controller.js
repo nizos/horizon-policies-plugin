@@ -7,11 +7,12 @@
 
     SearchController.$inject = [
         'horizon.dashboard.identity.policy.model.policies-model',
-        '$scope',
-        'horizon.dashboard.identity.policy.api'
+        '$actionsReload',
+        '$scope'
     ];
 
-    function SearchController(PoliciesModel, $scope, Api) {
+    function SearchController(PoliciesModel, $actionsReload, $scope) {
+        var $ctrl = this;
         $scope.policies = PoliciesModel.data;
         $scope.query;
         $scope.showOptions = false;
@@ -37,24 +38,14 @@
             }
         },true);
 
-        $scope.refreshPolicies = function () {
-            Api.getRules().success(refreshView);
-        }
-
-        function refreshView(response) {
-            response.forEach(function(policy) {
-                policy.expanded=false;
-            });
-            PoliciesModel.setAllPolicies(response);
-            PoliciesModel.setFilteredPolicies(response);
-            PoliciesModel.setCurrentPage(0);
-            PoliciesModel.setItemsPerPage(20);
-            PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
-        }
-
         // Rerun search filter after search option changed
         $scope.searchOptionsChanged = function() {
             filterPolicies();
+        }
+
+        // Reload all policies
+        $scope.reloadPolicies = function() {
+            $actionsReload.reloadPolicies();
         }
 
         // Filter policies according to user input and chosen options

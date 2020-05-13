@@ -24,7 +24,7 @@
                     '$q',
                     function (toastService, $q) {
                         return {
-                            download: function (text) {
+                            downloadContents: function (text) {
                                 let deferred = $q.defer();
                                 deferred.notify("Downloading file");
 
@@ -42,9 +42,80 @@
                                         document.body.appendChild(newLink);
                                     }
                                     newLink.click();
+                                    toastService.add('success', gettext('Policy file downloaded successfully'));
                                     deferred.resolve();
                                 } catch (err) {
-                                    toastService.add('error', gettext('Could not print content'));
+                                    toastService.add('error', gettext('Could not download policy file!'));
+                                    deferred.reject(err);
+                                }
+                                return deferred.promise;
+                            },
+                            downloadPolicy: function (policy) {
+                                let deferred = $q.defer();
+                                deferred.notify("Downloading policy");
+                                try {
+                                    const fileName = 'policy.json';
+                                    let newLink = document.createElement("a");
+                                    newLink.download = fileName;
+                                    let contents = '{' + '\n' + '    ';
+                                    if (policy.project != 'global') {
+                                        contents += '"' + policy.project + ':' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';
+                                    } else {
+                                        contents += '"' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';
+                                    }
+                                    const textToBLOB = new Blob([contents], {type: 'application/json'});
+
+                                    if (window.webkitURL != null) {
+                                        newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+                                    } else {
+                                        newLink.href = window.URL.createObjectURL(textToBLOB);
+                                        newLink.style.display = "none";
+                                        document.body.appendChild(newLink);
+                                    }
+                                    newLink.click();
+                                    toastService.add('success', gettext('Policy file downloaded successfully'));
+                                    deferred.resolve();
+                                } catch (err) {
+                                    toastService.add('error', gettext('Could not download policy file!'));
+                                    deferred.reject(err);
+                                }
+                                return deferred.promise;
+                            },
+                            downloadPolicies: function (policies) {
+                                let deferred = $q.defer();
+                                deferred.notify("Downloading policy");
+                                try {
+                                    const fileName = 'policy.json';
+                                    let newLink = document.createElement("a");
+                                    newLink.download = fileName;
+
+                                    let contents = '{' + '\n' + '    ';
+                                    for (let i = 0; i < policies.length; i++) {
+                                        if (policies[i].project != 'global') {
+                                            contents += '"' + policies[i].project + ':' + policies[i].target + '": "' + policies[i].rule + '"';
+                                        } else {
+                                            policies[i] += '"' + policies[i].target + '": "' + policies[i].rule + '"';
+                                        }
+                                        if (i+1 < policies.length) {
+                                            contents += ',' + '\n' + '    ';
+                                        } else {
+                                            contents += '\n' + '}';
+                                        }
+                                    }
+                                    const textToBLOB = new Blob([contents], {type: 'application/json'});
+
+                                    if (window.webkitURL != null) {
+                                        newLink.href = window.webkitURL.createObjectURL(textToBLOB);
+                                    } else {
+                                        newLink.href = window.URL.createObjectURL(textToBLOB);
+                                        newLink.style.display = "none";
+                                        document.body.appendChild(newLink);
+                                    }
+                                    newLink.click();
+                                    toastService.add('success', gettext('Policy file downloaded successfully'));
+                                    deferred.resolve();
+                                } catch (err) {
+                                    toastService.add('error', gettext('Could not download policy file!'));
                                     deferred.reject(err);
                                 }
                                 return deferred.promise;

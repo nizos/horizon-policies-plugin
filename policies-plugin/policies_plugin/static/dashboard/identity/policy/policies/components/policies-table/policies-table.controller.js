@@ -11,12 +11,13 @@
         'horizon.dashboard.identity.policy.model.policies-model',
         'horizon.framework.widgets.toast.service',
         'horizon.dashboard.identity.policy.api',
+        '$actionsReload',
         '$actionsCopy',
         '$actionsDownload',
         '$actionsPrint',
     ];
 
-    function TableController($scope, $uibModal, PoliciesModel, toastService, Api, $actionsCopy, $actionsDownload, $actionsPrint) {
+    function TableController($scope, $uibModal, PoliciesModel, toastService, Api, $actionsReload, $actionsCopy, $actionsDownload, $actionsPrint) {
         var $ctrl = this;
         $scope.policies = PoliciesModel.data;
         $scope.showEditorModal = false;
@@ -59,13 +60,13 @@
             null,
             ['More...', [
                 ['Copy', function ($itemScope) {
-                    copy($itemScope.policy);
+                    $actionsCopy.copyPolicy($itemScope.policy);
                 }],
                 ['Print', function ($itemScope) {
-                    print($itemScope.policy);
+                    $actionsPrint.printPolicy($itemScope.policy);
                 }],
                 ['Download', function ($itemScope) {
-                    download($itemScope.policy);
+                    $actionsDownload.downloadPolicy($itemScope.policy);
                 }],
                 ['Edit using form', function ($itemScope) {
                     $scope.OpenDetailsModal($itemScope.policy);
@@ -83,22 +84,7 @@
 
         // Functions to run on page load
         function init() {
-            updateRules();
-        }
-
-        function updateRules() {
-            Api.getRules().success(updateView);
-        }
-
-        function updateView(response) {
-            response.forEach(function(policy) {
-                policy.expanded=false;
-            });
-            PoliciesModel.setAllPolicies(response);
-            PoliciesModel.setFilteredPolicies(response);
-            PoliciesModel.setCurrentPage(0);
-            PoliciesModel.setItemsPerPage("20");
-            PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
+            $actionsReload.loadPolicies();
         }
 
         $scope.setRule = function(rule) {
@@ -219,54 +205,9 @@
         }
 
         // Download policy as file context menu action
-        function download(policy) {
-            $actionsDownload.download(policy).then(function () {
-                toastService.add('success', gettext('File downloaded successfully'));
-            });
-        };
-
-        // Download policy as file context menu action
         $scope.downloadSelected = function() {
-            const range = $scope.selectedPolicies.policies.length;
-            let contents = '{' + '\n' + '    ';
-            for (let i = 0; i < range; i++) {
-                const policy = $scope.selectedPolicies.policies[i];
-                if (policy.project != 'global') {
-                    contents += '"' + policy.project + ':' + policy.target + '": "' + policy.rule + '"';
-                } else {
-                    contents += '"' + policy.target + '": "' + policy.rule + '"';
-                }
-                if (i+1 < range) {
-                    contents += ',' + '\n' + '    ';
-                } else {
-                    contents += '\n' + '}';
-                }
-            }
-            $actionsDownload.download(contents).then(function () {
-                toastService.add('success', gettext('File downloaded successfully'));
-            });
+            $actionsDownload.downloadPolicies($scope.selectedPolicies.policies);
         };
-
-        // Copy policy to clipboard context menu action
-        function copy(policy) {
-            $actionsCopy.copy(policy).then(function () {
-                toastService.add('success', gettext('Text successfully copied to clipboard'));
-            });
-        };
-
-        // Print policy context menu action
-        function print(policy) {
-            let contents = '{' + '\n' + '    ';
-            if (policy.project != 'global') {
-                contents += '"' + policy.project + ':' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';
-            } else {
-                contents += '"' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';;
-            }
-            $actionsPrint.print(contents).then(function () {
-                toastService.add('success', gettext('Print document successfully created'));
-            });
-        }
-
 
         // Details modal
         $scope.OpenDetailsModal = function(policy){

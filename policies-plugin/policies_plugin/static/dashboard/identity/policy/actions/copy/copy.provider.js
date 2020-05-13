@@ -31,9 +31,9 @@
                         opacity: '0'
                     });
                     return {
-                        copy: function (stringToCopy) {
+                        copyContents: function (stringToCopy) {
                             let deferred = $q.defer();
-                            deferred.notify("copying the text to clipboard");
+                            deferred.notify("copying contents to clipboard");
                             textarea.val(stringToCopy);
                             body.append(textarea);
                             textarea[0].select();
@@ -45,6 +45,69 @@
                             } catch (err) {
                                 deferred.reject(err);
                                 toastService.add('info', gettext('Use Ctrl+C to copy to clipboard'));
+                            } finally {
+                                textarea.remove();
+                            }
+                            return deferred.promise;
+                        },
+                        copyPolicy: function (policy) {
+                            let deferred = $q.defer();
+                            deferred.notify("copying policy to clipboard");
+                            try {
+                                let contents = '{' + '\n' + '    ';
+                                if (policy.project != 'global') {
+                                    contents += '"' + policy.project + ':' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';
+                                } else {
+                                    contents += '"' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';
+                                }
+                                textarea.val(contents);
+                                body.append(textarea);
+                                textarea[0].select();
+                                let successful = $window.document.execCommand('copy');
+                                if (!successful) {
+                                    throw successful;
+                                } else {
+                                    toastService.add('success', gettext('Policy successfully copied to clipboard'));
+                                }
+                                deferred.resolve(successful);
+                            } catch (err) {
+                                deferred.reject(err);
+                                toastService.add('error', gettext('Unable to copy policy to clipboard!'));
+                            } finally {
+                                textarea.remove();
+                            }
+                            return deferred.promise;
+                        },
+                        copyPolicies: function (Policies) {
+                            let deferred = $q.defer();
+                            deferred.notify("copying policies to clipboard");
+                            try {
+                                let contents = '{' + '\n' + '    ';
+                                for (let i = 0; i < policies.length; i++) {
+                                    if (policies[i].project != 'global') {
+                                        contents += '"' + policies[i].project + ':' + policies[i].target + '": "' + policies[i].rule + '"';
+                                    } else {
+                                        policies[i] += '"' + policies[i].target + '": "' + policies[i].rule + '"';
+                                    }
+                                    if (i+1 < policies.length) {
+                                        contents += ',' + '\n' + '    ';
+                                    } else {
+                                        contents += '\n' + '}';
+                                    }
+                                }
+                                textarea.val(contents);
+                                body.append(textarea);
+                                textarea[0].select();
+                                var successful = $window.document.execCommand('copy');
+                                if (!successful) {
+                                    throw successful;
+                                } else {
+                                    toastService.add('success', gettext('Policies successfully copied to clipboard'));
+                                }
+                                deferred.resolve(successful);
+                            } catch (err) {
+                                deferred.reject(err);
+                                toastService.add('error', gettext('Unable to copy policies to clipboard!'));
                             } finally {
                                 textarea.remove();
                             }
