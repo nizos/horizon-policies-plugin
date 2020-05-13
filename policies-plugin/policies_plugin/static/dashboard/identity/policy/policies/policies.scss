@@ -1,10 +1,10 @@
-@import './plugin-info/plugin-info.scss';
-@import './policies-details/policies-details.scss';
-@import './policies-editor/policies-editor.scss';
-@import './policies-pagination/policies-pagination.scss';
-@import './policies-search/policies-search.scss';
-@import './policies-table/policies-table.scss';
-@import './scroll-up/scroll-up.scss';
+@import './components/plugin-info/plugin-info.scss';
+@import './components/policies-details/policies-details.scss';
+@import './components/policies-editor/policies-editor.scss';
+@import './components/policies-pagination/policies-pagination.scss';
+@import './components/policies-search/policies-search.scss';
+@import './components/policies-table/policies-table.scss';
+@import './components/scroll-up/scroll-up.scss';
 
 
 html, body:not(#splash) {
@@ -44,11 +44,7 @@ html {
     background-color: #DDD;
 }
 
-.policies-table thead th {
-    position: sticky;
-    top: 37px;
-    background: #e0e0e0;
-}
+
 
 .resizable-column {
     min-width: 100px;
@@ -75,12 +71,6 @@ html {
 .col-header {
     margin-left: 5px;
     margin-right: 5px;
-}
-
-.tooltip-inner,
-.tooltip  {
-    text-align: left !important;
-    transition: opacity  0s linear 1s;
 }
 
 .table-settings-menu-item {

@@ -1,0 +1,58 @@
+<!-- Search bar -->
+<div class="policies-search-bar" ng-controller="SearchController" ng-class="{'options-visible': showOptions}">
+    <div class="input-group" ng-class="{'options-visible': showOptions}">
+        <input ng-model="query" id="query" class="form-control" placeholder="Search">
+
+        <div class="input-group-btn">
+
+            <!-- Search settings button -->
+            <div class="btn-group">
+                <button class="btn btn-default search-options-button" type="button" ng-class="{'options-visible': showOptions}" ng-model="showOptions" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" title="Custom search" >
+                    <span class="fa fa-search"></span> <span class="fa fa-caret-down"></span>
+                </button>
+            </div>
+
+            <!-- Refresh button -->
+            <div class="btn-group">
+                <button class="btn btn-default" id="refresh-button" ng-click="refreshPolicies()" type="button"  title="Refresh">
+                    <i class="fa fa-refresh"></i>
+                </button>
+            </div>
+
+            <!-- Help Info button -->
+            <div class="btn-group">
+                <button class="btn btn-default" id="info-button" ng-click="openInfoModal()" ng-class="{'options-visible': showOptions}" type="button" title="Help">
+                    <i class="fa fa-info-circle"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom search -->
+    <div class="search-options" ng-class="{'options-visible': showOptions}">
+        <!-- Search settings button drop down menu-->
+        <span id="project-checkbox">
+            <input type="checkbox" ng-model="searchProject" ng-checked="searchProject" ng-init="searchProject=true" ng-change="searchOptionsChanged()"/> Project
+        </span>
+        <span id="target-checkbox">
+            <input type="checkbox" ng-model="searchTarget" ng-checked="searchTarget" ng-init="searchTarget=true" ng-change="searchOptionsChanged()"/> Target
+        </span>
+        <span id="rule-checkbox">
+            <input type="checkbox" ng-model="searchRule" ng-checked="searchRule" ng-init="searchRule=true" ng-change="searchOptionsChanged()"/> Rule
+        </span>
+        <span id="default-checkbox">
+            <input type="checkbox" ng-model="searchDefault" ng-checked="searchDefault" ng-init="searchDefault=true" ng-change="searchOptionsChanged()"/> Default
+        </span>
+        <span id="scopes-checkbox">
+            <input type="checkbox" ng-model="searchScopes" ng-checked="searchScopes" ng-init="searchScopes=true" ng-change="searchOptionsChanged()"/> Scopes
+        </span>
+        <span id="operations-checkbox">
+            <input type="checkbox" ng-model="searchOperations" ng-checked="searchOperations" ng-init="searchOperations=true" ng-change="searchOptionsChanged()"/> Operations
+        </span>
+        <span id="description-checkbox">
+            <input type="checkbox" ng-model="searchDescription" ng-checked="searchDescription" ng-init="searchDescription=true" ng-change="searchOptionsChanged()"/> Description
+        </span>
+    </div>
+
+</div>
+<br>

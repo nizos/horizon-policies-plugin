@@ -1,0 +1,205 @@
+<!-- Policies controller -->
+<div ng-controller="TableController">
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Edit policy</h3>
+    </div>
+
+    <!-- Editor toolbar -->
+    <div class="editor-toolbar">
+
+        <!-- Editor history button group -->
+        <div class="btn-group">
+            <!-- Undo button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Undo changes"
+                ng-click="">
+                <svg-icons p="undo_alt" id="undo-btn"></svg-icons>
+            </button>
+            <!-- Redo button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Redo changes"
+                ng-click="">
+                <svg-icons p="redo_alt" id="redo-btn"></svg-icons>
+            </button>
+        </div>
+
+        <!-- Clipboard button group -->
+        <div class="btn-group">
+            <!-- Copy button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Copy policies"
+                ng-click="clipboardCopy($event)">
+                <svg-icons p="copy_solid" id="copy-btn"></svg-icons>
+            </button>
+            <!-- Paste button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Paste policies"
+                ng-click="">
+                <svg-icons p="paste" id="paste-btn"></svg-icons>
+            </button>
+        </div>
+
+        <!-- Editor design button group -->
+        <div class="btn-group">
+            <!-- Autocomplete button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Enable/disable suggestions"
+                ng-click="">
+                <svg-icons p="edit_solid" id="autocomp-btn"></svg-icons>
+            </button>
+            <!-- Suggestions button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Manage suggestions"
+                ng-click="">
+                <svg-icons p="list_alt_solid" id="suggestions-btn"></svg-icons>
+            </button>
+            <!-- Ruler button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Show/hide line numbers"
+                ng-click="">
+                <svg-icons p="ruler" id="ruler-btn"></svg-icons>
+            </button>
+            <!-- Font button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Font family"
+                ng-click="">
+                <svg-icons p="font" id="font-btn"></svg-icons>
+            </button>
+        </div>
+
+        <!-- Policy actions button group -->
+        <div class="btn-group">
+            <!-- Delete button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Delete policies"
+                ng-click="">
+                <svg-icons p="trash" id="delete-btn"></svg-icons>
+            </button>
+            <!-- Restore button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Restore policies"
+                ng-click="">
+                <svg-icons p="trash_restore" id="restore-btn"></svg-icons>
+            </button>
+            <!-- Reload button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Reload policies"
+                ng-click="">
+                <svg-icons p="sync_alt" id="reload-btn"></svg-icons>
+            </button>
+            <!-- Defaults button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Restore defaults"
+                ng-click="">
+                <svg-icons p="history" id="defaults-btn"></svg-icons>
+            </button>
+        </div>
+
+        <!-- Policy file actions button group -->
+        <div class="btn-group">
+            <!-- Download button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Download policies"
+                ng-click="downloadFile()">
+                <svg-icons p="file_download" id="download-btn"></svg-icons>
+            </button>
+            <!-- Upload button -->
+            <button class="btn btn-default toolbar-btn upload-button"
+                type="button"
+                ng-class="{'wipe-in': showUpload}"
+                ng-model="showUpload"
+                title="Upload from file"
+                uib-btn-checkbox btn-checkbox-true="1"
+                btn-checkbox-false="0">
+                <svg-icons p="file_upload" id="upload-btn"></svg-icons>
+            </button>
+            <!-- Print button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Print policies"
+                ng-click="print()">
+                <svg-icons p="print" id="print-btn"></svg-icons>
+            </button>
+        </div>
+
+        <!-- Editor settings button group -->
+        <div class="btn-group">
+            <!-- Settings button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Settings"
+                ng-click="">
+                <svg-icons p="cog"id="settings-btn"></svg-icons>
+            </button>
+            <!-- Help button -->
+            <button class="btn btn-default toolbar-btn"
+                type="button"
+                title="Help"
+                ng-click="">
+                <svg-icons p="question_circle_solid" id="help-btn"></svg-icons>
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom search -->
+    <div class="file-upload-form" ng-class="{'wipe-in': showUpload}">
+        <!--File input field-->
+        <input class="file-upload-input" type="file" id="uploadFile" name="uploadFile", accept=".json, application/json"/>
+
+        <!-- Upload Button -->
+        <button class="btn btn-primary file-upload-button"
+            type="button"
+            title="Upload"
+            ng-click="uploadFile()">
+            <span class="fa fa-upload"></span>
+            Upload
+        </button>
+    </div>
+
+    <!-- Editor -->
+    <div class="editor">
+        <span class="editor-line-numbers">
+            <div ng-repeat="i in [].constructor(nrOfLines) track by $index">{$ $index+1 $}</div>
+        </span>
+        <span editor-autocomplete class="editor-field">
+            <textarea class="editor-textarea editor-input" id="text-editor" ng-model="editorContent" ng-change="editorContentChanged()" spellcheck="false" ng-trim="false" autocomplete-item="autocomp_results" ng-init="init()"></textarea>
+        </span>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+
+        <div class="btn-group-rightside">
+            <!-- Cancel Button -->
+            <button class="btn btn-warning"
+                type="button"
+                ng-click="cancel()">
+                <svg-icons p="times_circle_solid" id="cancel-btn"></svg-icons>
+                Cancel
+            </button>
+
+            <!-- OK Button -->
+            <button class="btn btn-primary mr-1"
+                type="button"
+                ng-click="save()">
+                <svg-icons p="save_solid" id="save-btn"></svg-icons>
+                Save
+            </button>
+        </div>
+    </div>
+</div>

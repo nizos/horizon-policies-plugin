@@ -1,0 +1,132 @@
+// Policies actions bar section visible
+.actions-bar.actions-visible {
+    visibility: visible;
+    width: 100%;
+    display: inline-flex;
+    position: sticky;
+    top: 37px;
+    background: #e0e0e0;
+    opacity: 1;
+    height: 30px;
+    max-height: 30px;
+    line-height: 20px;
+    padding: 5px 0px 5px 10px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    -webkit-transition: visibility 0s 0s, top 0s 0s, opacity 0s 0s, height 0.2s 0s, max-height 0.2s 0s, line-height 0s 0s, padding 0s 0s, border-top-left-radius 0s 0s, border-top-right-radius 0s 0s;
+            transition: visibility 0s 0s, top 0s 0s, opacity 0s 0s, height 0.2s 0s, max-height 0.2s 0s, line-height 0s 0s, padding 0s 0s, border-top-left-radius 0s 0s, border-top-right-radius 0s 0s;
+}
+
+// Policies actions bar section hidden
+.actions-bar {
+    visibility: hidden;
+    width: 100%;
+    background: #e0e0e0;
+    position: sticky;
+    top: 37px;
+    line-height: 20px;
+    opacity: 0;
+    padding: 0px 0px 0px 10px;
+    height: 0px;
+    max-height: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    -webkit-transition: visibility 0s 0.2s, top 0s 0.2s, opacity 0s 0.2s, height 0.2s 0s, max-height 0.2s 0s, line-height 0s 0.2s, padding 0s 0.2s, border-top-left-radius 0s 0.2s, border-top-right-radius 0s 0.2s;
+            transition: visibility 0s 0.2s, top 0s 0.2s, opacity 0s 0.2s, height 0.2s 0s, max-height 0.2s 0s, line-height 0s 0.2s, padding 0s 0.2s, border-top-left-radius 0s 0.2s, border-top-right-radius 0s 0.2s;
+}
+
+// Policies actions bar buttons visible
+.actions-bar-button.actions-visible {
+    visibility: visible;
+    background-color: #f2f2f2;
+    width: 110px;
+    height: 30px;
+    max-height: 30px;
+    -webkit-transition: all ease 0.2s 0s;
+            transition: all ease 0.2s 0s;
+}
+
+// Policies actions bar buttons hidden
+.actions-bar-button {
+    visibility: hidden;
+    background-color: #f2f2f2;
+    width: 110px;
+    height: 0px;
+    max-height: 0px;
+    -webkit-transition: all ease 0.2s 0s;
+            transition: all ease 0.2s 0s;
+}
+
+// Policies actions bar text visible
+.actions-bar-text.actions-visible {
+    visibility: visible;
+    line-height: 20px;
+    opacity: 1;
+    -webkit-transition: all ease 0s 0s;
+            transition: all ease 0s 0s;
+}
+
+// Policies actions bar text hidden
+.actions-bar-text {
+    visibility: hidden;
+    line-height: 0;
+    opacity: 0;
+    -webkit-transition: all ease 0s 0.2s;
+            transition: all ease 0s 0.2s;
+}
+
+// Policies actions bar buttons group
+.actions-bar-buttons-group {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+}
+
+// Policies actions bar buttons icons
+.actions-bar-button svg-icons svg {
+    width: auto;
+    height: 14px;
+}
+
+// Policies table header when actions bar is visible
+.policies-table.actions-visible thead th {
+    position: sticky;
+    top: 67px;
+    background-color: #f2f2f2;
+    -webkit-transition: all ease 0.2s;
+            transition: all ease 0.2s;
+}
+
+// Policies table header when actions bar is hidden
+.policies-table thead th {
+    position: sticky;
+    top: 37px;
+    background-color: #f2f2f2;
+    -webkit-transition: all ease 0.2s;
+            transition: all ease 0.2s;
+}
+
+#reset-button {
+    border-bottom-left-radius: 0px;
+}
+
+#clear-button {
+    border-bottom-right-radius: 0px;
+}
+
+.policies-tooltip {
+    z-index: 20 !important;
+}
+
+
+@media (max-width: 320px) {
+    .tooltip-inner {
+        min-width: initial;
+        max-width: 320px;
+    }
+}
+.tooltip-inner  {
+    min-width: 100px;
+    max-width: 600px;
+    text-align: left !important;
+}
