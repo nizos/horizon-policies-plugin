@@ -97,7 +97,7 @@
             PoliciesModel.setAllPolicies(response);
             PoliciesModel.setFilteredPolicies(response);
             PoliciesModel.setCurrentPage(0);
-            PoliciesModel.setItemsPerPage(20);
+            PoliciesModel.setItemsPerPage("20");
             PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
         }
 
