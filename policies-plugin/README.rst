@@ -1,4 +1,0 @@
-Horizon Policies Plugin
-================================
-
-TODO
