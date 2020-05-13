@@ -187,6 +187,9 @@
     line-height: 20px;
     padding-top: 2px;
     padding-bottom: 5px;
+    .file-upload-button, .file-upload-input {
+        visibility: visible;
+    }
 }
 
 .file-upload-form {
@@ -200,6 +203,7 @@
 
 .file-upload-input {
     align-self: center;
+    visibility: hidden;
 }
 
 
@@ -207,6 +211,7 @@
     height: 24px;
     padding-top: 2px;
     align-self: center;
+    visibility: hidden;
 }
 
 .upload-button.wipe-in {
