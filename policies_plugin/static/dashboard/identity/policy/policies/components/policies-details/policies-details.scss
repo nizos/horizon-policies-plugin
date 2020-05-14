@@ -8,7 +8,51 @@
 .modal-content {
     background-color: #fefefe;
     margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
     width: 80%;
+}
+
+.edit-responsiv {
+    display: none;
+}
+
+@media screen and (max-width: 900px) {
+    .modal-content {
+        width: 50% !important;
+        float: left;
+}
+}
+
+@media screen and (max-width: 1081px) {
+    .modal-content {
+        width: 50% !important;
+}
+}
+
+@media screen and (max-width: 575px) {
+    .modal-content {
+        width: 28% !important;
+        float: left;
+
+}
+    .edit-responsiv {
+        display: block !important;
+        float: right;
+    }
+    .bar-edit {
+        display: none;
+
+    }
+    .action-right {
+        float: right;
+    }
+    .actions-bar {
+        float: right !important;
+    }
+    .table-settings-button {
+        float: right !important;
+    }
 }
 
 .window-label {
@@ -22,8 +66,11 @@
 	overflow:hidden;
 	line-height: 13px;
 	font-size: 13px;
+	border:1px solid #999;
+	padding:10px;
 	margin:0;
 	display:block;
+    outline:none;
     white-space: pre-wrap;
 }
 
@@ -69,5 +116,6 @@
 }
 
 .ac-container .ac-menu .ac-state-focus {
+    outline: none;
     background-color: #e0eaff;
 }

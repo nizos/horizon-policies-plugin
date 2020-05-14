@@ -5,8 +5,122 @@
     <div class="modal-header">
         <h3 class="modal-title" id="modal-title">Edit policy</h3>
     </div>
+    <!-- Responsiv editor toolbar -->
+    <div class="editor-toolbar-responsiv">
+        <!-- Editor history button group -->
+        <div class="btn-group table-settings-button" uib-dropdown auto-close="outsideClick">
+            <svg-icons p="bars" title="Table settings" id="table-settings-button" uib-dropdown-toggle></svg-icons>
+             <!-- Settings button drop down menu-->
+             <ul class="dropdown-manage-responsiv dropdown-menu-right table-settings-menu" uib-dropdown-menu role="menu" aria-labelledby="table-settings-button">
+        <div class="btn-group">
+            <!-- Undo button -->
+            <li>
+            <button class="btn btn-default toolbar-btn" type="button" title="Undo changes" ng-click="">
+                <svg-icons p="undo_alt" id="undo-btn"></svg-icons>
+            </button></li>
+            <!-- Redo button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Redo changes" ng-click="">
+                <svg-icons p="redo_alt" id="redo-btn"></svg-icons>
+            </button></li>
 
-    <!-- Editor toolbar -->
+        </div>
+  
+        <!-- Clipboard button group -->
+        <div class="btn-group">
+            <!-- Copy button -->
+        <li><button class="btn btn-default toolbar-btn" type="button" title="Copy policies" ng-click="clipboardCopy($event)">
+                <svg-icons p="copy_solid" id="copy-btn"></svg-icons>
+            </button></li>
+            <!-- Paste button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Paste policies" ng-click="">
+                <svg-icons p="paste" id="paste-btn"></svg-icons>
+            </button></li>
+        </div>
+        <!-- Editor design button group -->
+        <div class="btn-group">
+            <!-- Autocomplete button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Enable/disable suggestions" ng-click="">
+                <svg-icons p="edit_solid" id="autocomp-btn"></svg-icons>
+            </button></li>
+            <!-- Suggestions button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Manage suggestions" ng-click="">
+                <svg-icons p="list_alt_solid" id="suggestions-btn"></svg-icons>
+            </button></li>
+            <!-- Ruler button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Show/hide line numbers" ng-click="">
+                <svg-icons p="ruler" id="ruler-btn"></svg-icons>
+            </button></li>
+            <!-- Font button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Font family" ng-click="">
+                <svg-icons p="font" id="font-btn"></svg-icons>
+            </button></li>
+        </div>
+        <!-- Policy actions button group -->
+        <div class="btn-group">
+            <!-- Delete button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Delete policies" ng-click="">
+                <svg-icons p="trash" id="delete-btn"></svg-icons>
+            </button></li>
+            <!-- Restore button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Restore policies" ng-click="">
+                <svg-icons p="trash_restore" id="restore-btn"></svg-icons>
+            </button></li>
+            <!-- Reload button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Reload policies" ng-click="">
+                <svg-icons p="sync_alt" id="reload-btn"></svg-icons>
+            </button></li>
+            <!-- Defaults button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Restore defaults" ng-click="">
+                <svg-icons p="history" id="defaults-btn"></svg-icons>
+            </button></li>
+        </div>
+        <!-- Policy file actions button group -->
+        <div class="btn-group">
+            <!-- Download button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Download policies" ng-click="downloadFile()">
+                <svg-icons p="file_download" id="download-btn"></svg-icons>
+            </button></li>
+            <!-- Upload button -->
+            <li><button class="btn btn-default toolbar-btn upload-button" type="button" ng-class="{'wipe-in': showUpload}" ng-model="showUpload"
+                title="Upload from file" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+                <svg-icons p="file_upload" id="upload-btn"></svg-icons>
+            </button></li>
+            <!-- Print button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Print policies" ng-click="print()">
+                <svg-icons p="print" id="print-btn"></svg-icons>
+            </button></li>
+        </div>
+        <!-- Editor settings button group -->
+        <div class="btn-group">
+            <!-- Settings button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Settings" ng-click="">
+                <svg-icons p="cog"id="settings-btn"></svg-icons>
+            </button></li>
+            <!-- Help button -->
+            <li><button class="btn btn-default toolbar-btn" type="button" title="Help" ng-click="">
+                <svg-icons p="question_circle_solid" id="help-btn"></svg-icons>
+            </button></li>
+        </div>
+    </div>
+    <!-- File upload form -->
+    <div class="file-upload-form" ng-class="{'wipe-in': showUpload}">
+        <!--File input field-->
+        <input class="file-upload-input" type="file" id="uploadFile" name="uploadFile", accept=".json, application/json"/>
+        <!-- Upload Button -->
+        <li><button class="btn btn-primary file-upload-button" type="button" title="Upload" ng-click="uploadFile()">
+            <span class="fa fa-upload"></span> Upload
+        </button></li>
+    </div>
+</ul>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+
+    <!-- Desktop editor toolbar -->
     <div class="editor-toolbar">
         <!-- Editor history button group -->
         <div class="btn-group">
@@ -130,3 +244,14 @@
         </div>
     </div>
 </div>
+    
+
+
+
+
+
+
+
+
+
+

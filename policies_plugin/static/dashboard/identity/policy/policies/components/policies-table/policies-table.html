@@ -1,6 +1,7 @@
 <div ng-controller="TableController">
 
     <!-- Manage buttons -->
+    <div class="manage-desktop">
     <div class="actions-bar" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}">
         <p class="manager-text" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}">{$ selectedPolicies.policies.length $} policies selected</p>
         <div class="btn-group actions-bar-buttons-group">
@@ -18,7 +19,31 @@
             </button>
         </div>
     </div>
+</div>
 
+    <!-- responsiv manage button -->
+<div class="responsiv-manage">
+    <div class="actions-bar" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}">
+        <div class="btn-group table-settings-button" uib-dropdown auto-close="outsideClick">
+            <svg-icons p="bars" title="Table settings" id="table-settings-button" uib-dropdown-toggle></svg-icons>
+            <!-- Settings button drop down menu-->
+            <ul class="dropdown-menu-responsiv dropdown-menu-right table-settings-menu" uib-dropdown-menu role="menu" aria-labelledby="table-settings-button">
+                <li><button class="btn btn-default actions-bar-button" id="reset-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Reset selected">
+                    <svg-icons p="history" id="reset-btn"></svg-icons> Reset
+                </button></li>
+                <li><button class="btn btn-default actions-bar-button" id="download-button" ng-click="downloadSelected()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Download selected">
+                    <svg-icons p="file_download" id="download-btn"></svg-icons> Download
+                </button></li>
+                <li><button class="btn btn-default actions-bar-button" id="edit-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Edit selected">
+                    <svg-icons p="pen_square" id="edit-btn"></svg-icons> Edit
+                </button></li>
+                <li><button class="btn btn-default actions-bar-button" id="clear-button" ng-click="clearAllSelections()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Clear selected">
+                    <svg-icons p="times_circle_solid" id="clear-btn"></svg-icons> Clear
+                </button></li>
+                </ul>
+                </div>
+                </div>
+                </div>
     <!-- Table -->
     <table class="policies-table" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}">
         <!-- Table headers -->

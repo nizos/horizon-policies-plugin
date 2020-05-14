@@ -34,6 +34,34 @@
     justify-content: space-between;
 }
 
+.editor-toolbar-responsiv {
+    display: none;
+}
+
+@media screen and (max-width: 575px) {
+    .editor-toolbar {
+        height: unset !important;
+        display: none !important;
+    }
+
+    .editor-toolbar-responsiv {
+        display: flow-root;
+        background-color: #cccccc;
+    }
+
+    .manage-desktop {
+        display: none !important;
+    }
+
+    .dropdown-manage-responsiv {
+        display: flow-root;
+    }
+
+    .responsiv-manage {
+        display: inline-flex !important;
+        width: 100%;
+    }
+}
 /* Toolbar buttons */
 .toolbar-btn {
     width: 42px;
@@ -97,6 +125,54 @@
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+}
+
+.responsiv-manage {
+    display: none;
+}
+
+.dropdown-menu-responsiv {
+    position: inherit;
+    top: 35px;
+    // left: 0;
+    // z-index: 1000;
+    // display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 13px;
+    text-align: left;
+    background-color: #fff;
+    // border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    // -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.17);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.17);
+    background-clip: padding-box;
+}
+
+.dropdown-manage-responsiv {
+    position: inherit;
+    display: none;
+    // left: 0;
+    // z-index: 1000;
+    // display: none;
+    float: right;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 13px;
+    text-align: left;
+    background-color: #fff;
+    // border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    // -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.17);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.17);
+    background-clip: padding-box;
 }
 
 /* Autocomplete suggestions */

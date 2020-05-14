@@ -1,4 +1,4 @@
-/* Policies actions bar section visible */
+// Policies actions bar section visible
 .actions-bar.actions-visible {
     visibility: visible;
     width: 100%;
@@ -17,7 +17,7 @@
             transition: visibility 0s 0s, top 0s 0s, opacity 0s 0s, height 0.2s 0s, max-height 0.2s 0s, line-height 0s 0s, padding 0s 0s, border-top-left-radius 0s 0s, border-top-right-radius 0s 0s;
 }
 
-/* Policies actions bar section hidden */
+// Policies actions bar section hidden
 .actions-bar {
     visibility: hidden;
     width: 100%;
@@ -35,7 +35,7 @@
             transition: visibility 0s 0.2s, top 0s 0.2s, opacity 0s 0.2s, height 0.2s 0s, max-height 0.2s 0s, line-height 0s 0.2s, padding 0s 0.2s, border-top-left-radius 0s 0.2s, border-top-right-radius 0s 0.2s;
 }
 
-/* Policies actions bar buttons visible */
+// Policies actions bar buttons visible
 .actions-bar-button.actions-visible {
     visibility: visible;
     background-color: #f2f2f2;
@@ -46,7 +46,7 @@
             transition: all ease 0.2s 0s;
 }
 
-/* Policies actions bar buttons hidden */
+// Policies actions bar buttons hidden
 .actions-bar-button {
     visibility: hidden;
     background-color: #f2f2f2;
@@ -57,7 +57,7 @@
             transition: all ease 0.2s 0s;
 }
 
-/* Policies actions bar text visible */
+// Policies actions bar text visible
 .actions-bar-text.actions-visible {
     visibility: visible;
     line-height: 20px;
@@ -66,7 +66,7 @@
             transition: all ease 0s 0s;
 }
 
-/* Policies actions bar text hidden */
+// Policies actions bar text hidden
 .actions-bar-text {
     visibility: hidden;
     line-height: 0;
@@ -75,20 +75,20 @@
             transition: all ease 0s 0.2s;
 }
 
-/* Policies actions bar buttons group */
+// Policies actions bar buttons group
 .actions-bar-buttons-group {
     position: absolute;
     bottom: 0px;
     right: 0px;
 }
 
-/* Policies actions bar buttons icons */
+// Policies actions bar buttons icons
 .actions-bar-button svg-icons svg {
     width: auto;
     height: 14px;
 }
 
-/* Policies table header when actions bar is visible */
+// Policies table header when actions bar is visible
 .policies-table.actions-visible thead th {
     position: sticky;
     top: 67px;
@@ -97,7 +97,7 @@
             transition: all ease 0.2s;
 }
 
-/* Policies table header when actions bar is hidden */
+// Policies table header when actions bar is hidden
 .policies-table thead th {
     position: sticky;
     top: 37px;
@@ -119,7 +119,7 @@
 }
 
 
-@media (max-width: 320px) {
+@media screen and (max-width: 320px) {
     .tooltip-inner {
         min-width: initial;
         max-width: 320px;
