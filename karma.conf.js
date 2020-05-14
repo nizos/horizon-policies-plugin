@@ -18,152 +18,152 @@
 
 var fs = require('fs');
 var path = require('path');
+var child_process = require("child_process");
 
 module.exports = function (config) {
-  var xstaticPath;
-  var basePaths = [
-    '../horizon/.venv'
-  ];
+    // This tox venv is setup in the post-install npm step
+    var pythonVersion = "python3.";
+    var stdout = child_process.execFileSync("python3", ["--version"]);
+    pythonVersion += stdout.toString().split(".")[1];
+    var toxPath = './.tox/karma/lib/' + pythonVersion + '/site-packages/';
+    console.log("Karma will check on directory: ", toxPath);
 
-  for (var i = 0; i < basePaths.length; i++) {
-    var basePath = path.resolve(basePaths[i]);
+    process.env.PHANTOMJS_BIN = 'node_modules/phantomjs-prebuilt/bin/phantomjs';
 
-    if (fs.existsSync(basePath)) {
-      xstaticPath = basePath + '/lib/python2.7/site-packages/xstatic/pkg/';
-      break;
-    }
-  }
+    config.set({
+        preprocessors: {
+            // Used to collect templates for preprocessing.
+            // NOTE: the templates must also be listed in the files section below.
+            './static/**/*.html': ['ng-html2js'],
+            // Used to indicate files requiring coverage reports.
+            './static/**/!(*.spec).js': ['coverage'],
+        },
 
-  if (!xstaticPath) {
-    console.error('xStatic libraries not found, please set up venv');
-    process.exit(1);
-  }
+        // Sets up module to process templates.
+        ngHtml2JsPreprocessor: {
+            prependPrefix: '/',
+            moduleName: 'templates'
+        },
 
-  config.set({
-    preprocessors: {
-      // Used to collect templates for preprocessing.
-      // NOTE: the templates must also be listed in the files section below.
-      './static/**/*.html': ['ng-html2js'],
-      // Used to indicate files requiring coverage reports.
-      './static/**/!(*.spec).js': ['coverage'],
-    },
+        // Assumes you're in the top-level horizon directory.
+        basePath: './',
 
-    // Sets up module to process templates.
-    ngHtml2JsPreprocessor: {
-      prependPrefix: '/',
-      moduleName: 'templates'
-    },
+        // Contains both source and test files.
+        files: [
+            /*
+             * shim, partly stolen from /i18n/js/horizon/
+             * Contains expected items not provided elsewhere (dynamically by
+             * Django or via jasmine template.
+             */
+            '../test-shim.js',
 
-    // Assumes you're in the top-level horizon directory.
-    basePath: './',
+            // from jasmine.html
+            toxPath + 'xstatic/pkg/jquery/data/jquery.js',
+            toxPath + 'xstatic/pkg/angular/data/angular.js',
+            toxPath + 'xstatic/pkg/angular/data/angular-route.js',
+            toxPath + 'xstatic/pkg/angular/data/angular-mocks.js',
+            toxPath + 'xstatic/pkg/angular/data/angular-cookies.js',
+            toxPath + 'xstatic/pkg/angular_bootstrap/data/angular-bootstrap.js',
+            toxPath + 'xstatic/pkg/angular_gettext/data/angular-gettext.js',
+            toxPath + 'xstatic/pkg/angular/data/angular-sanitize.js',
+            toxPath + 'xstatic/pkg/d3/data/d3.js',
+            toxPath + 'xstatic/pkg/rickshaw/data/rickshaw.js',
+            toxPath + 'xstatic/pkg/angular_smart_table/data/smart-table.js',
+            toxPath + 'xstatic/pkg/angular_lrdragndrop/data/lrdragndrop.js',
+            toxPath + 'xstatic/pkg/spin/data/spin.js',
+            toxPath + 'xstatic/pkg/spin/data/spin.jquery.js',
+            toxPath + 'xstatic/pkg/tv4/data/tv4.js',
+            toxPath + 'xstatic/pkg/objectpath/data/ObjectPath.js',
+            toxPath + 'xstatic/pkg/angular_schema_form/data/schema-form.js',
+            toxPath + 'xstatic/pkg/angular_fileupload/data/ng-file-upload.js',
 
-    // Contains both source and test files.
-    files: [
-      /*
-       * shim, partly stolen from /i18n/js/horizon/
-       * Contains expected items not provided elsewhere (dynamically by
-       * Django or via jasmine template.
-       */
-      '../../horizon/test-shim.js',
 
-      // from jasmine.html
-      xstaticPath + 'jquery/data/jquery.js',
-      xstaticPath + 'angular/data/angular.js',
-      xstaticPath + 'angular/data/angular-route.js',
-      xstaticPath + 'angular/data/angular-mocks.js',
-      xstaticPath + 'angular/data/angular-cookies.js',
-      xstaticPath + 'angular_bootstrap/data/angular-bootstrap.js',
-      xstaticPath + 'angular_gettext/data/angular-gettext.js',
-      xstaticPath + 'angular/data/angular-sanitize.js',
-      xstaticPath + 'd3/data/d3.js',
-      xstaticPath + 'rickshaw/data/rickshaw.js',
-      xstaticPath + 'angular_smart_table/data/smart-table.js',
-      xstaticPath + 'angular_lrdragndrop/data/lrdragndrop.js',
-      xstaticPath + 'spin/data/spin.js',
-      xstaticPath + 'spin/data/spin.jquery.js',
+            // TODO: These should be mocked.
+            toxPath + 'horizon/static/horizon/js/horizon.js',
 
-      // TODO: These should be mocked.
-      '../../horizon/horizon/static/horizon/js/horizon.js',
+            /**
+             * Include framework source code from horizon that we need.
+             * Otherwise, karma will not be able to find them when testing.
+             * These files should be mocked in the foreseeable future.
+             */
+            toxPath + 'horizon/static/framework/**/*.module.js',
+            toxPath + 'horizon/static/framework/**/!(*.spec|*.mock).js',
+            toxPath + 'openstack_dashboard/static/**/*.module.js',
+            toxPath + 'openstack_dashboard/static/**/!(*.spec|*.mock).js',
+            toxPath + 'openstack_dashboard/dashboards/**/static/**/*.module.js',
+            toxPath + 'openstack_dashboard/dashboards/**/static/**/!(*.spec|*.mock).js',
 
-      /**
-       * Include framework source code from horizon that we need.
-       * Otherwise, karma will not be able to find them when testing.
-       * These files should be mocked in the foreseeable future.
-       */
-      '../../horizon/horizon/static/framework/**/*.module.js',
-      '../../horizon/horizon/static/framework/**/!(*.spec|*.mock).js',
-      '../../horizon/openstack_dashboard/static/**/*.module.js',
-      '../../horizon/openstack_dashboard/static/**/!(*.spec|*.mock).js',
-      '../../horizon/openstack_dashboard/dashboards/**/static/**/*.module.js',
-      '../../horizon/openstack_dashboard/dashboards/**/static/**/!(*.spec|*.mock).js',
+            /**
+             * First, list all the files that defines application's angular modules.
+             * Those files have extension of `.module.js`. The order among them is
+             * not significant.
+             */
+            './static/**/*.module.js',
 
-      /**
-       * First, list all the files that defines application's angular modules.
-       * Those files have extension of `.module.js`. The order among them is
-       * not significant.
-       */
-      './static/**/*.module.js',
+            /**
+             * Followed by other JavaScript files that defines angular providers
+             * on the modules defined in files listed above. And they are not mock
+             * files or spec files defined below. The order among them is not
+             * significant.
+             */
+            './static/**/!(*.spec|*.mock).js',
 
-      /**
-       * Followed by other JavaScript files that defines angular providers
-       * on the modules defined in files listed above. And they are not mock
-       * files or spec files defined below. The order among them is not
-       * significant.
-       */
-      './static/**/!(*.spec|*.mock).js',
+            /**
+             * Then, list files for mocks with `mock.js` extension. The order
+             * among them should not be significant.
+             */
+            toxPath + 'openstack_dashboard/static/**/*.mock.js',
 
-      /**
-       * Then, list files for mocks with `mock.js` extension. The order
-       * among them should not be significant.
-       */
-      '../../horizon/openstack_dashboard/static/**/*.mock.js',
-      //'./static/**/*.mock.js',
+            /**
+             * Finally, list files for spec with `spec.js` extension. The order
+             * among them should not be significant.
+             */
+            './static/**/*.spec.js',
 
-      /**
-       * Finally, list files for spec with `spec.js` extension. The order
-       * among them should not be significant.
-       */
-      './static/**/*.spec.js',
+            /**
+             * Angular external templates
+             */
+            './static/**/*.html'
+        ],
 
-      /**
-       * Angular external templates
-       */
-      './static/**/*.html'
-    ],
+        autoWatch: true,
 
-    autoWatch: true,
+        frameworks: ['jasmine'],
 
-    frameworks: ['jasmine'],
+        // browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
 
-    browsers: ['PhantomJS'],
+        browserNoActivityTimeout: 60000,
 
-    phantomjsLauncher: {
-      // Have phantomjs exit if a ResourceError is encountered
-      // (useful if karma exits without killing phantom)
-      exitOnResourceError: true
-    },
+        reporters: ['progress', 'coverage', 'threshold'],
 
-    reporters: ['progress', 'coverage', 'threshold'],
+        plugins: [
+            'karma-chrome-launcher',
+            'karma-phantomjs-launcher',
+            'karma-jasmine',
+            'karma-ng-html2js-preprocessor',
+            'karma-coverage',
+            'karma-threshold-reporter'
+        ],
 
-    plugins: [
-      'karma-phantomjs-launcher',
-      'karma-jasmine',
-      'karma-ng-html2js-preprocessor',
-      'karma-coverage',
-      'karma-threshold-reporter'
-    ],
+        phantomjsLauncher: {
+            // Have phantomjs exit if a ResourceError is encountered
+            // (useful if karma exits without killing phantom)
+            exitOnResourceError: true
+        },
 
-    coverageReporter: {
-      type: 'html',
-      dir: '../coverage-karma/'
-    },
+        // Places coverage report in HTML format in the subdirectory below.
+        coverageReporter: {
+            type: 'html',
+            dir: '../cover/karma/'
+        },
 
-    // Coverage threshold values.
-    thresholdReporter: {
-      statements: 100,
-      branches: 100,
-      functions: 100,
-      lines: 100
-    }
-  });
+        // Coverage threshold values.
+        thresholdReporter: {
+            statements: 85, // target 100
+            branches: 60, // target 100
+            functions: 80, // target 100
+            lines: 85 // target 100
+        }
+    });
 };
