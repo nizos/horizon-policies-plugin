@@ -55,7 +55,7 @@ module.exports = function (config) {
              * Contains expected items not provided elsewhere (dynamically by
              * Django or via jasmine template.
              */
-            '../test-shim.js',
+            './test-shim.js',
 
             // from jasmine.html
             toxPath + 'xstatic/pkg/jquery/data/jquery.js',
@@ -98,7 +98,7 @@ module.exports = function (config) {
              * Those files have extension of `.module.js`. The order among them is
              * not significant.
              */
-            './static/**/*.module.js',
+            './policies_plugin/static/**/*.module.js',
 
             /**
              * Followed by other JavaScript files that defines angular providers
@@ -106,7 +106,7 @@ module.exports = function (config) {
              * files or spec files defined below. The order among them is not
              * significant.
              */
-            './static/**/!(*.spec|*.mock).js',
+            './policies_plugin/static/**/!(*.spec|*.mock).js',
 
             /**
              * Then, list files for mocks with `mock.js` extension. The order
@@ -118,12 +118,12 @@ module.exports = function (config) {
              * Finally, list files for spec with `spec.js` extension. The order
              * among them should not be significant.
              */
-            './static/**/*.spec.js',
+            './policies_plugin/static/**/*.spec.js',
 
             /**
              * Angular external templates
              */
-            './static/**/*.html'
+            './policies_plugin/static/**/*.html'
         ],
 
         autoWatch: true,
