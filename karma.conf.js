@@ -192,6 +192,8 @@ module.exports = function (config) {
             lines: 85 // target 100
         },
 
-        concurrency: Infinity
+        concurrency: Infinity,
+
+        failOnEmptyTestSuite: false
     });
 };
