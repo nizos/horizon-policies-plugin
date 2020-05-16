@@ -18,7 +18,8 @@
     "angular-ui-bootstrap": "2.5.6",
     "angular-ui-router": "1.0.26",
     "angular-uuid": "0.0.4",
-    "eslint": "^4.18.2",
+    "chai": "^4.2.0",
+    "eslint": "^3.0.0",
     "eslint-config-openstack": "4.0.1",
     "eslint-plugin-angular": "4.0.1",
     "eslint-plugin-jasmine": "4.1.1",
@@ -27,22 +28,25 @@
     "js-yaml": "3.13.1",
     "json2yaml": "1.1.0",
     "karma": "^5.0.5",
+    "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-cli": "2.0.0",
     "karma-coverage": "2.0.2",
     "karma-firefox-launcher": "1.3.0",
     "karma-ie-launcher": "^1.0.0",
     "karma-jasmine": "^3.1.1",
+    "karma-mocha": "^2.0.1",
     "karma-ng-html2js-preprocessor": "1.0.0",
-    "karma-phantomjs-launcher": "^1.0.4",
     "karma-threshold-reporter": "0.1.15",
-    "phantomjs": "^2.1.7",
-    "phantomjs-prebuilt": "2.1.16"
+    "mocha": "^7.1.2",
+    "puppeteer": "^3.0.4"
   },
   "scripts": {
     "postinstall": "if [ ! -d .tox ] || [ ! -d .tox/npm ]; then tox -e npm --notest; python3 -m pip install -U -t ./.tox/npm/lib/`python3 -V|tr -d ' '|tr 'P' 'p'|cut -c -9`/site-packages/ -chttps://releases.openstack.org/constraints/upper/master ../horizon; fi",
-    "test": "karma start karma.conf.js --single-run",
+    "test": "karma start --single-run --browsers ChromeHeadless karma.conf.js",
     "lint": "eslint --no-color policies_plugin/static"
   },
-  "dependencies": {}
+  "dependencies": {
+    "chrome-launcher": "^0.13.2"
+  }
 }

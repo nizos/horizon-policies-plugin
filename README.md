@@ -1,4 +1,4 @@
-# horizon-policies-plugin
+# policies_plugin
 Plugin for OpenStack's dashboard Horizon for accessing and managing policies
 
 # Quick Start

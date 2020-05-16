@@ -20,6 +20,10 @@ var fs = require('fs');
 var path = require('path');
 var child_process = require("child_process");
 
+const puppeteer = require('puppeteer');
+process.env.CHROMIUM_BIN = puppeteer.executablePath();
+process.env.CHROME_BIN = puppeteer.executablePath();
+
 module.exports = function (config) {
     // This tox venv is setup in the post-install npm step
     var pythonVersion = "python3.";
@@ -28,7 +32,7 @@ module.exports = function (config) {
     var toxPath = './.tox/karma/lib/' + pythonVersion + '/site-packages/';
     console.log("Karma will check on directory: ", toxPath);
 
-    process.env.PHANTOMJS_BIN = 'node_modules/phantomjs-prebuilt/bin/phantomjs';
+
 
     config.set({
         preprocessors: {
@@ -55,7 +59,7 @@ module.exports = function (config) {
              * Contains expected items not provided elsewhere (dynamically by
              * Django or via jasmine template.
              */
-            './test-shim.js',
+            //'./test-shim.js',
 
             // from jasmine.html
             toxPath + 'xstatic/pkg/jquery/data/jquery.js',
@@ -98,7 +102,7 @@ module.exports = function (config) {
              * Those files have extension of `.module.js`. The order among them is
              * not significant.
              */
-            './policies_plugin/static/**/*.module.js',
+            './static/**/*.module.js',
 
             /**
              * Followed by other JavaScript files that defines angular providers
@@ -106,7 +110,7 @@ module.exports = function (config) {
              * files or spec files defined below. The order among them is not
              * significant.
              */
-            './policies_plugin/static/**/!(*.spec|*.mock).js',
+            './static/**/!(*.spec|*.mock).js',
 
             /**
              * Then, list files for mocks with `mock.js` extension. The order
@@ -118,20 +122,43 @@ module.exports = function (config) {
              * Finally, list files for spec with `spec.js` extension. The order
              * among them should not be significant.
              */
-            './policies_plugin/static/**/*.spec.js',
+            './static/**/*.spec.js',
 
             /**
              * Angular external templates
              */
-            './policies_plugin/static/**/*.html'
+            './static/**/*.html'
         ],
 
-        autoWatch: true,
+        autoWatch: false,
 
         frameworks: ['jasmine'],
 
+        port: 9876,  // karma web server port
+
+        colors: true,
+
+        logLevel: config.LOG_INFO,
+
         // browsers: ['Chrome'],
-        browsers: ['PhantomJS'],
+        browsers: ['HeadlessChromium'],
+
+        customLaunchers: {
+            HeadlessChromium: {
+                base: 'ChromiumHeadless',
+                flags: [
+                    '--no-sandbox',
+                    '--remote-debugging-port=9222',
+                    '--enable-logging',
+                    '--user-data-dir=./karma-chrome',
+                    '--v=1',
+                    '--disable-background-timer-throttling',
+                    '--disable-renderer-backgrounding',
+                    '--proxy-bypass-list=*',
+                    '--proxy-server=\'direct://\''
+                ]
+            }
+        },
 
         browserNoActivityTimeout: 60000,
 
@@ -139,7 +166,6 @@ module.exports = function (config) {
 
         plugins: [
             'karma-chrome-launcher',
-            'karma-phantomjs-launcher',
             'karma-jasmine',
             'karma-ng-html2js-preprocessor',
             'karma-coverage',
@@ -164,6 +190,8 @@ module.exports = function (config) {
             branches: 60, // target 100
             functions: 80, // target 100
             lines: 85 // target 100
-        }
+        },
+
+        concurrency: Infinity
     });
 };
