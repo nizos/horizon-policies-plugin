@@ -102,7 +102,32 @@ module.exports = function (config) {
              * Those files have extension of `.module.js`. The order among them is
              * not significant.
              */
-            './static/**/*.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policy.module.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/actions.module.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/context-menu/context-menu.module.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/copy/copy.module.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/download/download.module.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/history/history.module.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/paste/paste.module.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/print/print.module.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/reload/reload.module.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/upload/upload.module.js',
+            './policies_plugin/static/dashboard/identity/policy/api/api.module.js',
+            './policies_plugin/static/dashboard/identity/policy/model/model.module.js',
+            './policies_plugin/static/dashboard/identity/policy/model/checklist-model/checklist-model.module.js',
+            './policies_plugin/static/dashboard/identity/policy/model/policies-model/policies-model.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/components.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/plugin-info/plugin-info.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-details/policies-details.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-editor/editor-autocomplete/autocomplete-item/autocomplete-item.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-editor/editor-autocomplete/editor-autocomplete.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-editor/policies-editor.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-pagination/policies-pagination.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-search/policies-search.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-table/policies-table.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/scroll-up/scroll-up.module.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/policies.module.js',
+            './policies_plugin/static/dashboard/identity/policy/svg-icons/svg-icons.module.js',
 
             /**
              * Followed by other JavaScript files that defines angular providers
@@ -111,6 +136,32 @@ module.exports = function (config) {
              * significant.
              */
             './static/**/!(*.spec|*.mock).js',
+            './policies_plugin/static/dashboard/identity/policy/actions/context-menu/context-menu.constant.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/context-menu/context-menu.directive.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/context-menu/context-menu.service.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/copy/copy.provider.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/download/download.provider.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/print/print.provider.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/reload/reload.provider.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/upload/upload.provider.js',
+            './policies_plugin/static/dashboard/identity/policy/api/api.service.js',
+            './policies_plugin/static/dashboard/identity/policy/model/checklist-model/checklist-model.directive.js',
+            './policies_plugin/static/dashboard/identity/policy/model/policies-model/policies-model.service.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/plugin-info/plugin-info.controller.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-details/policies-details.controller.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-editor/editor-autocomplete/autocomplete-item/autocomplete-item.directive.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-editor/editor-autocomplete/editor-autocomplete.directive.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-editor/editor-autocomplete/editor-autocomplete.provider.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-editor/policies-editor.controller.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-pagination/policies-pagination.component.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-pagination/policies-pagination.controller.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-search/policies-search.component.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-search/policies-search.controller.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-table/policies-table.component.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-table/policies-table.controller.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/scroll-up/scroll-up.component.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/scroll-up/scroll-up.controller.js',
+            './policies_plugin/static/dashboard/identity/policy/svg-icons/svg-icons.directive.js',
 
             /**
              * Then, list files for mocks with `mock.js` extension. The order
@@ -122,6 +173,7 @@ module.exports = function (config) {
              * Finally, list files for spec with `spec.js` extension. The order
              * among them should not be significant.
              */
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-table/policies-table.controller.spec.js',
             './static/**/*.spec.js',
 
             /**

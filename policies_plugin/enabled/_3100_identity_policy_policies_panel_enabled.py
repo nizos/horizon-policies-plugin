@@ -39,6 +39,10 @@ ADD_JS_FILES = [
     'horizon/lib/angular/angular-route.js'
 ]
 
+ADD_JS_SPEC_FILES = [
+    'dashboard/identity/policy/policies/components/policies-table/policies-table.controller.spec.js',
+]
+
 # A list of scss files to be included in the compressed set of files
 ADD_SCSS_FILES = ['dashboard/identity/policy/policies/policies.scss']
 
