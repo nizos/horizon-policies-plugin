@@ -19,7 +19,7 @@
     "angular-ui-router": "1.0.26",
     "angular-uuid": "0.0.4",
     "chai": "^4.2.0",
-    "eslint": "^3.0.0",
+    "eslint": "^4.18.2",
     "eslint-config-openstack": "4.0.1",
     "eslint-plugin-angular": "4.0.1",
     "eslint-plugin-jasmine": "4.1.1",
