@@ -41,6 +41,8 @@ ADD_JS_FILES = [
 
 ADD_JS_SPEC_FILES = [
     'dashboard/identity/policy/policies/components/policies-table/policies-table.controller.spec.js',
+    'dashboard/identity/policy/policies/components/policies-search/policies-search.controller.spec.js',
+    'dashboard/identity/policy/policies/components/policies-pagination/policies-pagination.controller.spec.js'
 ]
 
 # A list of scss files to be included in the compressed set of files
