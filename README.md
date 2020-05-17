@@ -4,9 +4,9 @@ Plugin for OpenStack's dashboard Horizon for accessing and managing policies
 # Quick Start
 Instructions for running the plugin using DevStack, Python3.6, pip 20.0.2 and Django 2.2:
 ```Bash
-cd /opt/stack/horizon/
+cd /opt/stack/
 git clone https://github.com/nizos/horizon-policies-plugin
-cd horizon-policies-plugin/policies-plugin/
+cd horizon-policies-plugin/
 bash install.bash
 ```
 ## Development Mode

@@ -59,7 +59,7 @@ module.exports = function (config) {
              * Contains expected items not provided elsewhere (dynamically by
              * Django or via jasmine template.
              */
-            //'./test-shim.js',
+            './test-shim.js',
 
             // from jasmine.html
             toxPath + 'xstatic/pkg/jquery/data/jquery.js',
@@ -83,19 +83,60 @@ module.exports = function (config) {
 
 
             // TODO: These should be mocked.
-            toxPath + 'horizon/static/horizon/js/horizon.js',
+            // '../horizon/js/horizon.js',
+            // '../horizon/horizon/static/horizon/js/horizon.js',
+            // toxPath + 'horizon/static/horizon/js/horizon.js',
+            '../horizon/static/framework/util/actions/actions.module.js',
+            '../horizon/static/framework/util/bind-scope/bind-scope.module.js',
+            '../horizon/static/framework/util/extensible/extensible.module.js',
+            '../horizon/static/framework/util/file/file.module.js',
+            '../horizon/static/framework/util/filters/filters.module.js',
+            '../horizon/static/framework/util/http/http.js',
+            '../horizon/static/framework/util/i18n/i18n.js',
+            '../horizon/static/framework/util/navigations/navigations.module.js',
+            '../horizon/static/framework/util/promise-toggle/promise-toggle.module.js',
+            '../horizon/static/framework/util/q/q.module.js',
+            '../horizon/static/framework/util/tech-debt/tech-debt.module.js',
+            '../horizon/static/framework/util/timezones/timezone.service.js',
+            '../horizon/static/framework/util/uuid/uuid.js',
+            '../horizon/static/framework/util/validators/validators.module.js',
+            '../horizon/static/framework/util/workflow/workflow.module.js',
+            '../horizon/static/framework/util/util.module.js',
+            '../horizon/static/framework/widgets/action-list/action-list.module.js',
+            '../horizon/static/framework/widgets/charts/charts.module.js',
+            '../horizon/static/framework/widgets/contenteditable/contenteditable.module.js',
+            '../horizon/static/framework/widgets/details/details.module.js',
+            '../horizon/static/framework/widgets/form/form.module.js',
+            '../horizon/static/framework/widgets/form/decorator.js',
+            '../horizon/static/framework/widgets/headers/headers.module.js',
+            '../horizon/static/framework/widgets/help-panel/help-panel.module.js',
+            '../horizon/static/framework/widgets/load-edit/load-edit.module.js',
+            '../horizon/static/framework/widgets/magic-search/magic-search.module.js',
+            '../horizon/static/framework/widgets/metadata/display/display.module.js',
+            '../horizon/static/framework/widgets/metadata/tree/tree.module.js',
+            '../horizon/static/framework/widgets/metadata/metadata.module.js',
+            '../horizon/static/framework/widgets/modal/modal.module.js',
+            '../horizon/static/framework/widgets/modal-wait-spinner/modal-wait-spinner.module.js',
+            '../horizon/static/framework/widgets/panel/panel.module.js',
+            '../horizon/static/framework/widgets/property/property.module.js',
+            '../horizon/static/framework/widgets/table/table.module.js',
+            '../horizon/static/framework/widgets/toast/toast.module.js',
+            '../horizon/static/framework/widgets/transfer-table/transfer-table.module.js',
+            '../horizon/static/framework/widgets/wizard/wizard.module.js',
+            '../horizon/static/framework/widgets/widgets.module.js',
+            '../horizon/static/framework/framework.module.js',
 
             /**
              * Include framework source code from horizon that we need.
              * Otherwise, karma will not be able to find them when testing.
              * These files should be mocked in the foreseeable future.
              */
-            toxPath + 'horizon/static/framework/**/*.module.js',
-            toxPath + 'horizon/static/framework/**/!(*.spec|*.mock).js',
-            toxPath + 'openstack_dashboard/static/**/*.module.js',
-            toxPath + 'openstack_dashboard/static/**/!(*.spec|*.mock).js',
-            toxPath + 'openstack_dashboard/dashboards/**/static/**/*.module.js',
-            toxPath + 'openstack_dashboard/dashboards/**/static/**/!(*.spec|*.mock).js',
+            // toxPath + 'horizon/static/framework/**/*.module.js',
+            // toxPath + 'horizon/static/framework/**/!(*.spec|*.mock).js',
+            // toxPath + 'openstack_dashboard/static/**/*.module.js',
+            // toxPath + 'openstack_dashboard/static/**/!(*.spec|*.mock).js',
+            // toxPath + 'openstack_dashboard/dashboards/**/static/**/*.module.js',
+            // toxPath + 'openstack_dashboard/dashboards/**/static/**/!(*.spec|*.mock).js',
 
             /**
              * First, list all the files that defines application's angular modules.
@@ -135,7 +176,101 @@ module.exports = function (config) {
              * files or spec files defined below. The order among them is not
              * significant.
              */
-            './static/**/!(*.spec|*.mock).js',
+            '../horizon/static/framework/util/actions/action-result.service.js',
+            '../horizon/static/framework/util/bind-scope/bind-scope.directive.js',
+            '../horizon/static/framework/util/extensible/extensible.service.js',
+            '../horizon/static/framework/util/file/file-reader.service.js',
+            '../horizon/static/framework/util/file/text-download.service.js',
+            '../horizon/static/framework/util/filters/filters.js',
+            '../horizon/static/framework/util/filters/helpers.borrowed-from-underscore.js',
+            '../horizon/static/framework/util/navigations/navigations.service.js',
+            '../horizon/static/framework/util/promise-toggle/hz-promise-toggle.directive.js',
+            '../horizon/static/framework/util/q/q.extensions.js',
+            '../horizon/static/framework/util/tech-debt/dummy.controller.js',
+            '../horizon/static/framework/util/tech-debt/helper-functions.service.js',
+            '../horizon/static/framework/util/tech-debt/image-file-on-change.directive.js',
+            '../horizon/static/framework/util/timezones/timezone.service.js',
+            '../horizon/static/framework/util/validators/hz-password-match.directive.js',
+            '../horizon/static/framework/util/validators/validate-number-max.directive.js',
+            '../horizon/static/framework/util/validators/validate-unique.js',
+            '../horizon/static/framework/util/workflow/workflow.service.js',
+            '../horizon/static/framework/widgets/action-list/action-list.directive.js',
+            '../horizon/static/framework/widgets/action-list/action.directive.js',
+            '../horizon/static/framework/widgets/action-list/actions.controller.js',
+            '../horizon/static/framework/widgets/action-list/actions.directive.js',
+            '../horizon/static/framework/widgets/action-list/actions.service.js',
+            '../horizon/static/framework/widgets/action-list/button-tooltip.directive.js',
+            '../horizon/static/framework/widgets/action-list/button-tooltip.row-warning.service.js',
+            '../horizon/static/framework/widgets/action-list/menu.directive.js',
+            '../horizon/static/framework/widgets/charts/chart-tooltip.directive.js',
+            '../horizon/static/framework/widgets/charts/pie-chart.directive.js',
+            '../horizon/static/framework/widgets/contenteditable/contenteditable.directive.js',
+            '../horizon/static/framework/widgets/details/details.directive.js',
+            '../horizon/static/framework/widgets/details/routed-details-view.controller.js',
+            '../horizon/static/framework/widgets/form/builders.provider.js',
+            '../horizon/static/framework/widgets/form/decorator.js',
+            '../horizon/static/framework/widgets/form/modal-form.controller.js',
+            '../horizon/static/framework/widgets/form/modal-form.service.js',
+            '../horizon/static/framework/widgets/headers/hz-page-header.directive.js',
+            '../horizon/static/framework/widgets/help-panel/help-panel.directive.js',
+            '../horizon/static/framework/widgets/load-edit/load-edit.directive.js',
+            '../horizon/static/framework/widgets/magic-search/hz-magic-search-bar.directive.js',
+            '../horizon/static/framework/widgets/magic-search/hz-magic-search-context.directive.js',
+            '../horizon/static/framework/widgets/magic-search/magic-search.controller.js',
+            '../horizon/static/framework/widgets/magic-search/magic-search.directive.js',
+            '../horizon/static/framework/widgets/magic-search/magic-search.service.js',
+            '../horizon/static/framework/widgets/magic-search/st-magic-search.directive.js',
+            '../horizon/static/framework/widgets/metadata/display/metadata-display.directive.js',
+            '../horizon/static/framework/widgets/metadata/display/metadata-display.controller.js',
+            '../horizon/static/framework/widgets/metadata/tree/metadata-tree-item.controller.js',
+            '../horizon/static/framework/widgets/metadata/tree/metadata-tree-item.directive.js',
+            '../horizon/static/framework/widgets/metadata/tree/metadata-tree.controller.js',
+            '../horizon/static/framework/widgets/metadata/tree/metadata-tree.directive.js',
+            '../horizon/static/framework/widgets/metadata/tree/tree.service.js',
+            '../horizon/static/framework/widgets/modal/delete-modal.service.js',
+            '../horizon/static/framework/widgets/modal/simple-modal.controller.js',
+            '../horizon/static/framework/widgets/modal/simple-modal.service.js',
+            '../horizon/static/framework/widgets/modal/wizard-modal.service.js',
+            '../horizon/static/framework/widgets/modal/wizard.controller.js',
+            '../horizon/static/framework/widgets/modal-wait-spinner/modal-wait-spinner.directive.js',
+            '../horizon/static/framework/widgets/modal-wait-spinner/modal-wait-spinner.service.js',
+            '../horizon/static/framework/widgets/panel/hz-resource-panel.controller.js',
+            '../horizon/static/framework/widgets/panel/hz-resource-panel.directive.js',
+            '../horizon/static/framework/widgets/property/hz-field.directive.js',
+            '../horizon/static/framework/widgets/property/hz-resource-property-list.directive.js',
+            '../horizon/static/framework/widgets/property/hz-resource-property.controller.js',
+            '../horizon/static/framework/widgets/property/hz-resource-property.directive.js',
+            '../horizon/static/framework/widgets/table/hz-cell.directive.js',
+            '../horizon/static/framework/widgets/table/hz-detail-row.directive.js',
+            '../horizon/static/framework/widgets/table/hz-dynamic-table.controller.js',
+            '../horizon/static/framework/widgets/table/hz-dynamic-table.directive.js',
+            '../horizon/static/framework/widgets/table/hz-expand-detail.directive.js',
+            '../horizon/static/framework/widgets/table/hz-no-items.directive.js',
+            '../horizon/static/framework/widgets/table/hz-resource-table.controller.js',
+            '../horizon/static/framework/widgets/table/hz-resource-table.directive.js',
+            '../horizon/static/framework/widgets/table/hz-search-bar.directive.js',
+            '../horizon/static/framework/widgets/table/hz-select-all.directive.js',
+            '../horizon/static/framework/widgets/table/hz-select.directive.js',
+            '../horizon/static/framework/widgets/table/hz-table-footer.controller.js',
+            '../horizon/static/framework/widgets/table/hz-table-footer.directive.js',
+            '../horizon/static/framework/widgets/table/hz-table.directive.js',
+            '../horizon/static/framework/widgets/table/table.controller.js',
+            '../horizon/static/framework/widgets/toast/toast.directive.js',
+            '../horizon/static/framework/widgets/toast/toast.service.js',
+            '../horizon/static/framework/widgets/transfer-table/filter-available.js',
+            '../horizon/static/framework/widgets/transfer-table/transfer-table.controller.js',
+            '../horizon/static/framework/widgets/transfer-table/transfer-table.directive.js',
+            '../horizon/static/framework/widgets/wizard/modal-container.controller.js',
+            '../horizon/static/framework/widgets/wizard/wizard.controller.js',
+            '../horizon/static/framework/widgets/wizard/wizard.directive.js',
+            '../horizon/static/framework/widgets/wizard/wizard.module.js',
+            '../horizon/static/framework/widgets/widgets.module.js',
+            '../horizon/static/framework/framework.module.js',
+            '../horizon/static/framework/conf/conf.js',
+            '../horizon/static/framework/conf/resource-type-registry.service.js',
+            '../horizon/static/framework/conf/permissions.service.js',
+
+
             './policies_plugin/static/dashboard/identity/policy/actions/context-menu/context-menu.constant.js',
             './policies_plugin/static/dashboard/identity/policy/actions/context-menu/context-menu.directive.js',
             './policies_plugin/static/dashboard/identity/policy/actions/context-menu/context-menu.service.js',
@@ -167,19 +302,19 @@ module.exports = function (config) {
              * Then, list files for mocks with `mock.js` extension. The order
              * among them should not be significant.
              */
-            toxPath + 'openstack_dashboard/static/**/*.mock.js',
+            // toxPath + 'openstack_dashboard/static/**/*.mock.js',
 
             /**
              * Finally, list files for spec with `spec.js` extension. The order
              * among them should not be significant.
              */
-            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-table/policies-table.controller.spec.js',
-            './static/**/*.spec.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-table/policies-table.controller.spec.js'
+            // './static/**/*.spec.js',
 
             /**
              * Angular external templates
              */
-            './static/**/*.html'
+            // './static/**/*.html'
         ],
 
         autoWatch: false,
