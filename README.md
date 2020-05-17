@@ -9,6 +9,9 @@ git clone https://github.com/nizos/horizon-policies-plugin
 cd horizon-policies-plugin/
 bash install.bash
 ```
+
+# Testing
+Instructions for running the tests can be found here in [TESTS.md](https://github.com/nizos/horizon-policies-plugin/blob/master/TESTS.md)
 ## Development Mode
 Inotify-tools allows us to automatically reinstall the plangin when any of changes are made to its file. If you do not have inotify-tools installed you can install it by running the following command:
 ```Bash
