@@ -127,18 +127,62 @@
         };
 
         // Table sort functions
+        function compare(a, b) {
+            if (typeof a !== 'undefined' && typeof b !== 'undefined') {
+                if (a.toLowerCase() < b.toLowerCase()) {
+                    return -1;
+                }
+                if (a.toLowerCase() > b.toLowerCase()) {
+                    return 1;
+                }
+                return 0;
+            } else if (typeof a !== 'undefined' && typeof b === 'undefined') {
+                return 1;
+            } else if (typeof a === 'undefined' && typeof b !== 'undefined') {
+                return -1;
+            } else {
+                return 0;
+            };
+        };
+
         $scope.sortPolicies = function(column) {
             if ($scope.sortColumn == column) {
                 $scope.sortReverse =! $scope.sortReverse;
             };
             if (!$scope.sortReverse) {
-                PoliciesModel.data.filteredPolicies.sort(function(a, b) {
-                    return a[column].localeCompare(b[column]);
-                });
+                if (column == 'scopes' || column == 'operations') {
+                    for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
+                        if (PoliciesModel.data.filteredPolicies[i][column].length >= 1) {
+                            PoliciesModel.data.filteredPolicies[i][column].sort(function(a, b) {
+                                return compare(a, b);
+                            });
+                        }
+                    };
+                    PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                        return compare(a[column][0], b[column][0]);
+                    });
+                } else {
+                    PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                        return a[column].localeCompare(b[column]);
+                    });
+                };
             } else {
-                PoliciesModel.data.filteredPolicies.sort(function(a, b) {
-                    return b[column].localeCompare(a[column]);
-                });
+                if (column == 'scopes' || column == 'operations') {
+                    for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
+                        if (PoliciesModel.data.filteredPolicies[i][column].length >= 1) {
+                            PoliciesModel.data.filteredPolicies[i][column].sort(function(a, b) {
+                                return compare(b, a);
+                            });
+                        };
+                    };
+                    PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                        return compare(b[column][0], a[column][0]);
+                    });
+                } else {
+                    PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                        return b[column].localeCompare(a[column]);
+                    });
+                };
             };
             $scope.sortColumn = column;
         };
@@ -158,7 +202,7 @@
             };
         };
 
-        // Policy select functions
+        // Table select functions
         $scope.toggleSelect = function() {
             updateSelected();
         };
