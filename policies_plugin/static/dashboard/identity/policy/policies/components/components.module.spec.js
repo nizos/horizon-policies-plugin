@@ -8,6 +8,13 @@
         });
     });
 
+    /* Test to see if confirm-dialog module is defined */
+    describe('horizon.dashboard.identity.policy.policies.components.confirm-dialog', function() {
+        it('Module is defined', function () {
+            expect(angular.module('horizon.dashboard.identity.policy.policies.components.confirm-dialog')).toBeDefined();
+        });
+    });
+
     /* Test to see if plugin-info module is defined */
     describe('horizon.dashboard.identity.policy.policies.components.plugin-info', function() {
         it('Module is defined', function () {
