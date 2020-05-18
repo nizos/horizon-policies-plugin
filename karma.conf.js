@@ -308,9 +308,16 @@ module.exports = function (config) {
              * Finally, list files for spec with `spec.js` extension. The order
              * among them should not be significant.
              */
-            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-table/policies-table.controller.spec.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-pagination/policies-pagination.controller.spec.js',
             './policies_plugin/static/dashboard/identity/policy/policies/components/policies-search/policies-search.controller.spec.js',
-            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-pagination/policies-pagination.controller.spec.js'
+            './policies_plugin/static/dashboard/identity/policy/policies/components/policies-table/policies-table.controller.spec.js',
+            './policies_plugin/static/dashboard/identity/policy/policy.module.spec.js',
+            './policies_plugin/static/dashboard/identity/policy/actions/actions.module.spec.js',
+            './policies_plugin/static/dashboard/identity/policy/api/api.module.spec.js',
+            './policies_plugin/static/dashboard/identity/policy/model/model.module.spec.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/policies.module.spec.js',
+            './policies_plugin/static/dashboard/identity/policy/policies/components/components.module.spec.js',
+            './policies_plugin/static/dashboard/identity/policy/svg-icons/svg-icons.module.spec.js',
             // './static/**/*.spec.js',
 
             /**
