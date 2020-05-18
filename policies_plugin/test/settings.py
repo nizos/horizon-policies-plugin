@@ -21,8 +21,8 @@ import policies_plugin.enabled
 
 # pop these keys to avoid log warnings about deprecation
 # update_dashboards will populate them anyway
-HORIZON_CONFIG.pop('dashboards', None)
-HORIZON_CONFIG.pop('default_dashboard', None)
+HORIZON_CONFIG.pop('dashboards', None)  # noqa: F405
+HORIZON_CONFIG.pop('default_dashboard', None)  # noqa: F405
 
 # Update the dashboards with policies_plugin enabled files
 # and current INSTALLED_APPS
@@ -31,9 +31,9 @@ settings.update_dashboards(
         openstack_dashboard.enabled,
         policies_plugin.enabled,
     ],
-    HORIZON_CONFIG,
-    INSTALLED_APPS
+    HORIZON_CONFIG,  # noqa: F405
+    INSTALLED_APPS  # noqa: F405
 )
 
 # Remove duplicated apps
-INSTALLED_APPS = list(set(INSTALLED_APPS))
+INSTALLED_APPS = list(set(INSTALLED_APPS))  # noqa: F405

@@ -1,17 +1,31 @@
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+
 import logging
 from policies_plugin.api.resources.keystone_fields import keystone_docs
+
 LOG = logging.getLogger(__name__)
+
 
 # Policy Class
 class Policy:
     def __init__(self,
-                project="Project",
-                target="Target",
-                rule="Rule",
-                default="Default rule",
-                scopes="Scopes",
-                operations="Operations",
-                description="Description"):
+                 project="Project",
+                 target="Target",
+                 rule="Rule",
+                 default="Default rule",
+                 scopes="Scopes",
+                 operations="Operations",
+                 description="Description"):
         self.project = project
         self.target = target
         self.rule = rule
@@ -33,8 +47,8 @@ class Policy:
         self.set_description(policy_dict)
         return self
 
-
     # SETTERS
+
     def get_dict(self):
         policy_dict = ""
         try:
@@ -43,7 +57,6 @@ class Policy:
             policy_dict = None
         return policy_dict
 
-
     def create_identifier(self):
         identifier = ""
         if (self.project != "global"):
@@ -51,7 +64,6 @@ class Policy:
         else:
             identifier = self.target
         return identifier
-
 
     def set_project(self, line_target):
         if ':' in line_target:
@@ -70,42 +82,43 @@ class Policy:
             self.rule = line_stripped_new_line.split('": "')[1]
         else:
             self.rule = "None"
-            LOG.error("No rule provided for requested policy target: {}".format(line_stripped_new_line))
+            LOG.error("No rule provided for requested policy target: {}"
+                      .format(line_stripped_new_line))
 
     def set_default(self, policy_dict):
         try:
             self.default = policy_dict["default"]
-        except:
+        except Exception:
             self.default = "No default"
 
     def set_scopes(self, policy_dict):
         try:
             self.scopes = policy_dict["scopes"]
-        except:
+        except Exception:
             self.scopes = "No scopes"
 
     def set_operations(self, policy_dict):
         try:
             self.operations = policy_dict["operations"]
-        except:
-             self.operations = "No operations"
+        except Exception:
+            self.operations = "No operations"
 
     def set_description(self, policy_dict):
         try:
             self.description = policy_dict["description"]
-        except:
+        except Exception:
             self.description = "No description"
 
-     # GETTERS
+    # GETTERS
     def to_json(self):
         policy_json = {
-                'project': self.project,
-                'target': self.target,
-                'rule': self.rule,
-                'default': self.default,
-                'scopes': self.scopes,
-                'operations': self.operations,
-                'description': self.description
+            'project': self.project,
+            'target': self.target,
+            'rule': self.rule,
+            'default': self.default,
+            'scopes': self.scopes,
+            'operations': self.operations,
+            'description': self.description
         }
         return policy_json
 

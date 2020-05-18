@@ -12,5 +12,5 @@
 # limitations under the License.
 
 # Register the REST API URLs so they can be called from the JavaScript files
-from policies_plugin.api import rest  # noqa
 
+from policies_plugin.api import rest # noqa

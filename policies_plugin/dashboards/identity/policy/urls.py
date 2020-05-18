@@ -18,5 +18,5 @@ from horizon.browsers import views
 
 title = _("Policies")
 urlpatterns = [
-  url('', views.AngularIndexView.as_view(title=title), name='index'),
+    url('', views.AngularIndexView.as_view(title=title), name='index'),
 ]

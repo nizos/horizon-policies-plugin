@@ -1,13 +1,33 @@
-from policies_plugin.api.models.policy import Policy
-from oslo_policy import generator, policy, _parser
-from django.http import HttpResponse
-from openstack_auth import policy as verify
+# Licensed under the Apache License, Version 2.0 (the "License"); you may
+# not use this file except in compliance with the License. You may obtain
+# a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+# License for the specific language governing permissions and limitations
+# under the License.
+
 import json
+
 import logging
+
+from django.http import HttpResponse
+
+from openstack_auth import policy as verify
+
+from oslo_policy import _parser
+from oslo_policy import generator
+from oslo_policy import policy
+
+from policies_plugin.api.models.policy import Policy
+
 
 LOG = logging.getLogger(__name__)
 
-# Client that manages policy rules
+
 class Client:
 
     # Get a single rule by specifying its project and target values
@@ -16,7 +36,7 @@ class Client:
         # Verify that the user attempting this is authorized to do so.
         if not verify.check((("identity", "identity:get_policy"),), request):
             resp = HttpResponse()
-            resp.status_code = 404 # 404 due to 401 foring system logout.
+            resp.status_code = 404  # 404 due to 401 foring system logout.
             return resp
 
         # Get the current rules from the policy file
@@ -37,20 +57,21 @@ class Client:
     # Modify single rule by providing its values in the request parameter
     def set_rule(self, request):
         # Verify that the user attempting this is authorized to do so.
-        if not verify.check((("identity", "identity:modify_policy"),), request):
+        if not verify.check((("identity", "identity:modify_policy"),),
+                            request):
             resp = HttpResponse()
-            resp.status_code = 404 # 404 due to 401 foring system logout.
+            resp.status_code = 404  # 404 due to 401 foring system logout.
             return resp
 
         # Test the parsing of the rule before proceeding
         new_rule = request.DATA
         try:
-           val = self.test_parsing(new_rule['rule'])
+            self.test_parsing(new_rule['rule'])
         except ValueError as e:
-           resp = HttpResponse()
-           resp.status_code = 400
-           resp.content = str(e)
-           return resp
+            resp = HttpResponse()
+            resp.status_code = 400
+            resp.content = str(e)
+            return resp
 
         # Ensure that existing rules are up to date
         enforcer = generator._get_enforcer("keystone")
@@ -58,27 +79,30 @@ class Client:
 
         # Create a dictionary of the existing rules
         current_rules_list = [policy.RuleDefault(name, default.check_str)
-                    for name, default in enforcer.file_rules.items()]
+                              for name, default in enforcer.file_rules.items()]
         current_rules_dict = {'rules': current_rules_list}
 
         # Create a new rules dictionary
         new_rules_dict = dict()
 
-        # Loop through the existing rules and add them to the new rules dictionary
+        # Loop through the existing rules and add them
+        # to the new rules dictionary
         for rule in sorted(current_rules_dict.keys()):
             rule_defaults = current_rules_dict[rule]
             for rule_default in rule_defaults:
                 # add the rules to the new rules dictionary
                 new_rules_dict[rule_default.name] = rule_default.check_str
 
-        # Get the new rules identifier and add/update it in the new rules dictionary
-        new_rule_id = self.get_identifier(new_rule['project'], new_rule['target'])
+        # Get the new rules identifier and add/update it in
+        # the new rules dictionary
+        new_rule_id = self.get_identifier(new_rule['project'],
+                                          new_rule['target'])
         new_rules_dict[new_rule_id] = new_rule['rule']
 
         # Write the new rules dictionary to the policy file
         with open('/etc/keystone/policy.json', 'w') as policyfile:
             json.dump(new_rules_dict, policyfile,
-                sort_keys=True, indent=4, separators=(',', ': '))
+                      sort_keys=True, indent=4, separators=(',', ': '))
 
         # Return a success status code
         resp = HttpResponse()
@@ -91,7 +115,7 @@ class Client:
         # Verify that the user attempting this is authorized to do so.
         if not verify.check((("identity", "identity:get_policy"),), request):
             resp = HttpResponse()
-            resp.status_code = 404 # 404 due to 401 foring system logout.
+            resp.status_code = 404  # 404 due to 401 foring system logout.
             return resp
 
         # Ensure that existing rules are up to date
@@ -100,33 +124,35 @@ class Client:
 
         # Create a dictionary of the existing rules
         current_rules_list = [policy.RuleDefault(name, default.check_str)
-                    for name, default in enforcer.file_rules.items()]
+                              for name, default in enforcer.file_rules.items()]
         registered_rules_list = [policy.RuleDefault(name, default.check_str)
-                            for name, default in enforcer.registered_rules.items()
-                            if name not in enforcer.file_rules]
+                                 for name, default in
+                                 enforcer.registered_rules.items()
+                                 if name not in enforcer.file_rules]
         all_rules_dict = {'rules': current_rules_list + registered_rules_list}
 
         # Create a rules list
         rules = []
         # Loop through all the rules and append them to the rules list
-        for rule in generator._sort_and_format_by_section(all_rules_dict, include_help=False):
+        for rule in generator._sort_and_format_by_section(all_rules_dict,
+                                                          include_help=False):
             rules.append(Policy().from_line(rule.rstrip()).to_json())
         return rules
-
 
     def set_rules(self, request):
 
         # Verify that the user attempting this is authorized to do so.
-        if not verify.check((("identity", "identity:modify_policy"),), request):
+        if not verify.check((("identity", "identity:modify_policy"),),
+                            request):
             resp = HttpResponse()
-            resp.status_code = 404 # 404 due to 401 foring system logout.
+            resp.status_code = 404  # 404 due to 401 foring system logout.
             return resp
 
         # Test the parsing of the new rules before proceeding for early failure
         new_rules = request.DATA
         for new_rule in new_rules:
             try:
-                val = self.test_parsing(new_rule['rule'])
+                self.test_parsing(new_rule['rule'])
             except ValueError as e:
                 resp = HttpResponse()
                 resp.status_code = 400
@@ -138,7 +164,7 @@ class Client:
         enforcer.load_rules()
         # Create a dict of the existing rules
         current_rules_list = [policy.RuleDefault(name, default.check_str)
-                    for name, default in enforcer.file_rules.items()]
+                              for name, default in enforcer.file_rules.items()]
         current_rules_dict = {'rules': current_rules_list}
         # Create a new rules dictionary
         new_rules_dict = dict()
@@ -153,14 +179,15 @@ class Client:
         # Loop through the new rules sent in the request
         for new_rule in new_rules:
             # Create an identifier using the rule's project and target
-            new_rule_id = self.get_identifier(new_rule['project'], new_rule['target'])
+            new_rule_id = self.get_identifier(new_rule['project'],
+                                              new_rule['target'])
             # Add/Update the new rule in the new rules dictionary
             new_rules_dict[new_rule_id] = new_rule['rule']
 
         # Write the new rules dict to the policy file
         with open('/etc/keystone/policy.json', 'w') as policyfile:
             json.dump(new_rules_dict, policyfile,
-                sort_keys=True, indent=4, separators=(',', ': '))
+                      sort_keys=True, indent=4, separators=(',', ': '))
 
         # Return 200 OK, everything went well.
         resp = HttpResponse()
@@ -170,7 +197,7 @@ class Client:
     # Tests the parsing of the rule values
     def test_parsing(self, rule):
         try:
-            rule_in_quotes = "\""+rule+"\""
+            rule_in_quotes = "\"" + rule + "\""
             kind, match = rule_in_quotes.split(':', 1)
         except Exception:
             raise ValueError('Failed to understand rule %s'.format(*rule))
@@ -188,6 +215,6 @@ class Client:
     # Creates an identifier for a rule provided its project and target
     def get_identifier(self, project, target):
         if (project != "global"):
-            return project+":"+target
+            return project + ":" + target
         else:
             return target
