@@ -247,7 +247,7 @@
         // Editor functions
         function openInEditor(policy) {
             $scope.clearAllSelected();
-            selectPolicy(policy);
+            $scope.selectPolicy(policy);
             $scope.openEditorModal();
         };
 
