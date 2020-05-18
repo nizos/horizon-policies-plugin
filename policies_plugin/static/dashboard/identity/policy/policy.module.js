@@ -40,6 +40,7 @@
             'horizon.dashboard.identity.policy.model.policies-model',
             'horizon.dashboard.identity.policy.svg-icons',
             'horizon.dashboard.identity.policy.policies.components',
+            'horizon.dashboard.identity.policy.policies.components.confirm-dialog',
             'horizon.dashboard.identity.policy.policies.components.plugin-info',
             'horizon.dashboard.identity.policy.policies.components.policies-details',
             'horizon.dashboard.identity.policy.policies.components.policies-editor.editor-autocomplete',

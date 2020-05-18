@@ -1,166 +1,179 @@
-<div ng-controller="TableController">
+<div ng-controller="TableController as $ctrl">
 
-    <!-- Manage buttons -->
-    <div class="actions-bar" ng-class="{'actions-visible': (actionsBarVisible)}">
-        <p class="manager-text" ng-class="{'actions-visible': (actionsBarVisible)}">{$ selectedPolicies.length $} policies selected</p>
+    <!-- Policies action bar -->
+    <div class="actions-bar" ng-class="{'actions-visible': ($ctrl.actionsBarVisible)}">
+
+        <!-- Selection count -->
+        <p class="manager-text" ng-class="{'actions-visible': ($ctrl.actionsBarVisible)}">{$ $ctrl.selectedPolicies.length $} policies selected</p>
+
+        <!-- Action bar buttons group -->
         <div class="btn-group actions-bar-buttons-group">
-            <button class="btn btn-default actions-bar-button" id="reset-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (actionsBarVisible)}" type="button" title="Reset selected">
-                <svg-icons p="history" id="reset-btn"></svg-icons> Reset
+
+            <!-- Restore selected button -->
+            <button class="btn btn-default actions-bar-button" id="reset-button" ng-click="$ctrl.confirmRestorePolicies()" ng-class="{'actions-visible': ($ctrl.actionsBarVisible)}" type="button" title="Reset selected">
+                <svg-icons p="history" id="reset-btn"></svg-icons> Restore
             </button>
-            <button class="btn btn-default actions-bar-button" id="download-button" ng-click="downloadSelected()" ng-class="{'actions-visible': (actionsBarVisible)}" type="button" title="Download selected">
+
+            <!-- Download selected button -->
+            <button class="btn btn-default actions-bar-button" id="download-button" ng-click="$ctrl.downloadSelected()" ng-class="{'actions-visible': ($ctrl.actionsBarVisible)}" type="button" title="Download selected">
                 <svg-icons p="file_download" id="download-btn"></svg-icons> Download
             </button>
-            <button class="btn btn-default actions-bar-button" id="edit-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (actionsBarVisible)}" type="button" title="Edit selected">
+
+            <!-- Edit selected button -->
+            <button class="btn btn-default actions-bar-button" id="edit-button" ng-click="$ctrl.openEditorModal()" ng-class="{'actions-visible': ($ctrl.actionsBarVisible)}" type="button" title="Edit selected">
                 <svg-icons p="pen_square" id="edit-btn"></svg-icons> Edit
             </button>
-            <button class="btn btn-default actions-bar-button" id="clear-button" ng-click="clearAllSelected()" ng-class="{'actions-visible': (actionsBarVisible)}" type="button" title="Clear selected">
+
+            <!-- Clear all selected button -->
+            <button class="btn btn-default actions-bar-button" id="clear-button" ng-click="$ctrl.clearAllSelected()" ng-class="{'actions-visible': ($ctrl.actionsBarVisible)}" type="button" title="Clear selected">
                 <svg-icons p="times_circle_solid" id="clear-btn"></svg-icons> Clear
             </button>
         </div>
     </div>
 
     <!-- Table -->
-    <table class="policies-table" ng-class="{'actions-visible': (actionsBarVisible)}">
+    <table class="policies-table" ng-class="{'actions-visible': ($ctrl.actionsBarVisible)}">
         <!-- Table headers -->
         <thead>
-            <!-- Table headers row-->
             <tr>
-
                 <!-- Checkbox column header -->
                 <th class="non-resizable-column" id="checkbox-column-header">
                     <div class="col-header col-check" title="Select all rows">
-                        <input class="table-checkbox" type="checkbox" ng-model="selectAll" ng-checked="selectAll" ng-init="selectAll=false" ng-change="toggleSelectAll()">
+                        <input class="table-checkbox" type="checkbox" ng-model="$ctrl.selectAll" ng-checked="$ctrl.selectAll" ng-init="$ctrl.selectAll=false" ng-change="$ctrl.toggleSelectAll()">
                     </div>
                 </th>
 
                 <!-- Expander column header -->
                 <th class="non-resizable-column" id="expander-column-header">
-                    <div class="col-header col-expander" ng-click="toggleExpandAll()">
-                        <span title="Expand all" ng-if="!expandAll"
-                                    class="fa fa-chevron-right"
-                                    duration="200">
-                        </span>
-                        <span ng-if="expandAll"
-                                class="fa fa-chevron-down"
-                                duration="200">
-                        </span>
+                    <div class="col-header col-expander" ng-click="$ctrl.toggleExpandAll()">
+                        <span ng-if="!$ctrl.expandAll" class="fa fa-chevron-right" title="Expand all" duration="200"></span>
+                        <span ng-if="$ctrl.expandAll" class="fa fa-chevron-down" title="Colapse all" duration="200"></span>
                     </div>
                 </th>
 
                 <!-- Project column header -->
-                <th class="resizable-column" id="project-column-header" ng-show="visibleColumns.project">
-                    <div class="col-header col-project" title="Sort by project" ng-click="sortPolicies('project')">Project
-                        <span ng-show="sortColumn == 'project'">
-                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
-                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
+                <th class="resizable-column" id="project-column-header" ng-show="$ctrl.visibleColumns.project">
+                    <div class="col-header col-project" title="Sort by project" ng-click="$ctrl.sortPolicies('project')">Project
+                        <span ng-show="$ctrl.sortColumn == 'project'">
+                            <span ng-show="!$ctrl.sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="$ctrl.sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Target column header -->
-                <th class="resizable-column" id="target-column-header" ng-show="visibleColumns.target">
-                    <div class="col-header col-target" title="Sort by target" ng-click="sortPolicies('target')">Target
-                        <span ng-show="sortColumn == 'target'">
-                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
-                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
+                <th class="resizable-column" id="target-column-header" ng-show="$ctrl.visibleColumns.target">
+                    <div class="col-header col-target" title="Sort by target" ng-click="$ctrl.sortPolicies('target')">Target
+                        <span ng-show="$ctrl.sortColumn == 'target'">
+                            <span ng-show="!$ctrl.sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="$ctrl.sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Rule column header -->
-                <th class="resizable-column" id="rule-column-header" ng-show="visibleColumns.rule">
-                    <div class="col-header col-rule" title="Sort by rule" ng-click="sortPolicies('rule')">Rule
-                        <span ng-show="sortColumn == 'rule'">
-                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
-                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
+                <th class="resizable-column" id="rule-column-header" ng-show="$ctrl.visibleColumns.rule">
+                    <div class="col-header col-rule" title="Sort by rule" ng-click="$ctrl.sortPolicies('rule')">Rule
+                        <span ng-show="$ctrl.sortColumn == 'rule'">
+                            <span ng-show="!$ctrl.sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="$ctrl.sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Default rule column header -->
-                <th class="resizable-column" id="default-column-header" ng-show="visibleColumns.defaultRule">
-                    <div class="col-header col-default" title="Sort by default" ng-click="sortPolicies('defaultRule')">Default
-                        <span ng-show="sortColumn == 'defaultRule'">
-                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
-                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
+                <th class="resizable-column" id="default-column-header" ng-show="$ctrl.visibleColumns.defaultRule">
+                    <div class="col-header col-default" title="Sort by default" ng-click="$ctrl.sortPolicies('defaultRule')">Default
+                        <span ng-show="$ctrl.sortColumn == 'defaultRule'">
+                            <span ng-show="!$ctrl.sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="$ctrl.sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Scopes column header -->
-                <th class="resizable-column" id="scopes-column-header" ng-show="visibleColumns.scopes">
-                    <div class="col-header col-scopes" title="Sort by scopes" ng-click="sortPolicies('scopes')">Scopes
-                        <span ng-show="sortColumn == 'scopes'">
-                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
-                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
+                <th class="resizable-column" id="scopes-column-header" ng-show="$ctrl.visibleColumns.scopes">
+                    <div class="col-header col-scopes" title="Sort by scopes" ng-click="$ctrl.sortPolicies('scopes')">Scopes
+                        <span ng-show="$ctrl.sortColumn == 'scopes'">
+                            <span ng-show="!$ctrl.sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="$ctrl.sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Operations column header -->
-                <th class="resizable-column" id="operations-column-header" ng-show="visibleColumns.operations">
-                    <div class="col-header col-operations" title="Sort by operations" ng-click="sortPolicies('operations')">Operations
-                        <span ng-show="sortColumn == 'operations'">
-                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
-                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
+                <th class="resizable-column" id="operations-column-header" ng-show="$ctrl.visibleColumns.operations">
+                    <div class="col-header col-operations" title="Sort by operations" ng-click="$ctrl.sortPolicies('operations')">Operations
+                        <span ng-show="$ctrl.sortColumn == 'operations'">
+                            <span ng-show="!$ctrl.sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="$ctrl.sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Description column header -->
-                <th class="resizable-column" id="description-column-header" ng-show="visibleColumns.description">
-                    <div class="col-header col-description" title="Sort by description" ng-click="sortPolicies('description')">Description
-                        <span ng-show="sortColumn == 'description'">
-                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
-                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
+                <th class="resizable-column" id="description-column-header" ng-show="$ctrl.visibleColumns.description">
+                    <div class="col-header col-description" title="Sort by description" ng-click="$ctrl.sortPolicies('description')">Description
+                        <span ng-show="$ctrl.sortColumn == 'description'">
+                            <span ng-show="!$ctrl.sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="$ctrl.sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
-                <!-- Table settings column header -->
+                <!-- Table settings drop-down button -->
                 <th class="non-resizable-column">
                     <div class="col-header col-settings" title="Customize table view">
                         <div class="btn-group table-settings-button" uib-dropdown auto-close="outsideClick">
                             <svg-icons p="bars" title="Table settings" id="table-settings-button" uib-dropdown-toggle></svg-icons>
-                            <!-- Settings button drop down menu-->
+
+                            <!-- Table settings drop-down menu -->
                             <ul class="dropdown-menu dropdown-menu-right table-settings-menu" uib-dropdown-menu role="menu" aria-labelledby="table-settings-button">
-                                <!-- Show/hide project column in policies table -->
-                                <li class="table-settings-menu-item" role="menuitem">Columns</li>
+
+                                <!-- Visible columns section title -->
+                                <li class="table-settings-menu-item" role="menuitem">Visible columns</li>
                                 <li class="divider"></li>
 
+                                <!-- Project column display option -->
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" id="projectFilter" ng-model="visibleColumns.project" ng-checked="visibleColumns.project" ng-change="storeVisibleColumns()"/> Project
+                                    <input type="checkbox" id="projectFilter" ng-model="$ctrl.visibleColumns.project" ng-checked="$ctrl.visibleColumns.project" ng-change="$ctrl.storeVisibleColumns()"/> Project
                                 </li>
 
+                                <!-- Target column display option -->
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="visibleColumns.target" ng-checked="visibleColumns.target" ng-change="storeVisibleColumns()"/> Target
+                                    <input type="checkbox" ng-model="$ctrl.visibleColumns.target" ng-checked="$ctrl.visibleColumns.target" ng-change="$ctrl.storeVisibleColumns()"/> Target
                                 </li>
 
+                                <!-- Rule column display option -->
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="visibleColumns.rule" ng-checked="visibleColumns.rule" ng-change="storeVisibleColumns()"/> Rule
+                                    <input type="checkbox" ng-model="$ctrl.visibleColumns.rule" ng-checked="$ctrl.visibleColumns.rule" ng-change="$ctrl.storeVisibleColumns()"/> Rule
                                 </li>
 
+                                <!-- Default rule column display option -->
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="visibleColumns.defaultRule" ng-checked="visibleColumns.defaultRule" ng-change="storeVisibleColumns()"/> Default
+                                    <input type="checkbox" ng-model="$ctrl.visibleColumns.defaultRule" ng-checked="$ctrl.visibleColumns.defaultRule" ng-change="$ctrl.storeVisibleColumns()"/> Default
                                 </li>
 
+                                <!-- Scopes column display option -->
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="visibleColumns.scopes" ng-checked="visibleColumns.scopes" ng-change="storeVisibleColumns()"/> Scopes
+                                    <input type="checkbox" ng-model="$ctrl.visibleColumns.scopes" ng-checked="$ctrl.visibleColumns.scopes" ng-change="$ctrl.storeVisibleColumns()"/> Scopes
                                 </li>
 
+                                <!-- Operations column display option -->
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="visibleColumns.operations" ng-checked="visibleColumns.operations" ng-change="storeVisibleColumns()"/> Operations
+                                    <input type="checkbox" ng-model="$ctrl.visibleColumns.operations" ng-checked="$ctrl.visibleColumns.operations" ng-change="$ctrl.storeVisibleColumns()"/> Operations
                                 </li>
 
+                                <!-- Description column display option -->
                                 <li class="table-settings-menu-item" role="menuitem">
-                                    <input type="checkbox" ng-model="visibleColumns.description" ng-checked="visibleColumns.description" ng-change="storeVisibleColumns()"/> Description
+                                    <input type="checkbox" ng-model="$ctrl.visibleColumns.description" ng-checked="$ctrl.visibleColumns.description" ng-change="$ctrl.storeVisibleColumns()"/> Description
                                 </li>
-
                                 <li class="divider"></li>
 
+                                <!-- Items per page section title -->
                                 <li class="table-settings-menu-item" role="menuitem">Results per page</li>
                                 <div class="select-control">
-                                    <select ng-model="policies.itemsPerPage" id="itemsPerPage" class="form-control" ng-change="itemsPerPageChanged(policies.itemsPerPage)">
+                                    <select ng-model="$ctrl.policies.itemsPerPage" id="itemsPerPage" class="form-control" ng-change="$ctrl.itemsPerPageChanged($ctrl.policies.itemsPerPage)">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
                                         <option value="50">50</option>
@@ -178,7 +191,7 @@
         <!-- Table body -->
         <tbody>
             <!-- Table body rows -->
-            <tr ng-repeat-start="policy in policies.filteredPolicies | limitTo:policies.itemsPerPage:policies.currentPage*policies.itemsPerPage track by $index" ng-class-even="'even-table-item'" context-menu="menuOptions">
+            <tr ng-repeat-start="policy in $ctrl.policies.filteredPolicies | limitTo:$ctrl.policies.itemsPerPage:$ctrl.policies.currentPage*$ctrl.policies.itemsPerPage track by $index" ng-class-even="'even-table-item'" context-menu="$ctrl.menuOptions">
 
                 <!--  Checkbox column content -->
                 <td id="checkbox-column-body" class="multi_select_column">
@@ -188,7 +201,7 @@
                         ng-model="policy.selected"
                         ng-checked="policy.selected"
                         ng-init="policy.selected=false"
-                        ng-change="toggleSelect()"/>
+                        ng-change="$ctrl.toggleSelect()"/>
                     </div>
                 </td>
 
@@ -201,118 +214,94 @@
                 </td>
 
                 <!--  Project column content -->
-                <td id="project-column-body" ng-show="visibleColumns.project">
+                <td id="project-column-body" ng-show="$ctrl.visibleColumns.project">
                     <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 20px;">
-                            <span tooltip-placement="top" uib-tooltip="{$ policy.project $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">
-                                {$ policy.project $}
-                            </span>
+                            <span tooltip-placement="top" uib-tooltip="{$ policy.project $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">{$ policy.project $}</span>
                         </div>
                     </span>
                     <span ng-if="policy.expanded">
-                        <div class="wrap" style="max-height: 500px;">
-                            {$ policy.project $}
-                        </div>
+                        <div class="wrap" style="max-height: 500px;">{$ policy.project $}</div>
                     </span>
                 </td>
 
                 <!--  Target column content -->
-                <td id="target-column-body" ng-show="visibleColumns.target">
+                <td id="target-column-body" ng-show="$ctrl.visibleColumns.target">
                     <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 20px;">
-                            <span tooltip-placement="top" uib-tooltip="{$ policy.target $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">
-                                {$ policy.target $}
-                            </span>
+                            <span tooltip-placement="top" uib-tooltip="{$ policy.target $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">{$ policy.target $}</span>
                         </div>
                     </span>
                     <span ng-if="policy.expanded">
-                        <div class="wrap" style="max-height: 500px;">
-                            {$ policy.target $}
-                        </div>
+                        <div class="wrap" style="max-height: 500px;">{$ policy.target $}</div>
                     </span>
                 </td>
 
                 <!--  Rule column content -->
-                <td id="rule-column-body" ng-show="visibleColumns.rule">
+                <td id="rule-column-body" ng-show="$ctrl.visibleColumns.rule">
                     <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 20px;">
                             <span ng-if="!policy.editMode" tooltip-placement="top" uib-tooltip="{$ policy.rule $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">
-                                <a ng-click="OpenDetailsModal(policy)">{$ policy.rule $}</a>
+                                <a ng-click="$ctrl.OpenDetailsModal(policy)">{$ policy.rule $}</a>
                             </span>
                         </div>
                     </span>
                     <span ng-if="policy.expanded && !policy.editMode">
                         <div class="wrap" style="max-height: 500px;">
-                            <a ng-click="OpenDetailsModal(policy)">{$ policy.rule $}</a>
+                            <a ng-click="$ctrl.OpenDetailsModal(policy)">{$ policy.rule $}</a>
                         </div>
                     </span>
                 </td>
 
                 <!--  Default rule column content -->
-                <td id="default-column-body" ng-show="visibleColumns.defaultRule">
+                <td id="default-column-body" ng-show="$ctrl.visibleColumns.defaultRule">
                     <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 20px;">
-                            <span tooltip-placement="top" uib-tooltip="{$ policy.defaultRule $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">
-                                {$ policy.defaultRule  $}
-                            </span>
+                            <span tooltip-placement="top" uib-tooltip="{$ policy.defaultRule $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">{$ policy.defaultRule $}</span>
                         </div>
                     </span>
                     <span ng-if="policy.expanded">
-                        <div class="wrap" style="max-height: 500px;">
-                            {$ policy.defaultRule $}
-                        </div>
+                        <div class="wrap" style="max-height: 500px;">{$ policy.defaultRule $}</div>
                     </span>
                 </td>
 
                 <!--  Scopes column content -->
-                <td id="scopes-column-body" ng-show="visibleColumns.scopes">
+                <td id="scopes-column-body" ng-show="$ctrl.visibleColumns.scopes">
                     <div ng-if="!policy.expanded" class="wrap" style="max-height: 20px;">
-                        <div ng-repeat="scope in policy.scopes track by $index">
-                            <span tooltip-placement="top" uib-tooltip="{$ policy.scopes $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">
-                                {$ scope  $}
-                            </span>
-                        </div>
+                        <span ng-repeat="scope in policy.scopes track by $index">
+                            <span tooltip-placement="top" uib-tooltip="{$ policy.scopes $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">{$ scope $} </span>
+                        </span>
                     </div>
                     <div ng-if="policy.expanded" class="wrap" style="max-height: 500px;">
-                        <div ng-repeat="scope in policy.scopes track by $index">
-                            <span tooltip-placement="top" uib-tooltip="{$ policy.scopes $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">
-                                {$ scope $}
-                            </span>
-                        </div>
+                        <span ng-repeat="scope in policy.scopes track by $index">
+                            <span tooltip-placement="top" uib-tooltip="{$ policy.scopes $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">{$ scope $} </span>
+                        </span>
                     </div>
                 </td>
 
                 <!--  Operations column content -->
-                <td id="operations-column-body" ng-show="visibleColumns.operations">
+                <td id="operations-column-body" ng-show="$ctrl.visibleColumns.operations">
                     <div ng-if="!policy.expanded" class="wrap" style="max-height: 20px;">
                         <div ng-repeat="operation in policy.operations track by $index">
-                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.operations $}" tooltip-popup-delay="500" tooltip-class="policies-top">
-                                {$ operation $}
-                            </span>
+                            <span tooltip-placement="bottom" uib-tooltip="{$ policy.operations $}" tooltip-popup-delay="500" tooltip-class="policies-top">{$ operation $}</span>
                         </div>
                     </div>
                     <div ng-if="policy.expanded" class="wrap" style="max-height: 500px;">
                         <div ng-repeat="operation in policy.operations track by $index">
-                            <span tooltip-placement="top" uib-tooltip="{$ policy.operations $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">
-                                {$ operation $}
-                            </span>
+                            <span tooltip-placement="top" uib-tooltip="{$ policy.operations $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">{$ operation $}</span>
                         </div>
                     </div>
                 </td>
 
                 <!--  Description column content -->
-                <td id="description-column-body" ng-show="visibleColumns.description">
+                <td id="description-column-body" ng-show="$ctrl.visibleColumns.description">
                     <span ng-if="!policy.expanded">
                         <div class="wrap" style="max-height: 20px;">
-                            <span tooltip-placement="top" uib-tooltip="{$ policy.description $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">
-                                {$ policy.description $}
-                            </span>
+                            <span tooltip-placement="top" uib-tooltip="{$ policy.description $}" tooltip-popup-delay="500" tooltip-class="policies-tooltip">{$ policy.description $}</span>
                         </div>
                     </span>
                     <span ng-if="policy.expanded">
-                        <div class="wrap" style="max-height: 500px;">
-                            {$ policy.description $}
-                        </div>
+                        <div class="wrap" style="max-height: 500px;">{$ policy.description $}</div>
                     </span>
                 </td>
 
@@ -322,5 +311,4 @@
             <tr ng-repeat-end></tr>
         </tbody>
     </table>
-
 </div>

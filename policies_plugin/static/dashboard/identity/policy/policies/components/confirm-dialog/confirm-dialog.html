@@ -1,0 +1,20 @@
+<!-- Confirmation dialog -->
+<div ng-controller="TableController">
+    <!-- Modal Header -->
+    <div class="modal-header"><h3 class="modal-title" id="modal-title">Confirm action</h3></div>
+
+     <!-- Modal Body -->
+    <div class="modal-body"><p>{$ $ctrl.dialog $}</p></div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+        <!-- Cancel Button -->
+        <button class="btn btn-warning" type="button" ng-click="cancel()">
+            <span class="fa fa-times"></span> Cancel
+        </button>
+        <!-- OK Button -->
+        <button class="btn btn-primary" type="button" ng-click="confirm()">
+            <span class="fa fa-check"></span> Ok
+        </button>
+    </div>
+</div>

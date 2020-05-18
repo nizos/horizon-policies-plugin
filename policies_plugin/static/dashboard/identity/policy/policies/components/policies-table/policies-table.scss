@@ -93,8 +93,8 @@
     position: sticky;
     top: 67px;
     background-color: #f2f2f2;
-    -webkit-transition: all ease 0.2s;
-            transition: all ease 0.2s;
+    -webkit-transition: top 0.2s;
+            transition: top 0.2s;
 }
 
 /* Policies table header when actions bar is hidden */
@@ -102,8 +102,8 @@
     position: sticky;
     top: 37px;
     background-color: #f2f2f2;
-    -webkit-transition: all ease 0.2s;
-            transition: all ease 0.2s;
+    -webkit-transition: top 0.2s;
+            transition: top 0.2s;
 }
 
 #reset-button {
