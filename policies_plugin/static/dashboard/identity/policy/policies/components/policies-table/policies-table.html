@@ -1,51 +1,26 @@
 <div ng-controller="TableController">
 
     <!-- Manage buttons -->
-    <div class="manage-desktop">
-    <div class="actions-bar" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}">
-        <p class="manager-text" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}">{$ selectedPolicies.policies.length $} policies selected</p>
+    <div class="actions-bar" ng-class="{'actions-visible': (actionsBarVisible)}">
+        <p class="manager-text" ng-class="{'actions-visible': (actionsBarVisible)}">{$ selectedPolicies.length $} policies selected</p>
         <div class="btn-group actions-bar-buttons-group">
-            <button class="btn btn-default actions-bar-button" id="reset-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Reset selected">
+            <button class="btn btn-default actions-bar-button" id="reset-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (actionsBarVisible)}" type="button" title="Reset selected">
                 <svg-icons p="history" id="reset-btn"></svg-icons> Reset
             </button>
-            <button class="btn btn-default actions-bar-button" id="download-button" ng-click="downloadSelected()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Download selected">
+            <button class="btn btn-default actions-bar-button" id="download-button" ng-click="downloadSelected()" ng-class="{'actions-visible': (actionsBarVisible)}" type="button" title="Download selected">
                 <svg-icons p="file_download" id="download-btn"></svg-icons> Download
             </button>
-            <button class="btn btn-default actions-bar-button" id="edit-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Edit selected">
+            <button class="btn btn-default actions-bar-button" id="edit-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (actionsBarVisible)}" type="button" title="Edit selected">
                 <svg-icons p="pen_square" id="edit-btn"></svg-icons> Edit
             </button>
-            <button class="btn btn-default actions-bar-button" id="clear-button" ng-click="clearAllSelections()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Clear selected">
+            <button class="btn btn-default actions-bar-button" id="clear-button" ng-click="clearAllSelected()" ng-class="{'actions-visible': (actionsBarVisible)}" type="button" title="Clear selected">
                 <svg-icons p="times_circle_solid" id="clear-btn"></svg-icons> Clear
             </button>
         </div>
     </div>
-</div>
 
-    <!-- responsiv manage button -->
-<div class="responsiv-manage">
-    <div class="actions-bar" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}">
-        <div class="btn-group table-settings-button" uib-dropdown auto-close="outsideClick">
-            <svg-icons p="bars" title="Table settings" id="table-settings-button" uib-dropdown-toggle></svg-icons>
-            <!-- Settings button drop down menu-->
-            <ul class="dropdown-menu-responsiv dropdown-menu-right table-settings-menu" uib-dropdown-menu role="menu" aria-labelledby="table-settings-button">
-                <li><button class="btn btn-default actions-bar-button" id="reset-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Reset selected">
-                    <svg-icons p="history" id="reset-btn"></svg-icons> Reset
-                </button></li>
-                <li><button class="btn btn-default actions-bar-button" id="download-button" ng-click="downloadSelected()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Download selected">
-                    <svg-icons p="file_download" id="download-btn"></svg-icons> Download
-                </button></li>
-                <li><button class="btn btn-default actions-bar-button" id="edit-button" ng-click="openEditorModal()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Edit selected">
-                    <svg-icons p="pen_square" id="edit-btn"></svg-icons> Edit
-                </button></li>
-                <li><button class="btn btn-default actions-bar-button" id="clear-button" ng-click="clearAllSelections()" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}" type="button" title="Clear selected">
-                    <svg-icons p="times_circle_solid" id="clear-btn"></svg-icons> Clear
-                </button></li>
-                </ul>
-                </div>
-                </div>
-                </div>
     <!-- Table -->
-    <table class="policies-table" ng-class="{'actions-visible': (selectedPolicies.policies.length > 0)}">
+    <table class="policies-table" ng-class="{'actions-visible': (actionsBarVisible)}">
         <!-- Table headers -->
         <thead>
             <!-- Table headers row-->
@@ -54,13 +29,13 @@
                 <!-- Checkbox column header -->
                 <th class="non-resizable-column" id="checkbox-column-header">
                     <div class="col-header col-check" title="Select all rows">
-                        <input class="table-checkbox" type="checkbox" ng-model="selectAllCheckBox" ng-checked="selectAllCheckBox" ng-init="selectAllCheckBox=false" ng-change="toggleSelectAll()">
+                        <input class="table-checkbox" type="checkbox" ng-model="selectAll" ng-checked="selectAll" ng-init="selectAll=false" ng-change="toggleSelectAll()">
                     </div>
                 </th>
 
                 <!-- Expander column header -->
                 <th class="non-resizable-column" id="expander-column-header">
-                    <div class="col-header col-expander" ng-click="">
+                    <div class="col-header col-expander" ng-click="toggleExpandAll()">
                         <span title="Expand all" ng-if="!expandAll"
                                     class="fa fa-chevron-right"
                                     duration="200">
@@ -74,70 +49,70 @@
 
                 <!-- Project column header -->
                 <th class="resizable-column" id="project-column-header" ng-show="visibleColumns.project">
-                    <div class="col-header col-project" title="Sort by project" ng-click="sortColumn('project')">Project
-                        <span ng-show="column == 'project'">
-                            <span ng-show="!reverse" class="fa fa-sort-down"></span>
-                            <span ng-show="reverse" class="fa fa-sort-up"></span>
+                    <div class="col-header col-project" title="Sort by project" ng-click="sortPolicies('project')">Project
+                        <span ng-show="sortColumn == 'project'">
+                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Target column header -->
                 <th class="resizable-column" id="target-column-header" ng-show="visibleColumns.target">
-                    <div class="col-header col-target" title="Sort by target" ng-click="sortColumn('target')">Target
-                        <span ng-show="column == 'target'">
-                            <span ng-show="!reverse" class="fa fa-sort-down"></span>
-                            <span ng-show="reverse" class="fa fa-sort-up"></span>
+                    <div class="col-header col-target" title="Sort by target" ng-click="sortPolicies('target')">Target
+                        <span ng-show="sortColumn == 'target'">
+                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Rule column header -->
                 <th class="resizable-column" id="rule-column-header" ng-show="visibleColumns.rule">
-                    <div class="col-header col-rule" title="Sort by rule" ng-click="sortColumn('rule')">Rule
-                        <span ng-show="column == 'rule'">
-                            <span ng-show="!reverse" class="fa fa-sort-down"></span>
-                            <span ng-show="reverse" class="fa fa-sort-up"></span>
+                    <div class="col-header col-rule" title="Sort by rule" ng-click="sortPolicies('rule')">Rule
+                        <span ng-show="sortColumn == 'rule'">
+                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Default rule column header -->
                 <th class="resizable-column" id="default-column-header" ng-show="visibleColumns.defaultRule">
-                    <div class="col-header col-default" title="Sort by default" ng-click="sortColumn('defaultRule')">Default
-                        <span ng-show="column == 'defaultRule'">
-                            <span ng-show="!reverse" class="fa fa-sort-down"></span>
-                            <span ng-show="reverse" class="fa fa-sort-up"></span>
+                    <div class="col-header col-default" title="Sort by default" ng-click="sortPolicies('defaultRule')">Default
+                        <span ng-show="sortColumn == 'defaultRule'">
+                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Scopes column header -->
                 <th class="resizable-column" id="scopes-column-header" ng-show="visibleColumns.scopes">
-                    <div class="col-header col-scopes" title="Sort by scopes" ng-click="sortColumn('scopes')">Scopes
-                        <span ng-show="column == 'scopes'">
-                            <span ng-show="!reverse" class="fa fa-sort-down"></span>
-                            <span ng-show="reverse" class="fa fa-sort-up"></span>
+                    <div class="col-header col-scopes" title="Sort by scopes" ng-click="sortPolicies('scopes')">Scopes
+                        <span ng-show="sortColumn == 'scopes'">
+                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Operations column header -->
                 <th class="resizable-column" id="operations-column-header" ng-show="visibleColumns.operations">
-                    <div class="col-header col-operations" title="Sort by operations" ng-click="sortColumn('operations')">Operations
-                        <span ng-show="column == 'operations'">
-                            <span ng-show="!reverse" class="fa fa-sort-down"></span>
-                            <span ng-show="reverse" class="fa fa-sort-up"></span>
+                    <div class="col-header col-operations" title="Sort by operations" ng-click="sortPolicies('operations')">Operations
+                        <span ng-show="sortColumn == 'operations'">
+                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
 
                 <!-- Description column header -->
                 <th class="resizable-column" id="description-column-header" ng-show="visibleColumns.description">
-                    <div class="col-header col-description" title="Sort by description" ng-click="sortColumn('description')">Description
-                        <span ng-show="column == 'description'">
-                            <span ng-show="!reverse" class="fa fa-sort-down"></span>
-                            <span ng-show="reverse" class="fa fa-sort-up"></span>
+                    <div class="col-header col-description" title="Sort by description" ng-click="sortPolicies('description')">Description
+                        <span ng-show="sortColumn == 'description'">
+                            <span ng-show="!sortReverse" class="fa fa-sort-down"></span>
+                            <span ng-show="sortReverse" class="fa fa-sort-up"></span>
                         </span>
                     </div>
                 </th>
@@ -203,17 +178,22 @@
         <!-- Table body -->
         <tbody>
             <!-- Table body rows -->
-            <tr ng-repeat-start="policy in policies.filteredPolicies | orderBy:column:reverse | limitTo:policies.itemsPerPage:policies.currentPage*policies.itemsPerPage track by $index" ng-class-even="'even-table-item'" context-menu="menuOptions">
+            <tr ng-repeat-start="policy in policies.filteredPolicies | limitTo:policies.itemsPerPage:policies.currentPage*policies.itemsPerPage track by $index" ng-class-even="'even-table-item'" context-menu="menuOptions">
 
                 <!--  Checkbox column content -->
                 <td id="checkbox-column-body" class="multi_select_column">
                     <div class="wrap">
-                        <input type="checkbox" class="table-checkbox" checklist-model="selectedPolicies.policies" checklist-value="policy" checklist-change="selectedPoliciesChanged()">
+                        <input class="table-checkbox"
+                        type="checkbox"
+                        ng-model="policy.selected"
+                        ng-checked="policy.selected"
+                        ng-init="policy.selected=false"
+                        ng-change="toggleSelect()"/>
                     </div>
                 </td>
 
                 <!--  Expander column content -->
-                <td id="expander-column-body" title="Expand column content" class="expander expander-column" ng-click="">
+                <td id="expander-column-body" title="Expand column content" class="expander expander-column" ng-model="policy.expanded" ng-init="policy.expanded=false" ng-click="policy.expanded=!policy.expanded">
                     <div class="wrap">
                         <span ng-if="!policy.expanded" class="fa fa-chevron-right" duration="200"></span>
                         <span ng-if="policy.expanded" class="fa fa-chevron-down" duration="200"></span>

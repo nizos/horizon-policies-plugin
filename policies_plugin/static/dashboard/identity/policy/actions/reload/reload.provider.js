@@ -34,6 +34,7 @@
                                     Api.getRules().success(function(response) {
                                         response.forEach(function(policy) {
                                             policy.expanded=false;
+                                            policy.selected=false;
                                         });
                                         PoliciesModel.setAllPolicies(response);
                                         PoliciesModel.setFilteredPolicies(response);
@@ -56,6 +57,7 @@
                                     Api.getRules().success(function(response) {
                                         response.forEach(function(policy) {
                                             policy.expanded=false;
+                                            policy.selected=false;
                                         });
                                         PoliciesModel.setAllPolicies(response);
                                         PoliciesModel.setFilteredPolicies(response);

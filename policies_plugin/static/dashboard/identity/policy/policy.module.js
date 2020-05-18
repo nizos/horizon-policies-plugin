@@ -37,7 +37,6 @@
             'horizon.dashboard.identity.policy.actions.upload',
             'horizon.dashboard.identity.policy.api',
             'horizon.dashboard.identity.policy.model',
-            'horizon.dashboard.identity.policy.model.checklist-model',
             'horizon.dashboard.identity.policy.model.policies-model',
             'horizon.dashboard.identity.policy.svg-icons',
             'horizon.dashboard.identity.policy.policies.components',

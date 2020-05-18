@@ -9,7 +9,6 @@
         '$scope',
         '$uibModal',
         'horizon.dashboard.identity.policy.model.policies-model',
-        'horizon.framework.widgets.toast.service',
         'horizon.dashboard.identity.policy.api',
         '$actionsReload',
         '$actionsCopy',
@@ -17,22 +16,17 @@
         '$actionsPrint',
     ];
 
-    function TableController($scope, $uibModal, PoliciesModel, toastService, Api, $actionsReload, $actionsCopy, $actionsDownload, $actionsPrint) {
+    function TableController($scope, $uibModal, PoliciesModel, Api, $actionsReload, $actionsCopy, $actionsDownload, $actionsPrint) {
         var $ctrl = this;
         $scope.policies = PoliciesModel.data;
-        $scope.showEditorModal = false;
-        $scope.selectAllCheckBox = false;
-        $scope.selectedPolicies = {
-            policies: []
-        };
+        $scope.actionsBarVisible = false;
+        $scope.expandAll = false;
+        $scope.selectAll = false;
+        $scope.selectedPolicies = [];
 
         // Table sort scopes
-        $scope.column = 'target';
-        $scope.reverse = false;
-        // Table display scopes
-        $scope.expandAll = false;
-        // Table item modal scopes
-        $scope.showEditorModal = false;
+        $scope.sortColumn = 'target';
+        $scope.sortReverse = false;
         // Table selected policies scopes
         $scope.visibleCols;
         $scope.colWidths;
@@ -51,7 +45,7 @@
             }],
             null,
             ['Toggle select', function ($itemScope) {
-                toggleSelect($itemScope.policy);
+                $scope.selectPolicy($itemScope.policy);
             }],
             null,
             ['Edit', function ($itemScope) {
@@ -84,129 +78,133 @@
 
         // Functions to run on page load
         function init() {
-            $actionsReload.loadPolicies();
-        }
+            $actionsReload.loadPolicies().then(function() {
+                $scope.sortPolicies($scope.sortColumn);
+            });
+        };
 
         $scope.setRule = function(rule) {
             Api.setRule(rule).success(updateRules);
-        }
+        };
 
         function setRules(rules) {
             Api.setRules(rules).success(updateRules);
-        }
+        };
 
+        // Table getters
+        function getTablePageStart() {
+            return ((PoliciesModel.data.currentPage+1)*PoliciesModel.data.itemsPerPage)-PoliciesModel.data.itemsPerPage;
+        };
+
+        function getTablePageEnd() {
+            return Math.min(((PoliciesModel.data.currentPage+1)*PoliciesModel.data.itemsPerPage), PoliciesModel.data.filteredPolicies.length);
+        };
+
+        // Table updaters
         $scope.itemsPerPageChanged = function(itemsPerPage) {
             PoliciesModel.setCurrentPage(0);
             PoliciesModel.setItemsPerPage(itemsPerPage);
             PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
-        }
+        };
+
+        function updateSelected() {
+            $scope.selectedPolicies.splice(0, $scope.selectedPolicies.length);
+            PoliciesModel.data.filteredPolicies.forEach(function(policy) {
+                if (policy.selected == true) {
+                    $scope.selectedPolicies.push(policy);
+                };
+            });
+            if ($scope.actionsBarVisible && $scope.selectedPolicies.length <= 0) {
+                selectionsChanged();
+            } else if (!$scope.actionsBarVisible && $scope.selectedPolicies.length > 0) {
+                selectionsChanged();
+            };
+        };
+
+        function selectionsChanged() {
+            // Show the policy actions toolbar if any policies are selected
+            $scope.selectedPolicies.length > 0 ? $scope.actionsBarVisible = true : $scope.actionsBarVisible = false;
+        };
 
         // Table sort functions
-        $scope.sortColumn = function(col) {
-            $scope.column = col;
-            if($scope.reverse) {
-                $scope.reverse = false;
-            } else {
-                $scope.reverse = true;
-            }
-        };
-
-        $scope.selectedPoliciesChanged=function() {
-            $scope.selectedPolicies.policies.length > 0 ? $scope.showEditorModal = true : $scope.showEditorModal = false;
-        }
-
-        function toggleExpand(policy) {
-            if (policy.expanded) {
-                policy.expanded = false;
-            } else {
-                policy.expanded = true;
-            }
-        }
-
-        function toggleSelect(policy) {
-            const index = checkIfSelected(policy);
-            if (index != -1) {
-                deselectPolicy(index);
-            } else {
-                selectPolicy(policy);
-            }
-        }
-
-        $scope.clearAllSelections = function() {
-            $scope.selectedPolicies.policies.splice(0, $scope.selectedPolicies.policies.length);
-            $scope.selectAllCheckBox = false;
-        }
-
-        function selectPolicy(policy) {
-            $scope.selectedPolicies.policies.push(policy);
-        }
-
-        function deselectPolicy(index) {
-            if (index != -1) {
-                $scope.selectedPolicies.policies.splice(index,1);
-            } else {
-                toastService.add('error', gettext("Couldn't perform deselection task!"));
-            }
-        }
-
-        $scope.toggleSelectAll = function() {
-            let filteredPoliciesCopy = [];
-            const sortReverse = $scope.reverse;
-            const sortByColumn = $scope.column;
-            const rangeStart = ((PoliciesModel.data.currentPage+1)*PoliciesModel.data.itemsPerPage)-PoliciesModel.data.itemsPerPage;
-            const rangeEnd = Math.min(((PoliciesModel.data.currentPage+1)*PoliciesModel.data.itemsPerPage), PoliciesModel.data.filteredPolicies.length);
-            angular.copy(PoliciesModel.data.filteredPolicies, filteredPoliciesCopy);
-
-            if (!sortReverse) {
-                filteredPoliciesCopy.sort(function(a, b) {
-                    return a[sortByColumn].localeCompare(b[sortByColumn]);
+        $scope.sortPolicies = function(column) {
+            if ($scope.sortColumn == column) {
+                $scope.sortReverse =! $scope.sortReverse;
+            };
+            if (!$scope.sortReverse) {
+                PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                    return a[column].localeCompare(b[column]);
                 });
             } else {
-                filteredPoliciesCopy.sort(function(a, b) {
-                    return b[sortByColumn].localeCompare(a[sortByColumn]);
+                PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                    return b[column].localeCompare(a[column]);
                 });
             };
-
-            if (!$scope.selectAllCheckBox) {
-                for (let i = rangeStart; i < rangeEnd; i++) {
-                    const policy = filteredPoliciesCopy[i];
-                    const index = checkIfSelected(policy);
-                    if (index != -1) {
-                        deselectPolicy(index);
-                    };
-                };
-            } else {
-                for (let i = rangeStart; i < rangeEnd; i++) {
-                    const policy = filteredPoliciesCopy[i];
-                    const index = checkIfSelected(policy);
-                    if (index == -1) {
-                        selectPolicy(policy);
-                    };
-                };
-            }
+            $scope.sortColumn = column;
         };
 
-        function checkIfSelected(policy) {
-            let index = -1;
-            for (let i = 0; i < $scope.selectedPolicies.policies.length; i++) {
-                if ($scope.selectedPolicies.policies[i].target == policy.target) {
-                    if ($scope.selectedPolicies.policies[i].project == policy.project) {
-                        index = i;
-                    }
-                }
-            }
-            return index;
-        }
+        // Table expand functions
+        function toggleExpand(policy) {
+            policy.expanded =! policy.expanded;
+        };
 
-        function openInEditor(policy) {
-            $scope.clearAllSelections();
-            $scope.selectedPolicies.policies.push(policy);
-            $scope.openEditorModal();
-        }
+        $scope.toggleExpandAll = function() {
+            $scope.expandAll = !$scope.expandAll;
+            const rangeStart = getTablePageStart();
+            const rangeEnd = getTablePageEnd();
+            // Loop through the policies shown in the table
+            for (let i = rangeStart; i < rangeEnd; i++) {
+                PoliciesModel.data.filteredPolicies[i].expanded = $scope.expandAll;
+            };
+        };
+
+        // Policy select functions
+        $scope.toggleSelect = function() {
+            updateSelected();
+        };
+
+        $scope.selectPolicy = function(policy) {
+            const rangeStart = getTablePageStart();
+            const rangeEnd = getTablePageEnd();
+            for (let i = 0; rangeStart < rangeEnd; i++) {
+                let filteredPolicy = PoliciesModel.data.filteredPolicies[i];
+                if (filteredPolicy.target == policy.target) {
+                    if (filteredPolicy.rule == policy.rule) {
+                        PoliciesModel.data.filteredPolicies[i].selected =! PoliciesModel.data.filteredPolicies[i].selected;
+                        break;
+                    };
+                };
+            };
+            updateSelected();
+        };
+
+        // Policy select all functions
+        $scope.toggleSelectAll = function() {
+            const rangeStart = getTablePageStart();
+            const rangeEnd = getTablePageEnd();
+            for (let i = rangeStart; i < rangeEnd; i++) {
+                PoliciesModel.data.filteredPolicies[i].selected = $scope.selectAll;
+            };
+            updateSelected();
+        };
+
+        $scope.clearAllSelected = function() {
+            for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
+                PoliciesModel.data.filteredPolicies[i].selected = false;
+            };
+            updateSelected();
+        };
 
         // Download policy as file context menu action
         $scope.downloadSelected = function() {
-            $actionsDownload.downloadPolicies($scope.selectedPolicies.policies);
+            $actionsDownload.downloadPolicies($scope.selectedPolicies);
+        };
+
+        // Editor functions
+        function openInEditor(policy) {
+            $scope.clearAllSelected();
+            selectPolicy(policy);
+            $scope.openEditorModal();
         };
 
         // Details modal
@@ -226,7 +224,7 @@
             modalInstance.result.then(function (policy) {
                 $scope.setRule(policy);
             });
-        }
+        };
 
         // Editor modal
         $scope.openEditorModal = function(){
@@ -238,28 +236,16 @@
                 controllerAs:           '$ctrl',
                 resolve: {
                     $policy: function () {
-                        return $scope.selectedPolicies.policies;
+                        return $scope.selectedPolicies;
                     }
                 }
             });
 
             modalInstance.result.then(function (rules) {
                 setRules(rules);
+                $scope.clearAllSelected();
             });
-        }
-
-        // Info modal
-        $scope.openInfoModal = function(){
-            let modalInstance =     $uibModal.open({
-                ariaLabelledBy:     'modal-title',
-                ariaDescribedBy:    'modal-body',
-                templateUrl:        'static/dashboard/identity/policy/policies/components/plugin-info/plugin-info.html',
-                controller:         'InfoController',
-                controllerAs:       '$ctrl'
-            });
-
-            modalInstance.result.then(function () {});
-        }
-    }
+        };
+    };
 
 })();
