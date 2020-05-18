@@ -1,4 +1,3 @@
-
 .window-label {
     width: 100%;
 }
@@ -46,27 +45,29 @@
     .editor-toolbar-responsiv {
         display: flow-root;
         background-color: #cccccc;
+        padding: 5px;
     }
-
     .manage-desktop {
         display: none !important;
+        position: sticky;
+        top: 37px;
     }
-
     .dropdown-manage-responsiv {
         display: flow-root;
     }
-
     .responsiv-manage {
         display: inline-flex !important;
         width: 100%;
+        position: sticky;
+        top: 37px;
     }
 }
+
 /* Toolbar buttons */
 .toolbar-btn {
     width: 42px;
     height: 30px;
 }
-
 .toolbar-btn svg-icons {
     width: auto;
     height: 24px;
@@ -222,7 +223,6 @@
     width: 16px;
     vertical-align: text-bottom;
 }
-
 
 /* Button icons justification */
 #ruler-btn {

@@ -21,28 +21,29 @@
     .modal-content {
         width: 50% !important;
         float: left;
-}
+    }
 }
 
 @media screen and (max-width: 1081px) {
     .modal-content {
         width: 50% !important;
 }
+    .editor-toolbar {
+        display: inline-table !important;
+    }
 }
 
 @media screen and (max-width: 575px) {
     .modal-content {
         width: 28% !important;
         float: left;
-
-}
+    }
     .edit-responsiv {
         display: block !important;
         float: right;
     }
     .bar-edit {
         display: none;
-
     }
     .action-right {
         float: right;

@@ -8,10 +8,11 @@
     SearchController.$inject = [
         'horizon.dashboard.identity.policy.model.policies-model',
         '$actionsReload',
-        '$scope'
+        '$scope',
+        '$uibModal'
     ];
 
-    function SearchController(PoliciesModel, $actionsReload, $scope) {
+    function SearchController(PoliciesModel, $actionsReload, $scope, $uibModal) {
         var $ctrl = this;
         $scope.policies = PoliciesModel.data;
         $scope.query;
@@ -106,7 +107,7 @@
                     // Search for user input in policies Default parameter
                     // if search in Default checkbox is checked
                     if ($scope.searchDefault && !added) {
-                        if (policy['defaultRule'].toLowerCase().indexOf(query) != -1) {
+                        if (policy['default'].toLowerCase().indexOf(query) != -1) {
                             // Add the policy to the filtered policies list
                             // and proceed to the next policy in the loop
                             filtered.push(policy);
@@ -167,6 +168,18 @@
                 PoliciesModel.setCurrentPage(0);
                 PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
             }
+        }
+        // Info modal
+        $scope.openInfoModal = function(){
+            let modalInstance =     $uibModal.open({
+                ariaLabelledBy:     'modal-title',
+                ariaDescribedBy:    'modal-body',
+                templateUrl:        'static/dashboard/identity/policy/policies/components/plugin-info/plugin-info.html',
+                controller:         'InfoController',
+                controllerAs:       '$ctrl'
+            });
+
+            modalInstance.result.then(function () {});
         }
     }
 

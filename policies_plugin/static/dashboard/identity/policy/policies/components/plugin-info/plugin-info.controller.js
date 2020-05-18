@@ -8,7 +8,7 @@
             '$scope',
             function($uibModalInstance, $scope) {
 
-                $scope.exit = function() {
+                $scope.cancel = function() {
                     $uibModalInstance.dismiss('cancel');
                 }
             }

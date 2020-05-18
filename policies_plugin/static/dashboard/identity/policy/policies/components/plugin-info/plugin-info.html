@@ -1,20 +1,38 @@
 <!-- Info controller -->
-<div ng-controller="PoliciesController">
+<div ng-controller="SearchController">
 
     <!-- Modal Header -->
     <div class="modal-header">
-        <h3 class="modal-title" id="modal-title">Info</h3>
+        <h3 class="modal-title" id="modal-title">Info <a class="close pull-right" type="button"
+            ng-click="cancel()">
+            <span class="fa fa-times"></span>
+        </a></h3>
+        
     </div>
+    
 
     <div class="modal-body">
         <div class="setting">
             <h4>Table settings</h4>
+            <p>Underneath the help/info button there is a table settings button, clicking on this button will open a menu allowing the user to change which fields are visible as well as how many policies are shown per page.
+            </p>
             <br>
-            <h4>Search settings</h4><br>
+            <h4>Search settings</h4>
+            <p>The search-bar defaults to search in every field for the entered value. This can be changed by clicking on the magnifying glass button on the right of the searchbar, this will open up a panel beneath/underneath the search-bar with options to de-select fields to exclude them from the search. </p><br>
         </div>
         <div class="edit">
-            <h4>Edit policy</h4><br>
-            <h4>Edit policy using JSON format</h4><br>
+            <h4>Edit policy</h4>
+            <p>To edit a policy using the form editor either click on a policies rule or right click on a policy and chose edit. This will open a form that will let the user edit and save a policy rule.</p><br>
+
+            <h4>Edit policy using JSON format</h4>
+            <p>To edit a policy using the form editor either click on a policies rule or right click on a policy and chose edit. This will open a form that will let the user edit and save a policy rule.</p><br>
+
+            <h4>Downloading & Uploading files</h4>
+            <p>The plugin supports downloading and uploading json files as a way to backup policies and restoring policies from a backup.</p> 
+                <p>Downloading policies can be done by selecting policies using the checkboxes and clicking on the download button, this can also be done in the text editor. To download a single policy right click on a policy and hover over more and an option to download will appear.</p>
+                <p>Uploading policies can be done via the text editor, after clicking on the upload from file button a panel will appear where the user can chose a file to upload.</p> <p>The contents of the file will appear in the text editor after being uploaded to let the user make any changes if necessary. The upload feature supports json files and will show an error if the user tries to upload another type of file.
+                </p>
         </div>
     </div>
 </div>
+
