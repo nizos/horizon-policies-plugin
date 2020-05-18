@@ -10,10 +10,10 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-keystone_docs = {
+identity_docs = {
     "admin_required": {
         "target": "admin_required",
-        "default": "role:admin or is_admin:1",
+        "defaultRule": "role:admin or is_admin:1",
         "scopes": [
             "None"
         ],
@@ -24,7 +24,7 @@ keystone_docs = {
     },
     "service_role": {
         "target": "service_role",
-        "default": "role:service",
+        "defaultRule": "role:service",
         "scopes": [
             "None"
         ],
@@ -35,7 +35,7 @@ keystone_docs = {
     },
     "service_or_admin": {
         "target": "service_or_admin",
-        "default": "rule:admin_required or rule:service_role",
+        "defaultRule": "rule:admin_required or rule:service_role",
         "scopes": [
             "None"
         ],
@@ -46,7 +46,7 @@ keystone_docs = {
     },
     "owner": {
         "target": "owner",
-        "default": "user_id:%(user_id)s",
+        "defaultRule": "user_id:%(user_id)s",
         "scopes": [
             "None"
         ],
@@ -57,7 +57,7 @@ keystone_docs = {
     },
     "admin_or_owner": {
         "target": "admin_or_owner",
-        "default": "rule:admin_required or rule:owner",
+        "defaultRule": "rule:admin_required or rule:owner",
         "scopes": [
             "None"
         ],
@@ -68,7 +68,7 @@ keystone_docs = {
     },
     "token_subject": {
         "target": "token_subject",
-        "default": "user_id:%(target.token.user_id)s",
+        "defaultRule": "user_id:%(target.token.user_id)s",
         "scopes": [
             "None"
         ],
@@ -79,7 +79,7 @@ keystone_docs = {
     },
     "admin_or_token_subject": {
         "target": "admin_or_token_subject",
-        "default": "rule:admin_required or rule:token_subject",
+        "defaultRule": "rule:admin_required or rule:token_subject",
         "scopes": [
             "None"
         ],
@@ -90,7 +90,7 @@ keystone_docs = {
     },
     "service_admin_or_token_subject": {
         "target": "service_admin_or_token_subject",
-        "default": "rule:service_or_admin or rule:token_subject",
+        "defaultRule": "rule:service_or_admin or rule:token_subject",
         "scopes": [
             "None"
         ],
@@ -101,7 +101,7 @@ keystone_docs = {
     },
     "identity:get_access_rule": {
         "target": "identity:get_access_rule",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or user_id:%(target.user.id)s",
         "scopes": [
             "system",
@@ -115,7 +115,7 @@ keystone_docs = {
     },
     "identity:list_access_rules": {
         "target": "identity:list_access_rules",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or user_id:%(target.user.id)s",
         "scopes": [
             "system",
@@ -129,7 +129,7 @@ keystone_docs = {
     },
     "identity:delete_access_rule": {
         "target": "identity:delete_access_rule",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or user_id:%(target.user.id)s",
         "scopes": [
             "system",
@@ -142,7 +142,7 @@ keystone_docs = {
     },
     "identity:authorize_request_token": {
         "target": "identity:authorize_request_token",
-        "default": "rule:admin_required",
+        "defaultRule": "rule:admin_required",
         "scopes": [
             "project"
         ],
@@ -153,7 +153,7 @@ keystone_docs = {
     },
     "identity:get_access_token": {
         "target": "identity:get_access_token",
-        "default": "rule:admin_required",
+        "defaultRule": "rule:admin_required",
         "scopes": [
             "project"
         ],
@@ -165,7 +165,7 @@ keystone_docs = {
     },
     "identity:get_access_token_role": {
         "target": "identity:get_access_token_role",
-        "default": "rule:admin_required",
+        "defaultRule": "rule:admin_required",
         "scopes": [
             "project"
         ],
@@ -177,7 +177,7 @@ keystone_docs = {
     },
     "identity:list_access_tokens": {
         "target": "identity:list_access_tokens",
-        "default": "rule:admin_required",
+        "defaultRule": "rule:admin_required",
         "scopes": [
             "project"
         ],
@@ -188,7 +188,7 @@ keystone_docs = {
     },
     "identity:list_access_token_roles": {
         "target": "identity:list_access_token_roles",
-        "default": "rule:admin_required",
+        "defaultRule": "rule:admin_required",
         "scopes": [
             "project"
         ],
@@ -200,7 +200,7 @@ keystone_docs = {
     },
     "identity:delete_access_token": {
         "target": "identity:delete_access_token",
-        "default": "rule:admin_required",
+        "defaultRule": "rule:admin_required",
         "scopes": [
             "project"
         ],
@@ -212,7 +212,7 @@ keystone_docs = {
     },
     "identity:get_application_credential": {
         "target": "identity:get_application_credential",
-        "default": "(role:reader and system_scope:all) or rule:owner",
+        "defaultRule": "(role:reader and system_scope:all) or rule:owner",
         "scopes": [
             "system",
             "project"
@@ -227,7 +227,7 @@ keystone_docs = {
     },
     "identity:list_application_credentials": {
         "target": "identity:list_application_credentials",
-        "default": "(role:reader and system_scope:all) or rule:owner",
+        "defaultRule": "(role:reader and system_scope:all) or rule:owner",
         "scopes": [
             "system",
             "project"
@@ -240,7 +240,7 @@ keystone_docs = {
     },
     "identity:create_application_credential": {
         "target": "identity:create_application_credential",
-        "default": "user_id:%(user_id)s",
+        "defaultRule": "user_id:%(user_id)s",
         "scopes": [
             "project"
         ],
@@ -251,7 +251,7 @@ keystone_docs = {
     },
     "identity:delete_application_credential": {
         "target": "identity:delete_application_credential",
-        "default": "(role:admin and system_scope:all) or rule:owner",
+        "defaultRule": "(role:admin and system_scope:all) or rule:owner",
         "scopes": [
             "system",
             "project"
@@ -264,7 +264,7 @@ keystone_docs = {
     },
     "identity:get_auth_catalog": {
         "target": "identity:get_auth_catalog",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
 
         ],
@@ -276,7 +276,7 @@ keystone_docs = {
     },
     "identity:get_auth_projects": {
         "target": "identity:get_auth_projects",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
 
         ],
@@ -289,7 +289,7 @@ keystone_docs = {
     },
     "identity:get_auth_domains": {
         "target": "identity:get_auth_domains",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
 
         ],
@@ -302,7 +302,7 @@ keystone_docs = {
     },
     "identity:get_auth_system": {
         "target": "identity:get_auth_system",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
 
         ],
@@ -315,7 +315,7 @@ keystone_docs = {
     },
     "identity:get_consumer": {
         "target": "identity:get_consumer",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -326,7 +326,7 @@ keystone_docs = {
     },
     "identity:list_consumers": {
         "target": "identity:list_consumers",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -337,7 +337,7 @@ keystone_docs = {
     },
     "identity:create_consumer": {
         "target": "identity:create_consumer",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -348,7 +348,7 @@ keystone_docs = {
     },
     "identity:update_consumer": {
         "target": "identity:update_consumer",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -359,7 +359,7 @@ keystone_docs = {
     },
     "identity:delete_consumer": {
         "target": "identity:delete_consumer",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -370,7 +370,7 @@ keystone_docs = {
     },
     "identity:get_credential": {
         "target": "identity:get_credential",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or user_id:%(target.credential.user_id)s",
         "scopes": [
             "system",
@@ -383,7 +383,7 @@ keystone_docs = {
     },
     "identity:list_credentials": {
         "target": "identity:list_credentials",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or user_id:%(target.credential.user_id)s",
         "scopes": [
             "system",
@@ -396,7 +396,7 @@ keystone_docs = {
     },
     "identity:create_credential": {
         "target": "identity:create_credential",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or user_id:%(target.credential.user_id)s",
         "scopes": [
             "system",
@@ -409,7 +409,7 @@ keystone_docs = {
     },
     "identity:update_credential": {
         "target": "identity:update_credential",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or user_id:%(target.credential.user_id)s",
         "scopes": [
             "system",
@@ -422,7 +422,7 @@ keystone_docs = {
     },
     "identity:delete_credential": {
         "target": "identity:delete_credential",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or user_id:%(target.credential.user_id)s",
         "scopes": [
             "system",
@@ -435,7 +435,7 @@ keystone_docs = {
     },
     "identity:get_domain": {
         "target": "identity:get_domain",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or token.domain.id:%(target.domain.id)s"
         " or token.project.domain.id:%(target.domain.id)s",
         "scopes": [
@@ -450,7 +450,7 @@ keystone_docs = {
     },
     "identity:list_domains": {
         "target": "identity:list_domains",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -461,7 +461,7 @@ keystone_docs = {
     },
     "identity:create_domain": {
         "target": "identity:create_domain",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -472,7 +472,7 @@ keystone_docs = {
     },
     "identity:update_domain": {
         "target": "identity:update_domain",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -483,7 +483,7 @@ keystone_docs = {
     },
     "identity:delete_domain": {
         "target": "identity:delete_domain",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -494,7 +494,7 @@ keystone_docs = {
     },
     "identity:create_domain_config": {
         "target": "identity:create_domain_config",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -505,7 +505,7 @@ keystone_docs = {
     },
     "identity:get_domain_config": {
         "target": "identity:get_domain_config",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -523,7 +523,7 @@ keystone_docs = {
     },
     "identity:get_security_compliance_domain_config": {
         "target": "identity:get_security_compliance_domain_config",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
             "system",
             "domain",
@@ -540,7 +540,7 @@ keystone_docs = {
     },
     "identity:update_domain_config": {
         "target": "identity:update_domain_config",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -554,7 +554,7 @@ keystone_docs = {
     },
     "identity:delete_domain_config": {
         "target": "identity:delete_domain_config",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -568,7 +568,7 @@ keystone_docs = {
     },
     "identity:get_domain_config_default": {
         "target": "identity:get_domain_config_default",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -585,7 +585,7 @@ keystone_docs = {
     },
     "identity:ec2_get_credential": {
         "target": "identity:ec2_get_credential",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or user_id:%(target.credential.user_id)s",
         "scopes": [
             "system",
@@ -598,7 +598,7 @@ keystone_docs = {
     },
     "identity:ec2_list_credentials": {
         "target": "identity:ec2_list_credentials",
-        "default": "(role:reader and system_scope:all) or rule:owner",
+        "defaultRule": "(role:reader and system_scope:all) or rule:owner",
         "scopes": [
             "system",
             "project"
@@ -610,7 +610,7 @@ keystone_docs = {
     },
     "identity:ec2_create_credential": {
         "target": "identity:ec2_create_credential",
-        "default": "(role:admin and system_scope:all) or rule:owner",
+        "defaultRule": "(role:admin and system_scope:all) or rule:owner",
         "scopes": [
             "system",
             "project"
@@ -622,7 +622,7 @@ keystone_docs = {
     },
     "identity:ec2_delete_credential": {
         "target": "identity:ec2_delete_credential",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or user_id:%(target.credential.user_id)s",
         "scopes": [
             "system",
@@ -635,7 +635,7 @@ keystone_docs = {
     },
     "identity:get_endpoint": {
         "target": "identity:get_endpoint",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -646,7 +646,7 @@ keystone_docs = {
     },
     "identity:list_endpoints": {
         "target": "identity:list_endpoints",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -657,7 +657,7 @@ keystone_docs = {
     },
     "identity:create_endpoint": {
         "target": "identity:create_endpoint",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -668,7 +668,7 @@ keystone_docs = {
     },
     "identity:update_endpoint": {
         "target": "identity:update_endpoint",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -679,7 +679,7 @@ keystone_docs = {
     },
     "identity:delete_endpoint": {
         "target": "identity:delete_endpoint",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -690,7 +690,7 @@ keystone_docs = {
     },
     "identity:create_endpoint_group": {
         "target": "identity:create_endpoint_group",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -701,7 +701,7 @@ keystone_docs = {
     },
     "identity:list_endpoint_groups": {
         "target": "identity:list_endpoint_groups",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -712,7 +712,7 @@ keystone_docs = {
     },
     "identity:get_endpoint_group": {
         "target": "identity:get_endpoint_group",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -724,7 +724,7 @@ keystone_docs = {
     },
     "identity:update_endpoint_group": {
         "target": "identity:update_endpoint_group",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -735,7 +735,7 @@ keystone_docs = {
     },
     "identity:delete_endpoint_group": {
         "target": "identity:delete_endpoint_group",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -746,7 +746,7 @@ keystone_docs = {
     },
     "identity:list_projects_associated_with_endpoint_group": {
         "target": "identity:list_projects_associated_with_endpoint_group",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -758,7 +758,7 @@ keystone_docs = {
     },
     "identity:list_endpoints_associated_with_endpoint_group": {
         "target": "identity:list_endpoints_associated_with_endpoint_group",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -770,7 +770,7 @@ keystone_docs = {
     },
     "identity:get_endpoint_group_in_project": {
         "target": "identity:get_endpoint_group_in_project",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -785,7 +785,7 @@ keystone_docs = {
     },
     "identity:list_endpoint_groups_for_project": {
         "target": "identity:list_endpoint_groups_for_project",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -797,7 +797,7 @@ keystone_docs = {
     },
     "identity:add_endpoint_group_to_project": {
         "target": "identity:add_endpoint_group_to_project",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -809,7 +809,7 @@ keystone_docs = {
     },
     "identity:remove_endpoint_group_from_project": {
         "target": "identity:remove_endpoint_group_from_project",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -821,7 +821,7 @@ keystone_docs = {
     },
     "identity:check_grant": {
         "target": "identity:check_grant",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or ((role:reader and domain_id:%(target.user.domain_id)s"
         " and domain_id:%(target.project.domain_id)s)"
         " or (role:reader and domain_id:%(target.user.domain_id)s"
@@ -871,7 +871,7 @@ keystone_docs = {
     },
     "identity:list_grants": {
         "target": "identity:list_grants",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.user.domain_id)s"
         " and domain_id:%(target.project.domain_id)s)"
         " or (role:reader and domain_id:%(target.user.domain_id)s"
@@ -908,7 +908,7 @@ keystone_docs = {
     },
     "identity:create_grant": {
         "target": "identity:create_grant",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or ((role:admin and domain_id:%(target.user.domain_id)s"
         " and domain_id:%(target.project.domain_id)s)"
         " or (role:admin and domain_id:%(target.user.domain_id)s"
@@ -946,7 +946,7 @@ keystone_docs = {
     },
     "identity:revoke_grant": {
         "target": "identity:revoke_grant",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or ((role:admin and domain_id:%(target.user.domain_id)s"
         " and domain_id:%(target.project.domain_id)s)"
         " or (role:admin and domain_id:%(target.user.domain_id)s"
@@ -989,7 +989,7 @@ keystone_docs = {
     },
     "identity:list_system_grants_for_user": {
         "target": "identity:list_system_grants_for_user",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1001,7 +1001,7 @@ keystone_docs = {
     },
     "identity:check_system_grant_for_user": {
         "target": "identity:check_system_grant_for_user",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1013,7 +1013,7 @@ keystone_docs = {
     },
     "identity:create_system_grant_for_user": {
         "target": "identity:create_system_grant_for_user",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1024,7 +1024,7 @@ keystone_docs = {
     },
     "identity:revoke_system_grant_for_user": {
         "target": "identity:revoke_system_grant_for_user",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1035,7 +1035,7 @@ keystone_docs = {
     },
     "identity:list_system_grants_for_group": {
         "target": "identity:list_system_grants_for_group",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1047,7 +1047,7 @@ keystone_docs = {
     },
     "identity:check_system_grant_for_group": {
         "target": "identity:check_system_grant_for_group",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1059,7 +1059,7 @@ keystone_docs = {
     },
     "identity:create_system_grant_for_group": {
         "target": "identity:create_system_grant_for_group",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1070,7 +1070,7 @@ keystone_docs = {
     },
     "identity:revoke_system_grant_for_group": {
         "target": "identity:revoke_system_grant_for_group",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1081,7 +1081,7 @@ keystone_docs = {
     },
     "identity:get_group": {
         "target": "identity:get_group",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.group.domain_id)s)",
         "scopes": [
             "system",
@@ -1095,7 +1095,7 @@ keystone_docs = {
     },
     "identity:list_groups": {
         "target": "identity:list_groups",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.group.domain_id)s)",
         "scopes": [
             "system",
@@ -1109,7 +1109,7 @@ keystone_docs = {
     },
     "identity:list_groups_for_user": {
         "target": "identity:list_groups_for_user",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.user.domain_id)s)"
         " or user_id:%(user_id)s",
         "scopes": [
@@ -1125,7 +1125,7 @@ keystone_docs = {
     },
     "identity:create_group": {
         "target": "identity:create_group",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.group.domain_id)s)",
         "scopes": [
             "system",
@@ -1138,7 +1138,7 @@ keystone_docs = {
     },
     "identity:update_group": {
         "target": "identity:update_group",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.group.domain_id)s)",
         "scopes": [
             "system",
@@ -1151,7 +1151,7 @@ keystone_docs = {
     },
     "identity:delete_group": {
         "target": "identity:delete_group",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.group.domain_id)s)",
         "scopes": [
             "system",
@@ -1164,7 +1164,7 @@ keystone_docs = {
     },
     "identity:list_users_in_group": {
         "target": "identity:list_users_in_group",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.group.domain_id)s)",
         "scopes": [
             "system",
@@ -1178,7 +1178,7 @@ keystone_docs = {
     },
     "identity:remove_user_from_group": {
         "target": "identity:remove_user_from_group",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.group.domain_id)s"
         " and domain_id:%(target.user.domain_id)s)",
         "scopes": [
@@ -1192,7 +1192,7 @@ keystone_docs = {
     },
     "identity:check_user_in_group": {
         "target": "identity:check_user_in_group",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.group.domain_id)s"
         " and domain_id:%(target.user.domain_id)s)",
         "scopes": [
@@ -1207,7 +1207,7 @@ keystone_docs = {
     },
     "identity:add_user_to_group": {
         "target": "identity:add_user_to_group",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.group.domain_id)s"
         " and domain_id:%(target.user.domain_id)s)",
         "scopes": [
@@ -1221,7 +1221,7 @@ keystone_docs = {
     },
     "identity:create_identity_provider": {
         "target": "identity:create_identity_provider",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1232,7 +1232,7 @@ keystone_docs = {
     },
     "identity:list_identity_providers": {
         "target": "identity:list_identity_providers",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1244,7 +1244,7 @@ keystone_docs = {
     },
     "identity:get_identity_provider": {
         "target": "identity:get_identity_provider",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1256,7 +1256,7 @@ keystone_docs = {
     },
     "identity:update_identity_provider": {
         "target": "identity:update_identity_provider",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1267,7 +1267,7 @@ keystone_docs = {
     },
     "identity:delete_identity_provider": {
         "target": "identity:delete_identity_provider",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1278,7 +1278,7 @@ keystone_docs = {
     },
     "identity:get_implied_role": {
         "target": "identity:get_implied_role",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1293,7 +1293,7 @@ keystone_docs = {
     },
     "identity:list_implied_roles": {
         "target": "identity:list_implied_roles",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1310,7 +1310,7 @@ keystone_docs = {
     },
     "identity:create_implied_role": {
         "target": "identity:create_implied_role",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1324,7 +1324,7 @@ keystone_docs = {
     },
     "identity:delete_implied_role": {
         "target": "identity:delete_implied_role",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1340,7 +1340,7 @@ keystone_docs = {
     },
     "identity:list_role_inference_rules": {
         "target": "identity:list_role_inference_rules",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1355,7 +1355,7 @@ keystone_docs = {
     },
     "identity:check_implied_role": {
         "target": "identity:check_implied_role",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1369,7 +1369,7 @@ keystone_docs = {
     },
     "identity:get_limit_model": {
         "target": "identity:get_limit_model",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
             "system",
             "domain",
@@ -1383,7 +1383,7 @@ keystone_docs = {
     },
     "identity:get_limit": {
         "target": "identity:get_limit",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (domain_id:%(target.limit.domain.id)s"
         " or domain_id:%(target.limit.project.domain_id)s)"
         " or (project_id:%(target.limit.project_id)s"
@@ -1401,7 +1401,7 @@ keystone_docs = {
     },
     "identity:list_limits": {
         "target": "identity:list_limits",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
             "system",
             "domain",
@@ -1415,7 +1415,7 @@ keystone_docs = {
     },
     "identity:create_limits": {
         "target": "identity:create_limits",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1426,7 +1426,7 @@ keystone_docs = {
     },
     "identity:update_limit": {
         "target": "identity:update_limit",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1437,7 +1437,7 @@ keystone_docs = {
     },
     "identity:delete_limit": {
         "target": "identity:delete_limit",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1448,7 +1448,7 @@ keystone_docs = {
     },
     "identity:create_mapping": {
         "target": "identity:create_mapping",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1460,7 +1460,7 @@ keystone_docs = {
     },
     "identity:get_mapping": {
         "target": "identity:get_mapping",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1472,7 +1472,7 @@ keystone_docs = {
     },
     "identity:list_mappings": {
         "target": "identity:list_mappings",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1484,7 +1484,7 @@ keystone_docs = {
     },
     "identity:delete_mapping": {
         "target": "identity:delete_mapping",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1495,7 +1495,7 @@ keystone_docs = {
     },
     "identity:update_mapping": {
         "target": "identity:update_mapping",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1506,7 +1506,7 @@ keystone_docs = {
     },
     "identity:get_policy": {
         "target": "identity:get_policy",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1517,7 +1517,7 @@ keystone_docs = {
     },
     "identity:list_policies": {
         "target": "identity:list_policies",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1528,7 +1528,7 @@ keystone_docs = {
     },
     "identity:create_policy": {
         "target": "identity:create_policy",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1539,7 +1539,7 @@ keystone_docs = {
     },
     "identity:update_policy": {
         "target": "identity:update_policy",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1550,7 +1550,7 @@ keystone_docs = {
     },
     "identity:delete_policy": {
         "target": "identity:delete_policy",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1561,7 +1561,7 @@ keystone_docs = {
     },
     "identity:create_policy_association_for_endpoint": {
         "target": "identity:create_policy_association_for_endpoint",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1573,7 +1573,7 @@ keystone_docs = {
     },
     "identity:check_policy_association_for_endpoint": {
         "target": "identity:check_policy_association_for_endpoint",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1587,7 +1587,7 @@ keystone_docs = {
     },
     "identity:delete_policy_association_for_endpoint": {
         "target": "identity:delete_policy_association_for_endpoint",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1599,7 +1599,7 @@ keystone_docs = {
     },
     "identity:create_policy_association_for_service": {
         "target": "identity:create_policy_association_for_service",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1611,7 +1611,7 @@ keystone_docs = {
     },
     "identity:check_policy_association_for_service": {
         "target": "identity:check_policy_association_for_service",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1625,7 +1625,7 @@ keystone_docs = {
     },
     "identity:delete_policy_association_for_service": {
         "target": "identity:delete_policy_association_for_service",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1637,7 +1637,7 @@ keystone_docs = {
     },
     "identity:create_policy_association_for_region_and_service": {
         "target": "identity:create_policy_association_for_region_and_service",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1650,7 +1650,7 @@ keystone_docs = {
     },
     "identity:check_policy_association_for_region_and_service": {
         "target": "identity:check_policy_association_for_region_and_service",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1664,7 +1664,7 @@ keystone_docs = {
     },
     "identity:delete_policy_association_for_region_and_service": {
         "target": "identity:delete_policy_association_for_region_and_service",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1676,7 +1676,7 @@ keystone_docs = {
     },
     "identity:get_policy_for_endpoint": {
         "target": "identity:get_policy_for_endpoint",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1688,7 +1688,7 @@ keystone_docs = {
     },
     "identity:list_endpoints_for_policy": {
         "target": "identity:list_endpoints_for_policy",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1699,7 +1699,7 @@ keystone_docs = {
     },
     "identity:get_project": {
         "target": "identity:get_project",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.project.domain_id)s)"
         " or project_id:%(target.project.id)s",
         "scopes": [
@@ -1714,7 +1714,7 @@ keystone_docs = {
     },
     "identity:list_projects": {
         "target": "identity:list_projects",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.domain_id)s)",
         "scopes": [
             "system",
@@ -1727,7 +1727,7 @@ keystone_docs = {
     },
     "identity:list_user_projects": {
         "target": "identity:list_user_projects",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.user.domain_id)s)"
         " or user_id:%(target.user.id)s",
         "scopes": [
@@ -1742,7 +1742,7 @@ keystone_docs = {
     },
     "identity:create_project": {
         "target": "identity:create_project",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.project.domain_id)s)",
         "scopes": [
             "system",
@@ -1755,7 +1755,7 @@ keystone_docs = {
     },
     "identity:update_project": {
         "target": "identity:update_project",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.project.domain_id)s)",
         "scopes": [
             "system",
@@ -1768,7 +1768,7 @@ keystone_docs = {
     },
     "identity:delete_project": {
         "target": "identity:delete_project",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.project.domain_id)s)",
         "scopes": [
             "system",
@@ -1781,7 +1781,7 @@ keystone_docs = {
     },
     "identity:list_project_tags": {
         "target": "identity:list_project_tags",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.project.domain_id)s)"
         " or project_id:%(target.project.id)s",
         "scopes": [
@@ -1797,7 +1797,7 @@ keystone_docs = {
     },
     "identity:get_project_tag": {
         "target": "identity:get_project_tag",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.project.domain_id)s)"
         " or project_id:%(target.project.id)s",
         "scopes": [
@@ -1813,7 +1813,7 @@ keystone_docs = {
     },
     "identity:update_project_tags": {
         "target": "identity:update_project_tags",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.project.domain_id)s)"
         " or (role:admin and project_id:%(target.project.id)s)",
         "scopes": [
@@ -1829,7 +1829,7 @@ keystone_docs = {
     },
     "identity:create_project_tag": {
         "target": "identity:create_project_tag",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.project.domain_id)s)"
         " or (role:admin and project_id:%(target.project.id)s)",
         "scopes": [
@@ -1844,7 +1844,7 @@ keystone_docs = {
     },
     "identity:delete_project_tags": {
         "target": "identity:delete_project_tags",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.project.domain_id)s)"
         " or (role:admin and project_id:%(target.project.id)s)",
         "scopes": [
@@ -1859,7 +1859,7 @@ keystone_docs = {
     },
     "identity:delete_project_tag": {
         "target": "identity:delete_project_tag",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and domain_id:%(target.project.domain_id)s)"
         " or (role:admin and project_id:%(target.project.id)s)",
         "scopes": [
@@ -1874,7 +1874,7 @@ keystone_docs = {
     },
     "identity:list_projects_for_endpoint": {
         "target": "identity:list_projects_for_endpoint",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1885,7 +1885,7 @@ keystone_docs = {
     },
     "identity:add_endpoint_to_project": {
         "target": "identity:add_endpoint_to_project",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1897,7 +1897,7 @@ keystone_docs = {
     },
     "identity:check_endpoint_in_project": {
         "target": "identity:check_endpoint_in_project",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1911,7 +1911,7 @@ keystone_docs = {
     },
     "identity:list_endpoints_for_project": {
         "target": "identity:list_endpoints_for_project",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1922,7 +1922,7 @@ keystone_docs = {
     },
     "identity:remove_endpoint_from_project": {
         "target": "identity:remove_endpoint_from_project",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1935,7 +1935,7 @@ keystone_docs = {
     },
     "identity:create_protocol": {
         "target": "identity:create_protocol",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1947,7 +1947,7 @@ keystone_docs = {
     },
     "identity:update_protocol": {
         "target": "identity:update_protocol",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1959,7 +1959,7 @@ keystone_docs = {
     },
     "identity:get_protocol": {
         "target": "identity:get_protocol",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1971,7 +1971,7 @@ keystone_docs = {
     },
     "identity:list_protocols": {
         "target": "identity:list_protocols",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1982,7 +1982,7 @@ keystone_docs = {
     },
     "identity:delete_protocol": {
         "target": "identity:delete_protocol",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -1994,7 +1994,7 @@ keystone_docs = {
     },
     "identity:get_region": {
         "target": "identity:get_region",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
             "system",
             "domain",
@@ -2008,7 +2008,7 @@ keystone_docs = {
     },
     "identity:list_regions": {
         "target": "identity:list_regions",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
             "system",
             "domain",
@@ -2022,7 +2022,7 @@ keystone_docs = {
     },
     "identity:create_region": {
         "target": "identity:create_region",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2034,7 +2034,7 @@ keystone_docs = {
     },
     "identity:update_region": {
         "target": "identity:update_region",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2045,7 +2045,7 @@ keystone_docs = {
     },
     "identity:delete_region": {
         "target": "identity:delete_region",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2056,7 +2056,7 @@ keystone_docs = {
     },
     "identity:get_registered_limit": {
         "target": "identity:get_registered_limit",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
             "system",
             "domain",
@@ -2070,7 +2070,7 @@ keystone_docs = {
     },
     "identity:list_registered_limits": {
         "target": "identity:list_registered_limits",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
             "system",
             "domain",
@@ -2084,7 +2084,7 @@ keystone_docs = {
     },
     "identity:create_registered_limits": {
         "target": "identity:create_registered_limits",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2095,7 +2095,7 @@ keystone_docs = {
     },
     "identity:update_registered_limit": {
         "target": "identity:update_registered_limit",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2106,7 +2106,7 @@ keystone_docs = {
     },
     "identity:delete_registered_limit": {
         "target": "identity:delete_registered_limit",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2117,7 +2117,7 @@ keystone_docs = {
     },
     "identity:list_revoke_events": {
         "target": "identity:list_revoke_events",
-        "default": "rule:service_or_admin",
+        "defaultRule": "rule:service_or_admin",
         "scopes": [
             "system"
         ],
@@ -2128,7 +2128,7 @@ keystone_docs = {
     },
     "identity:get_role": {
         "target": "identity:get_role",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2140,7 +2140,7 @@ keystone_docs = {
     },
     "identity:list_roles": {
         "target": "identity:list_roles",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2152,7 +2152,7 @@ keystone_docs = {
     },
     "identity:create_role": {
         "target": "identity:create_role",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2163,7 +2163,7 @@ keystone_docs = {
     },
     "identity:update_role": {
         "target": "identity:update_role",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2174,7 +2174,7 @@ keystone_docs = {
     },
     "identity:delete_role": {
         "target": "identity:delete_role",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2185,7 +2185,7 @@ keystone_docs = {
     },
     "identity:get_domain_role": {
         "target": "identity:get_domain_role",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2197,7 +2197,7 @@ keystone_docs = {
     },
     "identity:list_domain_roles": {
         "target": "identity:list_domain_roles",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2209,7 +2209,7 @@ keystone_docs = {
     },
     "identity:create_domain_role": {
         "target": "identity:create_domain_role",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2220,7 +2220,7 @@ keystone_docs = {
     },
     "identity:update_domain_role": {
         "target": "identity:update_domain_role",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2231,7 +2231,7 @@ keystone_docs = {
     },
     "identity:delete_domain_role": {
         "target": "identity:delete_domain_role",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2242,7 +2242,7 @@ keystone_docs = {
     },
     "identity:list_role_assignments": {
         "target": "identity:list_role_assignments",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.domain_id)s)",
         "scopes": [
             "system",
@@ -2256,7 +2256,7 @@ keystone_docs = {
     },
     "identity:list_role_assignments_for_tree": {
         "target": "identity:list_role_assignments_for_tree",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.project.domain_id)s)"
         " or (role:admin and project_id:%(target.project.id)s)",
         "scopes": [
@@ -2273,7 +2273,7 @@ keystone_docs = {
     },
     "identity:get_service": {
         "target": "identity:get_service",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2284,7 +2284,7 @@ keystone_docs = {
     },
     "identity:list_services": {
         "target": "identity:list_services",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2295,7 +2295,7 @@ keystone_docs = {
     },
     "identity:create_service": {
         "target": "identity:create_service",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2306,7 +2306,7 @@ keystone_docs = {
     },
     "identity:update_service": {
         "target": "identity:update_service",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2317,7 +2317,7 @@ keystone_docs = {
     },
     "identity:delete_service": {
         "target": "identity:delete_service",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2328,7 +2328,7 @@ keystone_docs = {
     },
     "identity:create_service_provider": {
         "target": "identity:create_service_provider",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2339,7 +2339,7 @@ keystone_docs = {
     },
     "identity:list_service_providers": {
         "target": "identity:list_service_providers",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2351,7 +2351,7 @@ keystone_docs = {
     },
     "identity:get_service_provider": {
         "target": "identity:get_service_provider",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2363,7 +2363,7 @@ keystone_docs = {
     },
     "identity:update_service_provider": {
         "target": "identity:update_service_provider",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2374,7 +2374,7 @@ keystone_docs = {
     },
     "identity:delete_service_provider": {
         "target": "identity:delete_service_provider",
-        "default": "role:admin and system_scope:all",
+        "defaultRule": "role:admin and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2385,7 +2385,7 @@ keystone_docs = {
     },
     "identity:revocation_list": {
         "target": "identity:revocation_list",
-        "default": "rule:service_or_admin",
+        "defaultRule": "rule:service_or_admin",
         "scopes": [
             "system",
             "project"
@@ -2397,7 +2397,7 @@ keystone_docs = {
     },
     "identity:check_token": {
         "target": "identity:check_token",
-        "default": "(role:reader and system_scope:all) or rule:token_subject",
+        "defaultRule": "(role:reader and system_scope:all) or rule:token_subject",
         "scopes": [
             "system",
             "domain",
@@ -2410,7 +2410,7 @@ keystone_docs = {
     },
     "identity:validate_token": {
         "target": "identity:validate_token",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or rule:service_role or rule:token_subject",
         "scopes": [
             "system",
@@ -2424,7 +2424,7 @@ keystone_docs = {
     },
     "identity:revoke_token": {
         "target": "identity:revoke_token",
-        "default": "(role:admin and system_scope:all) or rule:token_subject",
+        "defaultRule": "(role:admin and system_scope:all) or rule:token_subject",
         "scopes": [
             "system",
             "domain",
@@ -2437,7 +2437,7 @@ keystone_docs = {
     },
     "identity:create_trust": {
         "target": "identity:create_trust",
-        "default": "user_id:%(trust.trustor_user_id)s",
+        "defaultRule": "user_id:%(trust.trustor_user_id)s",
         "scopes": [
             "project"
         ],
@@ -2448,7 +2448,7 @@ keystone_docs = {
     },
     "identity:list_trusts": {
         "target": "identity:list_trusts",
-        "default": "role:reader and system_scope:all",
+        "defaultRule": "role:reader and system_scope:all",
         "scopes": [
             "system"
         ],
@@ -2460,7 +2460,7 @@ keystone_docs = {
     },
     "identity:list_trusts_for_trustor": {
         "target": "identity:list_trusts_for_trustor",
-        "default": "role:reader and system_scope:all"
+        "defaultRule": "role:reader and system_scope:all"
         " or user_id:%(target.trust.trustor_user_id)s",
         "scopes": [
             "system",
@@ -2474,7 +2474,7 @@ keystone_docs = {
     },
     "identity:list_trusts_for_trustee": {
         "target": "identity:list_trusts_for_trustee",
-        "default": "role:reader and system_scope:all"
+        "defaultRule": "role:reader and system_scope:all"
         " or user_id:%(target.trust.trustee_user_id)s",
         "scopes": [
             "system",
@@ -2488,7 +2488,7 @@ keystone_docs = {
     },
     "identity:list_roles_for_trust": {
         "target": "identity:list_roles_for_trust",
-        "default": "role:reader and system_scope:all"
+        "defaultRule": "role:reader and system_scope:all"
         " or user_id:%(target.trust.trustor_user_id)s"
         " or user_id:%(target.trust.trustee_user_id)s",
         "scopes": [
@@ -2503,7 +2503,7 @@ keystone_docs = {
     },
     "identity:get_role_for_trust": {
         "target": "identity:get_role_for_trust",
-        "default": "role:reader and system_scope:all"
+        "defaultRule": "role:reader and system_scope:all"
         " or user_id:%(target.trust.trustor_user_id)s"
         " or user_id:%(target.trust.trustee_user_id)s",
         "scopes": [
@@ -2518,7 +2518,7 @@ keystone_docs = {
     },
     "identity:delete_trust": {
         "target": "identity:delete_trust",
-        "default": "role:admin and system_scope:all"
+        "defaultRule": "role:admin and system_scope:all"
         " or user_id:%(target.trust.trustor_user_id)s",
         "scopes": [
             "system",
@@ -2531,7 +2531,7 @@ keystone_docs = {
     },
     "identity:get_trust": {
         "target": "identity:get_trust",
-        "default": "role:reader and system_scope:all"
+        "defaultRule": "role:reader and system_scope:all"
         " or user_id:%(target.trust.trustor_user_id)s"
         " or user_id:%(target.trust.trustee_user_id)s",
         "scopes": [
@@ -2546,7 +2546,7 @@ keystone_docs = {
     },
     "identity:get_user": {
         "target": "identity:get_user",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and token.domain.id:%(target.user.domain_id)s)"
         " or user_id:%(target.user.id)s",
         "scopes": [
@@ -2562,7 +2562,7 @@ keystone_docs = {
     },
     "identity:list_users": {
         "target": "identity:list_users",
-        "default": "(role:reader and system_scope:all)"
+        "defaultRule": "(role:reader and system_scope:all)"
         " or (role:reader and domain_id:%(target.domain_id)s)",
         "scopes": [
             "system",
@@ -2576,7 +2576,7 @@ keystone_docs = {
     },
     "identity:list_projects_for_user": {
         "target": "identity:list_projects_for_user",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
 
         ],
@@ -2588,7 +2588,7 @@ keystone_docs = {
     },
     "identity:list_domains_for_user": {
         "target": "identity:list_domains_for_user",
-        "default": "",
+        "defaultRule": "",
         "scopes": [
 
         ],
@@ -2600,7 +2600,7 @@ keystone_docs = {
     },
     "identity:create_user": {
         "target": "identity:create_user",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and token.domain.id:%(target.user.domain_id)s)",
         "scopes": [
             "system",
@@ -2613,7 +2613,7 @@ keystone_docs = {
     },
     "identity:update_user": {
         "target": "identity:update_user",
-        "default": "(role:admin and system_scope:all)"
+        "defaultRule": "(role:admin and system_scope:all)"
         " or (role:admin and token.domain.id:%(target.user.domain_id)s)",
         "scopes": [
             "system",
@@ -2627,7 +2627,7 @@ keystone_docs = {
     },
     "identity:delete_user": {
         "target": "identity:delete_user",
-        "default": "(role:admin and system_scope:all) or"
+        "defaultRule": "(role:admin and system_scope:all) or"
         " (role:admin and token.domain.id:%(target.user.domain_id)s)",
         "scopes": [
             "system",

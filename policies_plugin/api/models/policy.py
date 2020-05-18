@@ -11,7 +11,7 @@
 # under the License.
 
 import logging
-from policies_plugin.api.resources.keystone_fields import keystone_docs
+from policies_plugin.api.resources.identity_fields import identity_docs
 
 LOG = logging.getLogger(__name__)
 
@@ -22,14 +22,14 @@ class Policy:
                  project="Project",
                  target="Target",
                  rule="Rule",
-                 default="Default rule",
+                 defaultRule="Default rule",
                  scopes="Scopes",
                  operations="Operations",
                  description="Description"):
         self.project = project
         self.target = target
         self.rule = rule
-        self.default = default
+        self.defaultRule = defaultRule
         self.scopes = scopes
         self.operations = operations
         self.description = description
@@ -41,7 +41,7 @@ class Policy:
         self.set_target(line_target)
         self.set_rule(line_formatted)
         policy_dict = self.get_dict()
-        self.set_default(policy_dict)
+        self.set_defaultRule(policy_dict)
         self.set_scopes(policy_dict)
         self.set_operations(policy_dict)
         self.set_description(policy_dict)
@@ -52,7 +52,7 @@ class Policy:
     def get_dict(self):
         policy_dict = ""
         try:
-            policy_dict = keystone_docs[self.create_identifier()]
+            policy_dict = identity_docs[self.create_identifier()]
         except KeyError:
             policy_dict = None
         return policy_dict
@@ -85,11 +85,11 @@ class Policy:
             LOG.error("No rule provided for requested policy target: {}"
                       .format(line_stripped_new_line))
 
-    def set_default(self, policy_dict):
+    def set_defaultRule(self, policy_dict):
         try:
-            self.default = policy_dict["default"]
+            self.defaultRule = policy_dict["defaultRule"]
         except Exception:
-            self.default = "No default"
+            self.defaultRule = "No default"
 
     def set_scopes(self, policy_dict):
         try:
@@ -115,7 +115,7 @@ class Policy:
             'project': self.project,
             'target': self.target,
             'rule': self.rule,
-            'default': self.default,
+            'defaultRule': self.defaultRule,
             'scopes': self.scopes,
             'operations': self.operations,
             'description': self.description

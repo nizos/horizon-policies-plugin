@@ -26,7 +26,7 @@
 
         // Table sort scopes
         $scope.sortColumn = 'target';
-        $scope.sortReverse = false;
+        $scope.sortReverse = true;
         // Table selected policies scopes
         $scope.visibleCols;
         $scope.colWidths;

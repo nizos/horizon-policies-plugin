@@ -106,7 +106,7 @@
                     // Search for user input in policies Default parameter
                     // if search in Default checkbox is checked
                     if ($scope.searchDefault && !added) {
-                        if (policy['default'].toLowerCase().indexOf(query) != -1) {
+                        if (policy['defaultRule'].toLowerCase().indexOf(query) != -1) {
                             // Add the policy to the filtered policies list
                             // and proceed to the next policy in the loop
                             filtered.push(policy);

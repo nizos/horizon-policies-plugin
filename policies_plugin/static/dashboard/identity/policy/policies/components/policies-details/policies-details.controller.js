@@ -14,7 +14,7 @@
                 $ctrl.project = $policy['project'];
                 $ctrl.target = $policy['target'];
                 $ctrl.rule = $policy['rule'];
-                $ctrl.defaultRule = $policy['default'];
+                $ctrl.defaultRule = $policy['defaultRule'];
                 $ctrl.scopes = $policy['scopes'];
                 $ctrl.operations = $policy['operations'];
                 $ctrl.description = $policy['description'];
