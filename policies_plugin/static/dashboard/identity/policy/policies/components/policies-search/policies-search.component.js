@@ -11,6 +11,6 @@
                 }
             ],
             controller: 'SearchController',
-            controllerAs: 'ctrl'
+            controllerAs: '$schCtrl'
         });
 })();

@@ -23,14 +23,17 @@
                     'horizon.dashboard.identity.policy.model.policies-model',
                     'horizon.framework.widgets.toast.service',
                     'horizon.dashboard.identity.policy.api',
+                    '$actionsStorage',
+                    '$rootScope',
                     '$q',
-                    function (PoliciesModel, toastService, Api, $q) {
+                    function (PoliciesModel, toastService, Api, $actionsStorage, $rootScope, $q) {
                         return {
                             loadPolicies: function () {
                                 let deferred = $q.defer();
                                 deferred.notify("loading policies");
                                 let successful;
                                 try {
+                                    console.log('$actionsReload -> loadPolicies()');
                                     Api.getRules().success(function(response) {
                                         response.forEach(function(policy) {
                                             policy.expanded=false;
@@ -38,8 +41,10 @@
                                         });
                                         PoliciesModel.setAllPolicies(response);
                                         PoliciesModel.setFilteredPolicies(response);
-                                        PoliciesModel.setCurrentPage(0);
-                                        PoliciesModel.setItemsPerPage("20");
+                                        $actionsStorage.restoreVisibleColumns();
+                                        $actionsStorage.restoreSearchColumns();
+                                        $actionsStorage.restoreColumnWidths();
+                                        $actionsStorage.restoreItemsPerPage();
                                         PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
                                         deferred.resolve(successful);
                                     })
@@ -54,6 +59,7 @@
                                 deferred.notify("Reloading policies");
                                 let successful;
                                 try {
+                                    console.log('$actionsReload -> reloadPolicies()');
                                     Api.getRules().success(function(response) {
                                         response.forEach(function(policy) {
                                             policy.expanded=false;
@@ -61,9 +67,9 @@
                                         });
                                         PoliciesModel.setAllPolicies(response);
                                         PoliciesModel.setFilteredPolicies(response);
-                                        PoliciesModel.setCurrentPage(0);
-                                        PoliciesModel.setItemsPerPage("20");
                                         PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
+                                        console.log('$actionsReload -> $rootScope.$broadcast(Policies updated);');
+                                        $rootScope.$broadcast('Policies updated');
                                         toastService.add('success', gettext('Policies reloaded successfully'));
                                         deferred.resolve(successful);
                                     })

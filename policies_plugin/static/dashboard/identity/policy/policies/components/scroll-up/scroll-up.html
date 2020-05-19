@@ -1,4 +1,4 @@
 <!--  Scroll to top button -->
-<div id="scrollArea" ng-controller="ScrollUpController">
-    <a id="btnUp" style="display:none;" class="btn btn-primary gotoTop" ng-click="gotoTop()">Go to top</a>
+<div id="scrollArea" ng-controller="ScrollUpController as $scrCtrl">
+    <a id="btnUp" style="display:none;" class="btn btn-primary gotoTop" ng-click="$scrCtrl.gotoTop()">Go to top</a>
 </div>

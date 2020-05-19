@@ -1,58 +1,118 @@
-<!-- Search bar -->
-<div class="policies-search-bar" ng-controller="SearchController" ng-class="{'options-visible': showOptions}">
-    <div class="input-group" ng-class="{'options-visible': showOptions}">
-        <input ng-model="query" id="query" class="form-control" placeholder="Search">
+<!-- Search Controller -->
+<div ng-controller="SearchController as $schCtrl">
 
-        <div class="input-group-btn">
+    <!-- Search bar -->
+    <div class="policies-search-bar" ng-class="{'options-visible': showOptions}">
+        <div class="input-group" ng-class="{'options-visible': showOptions}">
 
-            <!-- Search settings button -->
-            <div class="btn-group">
-                <button class="btn btn-default search-options-button" type="button" ng-class="{'options-visible': showOptions}" ng-model="showOptions" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0" title="Custom search" >
-                    <span class="fa fa-search"></span> <span class="fa fa-caret-down"></span>
-                </button>
-            </div>
+            <!-- Search input field -->
+            <input ng-model="$schCtrl.query" id="query" class="form-control" placeholder="Search">
 
-            <!-- Refresh button -->
-            <div class="btn-group">
-                <button class="btn btn-default" id="refresh-button" ng-click="reloadPolicies()" type="button" title="Refresh">
-                    <i class="fa fa-refresh"></i>
-                </button>
-            </div>
+            <!-- Search buttons group -->
+            <div class="input-group-btn">
 
-            <!-- Help Info button -->
-            <div class="btn-group">
-                <button class="btn btn-default" id="info-button" ng-click="openInfoModal()" ng-class="{'options-visible': showOptions}" type="button" title="Help">
-                    <i class="fa fa-info-circle"></i>
-                </button>
+                <!-- Custome search button -->
+                <div class="btn-group">
+                    <button class="btn btn-default search-options-button"
+                            ng-class="{'options-visible': showOptions}"
+                            type="button"
+                            title="Custom search"
+                            uib-btn-checkbox
+                            btn-checkbox-true="1"
+                            btn-checkbox-false="0"
+                            ng-model="showOptions">
+                        <span class="fa fa-search"> </span>
+                        <span class="fa fa-caret-down"></span>
+                    </button>
+                </div>
+
+                <!-- Refresh button -->
+                <div class="btn-group">
+                    <button class="btn btn-default"
+                            id="refresh-button"
+                            type="button"
+                            title="Refresh"
+                            ng-click="$schCtrl.reloadPolicies()">
+                        <i class="fa fa-refresh"></i>
+                    </button>
+                </div>
+
+                <!-- Help button -->
+                <div class="btn-group">
+                    <button class="btn btn-default"
+                            id="info-button"
+                            type="button"
+                            title="Help"
+                            ng-click="$schCtrl.openInfoModal()"
+                            ng-class="{'options-visible': showOptions}">
+                        <i class="fa fa-info-circle"></i>
+                    </button>
+                </div>
+
             </div>
         </div>
-    </div>
 
-    <!-- Custom search -->
-    <div class="search-options" ng-class="{'options-visible': showOptions}">
         <!-- Search settings button drop down menu-->
-        <span id="project-checkbox">
-            <input type="checkbox" ng-model="searchProject" ng-checked="searchProject" ng-init="searchProject=true" ng-change="searchOptionsChanged()"/> Project
-        </span>
-        <span id="target-checkbox">
-            <input type="checkbox" ng-model="searchTarget" ng-checked="searchTarget" ng-init="searchTarget=true" ng-change="searchOptionsChanged()"/> Target
-        </span>
-        <span id="rule-checkbox">
-            <input type="checkbox" ng-model="searchRule" ng-checked="searchRule" ng-init="searchRule=true" ng-change="searchOptionsChanged()"/> Rule
-        </span>
-        <span id="default-checkbox">
-            <input type="checkbox" ng-model="searchDefault" ng-checked="searchDefault" ng-init="searchDefault=true" ng-change="searchOptionsChanged()"/> Default
-        </span>
-        <span id="scopes-checkbox">
-            <input type="checkbox" ng-model="searchScopes" ng-checked="searchScopes" ng-init="searchScopes=true" ng-change="searchOptionsChanged()"/> Scopes
-        </span>
-        <span id="operations-checkbox">
-            <input type="checkbox" ng-model="searchOperations" ng-checked="searchOperations" ng-init="searchOperations=true" ng-change="searchOptionsChanged()"/> Operations
-        </span>
-        <span id="description-checkbox">
-            <input type="checkbox" ng-model="searchDescription" ng-checked="searchDescription" ng-init="searchDescription=true" ng-change="searchOptionsChanged()"/> Description
-        </span>
-    </div>
+        <div class="search-options" ng-class="{'options-visible': showOptions}">
 
+            <!-- Search in Project column -->
+            <span id="project-checkbox">
+                <input type="checkbox"
+                    ng-model="$schCtrl.policies.searchColumns.project"
+                    ng-checked="$schCtrl.policies.searchColumns.project"
+                    ng-change="$schCtrl.searchOptionsChanged()"/> Project
+            </span>
+
+            <!-- Search in Target column -->
+            <span id="target-checkbox">
+                <input type="checkbox"
+                    ng-model="$schCtrl.policies.searchColumns.target"
+                    ng-checked="$schCtrl.policies.searchColumns.target"
+                    ng-change="$schCtrl.searchOptionsChanged()"/> Target
+            </span>
+
+            <!-- Search in Rule column -->
+            <span id="rule-checkbox">
+                <input type="checkbox"
+                    ng-model="$schCtrl.policies.searchColumns.rule"
+                    ng-checked="$schCtrl.policies.searchColumns.rule"
+                    ng-change="$schCtrl.searchOptionsChanged()"/> Rule
+            </span>
+
+            <!-- Search in Default Rule column -->
+            <span id="default-checkbox">
+                <input type="checkbox"
+                    ng-model="$schCtrl.policies.searchColumns.defaultRule"
+                    ng-checked="$schCtrl.policies.searchColumns.defaultRule"
+                    ng-change="$schCtrl.searchOptionsChanged()"/> Default
+            </span>
+
+            <!-- Search in Scopes column -->
+            <span id="scopes-checkbox">
+                <input type="checkbox"
+                    ng-model="$schCtrl.policies.searchColumns.scopes"
+                    ng-checked="$schCtrl.policies.searchColumns.scopes"
+                    ng-change="$schCtrl.searchOptionsChanged()"/> Scopes
+            </span>
+
+            <!-- Search in Operations column -->
+            <span id="operations-checkbox">
+                <input type="checkbox"
+                    ng-model="$schCtrl.policies.searchColumns.operations"
+                    ng-checked="$schCtrl.policies.searchColumns.operations"
+                    ng-change="$schCtrl.searchOptionsChanged()"/> Operations
+            </span>
+
+            <!-- Search in Description column -->
+            <span id="description-checkbox">
+                <input type="checkbox"
+                    ng-model="$schCtrl.policies.searchColumns.description"
+                    ng-checked="$schCtrl.policies.searchColumns.description"
+                    ng-change="$schCtrl.searchOptionsChanged()"/> Description
+            </span>
+
+        </div>
+
+    </div>
 </div>
 <br>

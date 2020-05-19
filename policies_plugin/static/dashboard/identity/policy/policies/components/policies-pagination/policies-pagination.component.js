@@ -11,6 +11,6 @@
                 }
             ],
             controller: 'PaginationController',
-            controllerAs: 'ctrl'
+            controllerAs: '$pgnCtrl'
         });
 })();

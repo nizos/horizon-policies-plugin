@@ -6,23 +6,22 @@
         .controller('ScrollUpController', ScrollUpController);
 
     ScrollUpController.$inject = [
-        '$scope',
         '$anchorScroll'
     ];
 
-    function ScrollUpController($scope, $anchorScroll) {
-        var $ctrl = this;
-        let lastScrollTop = 100;
+    function ScrollUpController($anchorScroll) {
+        let $scrCtrl = this;
+        $scrCtrl.lastScrollTop = 100;
         $(window).scroll(function(event){
             const st = $(this).scrollTop();
-            if (st > lastScrollTop){
+            if (st > $scrCtrl.lastScrollTop){
                 $('#btnUp').fadeIn();
             } else {
                 $('#btnUp').fadeOut();
             }
-            lastScrollTop = st;
+            $scrCtrl.lastScrollTop = st;
         });
-        $scope.gotoTop = function() {
+        $scrCtrl.gotoTop = function() {
             $("html, body").animate({ scrollTop: 0 }, 100);
             $anchorScroll();
         };

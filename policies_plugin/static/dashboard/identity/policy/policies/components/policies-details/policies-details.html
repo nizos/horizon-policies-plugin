@@ -1,4 +1,4 @@
-<div ng-controller="TableController">
+<div ng-controller="TableController as $tblCtrl">
 
     <!-- Modal Header -->
     <div class="modal-header">
@@ -19,8 +19,8 @@
                 <input type="text"
                     class="form-control"
                     id="projectFieldInput"
-                    ng-model="$ctrl.project"
-                    value="{$ $ctrl.project $}"
+                    ng-model="$dtlCtrl.project"
+                    value="{$ $dtlCtrl.project $}"
                     ng-init="editProject = false"
                     ng-disabled="!editProject">
             </div>
@@ -35,8 +35,8 @@
                 <input type="text"
                     class="form-control"
                     id="targetFieldInput"
-                    ng-model="$ctrl.target"
-                    value="{$ $ctrl.target $}"
+                    ng-model="$dtlCtrl.target"
+                    value="{$ $dtlCtrl.target $}"
                     ng-init="editTarget = false"
                     ng-disabled="!editTarget">
             </div>
@@ -51,8 +51,8 @@
                 <input type="text"
                     class="form-control"
                     id="ruleFieldInput"
-                    ng-model="$ctrl.rule"
-                    value="{$ $ctrl.rule $}"
+                    ng-model="$dtlCtrl.rule"
+                    value="{$ $dtlCtrl.rule $}"
                     ng-init="editRule = false"
                     ng-disabled="!editRule">
                 <!-- Policy Rule Edit Button -->
@@ -73,8 +73,8 @@
                 <input type="text"
                     class="form-control"
                     id="defaultFieldInput"
-                    ng-model="$ctrl.defaultRule"
-                    value="{$ $ctrl.defaultRule $}"
+                    ng-model="$dtlCtrl.defaultRule"
+                    value="{$ $dtlCtrl.defaultRule $}"
                     ng-init="editDefault = false"
                     ng-disabled="!editDefault">
             </div>
@@ -84,12 +84,12 @@
         <div class="form-group">
             <!-- Policy Scopes Label -->
             <label class="window-label" for="scopesFieldInput">Scopes</label>
-            <div ng-repeat="scope in $ctrl.scopes track by $index">
+            <div ng-repeat="scope in $dtlCtrl.scopes track by $index">
                 <div class="input-group-window">
                     <!--  Policy Scope Input Field -->
                     <input type="text"
                         class="form-control"
-                        ng-model="$ctrl.scopes[$index]"
+                        ng-model="$dtlCtrl.scopes[$index]"
                         value="{$ scope $}"
                         ng-init="editScope = false"
                         ng-disabled="!editScope">
@@ -101,12 +101,12 @@
         <div class="form-group">
             <!-- Policy Operations Label -->
             <label class="window-label"  for="operationsFieldInput">Operations</label>
-            <div ng-repeat="operation in $ctrl.operations track by $index">
+            <div ng-repeat="operation in $dtlCtrl.operations track by $index">
                 <div class="input-group-window">
                     <!--  Policy Operation Input Field -->
                     <input type="text"
                         class="form-control"
-                        ng-model="$ctrl.operations[$index]"
+                        ng-model="$dtlCtrl.operations[$index]"
                         value="{$ operation $}"
                         ng-init="editOperation = false"
                         ng-disabled="!editOperation">
@@ -123,8 +123,8 @@
                 <input type="text"
                     class="form-control"
                     id="descriptionFieldInput"
-                    ng-model="$ctrl.description"
-                    value="{$ $ctrl.description $}"
+                    ng-model="$dtlCtrl.description"
+                    value="{$ $dtlCtrl.description $}"
                     ng-init="editDescription = false"
                     ng-disabled="!editDescription">
             </div>
@@ -136,7 +136,7 @@
             <!-- Cancel Button -->
             <button class="btn btn-warning"
                 type="button"
-                ng-click="cancel()">
+                ng-click="$dtlCtrl.cancel()">
                 <span class="fa fa-times"></span>
                 Discard
             </button>
@@ -144,7 +144,7 @@
             <!-- OK Button -->
             <button class="btn btn-primary"
                 type="button"
-                ng-click="ok()">
+                ng-click="$dtlCtrl.ok()">
                 <span class="fa fa-check"></span>
                 Save
             </button>

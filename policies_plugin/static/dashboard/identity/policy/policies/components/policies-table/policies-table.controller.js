@@ -10,36 +10,27 @@
         'horizon.dashboard.identity.policy.model.policies-model',
         'horizon.dashboard.identity.policy.api',
         '$actionsReload',
+        '$actionsSort',
         '$actionsCopy',
         '$actionsDownload',
         '$actionsPrint',
-        '$scope'
+        '$actionsStorage',
+        '$rootScope'
     ];
 
-    function TableController($uibModal, PoliciesModel, Api, $actionsReload, $actionsCopy, $actionsDownload, $actionsPrint, $scope) {
-        var $ctrl = this;
-        $ctrl.policies = PoliciesModel.data;
-        $ctrl.actionsBarVisible = false;
-        $ctrl.expandAll = false;
-        $ctrl.selectAll = false;
-        $ctrl.selectedPolicies = [];
-        // Table sort scopes
-        $ctrl.sortColumn = 'target';
-        $ctrl.sortReverse = true;
+    function TableController($uibModal, PoliciesModel, Api, $actionsReload, $actionsSort, $actionsCopy, $actionsDownload, $actionsPrint, $actionsStorage, $rootScope) {
+        let $tblCtrl = this;
+        $tblCtrl.policies = PoliciesModel.data;
+        $tblCtrl.actionsBarVisible = false;
+        $tblCtrl.expandAll = false;
+        $tblCtrl.selectAll = false;
+        $tblCtrl.selectedPolicies = [];
         // Table selected policies scopes
-        $ctrl.visibleColumns = {
-            project:        true,
-            target:         true,
-            rule:           true,
-            defaultRule:    true,
-            scopes:         true,
-            operations:     true,
-            description:    true
-        };
-        $ctrl.menuOptions = [
+        $tblCtrl.menuOptions = [
             {
                 text: 'Expand',
                 click: function($itemScope) {
+                    console.log('TableController -> toggleExpand($itemScope.policy)');
                     toggleExpand($itemScope.policy);
                 },
                 displayed: function($itemScope) {
@@ -53,6 +44,7 @@
             {
                 text: 'Collapse',
                 click: function($itemScope) {
+                    console.log('TableController -> toggleExpand($itemScope.policy)');
                     toggleExpand($itemScope.policy);
                 },
                 displayed: function($itemScope) {
@@ -66,7 +58,8 @@
             {
                 text: 'Select',
                 click: function($itemScope) {
-                    $ctrl.selectPolicy($itemScope.policy);
+                    console.log('TableController -> $tblCtrl.selectPolicy($itemScope.policy)');
+                    $tblCtrl.selectPolicy($itemScope.policy);
                 },
                 displayed: function($itemScope) {
                     if ($itemScope.policy.selected) {
@@ -79,7 +72,8 @@
             {
                 text: 'Deselect',
                 click: function($itemScope) {
-                    $ctrl.selectPolicy($itemScope.policy);
+                    console.log('TableController -> $tblCtrl.selectPolicy($itemScope.policy)');
+                    $tblCtrl.selectPolicy($itemScope.policy);
                 },
                 displayed: function($itemScope) {
                     if ($itemScope.policy.selected) {
@@ -92,36 +86,42 @@
             {
                 text: 'Open in Quick Editor',
                 click: function($itemScope) {
-                    $ctrl.OpenDetailsModal($itemScope.policy);
+                    console.log('TableController -> $tblCtrl.OpenDetailsModal($itemScope.policy)');
+                    $tblCtrl.OpenDetailsModal($itemScope.policy);
                 }
             },
             {
                 text: 'Open in Text Editor',
                 click: function($itemScope) {
+                    console.log('TableController -> openInEditor($itemScope.policy)');
                     openInEditor($itemScope.policy);
                 }
             },
             {
                 text: 'Copy',
                 click: function($itemScope) {
+                    console.log('TableController -> $actionsCopy.copyPolicy($itemScope.policy)');
                     $actionsCopy.copyPolicy($itemScope.policy);
                 }
             },
             {
                 text: 'Print',
                 click: function($itemScope) {
+                    console.log('TableController -> $actionsPrint.printPolicy($itemScope.policy)');
                     $actionsPrint.printPolicy($itemScope.policy);
                 }
             },
             {
                 text: 'Download',
                 click: function($itemScope) {
+                    console.log('TableController -> $actionsDownload.downloadPolicy($itemScope.policy)');
                     $actionsDownload.downloadPolicy($itemScope.policy);
                 }
             },
             {
                 text: 'Restore default rule',
                 click: function($itemScope) {
+                    console.log('TableController -> confirmRestorePolicy($itemScope.policy)');
                     confirmRestorePolicy($itemScope.policy);
                 }
             }
@@ -131,224 +131,109 @@
 
         // Functions to run on page load
         function init() {
+            console.log('TableController -> init()');
             $actionsReload.loadPolicies().then(function() {
-                $ctrl.sortPolicies($ctrl.sortColumn);
+                console.log('TableController -> $actionsReload.loadPolicies().then');
             });
-            restoreItemsPerPage();
-            restoreVisibleColumns();
-            restoreColumnWidths();
         };
 
-        // Table column functions
-        $scope.$watch(function () {
-            return parseInt(document.querySelector('#project-column-header').style.width);
-        }, function(newVal, oldVal) {
-            storeColumnWidths();
-        });
-
-        $scope.$watch(function () {
-            return parseInt(document.querySelector('#target-column-header').style.width);
-        }, function(newVal, oldVal) {
-            storeColumnWidths();
-        });
-
-        $scope.$watch(function () {
-            return parseInt(document.querySelector('#rule-column-header').style.width);
-        }, function(newVal, oldVal) {
-            storeColumnWidths();
-        });
-
-        $scope.$watch(function () {
-            return parseInt(document.querySelector('#default-column-header').style.width);
-        }, function(newVal, oldVal) {
-            storeColumnWidths();
-        });
-
-        $scope.$watch(function () {
-            return parseInt(document.querySelector('#scopes-column-header').style.width);
-        }, function(newVal, oldVal) {
-            storeColumnWidths();
-        });
-
-        $scope.$watch(function () {
-            return parseInt(document.querySelector('#operations-column-header').style.width);
-        }, function(newVal, oldVal) {
-            storeColumnWidths();
-        });
-
-        $scope.$watch(function () {
-            return parseInt(document.querySelector('#description-column-header').style.width);
-        }, function(newVal, oldVal) {
-            storeColumnWidths();
-        });
-
-        // Visible column functions
-        $ctrl.storeVisibleColumns = function() {
-            localStorage.setItem("visibleColumns", JSON.stringify($ctrl.visibleColumns));
+        $tblCtrl.storeColumnWidths = function() {
+            console.log('TableController -> $tblCtrl.storeColumnWidths()');
+            $actionsStorage.storeColumnWidths();
         };
 
-        function restoreVisibleColumns() {
-            if (localStorage.getItem('visibleColumns') !== null) {
-                $ctrl.visibleColumns = JSON.parse(localStorage.getItem('visibleColumns'));
-            };
+        $tblCtrl.storeVisibleColumns = function() {
+            console.log('TableController -> $tblCtrl.storeVisibleColumns()');
+            $actionsStorage.storeVisibleColumns();
+        };
+
+        $tblCtrl.storeItemsPerPage = function() {
+            console.log('TableController -> $tblCtrl.storeItemsPerPage()');
+            $actionsStorage.storeItemsPerPage();
         };
 
         // Items per page functions
-        $ctrl.storeItemsPerPage = function(itemsPerPage) {
-            console.log("store itemsPerPage: ", itemsPerPage);
-            localStorage.setItem("itemsPerPage", itemsPerPage);
-        };
-
-        function restoreItemsPerPage() {
-            if (localStorage.getItem('itemsPerPage') !== null) {
-                console.log("restore itemsPerPage: ", localStorage.getItem('itemsPerPage'));
-                PoliciesModel.setItemsPerPage(localStorage.getItem('itemsPerPage'));
-            } else {
-                PoliciesModel.setItemsPerPage(20);
-            };
-        };
-
-        $ctrl.itemsPerPageChanged = function(itemsPerPage) {
+        $tblCtrl.itemsPerPageChanged = function(itemsPerPage) {
+            console.log('TableController -> $tblCtrl.itemsPerPageChanged(itemsPerPage)');
             PoliciesModel.setCurrentPage(0);
-            PoliciesModel.setItemsPerPage(itemsPerPage);
+            $actionsStorage.storeItemsPerPage(itemsPerPage);
             PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
-            $ctrl.storeItemsPerPage(itemsPerPage);
         };
 
-        // Column width functions
-        function storeColumnWidths() {
-            const widths = {
-                'project':          parseInt(document.querySelector('#project-column-header').style.width),
-                'target':           parseInt(document.querySelector('#target-column-header').style.width),
-                'rule':             parseInt(document.querySelector('#rule-column-header').style.width),
-                'defaultRule':      parseInt(document.querySelector('#default-column-header').style.width),
-                'scopes':           parseInt(document.querySelector('#scopes-column-header').style.width),
-                'operations':       parseInt(document.querySelector('#operations-column-header').style.width),
-                'description':      parseInt(document.querySelector('#description-column-header').style.width)
-            };
-            localStorage.setItem("columnWidths", JSON.stringify(widths));
-        };
-
-        function restoreColumnWidths() {
-            if (localStorage.getItem('columnWidths') !== null){
-                const widths = JSON.parse(localStorage.getItem('columnWidths'));
-                document.querySelector('#project-column-header').style.width =      widths['project'] + 'px';
-                document.querySelector('#target-column-header').style.width =       widths['target'] + 'px';
-                document.querySelector('#rule-column-header').style.width =         widths['rule'] + 'px';
-                document.querySelector('#default-column-header').style.width =      widths['default'] + 'px';
-                document.querySelector('#scopes-column-header').style.width =       widths['scopes'] + 'px';
-                document.querySelector('#operations-column-header').style.width =   widths['operations'] + 'px';
-                document.querySelector('#description-column-header').style.width =  widths['description'] + 'px';
-            };
-        };
-
-        $ctrl.setRule = function(rule) {
-            Api.setRule(rule);
+        $tblCtrl.setRule = function(rule) {
+            console.log('TableController -> $tblCtrl.setRule(rule)');
+            Api.setRule(rule).success(policiesUpdated);
         };
 
         function setRules(rules) {
-            Api.setRules(rules);
+            console.log('TableController -> setRules(rules)');
+            Api.setRules(rules).success(policiesUpdated);
+        };
+
+        function policiesUpdated() {
+            console.log('TableController -> policiesUpdated() -> $rootScope.$broadcast(Policies updated)');
+            $rootScope.$broadcast('Policies updated');
         };
 
         // Table getters
         function getTablePageStart() {
+            console.log('TableController -> getTablePageStart()');
             return ((PoliciesModel.data.currentPage+1)*PoliciesModel.data.itemsPerPage)-PoliciesModel.data.itemsPerPage;
         };
 
         function getTablePageEnd() {
+            console.log('TableController -> getTablePageEnd()');
             return Math.min(((PoliciesModel.data.currentPage+1)*PoliciesModel.data.itemsPerPage), PoliciesModel.data.filteredPolicies.length);
         };
 
         // Table updaters
         function updateSelected() {
-            $ctrl.selectedPolicies.splice(0, $ctrl.selectedPolicies.length);
-            PoliciesModel.data.filteredPolicies.forEach(function(policy) {
-                if (policy.selected === true) {
-                    $ctrl.selectedPolicies.push(policy);
+            console.log('TableController -> updateSelected()');
+            $tblCtrl.selectedPolicies.splice(0, $tblCtrl.selectedPolicies.length);
+            for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
+                if (PoliciesModel.data.filteredPolicies[i].selected === true) {
+                    $tblCtrl.selectedPolicies.push(PoliciesModel.data.filteredPolicies[i]);
                 };
-            });
+            }
             selectionsChanged();
         };
 
         function selectionsChanged() {
+            console.log('TableController -> selectionsChanged()');
             // Show the policy actions toolbar if any policies are selected
-            $ctrl.selectedPolicies.length > 0 ? $ctrl.actionsBarVisible = true : $ctrl.actionsBarVisible = false;
+            $tblCtrl.selectedPolicies.length > 0 ? $tblCtrl.actionsBarVisible = true : $tblCtrl.actionsBarVisible = false;
         };
 
-        // Table sort functions
-        function compare(a, b) {
-            if (typeof a !== 'undefined' && typeof b !== 'undefined') {
-                if (a.toLowerCase() < b.toLowerCase()) {
-                    return -1;
-                }
-                if (a.toLowerCase() > b.toLowerCase()) {
-                    return 1;
-                }
-                return 0;
-            } else if (typeof a !== 'undefined' && typeof b === 'undefined') {
-                return 1;
-            } else if (typeof a === 'undefined' && typeof b !== 'undefined') {
-                return -1;
-            } else {
-                return 0;
-            };
-        };
 
-        $ctrl.sortPolicies = function(column) {
-            if ($ctrl.sortColumn === column) {
-                $ctrl.sortReverse =! $ctrl.sortReverse;
-            };
-            if (column === 'scopes' || column === 'operations') {
-                for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
-                    if (PoliciesModel.data.filteredPolicies[i][column].length >= 1) {
-                        PoliciesModel.data.filteredPolicies[i][column].sort(function(a, b) {
-                            if (!$ctrl.sortReverse) {
-                                return compare(a, b);
-                            } else {
-                                return compare(b, a);
-                            };
-                        });
-                    }
-                };
-                PoliciesModel.data.filteredPolicies.sort(function(a, b) {
-                    if (!$ctrl.sortReverse) {
-                        return compare(a[column][0], b[column][0]);
-                    } else {
-                        return compare(b[column][0], a[column][0]);
-                    };
-                });
-            } else {
-                PoliciesModel.data.filteredPolicies.sort(function(a, b) {
-                    if (!$ctrl.sortReverse) {
-                        return a[column].localeCompare(b[column]);
-                    } else {
-                        return b[column].localeCompare(a[column]);
-                    };
-                });
-            };
-            $ctrl.sortColumn = column;
+        $tblCtrl.sortPolicies = function(column) {
+            console.log('TableController -> $tblCtrl.sortPolicies');
+            $actionsSort.sortPolicies(column);
         };
 
         // Table expand functions
         function toggleExpand(policy) {
+            console.log('TableController -> toggleExpand(policy)');
             policy.expanded =! policy.expanded;
         };
 
-        $ctrl.toggleExpandAll = function() {
-            $ctrl.expandAll = !$ctrl.expandAll;
+        $tblCtrl.toggleExpandAll = function() {
+            console.log('TableController -> $tblCtrl.toggleExpandAll');
+            $tblCtrl.expandAll = !$tblCtrl.expandAll;
             const rangeStart = getTablePageStart();
             const rangeEnd = getTablePageEnd();
             for (let i = rangeStart; i < rangeEnd; i++) {
-                PoliciesModel.data.filteredPolicies[i].expanded = $ctrl.expandAll;
+                PoliciesModel.data.filteredPolicies[i].expanded = $tblCtrl.expandAll;
             };
         };
 
         // Table select functions
-        $ctrl.toggleSelect = function() {
+        $tblCtrl.toggleSelect = function() {
+            console.log('TableController -> $tblCtrl.toggleSelect');
             updateSelected();
         };
 
-        $ctrl.selectPolicy = function(policy) {
+        $tblCtrl.selectPolicy = function(policy) {
+            console.log('TableController -> $tblCtrl.selectPolicy');
             const rangeStart = getTablePageStart();
             const rangeEnd = getTablePageEnd();
             for (let i = rangeStart; i < rangeEnd; i++) {
@@ -364,16 +249,18 @@
         };
 
         // Policy select all functions
-        $ctrl.toggleSelectAll = function() {
+        $tblCtrl.toggleSelectAll = function() {
+            console.log('TableController -> $tblCtrl.toggleSelectAll');
             const rangeStart = getTablePageStart();
             const rangeEnd = getTablePageEnd();
             for (let i = rangeStart; i < rangeEnd; i++) {
-                PoliciesModel.data.filteredPolicies[i].selected = $ctrl.selectAll;
+                PoliciesModel.data.filteredPolicies[i].selected = $tblCtrl.selectAll;
             };
             updateSelected();
         };
 
-        $ctrl.clearAllSelected = function() {
+        $tblCtrl.clearAllSelected = function() {
+            console.log('TableController -> $tblCtrl.clearAllSelected');
             for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
                 PoliciesModel.data.filteredPolicies[i].selected = false;
             };
@@ -381,23 +268,26 @@
         };
 
         // Download policy as file context menu action
-        $ctrl.downloadSelected = function() {
-            $actionsDownload.downloadPolicies($ctrl.selectedPolicies);
+        $tblCtrl.downloadSelected = function() {
+            console.log('TableController -> $tblCtrl.downloadSelected');
+            $actionsDownload.downloadPolicies($tblCtrl.selectedPolicies);
         };
 
         // Restore policy functions
         function confirmRestorePolicy(policy) {
+            console.log('TableController -> confirmRestorePolicy(policy)');
             const dialog = "Are you sure you want to restore the policy's rule to its default value?";
             openRestorePolicyModal(dialog, policy);
         };
 
         function restorePolicy(policy) {
+            console.log('TableController -> restorePolicy(policy)');
             for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
                 let filteredPolicy = PoliciesModel.data.filteredPolicies[i];
                 if (filteredPolicy.target === policy.target) {
                     if (filteredPolicy.rule === policy.rule) {
                         PoliciesModel.data.filteredPolicies[i].rule = PoliciesModel.data.filteredPolicies[i].defaultRule;
-                        $ctrl.setRule(PoliciesModel.data.filteredPolicies[i]);
+                        $tblCtrl.setRule(PoliciesModel.data.filteredPolicies[i]);
                         break;
                     };
                 };
@@ -406,12 +296,14 @@
 
 
         // Restore policies functions
-        $ctrl.confirmRestorePolicies = function() {
+        $tblCtrl.confirmRestorePolicies = function() {
+            console.log('TableController -> $tblCtrl.confirmRestorePolicies');
             const dialog = "Are you sure you want to restore the select policies' rules to their default values?";
-            openRestorePoliciesModal(dialog, $ctrl.selectedPolicies);
+            openRestorePoliciesModal(dialog, $tblCtrl.selectedPolicies);
         };
 
         function restorePolicies(policies) {
+            console.log('TableController -> restorePolicies(policies)');
             let requests = [];
             for (let i = 0; i < policies.length; i++) {
                 const request = {
@@ -426,19 +318,21 @@
 
         // Editor functions
         function openInEditor(policy) {
-            $ctrl.clearAllSelected();
-            $ctrl.selectPolicy(policy);
-            $ctrl.openEditorModal();
+            console.log('TableController ->  openInEditor(policy)');
+            $tblCtrl.clearAllSelected();
+            $tblCtrl.selectPolicy(policy);
+            $tblCtrl.openEditorModal();
         };
 
         // Details modal
-        $ctrl.OpenDetailsModal = function(policy){
+        $tblCtrl.OpenDetailsModal = function(policy) {
+            console.log('TableController ->  OpenDetailsModal');
             let modalInstance =         $uibModal.open({
                 ariaLabelledBy:         'modal-title',
                 ariaDescribedBy:        'modal-body',
                 templateUrl:            'static/dashboard/identity/policy/policies/components/policies-details/policies-details.html',
                 controller:             'DetailsController',
-                controllerAs:           '$ctrl',
+                controllerAs:           '$dtlCtrl',
                 resolve: {
                     $policy: function () {
                         return policy;
@@ -448,46 +342,51 @@
 
             // User saved modifications to policy
             modalInstance.result.then(function (policy) {
-                $ctrl.setRule(policy);
+                console.log('TableController ->  OpenDetailsModal -> modalInstance.result.then');
+                $tblCtrl.setRule(policy);
             });
         };
 
         // Editor modal
-        $ctrl.openEditorModal = function(){
+        $tblCtrl.openEditorModal = function() {
+            console.log('TableController ->  openEditorModal');
             let modalInstance =         $uibModal.open({
                 ariaLabelledBy:         'modal-title',
                 ariaDescribedBy:        'modal-body',
                 templateUrl:            'static/dashboard/identity/policy/policies/components/policies-editor/policies-editor.html',
                 controller:             'EditorController',
-                controllerAs:           '$ctrl',
+                controllerAs:           '$edtCtrl',
                 resolve: {
                     $policy: function () {
-                        return $ctrl.selectedPolicies;
+                        return $tblCtrl.selectedPolicies;
                     }
                 }
             });
 
             // User saved modifications to policies
             modalInstance.result.then(function (rules) {
+                console.log('TableController ->  openEditorModal -> modalInstance.result.then');
                 setRules(rules);
-                $ctrl.clearAllSelected();
+                $tblCtrl.clearAllSelected();
             });
 
             // User discarded modifications to policies
             modalInstance.closed.then(function () {
-                $ctrl.clearAllSelected();
+                console.log('TableController ->  openEditorModal -> modalInstance.closed.then');
+                $tblCtrl.clearAllSelected();
             });
         };
 
         // Restore policy modal
         function openRestorePolicyModal(dialog, policy) {
+            console.log('TableController ->  openRestorePolicyModal');
             let modalInstance =         $uibModal.open({
                 ariaLabelledBy:         'modal-title',
                 ariaDescribedBy:        'modal-body',
                 animation:              false,
                 templateUrl:            'static/dashboard/identity/policy/policies/components/confirm-dialog/confirm-dialog.html',
                 controller:             'ConfirmController',
-                controllerAs:           '$ctrl',
+                controllerAs:           '$cnfCtrl',
                 resolve: {
                     dialog: function () {
                         return dialog;
@@ -497,25 +396,28 @@
 
             // User confirmed restore policy action
             modalInstance.result.then(function () {
+                console.log('TableController ->  openRestorePolicyModal -> modalInstance.result.then');
                 restorePolicy(policy);
-                $ctrl.clearAllSelected();
+                $tblCtrl.clearAllSelected();
             });
 
             // User canceled restore policy action
             modalInstance.closed.then(function () {
-                $ctrl.clearAllSelected();
+                console.log('TableController ->  openRestorePolicyModal -> modalInstance.closed.then');
+                $tblCtrl.clearAllSelected();
             });
         };
 
         // Restore policies modal
-        function openRestorePoliciesModal(dialog, policies){
+        function openRestorePoliciesModal(dialog, policies) {
+            console.log('TableController ->  openRestorePoliciesModal');
             let modalInstance =         $uibModal.open({
                 ariaLabelledBy:         'modal-title',
                 ariaDescribedBy:        'modal-body',
                 animation:              false,
                 templateUrl:            'static/dashboard/identity/policy/policies/components/confirm-dialog/confirm-dialog.html',
                 controller:             'ConfirmController',
-                controllerAs:           '$ctrl',
+                controllerAs:           '$cnfCtrl',
                 resolve: {
                     dialog: function () {
                         return dialog;
@@ -525,13 +427,15 @@
 
             // User confirmed restore policies action
             modalInstance.result.then(function () {
+                console.log('TableController ->  openRestorePoliciesModal -> modalInstance.result.then');
                 restorePolicies(policies);
-                $ctrl.clearAllSelected();
+                $tblCtrl.clearAllSelected();
             });
 
             // User canceled restore policies action
             modalInstance.closed.then(function () {
-                $ctrl.clearAllSelected();
+                console.log('TableController ->  openRestorePoliciesModal -> modalInstance.closed.then');
+                $tblCtrl.clearAllSelected();
             });
         };
     };

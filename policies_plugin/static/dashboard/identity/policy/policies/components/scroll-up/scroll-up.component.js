@@ -11,6 +11,6 @@
                 }
             ],
             controller: 'ScrollUpController',
-            controllerAs: 'ctrl'
+            controllerAs: '$scrCtrl'
         });
 })();

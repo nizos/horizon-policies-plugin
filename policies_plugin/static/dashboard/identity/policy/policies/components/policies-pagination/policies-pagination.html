@@ -1,36 +1,36 @@
 <!--  Page navigation -->
-<nav aria-label="Page navigation" align="center" ng-controller="PaginationController">
+<nav aria-label="Page navigation" align="center" ng-controller="PaginationController as $pgnCtrl">
     <ul class="pagination">
 
         <!--  Go to first page -->
-        <li ng-disabled="policies.currentPage==0">
-            <a aria-label="First" ng-click="firstPage()" >
+        <li ng-disabled="$pgnCtrl.policies.currentPage==0">
+            <a aria-label="First" ng-click="$pgnCtrl.firstPage()" >
                 <span aria-hidden="true" class="fa fa-angle-double-left"></span>
             </a>
         </li>
 
         <!--  Go to previous page -->
-        <li ng-disabled="policies.currentPage==0">
-            <a aria-label="Previous" ng-click="previousPage()" >
+        <li ng-disabled="$pgnCtrl.policies.currentPage==0">
+            <a aria-label="Previous" ng-click="$pgnCtrl.previousPage()" >
                 <span aria-hidden="true" class="fa fa-angle-left"></span>
             </a>
         </li>
 
         <!--  Go to page in list of page numbers -->
-        <li ng-repeat="page in [].constructor(policies.numberOfPages) track by $index" ng-class="{active:policies.currentPage==$index}" ng-disabled="policies.currentPage==$index">
-            <a ng-click="goToPage($index)">{$ $index+1 $}</a>
+        <li ng-repeat="page in [].constructor($pgnCtrl.policies.numberOfPages) track by $index" ng-class="{active:$pgnCtrl.policies.currentPage==$index}" ng-disabled="$pgnCtrl.policies.currentPage==$index">
+            <a ng-click="$pgnCtrl.goToPage($index)">{$ $index+1 $}</a>
         </li>
 
         <!--  Go to next page -->
-        <li ng-disabled="policies.currentPage >= policies.numberOfPages">
-            <a aria-label="Next" ng-click="nextPage()">
+        <li ng-disabled="$pgnCtrl.policies.currentPage >= $pgnCtrl.policies.numberOfPages">
+            <a aria-label="Next" ng-click="$pgnCtrl.nextPage()">
                 <span aria-hidden="true" class="fa fa-angle-right"></span>
             </a>
         </li>
 
         <!--  Go to last page -->
-        <li ng-disabled="policies.currentPage >= policies.numberOfPages-1">
-            <a aria-label="Last" ng-click="lastPage()">
+        <li ng-disabled="$pgnCtrl.policies.currentPage >= $pgnCtrl.policies.numberOfPages-1">
+            <a aria-label="Last" ng-click="$pgnCtrl.lastPage()">
                 <span aria-hidden="true" class="fa fa-angle-double-right"></span>
             </a>
         </li>

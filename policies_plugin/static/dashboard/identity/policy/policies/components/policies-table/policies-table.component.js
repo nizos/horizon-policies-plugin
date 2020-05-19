@@ -11,6 +11,6 @@
                 }
             ],
             controller: 'TableController',
-            controllerAs: 'ctrl'
+            controllerAs: '$tblCtrl'
         });
 })();

@@ -32,7 +32,7 @@
     justify-content: space-between;
 }
 
-.editor-toolbar-responsiv {
+.editor-toolbar-responsive {
     display: none;
 }
 
@@ -42,7 +42,7 @@
         display: none !important;
     }
 
-    .editor-toolbar-responsiv {
+    .editor-toolbar-responsive {
         display: flow-root;
         background-color: #cccccc;
         padding: 5px;
@@ -52,10 +52,10 @@
         position: sticky;
         top: 37px;
     }
-    .dropdown-manage-responsiv {
+    .dropdown-manage-responsive {
         display: flow-root;
     }
-    .responsiv-manage {
+    .responsive-manage {
         display: inline-flex !important;
         width: 100%;
         position: sticky;
@@ -127,11 +127,11 @@
     width: 80%;
 }
 
-.responsiv-manage {
+.responsive-manage {
     display: none;
 }
 
-.dropdown-menu-responsiv {
+.dropdown-menu-responsive {
     position: inherit;
     top: 35px;
     float: left;
@@ -148,7 +148,7 @@
     background-clip: padding-box;
 }
 
-.dropdown-manage-responsiv {
+.dropdown-manage-responsive {
     position: inherit;
     display: none;
     float: right;
@@ -237,7 +237,7 @@
     padding-left: 2px;
 }
 
-.file-upload-form.wipe-in {
+.file-upload-form.uploadVisible {
     width: 100%;
     display: inline-flex;
     position:relative;
@@ -278,6 +278,6 @@
     visibility: hidden;
 }
 
-.upload-button.wipe-in {
+.upload-button.uploadVisible {
     border-bottom-width: 0px;
 }
