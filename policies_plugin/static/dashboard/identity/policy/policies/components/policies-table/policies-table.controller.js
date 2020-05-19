@@ -12,23 +12,21 @@
         '$actionsReload',
         '$actionsCopy',
         '$actionsDownload',
-        '$actionsPrint'
+        '$actionsPrint',
+        '$scope'
     ];
 
-    function TableController($uibModal, PoliciesModel, Api, $actionsReload, $actionsCopy, $actionsDownload, $actionsPrint) {
+    function TableController($uibModal, PoliciesModel, Api, $actionsReload, $actionsCopy, $actionsDownload, $actionsPrint, $scope) {
         var $ctrl = this;
         $ctrl.policies = PoliciesModel.data;
         $ctrl.actionsBarVisible = false;
         $ctrl.expandAll = false;
         $ctrl.selectAll = false;
         $ctrl.selectedPolicies = [];
-
         // Table sort scopes
         $ctrl.sortColumn = 'target';
         $ctrl.sortReverse = true;
         // Table selected policies scopes
-        $ctrl.visibleCols;
-        $ctrl.colWidths;
         $ctrl.visibleColumns = {
             project:        true,
             target:         true,
@@ -41,7 +39,7 @@
         $ctrl.menuOptions = [
             {
                 text: 'Expand',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     toggleExpand($itemScope.policy);
                 },
                 displayed: function($itemScope) {
@@ -54,7 +52,7 @@
             },
             {
                 text: 'Collapse',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     toggleExpand($itemScope.policy);
                 },
                 displayed: function($itemScope) {
@@ -67,7 +65,7 @@
             },
             {
                 text: 'Select',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     $ctrl.selectPolicy($itemScope.policy);
                 },
                 displayed: function($itemScope) {
@@ -80,7 +78,7 @@
             },
             {
                 text: 'Deselect',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     $ctrl.selectPolicy($itemScope.policy);
                 },
                 displayed: function($itemScope) {
@@ -93,42 +91,41 @@
             },
             {
                 text: 'Open in Quick Editor',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     $ctrl.OpenDetailsModal($itemScope.policy);
                 }
             },
             {
                 text: 'Open in Text Editor',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     openInEditor($itemScope.policy);
                 }
             },
             {
                 text: 'Copy',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     $actionsCopy.copyPolicy($itemScope.policy);
                 }
             },
             {
                 text: 'Print',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     $actionsPrint.printPolicy($itemScope.policy);
                 }
             },
             {
                 text: 'Download',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     $actionsDownload.downloadPolicy($itemScope.policy);
                 }
             },
             {
                 text: 'Restore default rule',
-                click: function ($itemScope) {
+                click: function($itemScope) {
                     confirmRestorePolicy($itemScope.policy);
                 }
             }
         ];
-
 
         init();
 
@@ -137,6 +134,112 @@
             $actionsReload.loadPolicies().then(function() {
                 $ctrl.sortPolicies($ctrl.sortColumn);
             });
+            restoreItemsPerPage();
+            restoreVisibleColumns();
+            restoreColumnWidths();
+        };
+
+        // Table column functions
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#project-column-header').style.width);
+        }, function(newVal, oldVal) {
+            storeColumnWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#target-column-header').style.width);
+        }, function(newVal, oldVal) {
+            storeColumnWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#rule-column-header').style.width);
+        }, function(newVal, oldVal) {
+            storeColumnWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#default-column-header').style.width);
+        }, function(newVal, oldVal) {
+            storeColumnWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#scopes-column-header').style.width);
+        }, function(newVal, oldVal) {
+            storeColumnWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#operations-column-header').style.width);
+        }, function(newVal, oldVal) {
+            storeColumnWidths();
+        });
+
+        $scope.$watch(function () {
+            return parseInt(document.querySelector('#description-column-header').style.width);
+        }, function(newVal, oldVal) {
+            storeColumnWidths();
+        });
+
+        // Visible column functions
+        $ctrl.storeVisibleColumns = function() {
+            localStorage.setItem("visibleColumns", JSON.stringify($ctrl.visibleColumns));
+        };
+
+        function restoreVisibleColumns() {
+            if (localStorage.getItem('visibleColumns') !== null) {
+                $ctrl.visibleColumns = JSON.parse(localStorage.getItem('visibleColumns'));
+            };
+        };
+
+        // Items per page functions
+        $ctrl.storeItemsPerPage = function(itemsPerPage) {
+            console.log("store itemsPerPage: ", itemsPerPage);
+            localStorage.setItem("itemsPerPage", itemsPerPage);
+        };
+
+        function restoreItemsPerPage() {
+            if (localStorage.getItem('itemsPerPage') !== null) {
+                console.log("restore itemsPerPage: ", localStorage.getItem('itemsPerPage'));
+                PoliciesModel.setItemsPerPage(localStorage.getItem('itemsPerPage'));
+            } else {
+                PoliciesModel.setItemsPerPage(20);
+            };
+        };
+
+        $ctrl.itemsPerPageChanged = function(itemsPerPage) {
+            PoliciesModel.setCurrentPage(0);
+            PoliciesModel.setItemsPerPage(itemsPerPage);
+            PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
+            $ctrl.storeItemsPerPage(itemsPerPage);
+        };
+
+        // Column width functions
+        function storeColumnWidths() {
+            const widths = {
+                'project':          parseInt(document.querySelector('#project-column-header').style.width),
+                'target':           parseInt(document.querySelector('#target-column-header').style.width),
+                'rule':             parseInt(document.querySelector('#rule-column-header').style.width),
+                'defaultRule':      parseInt(document.querySelector('#default-column-header').style.width),
+                'scopes':           parseInt(document.querySelector('#scopes-column-header').style.width),
+                'operations':       parseInt(document.querySelector('#operations-column-header').style.width),
+                'description':      parseInt(document.querySelector('#description-column-header').style.width)
+            };
+            localStorage.setItem("columnWidths", JSON.stringify(widths));
+        };
+
+        function restoreColumnWidths() {
+            if (localStorage.getItem('columnWidths') !== null){
+                const widths = JSON.parse(localStorage.getItem('columnWidths'));
+                document.querySelector('#project-column-header').style.width =      widths['project'] + 'px';
+                document.querySelector('#target-column-header').style.width =       widths['target'] + 'px';
+                document.querySelector('#rule-column-header').style.width =         widths['rule'] + 'px';
+                document.querySelector('#default-column-header').style.width =      widths['default'] + 'px';
+                document.querySelector('#scopes-column-header').style.width =       widths['scopes'] + 'px';
+                document.querySelector('#operations-column-header').style.width =   widths['operations'] + 'px';
+                document.querySelector('#description-column-header').style.width =  widths['description'] + 'px';
+            };
         };
 
         $ctrl.setRule = function(rule) {
@@ -157,12 +260,6 @@
         };
 
         // Table updaters
-        $ctrl.itemsPerPageChanged = function(itemsPerPage) {
-            PoliciesModel.setCurrentPage(0);
-            PoliciesModel.setItemsPerPage(itemsPerPage);
-            PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
-        };
-
         function updateSelected() {
             $ctrl.selectedPolicies.splice(0, $ctrl.selectedPolicies.length);
             PoliciesModel.data.filteredPolicies.forEach(function(policy) {
@@ -201,40 +298,33 @@
             if ($ctrl.sortColumn === column) {
                 $ctrl.sortReverse =! $ctrl.sortReverse;
             };
-            if (!$ctrl.sortReverse) {
-                if (column === 'scopes' || column === 'operations') {
-                    for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
-                        if (PoliciesModel.data.filteredPolicies[i][column].length >= 1) {
-                            PoliciesModel.data.filteredPolicies[i][column].sort(function(a, b) {
+            if (column === 'scopes' || column === 'operations') {
+                for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
+                    if (PoliciesModel.data.filteredPolicies[i][column].length >= 1) {
+                        PoliciesModel.data.filteredPolicies[i][column].sort(function(a, b) {
+                            if (!$ctrl.sortReverse) {
                                 return compare(a, b);
-                            });
-                        }
-                    };
-                    PoliciesModel.data.filteredPolicies.sort(function(a, b) {
-                        return compare(a[column][0], b[column][0]);
-                    });
-                } else {
-                    PoliciesModel.data.filteredPolicies.sort(function(a, b) {
-                        return a[column].localeCompare(b[column]);
-                    });
-                };
-            } else {
-                if (column === 'scopes' || column === 'operations') {
-                    for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
-                        if (PoliciesModel.data.filteredPolicies[i][column].length >= 1) {
-                            PoliciesModel.data.filteredPolicies[i][column].sort(function(a, b) {
+                            } else {
                                 return compare(b, a);
-                            });
-                        };
-                    };
-                    PoliciesModel.data.filteredPolicies.sort(function(a, b) {
-                        return compare(b[column][0], a[column][0]);
-                    });
-                } else {
-                    PoliciesModel.data.filteredPolicies.sort(function(a, b) {
-                        return b[column].localeCompare(a[column]);
-                    });
+                            };
+                        });
+                    }
                 };
+                PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                    if (!$ctrl.sortReverse) {
+                        return compare(a[column][0], b[column][0]);
+                    } else {
+                        return compare(b[column][0], a[column][0]);
+                    };
+                });
+            } else {
+                PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                    if (!$ctrl.sortReverse) {
+                        return a[column].localeCompare(b[column]);
+                    } else {
+                        return b[column].localeCompare(a[column]);
+                    };
+                });
             };
             $ctrl.sortColumn = column;
         };
@@ -248,7 +338,6 @@
             $ctrl.expandAll = !$ctrl.expandAll;
             const rangeStart = getTablePageStart();
             const rangeEnd = getTablePageEnd();
-            // Loop through the policies shown in the table
             for (let i = rangeStart; i < rangeEnd; i++) {
                 PoliciesModel.data.filteredPolicies[i].expanded = $ctrl.expandAll;
             };
@@ -323,22 +412,16 @@
         };
 
         function restorePolicies(policies) {
-            const total = policies.length;
+            let requests = [];
             for (let i = 0; i < policies.length; i++) {
-                for (let j = 0; j < PoliciesModel.data.filteredPolicies.length; j++) {
-                    let filteredPolicy = PoliciesModel.data.filteredPolicies[j];
-                    if (filteredPolicy.target === policies[i].target) {
-                        if (filteredPolicy.rule === policies[i].rule) {
-                            PoliciesModel.data.filteredPolicies[j].rule = PoliciesModel.data.filteredPolicies[j].defaultRule;
-                            $ctrl.setRule(PoliciesModel.data.filteredPolicies[j]);
-                            break;
-                        };
-                    };
+                const request = {
+                    'project': policies[i].project,
+                    'target': policies[i].target,
+                    'rule': policies[i].defaultRule
                 };
-                if (i >= total) {
-                    break;
-                }
+                requests.push(request);
             };
+            setRules(requests);
         };
 
         // Editor functions
