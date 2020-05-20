@@ -29,10 +29,10 @@
         });
 
     });
-    /* Test to see if history module is defined */
-    describe('horizon.dashboard.identity.policy.actions.history', function() {
+    /* Test to see if filter module is defined */
+    describe('horizon.dashboard.identity.policy.actions.filter', function() {
         it('Module is defined', function () {
-            expect(angular.module('horizon.dashboard.identity.policy.actions.history')).toBeDefined();
+            expect(angular.module('horizon.dashboard.identity.policy.actions.filter')).toBeDefined();
         });
 
     });
@@ -54,6 +54,20 @@
     describe('horizon.dashboard.identity.policy.actions.reload', function() {
         it('Module is defined', function () {
             expect(angular.module('horizon.dashboard.identity.policy.actions.reload')).toBeDefined();
+        });
+
+    });
+    /* Test to see if reload module is defined */
+    describe('horizon.dashboard.identity.policy.actions.sort', function() {
+        it('Module is defined', function () {
+            expect(angular.module('horizon.dashboard.identity.policy.actions.sort')).toBeDefined();
+        });
+
+    });
+    /* Test to see if reload module is defined */
+    describe('horizon.dashboard.identity.policy.actions.storage', function() {
+        it('Module is defined', function () {
+            expect(angular.module('horizon.dashboard.identity.policy.actions.storage')).toBeDefined();
         });
 
     });
