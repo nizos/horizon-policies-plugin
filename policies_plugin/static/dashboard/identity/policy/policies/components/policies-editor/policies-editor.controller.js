@@ -20,7 +20,10 @@
                 $edtCtrl.editorContent;
                 $edtCtrl.nrOfLines;
                 $edtCtrl.showUpload = false;
-                $edtCtrl.showResponsiveUpload = false;
+                $edtCtrl.historyIndex = 0;
+                $edtCtrl.history = [];
+                $edtCtrl.showSuggestions = true;
+                $edtCtrl.showRuler = true;
 
                 // Suggestions dictionary
                 let suggestions = ["admin", "admin_required", "rule:admin_required", "rule:service_role", "rule:service_or_admin", "rule:token_subject", "target.credential.user_id", "target.domain.id", "target.domain_id", "target.group.domain_id", "target.limit.domain.id", "target.limit.project.domain_id", "target.limit.project_id", "target:credential.user_id", "target.trust.trustor_user_id", "target.trust.trustee_user_id", "target.user.id", "target.project.domain_id", "target.project.id", "target.role.domain_id", "target.token.user_id", "target.user.domain_id", "token.domain.id", "token.project.domain.id", "role:reader", "role:admin", "and", "or", "rule:owner", "system_scope:all"];
@@ -36,10 +39,47 @@
                     };
                 };
 
-                // Save changes made to policies in editor
-                $edtCtrl.save = function() {
-                    const requests = validateSubmission();
-                    $uibModalInstance.close(requests);
+                // Undo changes made to policies in editor
+                $edtCtrl.undo = function() {
+                    if ($edtCtrl.historyIndex >= 1) {
+                        $edtCtrl.historyIndex--;
+                        document.querySelector('.editor-textarea').value = $edtCtrl.history[$edtCtrl.historyIndex];
+                    }
+                };
+
+                // Redo changes made to policies in editor
+                $edtCtrl.redo = function() {
+                    if ($edtCtrl.historyIndex < $edtCtrl.history.length-1) {
+                        $edtCtrl.historyIndex++;
+                        document.querySelector('.editor-textarea').value = $edtCtrl.history[$edtCtrl.historyIndex];
+                    }
+                };
+
+                // Copy editor's contents to clipboard
+                $edtCtrl.clipboardCopy = function() {
+                    $actionsCopy.copyContents($edtCtrl.editorContent);
+                };
+
+                // Paste clipboard's content into text editor
+                $edtCtrl.clipboardPaste = function() {
+                };
+
+                // Download editor's contents
+                $edtCtrl.downloadFile = function() {
+                    $actionsDownload.downloadContents($edtCtrl.editorContent);
+                };
+
+                // Set editor's contents from uploaded file's
+                $edtCtrl.uploadFile = function() {
+                    const file = document.getElementById('uploadFile').files[0];
+                    $actionsUpload.upload(file).then(function (response) {
+                        $edtCtrl.editorContent = response;
+                    });
+                };
+
+                // Print editor's contents
+                $edtCtrl.print = function() {
+                    $actionsPrint.printContents($edtCtrl.editorContent);
                 };
 
                 // Discard changes made to policies in editor
@@ -47,34 +87,11 @@
                     $uibModalInstance.dismiss('cancel');
                 }
 
-                // Download editor contents as file quick action
-                $edtCtrl.downloadFile = function() {
-                    $actionsDownload.downloadContents($edtCtrl.editorContent);
+                // Save changes made to policies in editor
+                $edtCtrl.save = function() {
+                    const requests = validateSubmission();
+                    $uibModalInstance.close(requests);
                 };
-
-                // Set editor contents from file upload quick action
-                $edtCtrl.uploadFile = function() {
-                    console.log("$edtCtrl.uploadFile -> $edtCtrl.uploadFile");
-                    let file = document.getElementById('uploadFile').files[0];
-                    if(!file) {
-                        console.log("$edtCtrl.uploadFile -> !file");
-                        file = document.getElementById('responsiveUploadFile').files[0];
-                    }
-                    $actionsUpload.upload(file).then(function (response) {
-                        console.log("$edtCtrl.uploadFile -> $actionsUpload.upload");
-                        $edtCtrl.editorContent = response;
-                    });
-                };
-
-                // Copy editor contents to clipboard quick action
-                $edtCtrl.clipboardCopy = function() {
-                    $actionsCopy.copyContents($edtCtrl.editorContent);
-                };
-
-                // Print editor contents quick action
-                $edtCtrl.print = function() {
-                    $actionsPrint.printContents($edtCtrl.editorContent);
-                }
 
                 // Validate contents of text editor
                 function validateSubmission() {
@@ -132,7 +149,11 @@
                 // Auto complete suggestions functions
                 function autocompSuggestions() {
                     const search_term = getSearchTerm();
-                    if (search_term.length < $edtCtrl.minCharsToShowSuggestions) {
+                    if (search_term === '') {
+                        $edtCtrl.history.push(document.querySelector('.editor-textarea').value);
+                        $edtCtrl.historyIndex = $edtCtrl.history.length;
+                    };
+                    if (search_term.length < $edtCtrl.minCharsToShowSuggestions || !$edtCtrl.showSuggestions) {
                         return;
                     }
                     const search_results = getSearchSuggestions(search_term);
