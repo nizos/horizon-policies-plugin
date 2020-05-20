@@ -111,7 +111,7 @@
         </div>
 
         <!-- Desktop editor toolbar -->
-        <div class="editor-toolbar" ng-class="{'rulerVisible': PoliciesModel.data.rulerVisible}">
+        <div class="editor-toolbar" ng-class="{'rulerVisible': $edtCtrl.showRuler}">
 
             <!-- Editor history button group -->
             <div class="btn-group">
@@ -210,7 +210,7 @@
         <div class="editor">
 
             <!-- Editor line numbers -->
-            <span class="editor-line-numbers" ng-show="$edtCtrl.showRuler">
+            <span class="editor-line-numbers" ng-class="{'rulerVisible': $edtCtrl.showRuler}">
                 <div ng-repeat="i in [].constructor($edtCtrl.nrOfLines) track by $index">{$ $index+1 $}</div>
             </span>
 
