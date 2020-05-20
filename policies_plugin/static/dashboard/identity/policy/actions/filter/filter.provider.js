@@ -18,18 +18,19 @@
     angular
         .module('horizon.dashboard.identity.policy.actions.filter')
         .provider('$actionsFilter', [
-            function () {
+            function() {
                 this.$get = [
                     'horizon.dashboard.identity.policy.model.policies-model',
                     '$q',
-                    function (PoliciesModel, $q) {
+                    function(PoliciesModel, $q) {
                         return {
+
+                            // Filter list of policies in filtered policies list according to query
                             filterPolicies: function(query) {
                                 let deferred = $q.defer();
                                 deferred.notify("Filtering policies");
                                 let successful;
                                 try {
-                                    console.log('$actionsFilter -> filterPolicies()');
                                     if (!query || query === '' || query === undefined) {
                                         // Include all policies in the filtered policies list
                                         PoliciesModel.setFilteredPolicies(PoliciesModel.data.allPolicies);
@@ -150,12 +151,14 @@
                                     };
                                 } catch (err) {
                                     deferred.reject(err);
-                                }
+                                };
                                 return deferred.promise;
                             }
-                        };
+                        }
                     }
                 ];
             }
         ]);
+
 })();
+

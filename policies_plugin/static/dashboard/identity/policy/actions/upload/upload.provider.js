@@ -18,15 +18,18 @@
     angular
         .module('horizon.dashboard.identity.policy.actions.upload')
         .provider('$actionsUpload', [
-            function () {
+            function() {
                 this.$get = [
                     'horizon.framework.widgets.toast.service',
                     '$q',
                     '$timeout',
-                    function (toastService, $q, $timeout) {
+                    function(toastService, $q, $timeout) {
                         const extension = ['json',];
                         return {
-                            upload: function (file) {
+
+                            // Return the text content of the
+                            // user's uploaded json file
+                            upload: function(file) {
                                 let deferred = $q.defer();
                                 deferred.notify("Uploading file");
                                 let successful;
@@ -36,30 +39,29 @@
                                             let reader = new FileReader();
                                             reader.onload = function(e) {
                                                 let data = e.target.result;
-                                                console.log("data", data);
                                                 $timeout(function() {
-                                                        successful = data;
-                                                        if (!successful) {
-                                                            throw successful;
-                                                        } else {
-                                                            toastService.add('success', gettext('File uploaded successfully'));
-                                                            deferred.resolve(successful);
-                                                        }
+                                                    successful = data;
+                                                    if (!successful) {
+                                                        throw successful;
+                                                    } else {
+                                                        toastService.add('success', gettext('File uploaded successfully'));
+                                                        deferred.resolve(successful);
+                                                    };
                                                 }, 100);
-                                            }
+                                            };
                                             reader.readAsBinaryString(file);
                                         } else {
                                             toastService.add('error', gettext('File type is not supported!'));
                                             deferred.reject('File type is not supported!');
-                                        }
+                                        };
                                     } else {
                                         toastService.add('error', gettext('File could not be found!'));
                                         deferred.reject('File could not be found!');
-                                    }
+                                    };
                                 } catch (err) {
                                     deferred.reject(err);
-                                    toastService.add('info', gettext('Use Ctrl+C to copy to clipboard'));
-                                }
+                                    toastService.add('error', gettext('File could not be uploaded!'));
+                                };
                                 return deferred.promise;
                             }
                         };
@@ -67,4 +69,5 @@
                 ];
             }
         ]);
+
 })();

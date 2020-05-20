@@ -17,154 +17,159 @@
 
     angular
         .module('horizon.dashboard.identity.policy.actions.print')
-        .provider('$actionsPrint', [function () {
+        .provider('$actionsPrint', [
+            function() {
+                this.$get = [
+                    'horizon.framework.widgets.toast.service',
+                    '$q',
+                    '$window',
+                    function(toastService, $q, $window) {
+                        const body = document.getElementsByTagName("BODY")[0];
+                        return {
 
-            this.$get = [
-                'horizon.framework.widgets.toast.service',
-                '$q',
-                '$window',
-                function (toastService, $q, $window) {
-                    const body = document.getElementsByTagName("BODY")[0];
-                    return {
-                        printContents: function (contents) {
-                            let deferred = $q.defer();
-                            deferred.notify("Printing contents");
+                            // Instantiate a print dialog for a document containing parameter passed string
+                            printContents: function(contents) {
+                                let deferred = $q.defer();
+                                deferred.notify("Printing contents");
+                                try {
+                                    // Create a dynamic IFRAME
+                                    const frame1 = document.createElement("IFRAME");
+                                    frame1.name = "frame1";
+                                    frame1.setAttribute("style", "position:absolute;top:-1000000px");
+                                    body.appendChild(frame1);
 
-                            try {
-                                // Create a dynamic IFRAME
-                                const frame1 = document.createElement("IFRAME");
-                                frame1.name = "frame1";
-                                frame1.setAttribute("style", "position:absolute;top:-1000000px");
-                                body.appendChild(frame1);
+                                    // Create a Frame Document
+                                    const frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+                                    frameDoc.document.open();
+                                    // Create a new HTML document
+                                    frameDoc.document.write('<html><head><title>Policies</title>');
+                                    frameDoc.document.write('</head><body>');
+                                    // Append the DIV contents
+                                    frameDoc.document.write(contents);
+                                    frameDoc.document.write('</body></html>');
+                                    frameDoc.document.close();
+                                    $window.setTimeout(function () {
+                                        $window.frames["frame1"].focus();
+                                        const successful = $window.frames["frame1"].print();
+                                        body.removeChild(frame1);
+                                        if (!successful) {
+                                            throw successful;
+                                        } else {
+                                            deferred.resolve(successful);
+                                        };
+                                    }, 500);
+                                } catch (err) {
+                                    deferred.reject(err);
+                                    toastService.add('error', gettext('Could not print document!'));
+                                };
+                                return deferred.promise;
+                            },
 
-                                // Create a Frame Document
-                                const frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
-                                frameDoc.document.open();
-                                // Create a new HTML document
-                                frameDoc.document.write('<html><head><title>Policies</title>');
-                                frameDoc.document.write('</head><body>');
-                                // Append the DIV contents
-                                frameDoc.document.write(contents);
-                                frameDoc.document.write('</body></html>');
-                                frameDoc.document.close();
-                                $window.setTimeout(function () {
-                                    $window.frames["frame1"].focus();
-                                    var successful = $window.frames["frame1"].print();
-                                    body.removeChild(frame1);
-                                    if (!successful) {
-                                        throw successful;
+                            // Instantiate a print dialog for a document containing parameter passed policy
+                            printPolicy: function(policy) {
+                                let deferred = $q.defer();
+                                deferred.notify("Printing policy");
+                                try {
+                                    // Create a dynamic IFRAME
+                                    const frame1 = document.createElement("IFRAME");
+                                    frame1.name = "frame1";
+                                    frame1.setAttribute("style", "position:absolute;top:-1000000px");
+                                    body.appendChild(frame1);
+
+                                    // Create a Frame Document
+                                    const frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+                                    frameDoc.document.open();
+                                    // Create a new HTML document
+                                    frameDoc.document.write('<html><head><title>Policies</title>');
+                                    frameDoc.document.write('</head><body>');
+
+                                    // Get the policy contents
+                                    let contents = '{' + '\n' + '    ';
+                                    if (policy.project != 'global') {
+                                        contents += '"' + policy.project + ':' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';
                                     } else {
-                                        deferred.resolve(successful);
-                                    }
-                                }, 500);
-                            } catch (err) {
-                                deferred.reject(err);
-                                toastService.add('error', gettext('Could not print document!'));
+                                        contents += '"' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';
+                                    };
+                                    // Append the DIV contents
+                                    frameDoc.document.write(contents);
+                                    frameDoc.document.write('</body></html>');
+                                    frameDoc.document.close();
+                                    $window.setTimeout(function () {
+                                        $window.frames["frame1"].focus();
+                                        let successful = $window.frames["frame1"].print();
+                                        body.removeChild(frame1);
+                                        if (!successful) {
+                                            throw successful;
+                                        } else {
+                                            toastService.add('success', gettext('Policy print document created'));
+                                            deferred.resolve(successful);
+                                        };
+                                    }, 500);
+                                } catch (err) {
+                                    deferred.reject(err);
+                                    toastService.add('error', gettext('Could not create policy print document!'));
+                                };
+                                return deferred.promise;
+                            },
+
+                            // Instantiate a print dialog for a document containing parameter passed list of policies
+                            printPolicies: function(policies) {
+                                let deferred = $q.defer();
+                                deferred.notify("Printing policies");
+                                try {
+                                    // Create a dynamic IFRAME
+                                    const frame1 = document.createElement("IFRAME");
+                                    frame1.name = "frame1";
+                                    frame1.setAttribute("style", "position:absolute;top:-1000000px");
+                                    body.appendChild(frame1);
+
+                                    // Create a Frame Document
+                                    const frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+                                    frameDoc.document.open();
+                                    // Create a new HTML document
+                                    frameDoc.document.write('<html><head><title>Policies</title>');
+                                    frameDoc.document.write('</head><body>');
+
+                                    // Get the policies contents
+                                    let contents = '{' + '\n' + '    ';
+                                    for (let i = 0; i < policies.length; i++) {
+                                        if (policies[i].project != 'global') {
+                                            contents += '"' + policies[i].project + ':' + policies[i].target + '": "' + policies[i].rule + '"';
+                                        } else {
+                                            policies[i] += '"' + policies[i].target + '": "' + policies[i].rule + '"';
+                                        };
+                                        if (i+1 < policies.length) {
+                                            contents += ',' + '\n' + '    ';
+                                        } else {
+                                            contents += '\n' + '}';
+                                        };
+                                    };
+
+                                    // Append the DIV contents
+                                    frameDoc.document.write(contents);
+                                    frameDoc.document.write('</body></html>');
+                                    frameDoc.document.close();
+                                    $window.setTimeout(function () {
+                                        $window.frames["frame1"].focus();
+                                        const successful = $window.frames["frame1"].print();
+                                        body.removeChild(frame1);
+                                        if (!successful) {
+                                            throw successful;
+                                        } else {
+                                            toastService.add('success', gettext('Policies print document created'));
+                                            deferred.resolve(successful);
+                                        };
+                                    }, 500);
+                                } catch (err) {
+                                    deferred.reject(err);
+                                    toastService.add('error', gettext('Could not print document!'));
+                                };
+                                return deferred.promise;
                             }
-                            return deferred.promise;
-                        },
-                        printPolicy: function (policy) {
-                            let deferred = $q.defer();
-                            deferred.notify("Printing policy");
+                        };
+                    }
+                ];
+            }
+        ]);
 
-                            try {
-                                // Create a dynamic IFRAME
-                                const frame1 = document.createElement("IFRAME");
-                                frame1.name = "frame1";
-                                frame1.setAttribute("style", "position:absolute;top:-1000000px");
-                                body.appendChild(frame1);
-
-                                // Create a Frame Document
-                                const frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
-                                frameDoc.document.open();
-                                // Create a new HTML document
-                                frameDoc.document.write('<html><head><title>Policies</title>');
-                                frameDoc.document.write('</head><body>');
-
-                                // Get the policy contents
-                                let contents = '{' + '\n' + '    ';
-                                if (policy.project != 'global') {
-                                    contents += '"' + policy.project + ':' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';
-                                } else {
-                                    contents += '"' + policy.target + '": "' + policy.rule + '"' + '\n' + '}';
-                                }
-                                // Append the DIV contents
-                                frameDoc.document.write(contents);
-                                frameDoc.document.write('</body></html>');
-                                frameDoc.document.close();
-                                $window.setTimeout(function () {
-                                    $window.frames["frame1"].focus();
-                                    let successful = $window.frames["frame1"].print();
-                                    body.removeChild(frame1);
-                                    if (!successful) {
-                                        throw successful;
-                                    } else {
-                                        toastService.add('success', gettext('Policy print document created'));
-                                        deferred.resolve(successful);
-                                    }
-                                }, 500);
-                            } catch (err) {
-                                deferred.reject(err);
-                                toastService.add('error', gettext('Could not create policy print document!'));
-                            }
-                            return deferred.promise;
-                        },
-                        printPolicies: function (policies) {
-                            let deferred = $q.defer();
-                            deferred.notify("Printing policies");
-
-                            try {
-                                // Create a dynamic IFRAME
-                                const frame1 = document.createElement("IFRAME");
-                                frame1.name = "frame1";
-                                frame1.setAttribute("style", "position:absolute;top:-1000000px");
-                                body.appendChild(frame1);
-
-                                // Create a Frame Document
-                                const frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
-                                frameDoc.document.open();
-                                // Create a new HTML document
-                                frameDoc.document.write('<html><head><title>Policies</title>');
-                                frameDoc.document.write('</head><body>');
-
-                                // Get the policies contents
-                                let contents = '{' + '\n' + '    ';
-                                for (let i = 0; i < policies.length; i++) {
-                                    if (policies[i].project != 'global') {
-                                        contents += '"' + policies[i].project + ':' + policies[i].target + '": "' + policies[i].rule + '"';
-                                    } else {
-                                        policies[i] += '"' + policies[i].target + '": "' + policies[i].rule + '"';
-                                    }
-                                    if (i+1 < policies.length) {
-                                        contents += ',' + '\n' + '    ';
-                                    } else {
-                                        contents += '\n' + '}';
-                                    }
-                                }
-
-                                // Append the DIV contents
-                                frameDoc.document.write(contents);
-                                frameDoc.document.write('</body></html>');
-                                frameDoc.document.close();
-                                $window.setTimeout(function () {
-                                    $window.frames["frame1"].focus();
-                                    var successful = $window.frames["frame1"].print();
-                                    body.removeChild(frame1);
-                                    if (!successful) {
-                                        throw successful;
-                                    } else {
-                                        toastService.add('success', gettext('Policies print document created'));
-                                        deferred.resolve(successful);
-                                    }
-                                }, 500);
-                            } catch (err) {
-                                deferred.reject(err);
-                                toastService.add('error', gettext('Could not print document!'));
-                            }
-                            return deferred.promise;
-                        }
-                    };
-                }
-            ];
-        }]);
 })();

@@ -18,13 +18,13 @@
                 $('#btnUp').fadeIn();
             } else {
                 $('#btnUp').fadeOut();
-            }
+            };
             $scrCtrl.lastScrollTop = st;
         });
         $scrCtrl.gotoTop = function() {
             $("html, body").animate({ scrollTop: 0 }, 100);
             $anchorScroll();
         };
-    }
+    };
 
 })();

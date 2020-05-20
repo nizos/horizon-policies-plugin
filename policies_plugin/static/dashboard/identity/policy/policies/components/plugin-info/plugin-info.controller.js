@@ -2,15 +2,19 @@
     'use strict';
 
     angular
-        .module('horizon.dashboard.identity.policy.policies.components.plugin-info', [])
-        .controller('InfoController', [
-            '$uibModalInstance',
-            '$scope',
-            function($uibModalInstance, $scope) {
+        .module('horizon.dashboard.identity.policy.policies.components.plugin-info')
+        .controller('InfoController', InfoController);
 
-                $scope.cancel = function() {
-                    $uibModalInstance.dismiss('cancel');
-                }
-            }
-        ]);
+    InfoController.$inject = [
+        '$uibModalInstance',
+        '$scope'
+    ];
+
+    function InfoController($uibModalInstance, $scope) {
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+    };
+
 })();

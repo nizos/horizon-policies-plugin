@@ -111,7 +111,7 @@
         </div>
 
         <!-- Desktop editor toolbar -->
-        <div class="editor-toolbar" ng-class="{'rulerVisible': $edtCtrl.showRuler}">
+        <div class="editor-toolbar" ng-class="{'rulerVisible': PoliciesModel.data.rulerVisible}">
 
             <!-- Editor history button group -->
             <div class="btn-group">
@@ -154,7 +154,8 @@
                         uib-btn-checkbox
                         btn-checkbox-true="true"
                         btn-checkbox-false="false"
-                        ng-model="$edtCtrl.showSuggestions">
+                        ng-model="$edtCtrl.showSuggestions"
+                        ng-click="$edtCtrl.toggleSuggestionsVisibility()">
                     <svg-icons p="edit_solid" id="autocomp-btn"></svg-icons> Suggestions
                 </button>
 
@@ -166,7 +167,8 @@
                         uib-btn-checkbox
                         btn-checkbox-true="true"
                         btn-checkbox-false="false"
-                        ng-model="$edtCtrl.showRuler">
+                        ng-model="$edtCtrl.showRuler"
+                        ng-click="$edtCtrl.toggleRulerVisibility()">
                     <svg-icons p="ruler" id="ruler-btn"></svg-icons> Ruler
                 </button>
             </div>

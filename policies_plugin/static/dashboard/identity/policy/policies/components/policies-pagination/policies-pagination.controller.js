@@ -10,19 +10,19 @@
     ];
 
     function PaginationController(PoliciesModel) {
-        var $pgnCtrl = this;
+        let $pgnCtrl = this;
         $pgnCtrl.policies = PoliciesModel.data;
 
         $pgnCtrl.nextPage=function() {
             if(PoliciesModel.data.currentPage < PoliciesModel.data.numberOfPages-1) {
                 PoliciesModel.setCurrentPage(PoliciesModel.data.currentPage+1);
-            }
+            };
         };
 
         $pgnCtrl.previousPage=function() {
             if(PoliciesModel.data.currentPage >= 1) {
                 PoliciesModel.setCurrentPage(PoliciesModel.data.currentPage-1);
-            }
+            };
         };
 
         $pgnCtrl.firstPage=function() {
@@ -36,7 +36,6 @@
         $pgnCtrl.goToPage=function(page) {
             PoliciesModel.setCurrentPage(page);
         };
-
     };
 
 })();

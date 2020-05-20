@@ -16,11 +16,14 @@
 
     angular
         .module('horizon.dashboard.identity.policy.actions.context-menu')
-        .service('ContextMenuService', function () {
-            return {
-              initialize: function (item) {
+        .service('ContextMenuService', ContextMenuService);
+
+    function ContextMenuService() {
+        return {
+            initialize: function(item) {
                 console.log('got here', item);
-              }
-            };
-        });
+            }
+        };
+    };
+
 })();

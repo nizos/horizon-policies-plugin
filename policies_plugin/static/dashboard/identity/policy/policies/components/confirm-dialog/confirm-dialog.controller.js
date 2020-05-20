@@ -3,22 +3,25 @@
 
     angular
         .module('horizon.dashboard.identity.policy.policies.components.confirm-dialog')
-        .controller('ConfirmController', [
-            '$uibModalInstance',
-            '$scope',
-            'dialog',
-            function($uibModalInstance, $scope, dialog) {
+        .controller('ConfirmController', ConfirmController);
 
-                var $ctrl = this;
-                $ctrl.dialog = dialog;
+    ConfirmController.$inject =[
+        '$uibModalInstance',
+        '$scope',
+        'dialog'
+    ];
 
-                $scope.confirm = function() {
-                    $uibModalInstance.close('ok');
-                }
+    function ConfirmController($uibModalInstance, $scope, dialog) {
+        let $cnfCtrl = this;
+        $cnfCtrl.dialog = dialog;
 
-                $scope.cancel = function() {
-                    $uibModalInstance.dismiss();
-                }
-            }
-        ]);
+        $scope.confirm = function() {
+            $uibModalInstance.close('ok');
+        };
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss();
+        };
+    };
+
 })();

@@ -38,7 +38,7 @@
                 .error(function () {
                     toastService.add('error', gettext('Unable to retrieve rule.'));
                 });
-        }
+        };
 
         function setRule(rule) {
             return apiService.post('/api/rule/'+rule.project+'/'+rule.target, rule)
@@ -48,15 +48,14 @@
                 .success(function () {
                     toastService.add('success', gettext('Rule has been successfully modified!'))
                 });
-
-        }
+        };
 
         function getRules() {
             return apiService.get('/api/rules/')
                 .error(function () {
                     toastService.add('error', gettext('Unable to retrieve rules.'));
                 });
-        }
+        };
 
         function setRules(rules) {
             return apiService.post('/api/rules/', rules)
@@ -66,7 +65,7 @@
                 .success(function () {
                     toastService.add('success', gettext('Rule has been successfully modified!'))
                 });
+        };
+    };
 
-        }
-    }
 })();

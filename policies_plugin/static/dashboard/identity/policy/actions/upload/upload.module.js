@@ -14,7 +14,6 @@
 (function() {
     'use strict';
 
-    angular
-        .module('horizon.dashboard.identity.policy.actions.upload', []);
+    angular.module('horizon.dashboard.identity.policy.actions.upload', []);
 
 })();

@@ -22,8 +22,11 @@
                 this.$get = [
                     'horizon.dashboard.identity.policy.model.policies-model',
                     '$q',
-                    function (PoliciesModel, $q) {
+                    function(PoliciesModel, $q) {
                         return {
+
+                            // Store the user configured list of visible
+                            // columns in the user's browser local storage
                             storeVisibleColumns: function() {
                                 let deferred = $q.defer();
                                 deferred.notify("Storing visible columns in local storage");
@@ -42,9 +45,12 @@
                                     deferred.resolve(successful);
                                 } catch (err) {
                                     deferred.reject(err);
-                                }
+                                };
                                 return deferred.promise;
                             },
+
+                            // Restore the user configured list of visible
+                            // columns from the user's browser local storage
                             restoreVisibleColumns: function() {
                                 let deferred = $q.defer();
                                 deferred.notify("Restoring visible columns from local storage");
@@ -77,6 +83,9 @@
                                 };
                                 return deferred.promise;
                             },
+
+                            // Store the user configured list of searchable
+                            // columns in the user's browser local storage
                             storeSearchColumns: function() {
                                 let deferred = $q.defer();
                                 deferred.notify("Storing search columns in local storage");
@@ -98,6 +107,9 @@
                                 };
                                 return deferred.promise;
                             },
+
+                            // Restore the user configured list of searchable
+                            // columns from the user's browser local storage
                             restoreSearchColumns: function() {
                                 let deferred = $q.defer();
                                 deferred.notify("Restoring search columns from local storage");
@@ -130,6 +142,9 @@
                                 };
                                 return deferred.promise;
                             },
+
+                            // Store the user configured table column
+                            // widths in the user's browser local storage
                             storeColumnWidths: function() {
                                 let deferred = $q.defer();
                                 deferred.notify("Storing column widths in local storage");
@@ -151,6 +166,9 @@
                                 };
                                 return deferred.promise;
                             },
+
+                            // Restore the user configured table column
+                            // widths from the user's browser local storage
                             restoreColumnWidths: function() {
                                 let deferred = $q.defer();
                                 deferred.notify("Restoring column widths from local storage");
@@ -188,6 +206,9 @@
                                 };
                                 return deferred.promise;
                             },
+
+                            // Store the user configured items per page
+                            // value from the user's browser local storage
                             storeItemsPerPage: function(itemsPerPage) {
                                 let deferred = $q.defer();
                                 deferred.notify("Storing items per page in local storage");
@@ -198,9 +219,12 @@
                                     deferred.resolve(successful);
                                 } catch (err) {
                                     deferred.reject(err);
-                                }
+                                };
                                 return deferred.promise;
                             },
+
+                            // Restore the user configured items per page
+                            // value from the user's browser local storage
                             restoreItemsPerPage: function() {
                                 let deferred = $q.defer();
                                 deferred.notify("Restoring items per page from local storage");
@@ -216,7 +240,99 @@
                                     };
                                 } catch (err) {
                                     deferred.reject(err);
-                                }
+                                };
+                                return deferred.promise;
+                            },
+
+                            // Store the user configured editor ruler visibility
+                            // configuration in the user's browser local storage
+                            storeRulerVisible: function(visible) {
+                                let deferred = $q.defer();
+                                deferred.notify("Storing ruler visibility in local storage");
+                                let successful;
+                                try {
+                                    if (visible) {
+                                        PoliciesModel.showRuler();
+                                    } else {
+                                        PoliciesModel.hideRuler();
+                                    };
+                                    localStorage.setItem("rulerVisible", visible);
+                                    deferred.resolve(successful);
+                                } catch (err) {
+                                    deferred.reject(err);
+                                };
+                                return deferred.promise;
+                            },
+
+                            // Restore the user configured editor ruler visibility
+                            // configuration from the user's browser local storage
+                            restoreRulerVisible: function() {
+                                let deferred = $q.defer();
+                                deferred.notify("Restoring ruler visibility from local storage");
+                                let successful;
+                                try {
+                                    if (localStorage.getItem('rulerVisible') !== null) {
+                                        const visible = localStorage.getItem('rulerVisible');
+                                        if (visible == 'true') {
+                                            PoliciesModel.showRuler();
+                                        } else {
+                                            PoliciesModel.hideRuler();
+                                        };
+                                        deferred.resolve(successful);
+                                    } else {
+                                        localStorage.setItem("rulerVisible", true);
+                                        PoliciesModel.showRuler();
+                                        deferred.resolve(successful);
+                                    };
+                                } catch (err) {
+                                    deferred.reject(err);
+                                };
+                                return deferred.promise;
+                            },
+
+                            // Store the user configured editor autocomplete suggestions
+                            // state configuration in the user's browser local storage
+                            storeSuggestionsVisible: function(visible) {
+                                let deferred = $q.defer();
+                                deferred.notify("Storing suggestions visibility in local storage");
+                                let successful;
+                                try {
+                                    if (visible) {
+                                        PoliciesModel.showSuggestions();
+                                    } else {
+                                        PoliciesModel.hideSuggestions();
+                                    };
+                                    localStorage.setItem("suggestionsVisible", visible);
+                                    deferred.resolve(successful);
+                                } catch (err) {
+                                    deferred.reject(err);
+                                };
+                                return deferred.promise;
+                            },
+
+                            // Restore the user configured editor autocomplete suggestions
+                            // state configuration from the user's browser local storage
+                            restoreSuggestionsVisible: function() {
+                                let deferred = $q.defer();
+                                deferred.notify("Restoring suggestions visibility from local storage");
+                                let successful;
+                                try {
+                                    if (localStorage.getItem('suggestionsVisible') !== null) {
+                                        const visible = localStorage.getItem('suggestionsVisible');
+                                        if (visible == 'true') {
+                                            PoliciesModel.showSuggestions();
+                                        } else {
+                                            PoliciesModel.hideSuggestions();
+                                        };
+                                        deferred.resolve(successful);
+                                    } else {
+                                        localStorage.setItem("suggestionsVisible", true);
+                                        PoliciesModel.showSuggestions();
+                                        deferred.resolve(successful);
+                                    };
+                                } catch (err) {
+                                    deferred.reject(err);
+                                };
                                 return deferred.promise;
                             }
                         };
@@ -224,4 +340,5 @@
                 ];
             }
         ]);
+
 })();

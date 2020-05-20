@@ -23,12 +23,11 @@
         $scope.$watch('$schCtrl.query', function(newValue, oldValue) {
             if(oldValue!=newValue) {
                 filterPolicies();
-            }
+            };
         },true);
 
         // Watch for changes in policies data
         $scope.$on('Policies updated', function() {
-            console.log('SearchController -> $scope.$on(Policies updated)');
             filterPolicies();
         });
 

@@ -16,34 +16,34 @@
 
     angular
         .module('horizon.dashboard.identity.policy.policies.components.policies-editor.editor-autocomplete.autocomplete-item')
-        .directive('autocompleteItem',
-            function () {
-                return {
-                    restrict: 'A',
-                    require: [
-                        '^editorAutocomplete',
-                        'ngModel'
-                    ],
-                    scope: {
-                        'autocompleteItem': '&'
-                    },
-                    link: function (scope, element, attrs, required) {
-                        // Prevent html5/browser auto completion.
-                        attrs.$set('autocomplete', 'off');
+        .directive('autocompleteItem', autocompleteItem);
 
-                        let acContainer = required[0];
-                        let ngModel = required[1];
+    function autocompleteItem() {
 
-                        element.bind('focus', function () {
-                            let options = scope.autocompleteItem();
-                            if (!options) {
-                                throw new Error('Invalid options');
-                            }
-                            acContainer.attach(ngModel, element, options);
-                        });
-                    }
-                }
+        return {
+            restrict: 'A',
+            require: [
+                '^editorAutocomplete',
+                'ngModel'
+            ],
+            scope: {
+                'autocompleteItem': '&'
+            },
+            link: function(scope, element, attrs, required) {
+                // Prevent html5/browser auto completion.
+                attrs.$set('autocomplete', 'off');
+                let acContainer = required[0];
+                let ngModel = required[1];
+
+                element.bind('focus', function() {
+                    let options = scope.autocompleteItem();
+                    if (!options) {
+                        throw new Error('Invalid options');
+                    };
+                    acContainer.attach(ngModel, element, options);
+                });
             }
-        )
+        };
+    };
 
 })();

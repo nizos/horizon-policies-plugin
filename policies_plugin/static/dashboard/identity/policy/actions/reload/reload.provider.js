@@ -18,7 +18,7 @@
     angular
         .module('horizon.dashboard.identity.policy.actions.reload')
         .provider('$actionsReload', [
-            function () {
+            function() {
                 this.$get = [
                     'horizon.dashboard.identity.policy.model.policies-model',
                     'horizon.framework.widgets.toast.service',
@@ -26,14 +26,15 @@
                     '$actionsStorage',
                     '$rootScope',
                     '$q',
-                    function (PoliciesModel, toastService, Api, $actionsStorage, $rootScope, $q) {
+                    function(PoliciesModel, toastService, Api, $actionsStorage, $rootScope, $q) {
                         return {
-                            loadPolicies: function () {
+
+                            // Retrieve list of policies from the API and provide them to the PoliciesModel
+                            loadPolicies: function() {
                                 let deferred = $q.defer();
                                 deferred.notify("loading policies");
                                 let successful;
                                 try {
-                                    console.log('$actionsReload -> loadPolicies()');
                                     Api.getRules().success(function(response) {
                                         response.forEach(function(policy) {
                                             policy.expanded=false;
@@ -45,21 +46,24 @@
                                         $actionsStorage.restoreSearchColumns();
                                         $actionsStorage.restoreColumnWidths();
                                         $actionsStorage.restoreItemsPerPage();
+                                        $actionsStorage.restoreSuggestionsVisible();
+                                        $actionsStorage.restoreRulerVisible();
                                         PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
                                         deferred.resolve(successful);
-                                    })
+                                    });
                                 } catch (err) {
                                     deferred.reject(err);
                                     toastService.add('error', gettext('Could not load policies!'));
-                                }
+                                };
                                 return deferred.promise;
                             },
-                            reloadPolicies: function () {
+
+                            // Retrieve list of policies from the API and repopulate the PoliciesModel with them
+                            reloadPolicies: function() {
                                 let deferred = $q.defer();
                                 deferred.notify("Reloading policies");
                                 let successful;
                                 try {
-                                    console.log('$actionsReload -> reloadPolicies()');
                                     Api.getRules().success(function(response) {
                                         response.forEach(function(policy) {
                                             policy.expanded=false;
@@ -68,15 +72,14 @@
                                         PoliciesModel.setAllPolicies(response);
                                         PoliciesModel.setFilteredPolicies(response);
                                         PoliciesModel.setNumberOfPages(Math.ceil(PoliciesModel.data.filteredPolicies.length/PoliciesModel.data.itemsPerPage));
-                                        console.log('$actionsReload -> $rootScope.$broadcast(Policies updated);');
                                         $rootScope.$broadcast('Policies updated');
                                         toastService.add('success', gettext('Policies reloaded successfully'));
                                         deferred.resolve(successful);
-                                    })
+                                    });
                                 } catch (err) {
                                     deferred.reject(err);
                                     toastService.add('error', gettext('Could not reloaded policies!'));
-                                }
+                                };
                                 return deferred.promise;
                             }
                         };
@@ -84,4 +87,5 @@
                 ];
             }
         ]);
+
 })();

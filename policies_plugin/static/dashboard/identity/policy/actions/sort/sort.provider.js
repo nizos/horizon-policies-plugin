@@ -18,12 +18,13 @@
     angular
         .module('horizon.dashboard.identity.policy.actions.sort')
         .provider('$actionsSort', [
-            function () {
+            function() {
                 this.$get = [
                     'horizon.dashboard.identity.policy.model.policies-model',
                     '$q',
-                    function (PoliciesModel, $q) {
-                        // Table sort functions
+                    function(PoliciesModel, $q) {
+
+                        // Policies sort helper function
                         function compare(a, b) {
                             if (typeof a !== 'undefined' && typeof b !== 'undefined') {
                                 if (a.toLowerCase() < b.toLowerCase()) {
@@ -43,12 +44,13 @@
                         };
 
                         return {
+
+                            // Sort list of filtered policies according to parameter passed column and expected sort order
                             sortPolicies: function(column) {
                                 let deferred = $q.defer();
                                 deferred.notify("Sorting policies");
                                 let successful;
                                 try {
-                                    console.log('$actionsSort -> sortPolicies()');
                                     const sortColumn = PoliciesModel.data.sortColumn;
                                     if (sortColumn === column) {
                                         PoliciesModel.toggleSortOrder(column);
@@ -63,7 +65,7 @@
                                                         return compare(b, a);
                                                     };
                                                 });
-                                            }
+                                            };
                                         };
                                         PoliciesModel.data.filteredPolicies.sort(function(a, b) {
                                             if (!PoliciesModel.data.sortAscending[column]) {
@@ -85,7 +87,7 @@
                                     deferred.resolve(successful);
                                 } catch (err) {
                                     deferred.reject(err);
-                                }
+                                };
                                 return deferred.promise;
                             },
                             sortPoliciesNoReorder: function(column) {
@@ -93,7 +95,6 @@
                                 deferred.notify("Sorting policies");
                                 let successful;
                                 try {
-                                    console.log('$actionsSort -> sortPolicies()');
                                     if (column === 'scopes' || column === 'operations') {
                                         for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
                                             if (PoliciesModel.data.filteredPolicies[i][column].length >= 1) {
@@ -104,7 +105,7 @@
                                                         return compare(b, a);
                                                     };
                                                 });
-                                            }
+                                            };
                                         };
                                         PoliciesModel.data.filteredPolicies.sort(function(a, b) {
                                             if (!PoliciesModel.data.sortAscending[column]) {
@@ -134,4 +135,5 @@
                 ];
             }
         ]);
+
 })();

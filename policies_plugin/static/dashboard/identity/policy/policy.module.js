@@ -31,7 +31,6 @@
             'horizon.dashboard.identity.policy.actions.context-menu',
             'horizon.dashboard.identity.policy.actions.download',
             'horizon.dashboard.identity.policy.actions.filter',
-            'horizon.dashboard.identity.policy.actions.history',
             'horizon.dashboard.identity.policy.actions.paste',
             'horizon.dashboard.identity.policy.actions.print',
             'horizon.dashboard.identity.policy.actions.reload',
@@ -57,21 +56,21 @@
         ])
         .config(config);
 
-        config.$inject = [
-            '$provide',
-            '$windowProvider',
-            '$routeProvider'
-        ];
+    config.$inject = [
+        '$provide',
+        '$windowProvider',
+        '$routeProvider'
+    ];
 
-        function config($provide, $windowProvider, $routeProvider) {
-            const basePath = $windowProvider.$get().STATIC_URL + 'dashboard/identity/policy/';
-            $provide.constant('horizon.dashboard.identity.policy.basePath', basePath);
+    function config($provide, $windowProvider, $routeProvider) {
+        const basePath = $windowProvider.$get().STATIC_URL + 'dashboard/identity/policy/';
+        $provide.constant('horizon.dashboard.identity.policy.basePath', basePath);
 
-            const policies = '/identity/policies';
+        const policies = '/identity/policies';
 
-            $routeProvider.when(policies, {
-                templateUrl: basePath + 'policies/policies.html'
-            });
-        }
+        $routeProvider.when(policies, {
+            templateUrl: basePath + 'policies/policies.html'
+        });
+    };
 
 }());

@@ -14,7 +14,6 @@
 (function() {
     'use strict';
 
-    angular
-        .module('horizon.dashboard.identity.policy.policies.components.confirm-dialog', []);
+    angular.module('horizon.dashboard.identity.policy.policies.components.confirm-dialog', []);
 
 })();
