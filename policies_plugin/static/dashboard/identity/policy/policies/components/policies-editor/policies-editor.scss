@@ -467,3 +467,47 @@
 
 
 
+// file-responsive-upload-form.responsiveUploadVisible {
+//     width: 100%;
+//     display: inline-flex;
+//     position:relative;
+//     justify-content: space-evenly;
+//     background: #e0e0e0;
+//     opacity: 1;
+//     height: 40px;
+//     line-height: 20px;
+//     padding-top: 2px;
+//     padding-bottom: 5px;
+//     .file-responsive-upload-button  {
+//         visibility: visible;
+//     }
+//     .file-responsive-upload-input {
+//         visibility: visible;
+//     }
+// }
+
+// .file-responsive-upload-form {
+//     line-height: 0px;
+//     opacity: 0;
+//     padding: 0 10px;
+//     height: 0px;
+//     -webkit-transition: all linear 0.2s;
+//             transition: all linear 0.2s;
+// }
+
+// .file-responsive-upload-input {
+//     align-self: center;
+//     visibility: hidden;
+// }
+
+
+// .file-responsive-upload-button {
+//     height: 24px;
+//     padding-top: 2px;
+//     align-self: center;
+//     visibility: hidden;
+// }
+
+// .upload-responsive-button.responsiveUploadVisible {
+//     border-bottom-width: 0px;
+// }

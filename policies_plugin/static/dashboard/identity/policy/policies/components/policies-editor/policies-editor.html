@@ -82,7 +82,7 @@
 
                         <!-- Upload button -->
                         <li>
-                            <button class="btn btn-default editor-toolbar-button upload-button" type="button" ng-class="{'uploadVisible': showUpload}" ng-model="showUpload"
+                            <button class="btn btn-default toolbar-btn responsive-upload-button" type="button" ng-class="{'responsiveUploadVisible': showResponsiveUpload}" ng-model="showResponsiveUpload"
                             title="Upload from file" uib-btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
                                 <svg-icons p="file_upload" id="upload-btn"></svg-icons>
                             </button>
@@ -96,18 +96,17 @@
                         </li>
                     </div>
                 </ul>
+            </div>
+            <!-- File upload form -->
+            <div class="file-responsive-upload-form" ng-class="{'responsiveUploadVisible': showResponsiveUpload}">
 
-                <!-- File upload form -->
-                <div class="file-upload-form" ng-class="{'uploadVisible': showUpload}">
+                <!--File input field-->
+                <input class="file-responsive-upload-input" type="file" id="responsiveUploadFile" name="responsiveUploadFile", accept=".json, application/json"/>
 
-                    <!--File input field-->
-                    <input class="file-upload-input" type="file" id="uploadFile" name="uploadFile", accept=".json, application/json"/>
-
-                    <!-- Upload Button -->
-                    <button class="btn btn-primary file-upload-button" type="button" title="Upload" ng-click="$tblCtrl.uploadFile()">
-                        <span class="fa fa-upload"></span> Upload
-                    </button>
-                </div>
+                <!-- Upload Button -->
+                <button class="btn btn-primary file-responsive-upload-button" type="button" title="Upload" ng-click="$edtCtrl.uploadFile()">
+                    <span class="fa fa-upload"></span> Upload
+                </button>
             </div>
         </div>
 

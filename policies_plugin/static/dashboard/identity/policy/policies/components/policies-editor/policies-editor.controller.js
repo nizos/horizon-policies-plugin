@@ -71,7 +71,10 @@
 
                 // Set editor's contents from uploaded file's
                 $edtCtrl.uploadFile = function() {
-                    const file = document.getElementById('uploadFile').files[0];
+                    let file = document.getElementById('uploadFile').files[0];
+                    if(!file) {
+                        file = document.getElementById('responsiveUploadFile').files[0];
+                    }
                     $actionsUpload.upload(file).then(function (response) {
                         $edtCtrl.editorContent = response;
                     });
