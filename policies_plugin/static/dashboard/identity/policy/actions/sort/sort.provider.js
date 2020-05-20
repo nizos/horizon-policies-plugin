@@ -87,6 +87,47 @@
                                     deferred.reject(err);
                                 }
                                 return deferred.promise;
+                            },
+                            sortPoliciesNoReorder: function(column) {
+                                let deferred = $q.defer();
+                                deferred.notify("Sorting policies");
+                                let successful;
+                                try {
+                                    console.log('$actionsSort -> sortPolicies()');
+                                    if (column === 'scopes' || column === 'operations') {
+                                        for (let i = 0; i < PoliciesModel.data.filteredPolicies.length; i++) {
+                                            if (PoliciesModel.data.filteredPolicies[i][column].length >= 1) {
+                                                PoliciesModel.data.filteredPolicies[i][column].sort(function(a, b) {
+                                                    if (!PoliciesModel.data.sortAscending[column]) {
+                                                        return compare(a, b);
+                                                    } else {
+                                                        return compare(b, a);
+                                                    };
+                                                });
+                                            }
+                                        };
+                                        PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                                            if (!PoliciesModel.data.sortAscending[column]) {
+                                                return compare(a[column][0], b[column][0]);
+                                            } else {
+                                                return compare(b[column][0], a[column][0]);
+                                            };
+                                        });
+                                    } else {
+                                        PoliciesModel.data.filteredPolicies.sort(function(a, b) {
+                                            if (!PoliciesModel.data.sortAscending[column]) {
+                                                return a[column].localeCompare(b[column]);
+                                            } else {
+                                                return b[column].localeCompare(a[column]);
+                                            };
+                                        });
+                                    };
+                                    PoliciesModel.setSortColumn(column);
+                                    deferred.resolve(successful);
+                                } catch (err) {
+                                    deferred.reject(err);
+                                }
+                                return deferred.promise;
                             }
                         };
                     }

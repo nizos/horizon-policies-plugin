@@ -127,13 +127,12 @@
             }
         ];
 
-        init();
-
         // Functions to run on page load
-        function init() {
+        $tblCtrl.init = function() {
             console.log('TableController -> init()');
             $actionsReload.loadPolicies().then(function() {
                 console.log('TableController -> $actionsReload.loadPolicies().then');
+                $actionsSort.sortPolicies('target');
             });
         };
 
@@ -173,6 +172,10 @@
         function policiesUpdated() {
             console.log('TableController -> policiesUpdated() -> $rootScope.$broadcast(Policies updated)');
             $rootScope.$broadcast('Policies updated');
+            $actionsReload.loadPolicies().then(function() {
+                console.log('TableController -> $actionsReload.loadPolicies().then');
+                $actionsSort.sortPoliciesNoReorder('target');
+            });
         };
 
         // Table getters

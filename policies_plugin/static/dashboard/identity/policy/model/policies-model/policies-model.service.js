@@ -50,7 +50,7 @@
                     operations:     true,
                     description:    true
                 },
-                sortColumn: '',
+                sortColumn: 'target',
                 itemsPerPage: 5,
                 currentPage: 0,
                 numberOfPages: 10
