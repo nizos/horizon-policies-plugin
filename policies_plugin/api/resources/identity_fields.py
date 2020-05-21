@@ -2397,7 +2397,8 @@ identity_docs = {
     },
     "identity:check_token": {
         "target": "identity:check_token",
-        "defaultRule": "(role:reader and system_scope:all) or rule:token_subject",
+        "defaultRule": "(role:reader and system_scope:all)"
+        " or rule:token_subject",
         "scopes": [
             "system",
             "domain",
@@ -2424,7 +2425,8 @@ identity_docs = {
     },
     "identity:revoke_token": {
         "target": "identity:revoke_token",
-        "defaultRule": "(role:admin and system_scope:all) or rule:token_subject",
+        "defaultRule": "(role:admin and system_scope:all)"
+        " or rule:token_subject",
         "scopes": [
             "system",
             "domain",
