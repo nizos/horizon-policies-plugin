@@ -3,35 +3,38 @@
 
     angular
         .module('horizon.dashboard.identity.policy.policies.components.policies-details')
-        .controller('DetailsController', DetailsController);
+        .controller('DetailsController', [
+            '$uibModalInstance',
+            '$policy',
+            function($uibModalInstance, $policy) {
 
-    DetailsController.$inject = [
-        '$uibModalInstance',
-        '$policy'
-    ];
+                var $dtlCtrl = this;
+                $dtlCtrl.policy = $policy;
+                $dtlCtrl.project = $policy['project'];
+                $dtlCtrl.target = $policy['target'];
+                $dtlCtrl.rule = $policy['rule'];
+                $dtlCtrl.defaultRule = $policy['defaultRule'];
+                $dtlCtrl.scopes = $policy['scopes'];
+                $dtlCtrl.operations = $policy['operations'];
+                $dtlCtrl.description = $policy['description'];
+                $dtlCtrl.showForm = false;
+                $dtlCtrl.showJson = false;
+                $dtlCtrl.isButtonVisible = true;
+                $dtlCtrl.limit = 3;
 
-    function DetailsController($uibModalInstance, $policy) {
+                $dtlCtrl.ok = function() {
+                    $policy['rule'] = $dtlCtrl.rule;
+                    $uibModalInstance.close($policy);
+                };
 
-        let $dtlCtrl = this;
-        $dtlCtrl.policy = $policy;
-        $dtlCtrl.project = $policy['project'];
-        $dtlCtrl.target = $policy['target'];
-        $dtlCtrl.rule = $policy['rule'];
-        $dtlCtrl.defaultRule = $policy['defaultRule'];
-        $dtlCtrl.scopes = $policy['scopes'];
-        $dtlCtrl.operations = $policy['operations'];
-        $dtlCtrl.description = $policy['description'];
-        $dtlCtrl.showForm = false;
-        $dtlCtrl.showJson = false;
+                $dtlCtrl.cancel = function() {
+                    $uibModalInstance.dismiss('cancel');
+                }
 
-        $dtlCtrl.ok = function() {
-            $policy['rule'] = $dtlCtrl.rule;
-            $uibModalInstance.close($policy);
-        };
-
-        $dtlCtrl.cancel = function() {
-            $uibModalInstance.dismiss('cancel');
-        };
-    };
-
+                $dtlCtrl.loadMore = function() {
+                    $dtlCtrl.limit = $dtlCtrl.operations.length;
+                    $dtlCtrl.isButtonVisible = false;
+                 }
+            }
+        ]);
 })();

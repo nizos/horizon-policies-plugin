@@ -101,7 +101,8 @@
         <div class="form-group">
             <!-- Policy Operations Label -->
             <label class="window-label"  for="operationsFieldInput">Operations</label>
-            <div ng-repeat="operation in $dtlCtrl.operations track by $index">
+            <div ng-repeat="operation in $dtlCtrl.operations | limitTo: $dtlCtrl.limit track by $index">
+
                 <div class="input-group-window">
                     <!--  Policy Operation Input Field -->
                     <input type="text"
@@ -112,6 +113,10 @@
                         ng-disabled="!editOperation">
                 </div>
             </div>
+            <br>
+            <span ng-if="$dtlCtrl.operations.length > 2">
+                <button class="btn btn-primary pull-right" ng-click="$dtlCtrl.loadMore()" ng-show="$dtlCtrl.isButtonVisible">Load more</button>
+            </span>
         </div>
 
         <!-- Policy Description -->
@@ -148,7 +153,6 @@
                 <span class="fa fa-check"></span>
                 Save
             </button>
-
         </div>
     </div>
 </div>
